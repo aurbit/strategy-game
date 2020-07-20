@@ -3,18 +3,17 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "client:dev": "yarn workspace react-app start",
-    "client:build": "yarn workspace react-app build --max-old-space-size=12288",
-    "client:eject": "yarn workspace react-app eject",
-    "client:test": "yarn workspace react-app test",
+    "client:dev": "yarn workspace client start",
+    "client:build": "yarn workspace client build --max-old-space-size=12288",
+    "client:eject": "yarn workspace client eject",
+    "client:test": "yarn workspace client test",
     "eth:chain": "cd packages/buidler && npx buidler node",
     "eth:console": "cd packages/buidler && npx buidler console",
     "eth:buidler": "cd packages/buidler && npx buidler",
     "eth:test": "cd packages/buidler && npx buidler test",
     "eth:compile": "cd packages/buidler && npx buidler compile",
     "eth:deploy": "cd packages/buidler && npx buidler run scripts/deploy.js && npx buidler run scripts/publish.js",
-    "eth:watch": "cd packages/buidler && node scripts/watch.js",
-    "eth:ipfs": "cd packages/react-app && node ipfs"
+    "eth:watch": "cd packages/buidler && node scripts/watch.js"
   },
   "devDependencies": {
     "@nomiclabs/buidler": "1.3.3-rc.0",

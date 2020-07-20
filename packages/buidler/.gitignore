@@ -1,0 +1,21 @@
+**/aws.json
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+buidler/artifacts
+react-app/src/contracts
+buidler/cache
+
+# dependencies
+.pnp
+.pnp.js
+
+# testing
+coverage
+
+# production
+build
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
