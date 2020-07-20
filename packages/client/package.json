@@ -40,7 +40,7 @@
     "prettier-standard": "^16.4.1"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx}": [
+    "*.js": [
       "yarn lint", "git push"
     ]
   },
