@@ -1,0 +1,5 @@
+exit
+ls
+ethereum
+web3.
+var game = new Game()
