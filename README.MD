@@ -12,9 +12,9 @@
 4) Add your **scripts** to run your project as you would any normal project in your `package.json`
 3) In the **root** `package.json` add your script named after the script you made in your project to run what ever you need inside the project I.E
 
-E.g 
+#### Example
 
-#### Folder Structure - Root Level
+## Folder Structure - Root Level
 ```
 /node_modules
 /packages
@@ -27,9 +27,11 @@ README.MD
 ```
 
 #### Package.json - My Project
+```
   "scripts": {
     "server:start": "node index.js",
-  },
+  }
+```
 
 #### Package.json - Root Level
 ```
