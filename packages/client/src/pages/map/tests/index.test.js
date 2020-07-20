@@ -10,7 +10,7 @@ test('render the map', () => {
 
   const isLand = index => {
     const loc = (index / 8).toFixed(0)
-    let bitpos = 7 - (index % 8)
+    const bitpos = 7 - (index % 8)
     return pullbit(map[loc], bitpos)
   }
 
