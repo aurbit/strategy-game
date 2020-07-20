@@ -1,9 +1,9 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-
 # App Info
 
 #### Absolute Imports
+
 - We can use absolute imports in this application so we will not need ugly paths when importing from nested paths - Eg
 - Files within the `src` folder is where you can start your import path from
 
@@ -13,10 +13,12 @@ Pretty: import HelloWorld from "shared/components/Hello";
 ```
 
 #### CSS Modules
+
 - We can use CSS Modules at component level styling to ensure we dont have any name classes - Eg
 - Just endure the name convention is as follows `*.module.css`
 
 **JS File**
+
 ```
 import styles from "index.module.css"
 
@@ -24,6 +26,7 @@ import styles from "index.module.css"
 ```
 
 **CSS File**
+
 ```
 .helloWorld {
     color: red

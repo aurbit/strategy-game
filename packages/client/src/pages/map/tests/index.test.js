@@ -9,15 +9,15 @@ test('render the map', () => {
   }
 
   const isLand = index => {
-    let loc = (index / 8).toFixed(0)
-    let bitpos = 7 - (index % 8)
+    const loc = (index / 8).toFixed(0)
+    const bitpos = 7 - (index % 8)
     return pullbit(map[loc], bitpos)
   }
 
   const main = () => {
-    let newl = 112
+    const newl = 112
     let out = ''
-    for (let i in [...Array(112 * 64).keys()]) {
+    for (const i in [...Array(112 * 64).keys()]) {
       out = out + isLand(i)
       if (i % newl === 0) {
         console.log(out)
