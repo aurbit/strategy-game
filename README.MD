@@ -11,6 +11,8 @@
 2) Take note of the name of your project ensure the name of the `folder` and the `name` inside the `package.json` file **match**
 4) Add your **scripts** to run your project as you would any normal project in your `package.json`
 3) In the **root** `package.json` add your script named after the script you made in your project to run what ever you need inside the project I.E
+4) Install project dependant npm packages within the projects `package.json` its self
+5) In the event you need global packages (I.E If we were going to use jest to test in many projects - instead of installing it at each project package level - you could install it at the root project level)
 
 #### Example
 
