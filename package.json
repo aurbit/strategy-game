@@ -1,8 +1,10 @@
 {
   "name": "aurbit-monorepo",
   "version": "1.0.0",
+  "private": true,
   "scripts": {
-    "client:dev": "yarn workspace react-app start"
+    "client:dev": "yarn workspace react-app start",
+    "test:start": "yarn workspace test-package start"
   },
   "workspaces": {
     "packages": [
