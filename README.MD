@@ -30,7 +30,7 @@ README.MD
 ```
   "scripts": {
     "server:start": "node index.js",
-  }
+  },
 ```
 
 #### Package.json - Root Level
