@@ -1,12 +1,12 @@
-import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Map } from "./pages";
+import React from 'react'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { Map } from './pages'
 
 const RouteContainer = () => {
   return (
     <Router>
       <Switch>
-        <Route path="/">
+        <Route path='/'>
           <Map />
         </Route>
         {/* <Route path="/">
@@ -14,7 +14,7 @@ const RouteContainer = () => {
         </Route> */}
       </Switch>
     </Router>
-  );
-};
+  )
+}
 
-export default RouteContainer;
+export default RouteContainer
