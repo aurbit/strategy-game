@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react'
 
 const HelloTest = () => {
-  return <div>Hello</div>;
-};
-export default HelloTest;
+  return <div>Hello</div>
+}
+export default HelloTest

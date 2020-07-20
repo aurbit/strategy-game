@@ -24,3 +24,5 @@ yarn-error.log*
 
 # Contracts
 src/contracts
+
+.eslintcache

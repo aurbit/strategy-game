@@ -1,0 +1,12 @@
+{
+    "extends": "standard",
+    "globals": {
+      "test": "readonly"
+    },
+    "env": {
+      "browser": true
+    },
+    "rules": {
+        "no-unused-vars": 0
+      }
+}
