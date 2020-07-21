@@ -6,11 +6,15 @@ import ReactDOM from 'react-dom'
 
 import Routes from './root-routes'
 
+import { UserContext } from 'shared/store/user'
+
 import * as serviceWorker from './serviceWorker'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Routes />
+    <UserContext.Provider>
+      <Routes />
+    </UserContext.Provider>
   </React.StrictMode>,
   document.getElementById('root')
 )

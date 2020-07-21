@@ -1,10 +1,10 @@
 import React from 'react'
-import { Navbar } from 'shared/components/Layout'
+import { ConnectedNavbar } from 'shared/components/Layout'
 
 const MainLayoutContainer = ({ children }) => {
   return (
     <div>
-      <Navbar />
+      <ConnectedNavbar />
       {children}
     </div>
   )

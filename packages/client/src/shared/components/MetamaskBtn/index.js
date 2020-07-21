@@ -1,5 +1,6 @@
 import MetaMaskOnboarding from '@metamask/onboarding'
 import React from 'react'
+import { UserContext, setAccount, setMetamask } from 'shared/store/user'
 import { Button } from 'react-bootstrap'
 
 const ONBOARD_TEXT = 'Install Metamask!'
@@ -7,10 +8,11 @@ const CONNECT_TEXT = 'Connect'
 const CONNECTED_TEXT = 'Connected'
 
 const MetamaskBtn = ({ className }) => {
+  const { userState, updateAccount, updateMetamask } = useUserStore()
+  const { account } = userState
   const [buttonText, setButtonText] = React.useState(ONBOARD_TEXT)
   const [isDisabled, setDisabled] = React.useState(false)
-  // Push accounts into global user state
-  const [accounts, setAccounts] = React.useState([])
+
   const onboarding = React.useRef()
 
   React.useEffect(() => {
@@ -21,7 +23,8 @@ const MetamaskBtn = ({ className }) => {
 
   React.useEffect(() => {
     if (MetaMaskOnboarding.isMetaMaskInstalled()) {
-      if (accounts.length > 0) {
+      if (account.length > 0) {
+        updateMetamask(true)
         setButtonText(CONNECTED_TEXT)
         setDisabled(true)
         onboarding.current.stopOnboarding()
@@ -30,11 +33,11 @@ const MetamaskBtn = ({ className }) => {
         setDisabled(false)
       }
     }
-  }, [accounts])
+  }, [account])
 
   React.useEffect(() => {
-    const handleNewAccounts = (newAccounts) => setAccounts(newAccounts)
-
+    const handleNewAccounts = (newAccounts) => updateAccount(newAccounts)
+    // Add logic here to stop the button from flashing before avatar shows
     if (MetaMaskOnboarding.isMetaMaskInstalled()) {
       window.ethereum
         .request({ method: 'eth_requestAccounts' })
@@ -50,13 +53,13 @@ const MetamaskBtn = ({ className }) => {
     if (MetaMaskOnboarding.isMetaMaskInstalled()) {
       window.ethereum
         .request({ method: 'eth_requestAccounts' })
-        .then((newAccounts) => setAccounts(newAccounts))
+        .then((newAccounts) => updateAccount(newAccounts))
     } else {
       onboarding.current.startOnboarding()
     }
   }
   // Do not display button if connected
-  if (accounts.length > 0) {
+  if (account.length > 0) {
     return null
   }
   return (
@@ -64,6 +67,15 @@ const MetamaskBtn = ({ className }) => {
       {buttonText}
     </Button>
   )
+}
+
+function useUserStore() {
+  const userDispatch = UserContext.useDispatch()
+  const userState = UserContext.useState()
+
+  const updateMetamask = (name) => setMetamask(userDispatch, name)
+  const updateAccount = (name) => setAccount(userDispatch, name)
+  return { userState, updateAccount, updateMetamask }
 }
 
 export default MetamaskBtn
