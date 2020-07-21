@@ -3,10 +3,14 @@ import ReactDOM from 'react-dom'
 import './shared/styles/index.css'
 import Routes from './root-routes'
 import * as serviceWorker from './serviceWorker'
+import { PlanetProvider } from './pages'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Routes />
+    <PlanetProvider>
+      {' '}
+      <Routes />
+    </PlanetProvider>
   </React.StrictMode>,
   document.getElementById('root')
 )
