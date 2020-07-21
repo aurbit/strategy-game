@@ -1,17 +1,8 @@
-import React from 'react'
 import { getRequest } from '../../shared/services/http'
-import logger from 'use-reducer-logger'
-
-const PlanetContext = React.createContext()
-// status to handle status context
-export const PLANET_STATUS = {
-  INIT: 'INIT',
-  IDLE: 'IDLE',
-  GETTING: 'GETTING'
-}
+import contextFactory, { STATUS } from '../../shared/context/factory'
 
 const initialState = {
-  status: PLANET_STATUS.INIT,
+  status: STATUS.INIT,
   name: 'Earth',
   message: {
     planet: null
@@ -27,12 +18,12 @@ const actions = {
 }
 
 // the state reducer switch
-export function planetReducer (state, action) {
+export function reducer (state, action) {
   switch (action.type) {
     case actions.SET_PLANET:
       return {
         ...state,
-        status: PLANET_STATUS.IDLE,
+        status: STATUS.IDLE,
         name: action.payload,
         message: {
           planet: `You are now on planet ${action.payload}!`
@@ -45,41 +36,6 @@ export function planetReducer (state, action) {
     default:
       break
   }
-}
-
-// the reducer context with logging
-export function usePlanetReducer () {
-  const thisReducer =
-    process.env.NODE_ENV === 'development'
-      ? logger(planetReducer)
-      : planetReducer
-  const memoizedReducer = React.useCallback(thisReducer, [])
-  return React.useReducer(memoizedReducer, initialState)
-}
-
-// the context provider
-export function PlanetProvider ({ children }) {
-  const { Provider } = PlanetContext
-  const [state, dispatch] = usePlanetReducer()
-  return <Provider value={{ state, dispatch }}>{children}</Provider>
-}
-
-// the state context
-export function usePlanetState () {
-  const { state } = React.useContext(PlanetContext)
-  if (state === undefined) {
-    throw new Error('usePlanetState must be used in a PlanetProvider')
-  }
-  return state
-}
-
-// state reduction dispatch context
-export function usePlanetDispatch () {
-  const { dispatch } = React.useContext(PlanetContext)
-  if (dispatch === undefined) {
-    throw new Error('usePlanetState must be used in a PlanetProvider')
-  }
-  return dispatch
 }
 
 // changes the planet
@@ -106,3 +62,5 @@ export async function getRequestExample (dispatch) {
     })
   }
 }
+
+export const PlanetContext = contextFactory('Planet', initialState, reducer)
