@@ -7,14 +7,10 @@ import ReactDOM from 'react-dom'
 import Routes from './root-routes'
 
 import * as serviceWorker from './serviceWorker'
-import { PlanetProvider } from './pages'
 
 ReactDOM.render(
   <React.StrictMode>
-    <PlanetProvider>
-      {' '}
-      <Routes />
-    </PlanetProvider>
+    <Routes />
   </React.StrictMode>,
   document.getElementById('root')
 )
