@@ -2,6 +2,7 @@
   "name": "aurbit-monorepo",
   "version": "1.0.0",
   "private": true,
+  "licence": "MIT",
   "scripts": {
     "client:dev": "yarn workspace client start",
     "client:build": "yarn workspace client build --max-old-space-size=12288",
