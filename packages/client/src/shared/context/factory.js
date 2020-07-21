@@ -9,7 +9,7 @@ export const STATUS = {
 
 function contextFactory (name, initialState, reducer) {
   const INITIAL_STATE = { status: STATUS.IDLE, ...initialState }
-  const CONTEXT = React.createContext()
+  const CONTEXT = React.createContext(name)
 
   const useReducer = () => {
     const thisReducer =
