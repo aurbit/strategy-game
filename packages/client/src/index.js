@@ -1,7 +1,11 @@
+import 'bootstrap/dist/css/bootstrap.css'
+import './shared/styles/index.css'
+
 import React from 'react'
 import ReactDOM from 'react-dom'
-import './shared/styles/index.css'
+
 import Routes from './root-routes'
+
 import * as serviceWorker from './serviceWorker'
 import { PlanetProvider } from './pages'
 
