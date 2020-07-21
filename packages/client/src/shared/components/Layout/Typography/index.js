@@ -10,6 +10,16 @@ const Header = ({ children }) => {
   return <h3 className="m-0">{children}</h3>
 }
 
+const Title = ({ children }) => {
+  return <h4 className="m-0">{children}</h4>
+}
+
+const Body = ({ children }) => {
+  return <p className="m-0">{children}</p>
+}
+
 Typography.Header = Header
+Typography.Title = Title
+Typography.Body = Body
 
 export default Typography
