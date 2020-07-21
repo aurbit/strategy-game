@@ -1,13 +1,14 @@
 import MetaMaskOnboarding from '@metamask/onboarding'
 import React from 'react'
 
-const ONBOARD_TEXT = 'Click here to install MetaMask!'
+const ONBOARD_TEXT = 'Install Metamask!'
 const CONNECT_TEXT = 'Connect'
 const CONNECTED_TEXT = 'Connected'
 
-export function OnboardingButton() {
+const MetamaskBtn = () => {
   const [buttonText, setButtonText] = React.useState(ONBOARD_TEXT)
   const [isDisabled, setDisabled] = React.useState(false)
+  // Push accounts into global user state
   const [accounts, setAccounts] = React.useState([])
   const onboarding = React.useRef()
 
@@ -31,9 +32,8 @@ export function OnboardingButton() {
   }, [accounts])
 
   React.useEffect(() => {
-    function handleNewAccounts(newAccounts) {
-      setAccounts(newAccounts)
-    }
+    const handleNewAccounts = newAccounts => setAccounts(newAccounts)
+
     if (MetaMaskOnboarding.isMetaMaskInstalled()) {
       window.ethereum
         .request({ method: 'eth_requestAccounts' })
@@ -61,4 +61,4 @@ export function OnboardingButton() {
   )
 }
 
-export default OnboardingButton
+export default MetamaskBtn
