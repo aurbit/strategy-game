@@ -1,0 +1,8 @@
+.avatarWrapper {
+  height: 50px;
+  width: 50px;
+}
+
+.avatarWrapper:hover {
+  cursor: pointer;
+}

@@ -1,13 +1,10 @@
 import React from 'react'
-import { MetamaskBtn } from 'shared/components'
-import { Button } from 'react-bootstrap'
+import { MainLayout } from 'shared/components/Layout'
 const DummyContainer = () => {
   return (
-    <div>
-      Hello
-      <MetamaskBtn />
-      <Button>Hello</Button>
-    </div>
+    <MainLayout>
+     Hello
+    </MainLayout>
   )
 }
 
