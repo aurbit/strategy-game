@@ -1,11 +1,7 @@
 import React from 'react'
 // import styles from './planet.module.css'
 
-import {
-  usePlanetState,
-  changePlanet,
-  usePlanetDispatch
-} from './planet.contex'
+import { changePlanet, PlanetContext } from './planet.contex'
 
 function PlanetContainer () {
   // useLogic function to abstract messy code below return
@@ -26,8 +22,8 @@ function PlanetContainer () {
 // need into the main function.
 
 function usePlanetLogic () {
-  const planetDispatch = usePlanetDispatch()
-  const planetState = usePlanetState()
+  const planetDispatch = PlanetContext.useDispatch()
+  const planetState = PlanetContext.useState()
 
   const goToPlanet = name => changePlanet(planetDispatch, name)
   return { planetState, goToPlanet }
