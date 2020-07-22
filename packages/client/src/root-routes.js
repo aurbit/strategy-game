@@ -15,6 +15,8 @@ export default () => {
   React.useEffect(() => {
     if (!MetaMaskOnboarding.isMetaMaskInstalled()) {
       dispatchCheckMetamask(false)
+    } else {
+      dispatchCheckMetamask(true)
     }
   }, [])
   // React.useEffect(() => {

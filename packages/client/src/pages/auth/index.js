@@ -1,20 +1,95 @@
 import React from 'react'
-import UserContext, { initUser, setMetamaskStatus } from 'shared/store/user'
-import { Container, Row, Col } from 'react-bootstap'
+import { useHistory } from 'react-router-dom'
+import MetaMaskOnboarding from '@metamask/onboarding'
+import UserContext, { initUser } from 'shared/store/user'
+import { Container, Card, Button } from 'reactstrap'
+import Modal from 'shared/components/Modal'
 
-const LoginContainer = () => {
-  const { isMetamaskInstalled } = useUserContext()
-  return <Container>HJeloo</Container>
+const LoginContainer = (props) => {
+  const history = useHistory()
+  const { isMetamaskInstalled, dispatchInitUser, account } = useUserContext()
+  const onboarding = React.useRef()
+
+  React.useEffect(() => {
+    if (!onboarding.current) {
+      onboarding.current = new MetaMaskOnboarding()
+    }
+  }, [])
+  React.useEffect(() => {
+    if (account && account.length > 0) {
+      // history.push('/map')
+      console.log('REDIRECT')
+    }
+  }, [account])
+
+  React.useEffect(() => {
+    if (MetaMaskOnboarding.isMetaMaskInstalled()) {
+      window.ethereum
+        .request({ method: 'eth_requestAccounts' })
+        .then(handleNewAccounts)
+      window.ethereum.on('accountsChanged', handleNewAccounts)
+      return () => {
+        window.ethereum.off('accountsChanged', handleNewAccounts)
+      }
+    }
+  }, [])
+  return (
+    <Container
+      fluid
+      className="d-flex justify-content-center align-items-center h-100 bg-dark"
+    >
+      <Card className="p-4">
+        <h3 className="text-center">Aurbit</h3>
+        {renderLoginBtn()}
+      </Card>
+      <Modal isOpen={isMetamaskInstalled} title="Unlock Wallet">
+        <Modal.Body>You may need to click extension</Modal.Body>
+      </Modal>
+    </Container>
+  )
+
+  function handleNewAccounts(newAccounts) {
+    console.log('HANDLE NEW ACCOUNTS', newAccounts)
+    dispatchInitUser({
+      account: newAccounts,
+      networkType: null
+    })
+  }
+
+  function renderLoginBtn() {
+    if (!isMetamaskInstalled) {
+      return <Button onClick={handleOnClick}>Install Metamask!</Button>
+    } else {
+      return <Button onClick={handleOnClick}>Connect Metamask!</Button>
+    }
+  }
+
+  function handleOnClick() {
+    if (!isMetamaskInstalled) {
+      onboarding.current.startOnboarding()
+    } else {
+      window.ethereum
+        .request({ method: 'eth_requestAccounts' })
+        .then((newAccounts) => {
+          console.log('WHAT IS THIS: ', newAccounts)
+          dispatchInitUser({
+            account: newAccounts[0],
+            networkType: null
+          })
+        })
+    }
+  }
 }
 
 const useUserContext = () => {
   const dispatch = UserContext.useDispatch()
   const { account, isMetamaskInstalled } = UserContext.useState()
 
-  // const dispatchInitUser = (name) => initUser(dispatch, name)
-  // const dispatchCheckMetamask = (status) => setMetamaskStatus(dispatch, status)
+  const dispatchInitUser = (data) => initUser(dispatch, data)
   return {
-    isMetamaskInstalled
+    dispatchInitUser,
+    isMetamaskInstalled,
+    account
   }
 }
 
