@@ -10,22 +10,19 @@ const DummyContainer = () => {
   const [PlayerContract] = React.useState(Contract(ABI, ADDRESS))
 
   React.useEffect(() => {
-    const event = PlayerContract.NewPlayer(function (error, result) {
+    // NewPlayer is name of Solidity Function - It is an event - To trigger once transaction complete
+    PlayerContract.NewPlayer(function (error, result) {
       if (error) {
         console.log('ERROR', error)
         return
       }
       console.log('RESULT: ', result)
       const { playerId, name, dna } = result.args
-      generatePlayer(playerId, name, dna)
+      console.log('WE HAVE DATA: ', playerId)
+      console.log('NAME: ', name)
+      console.log('DNA: ', dna)
     })
   }, [])
-
-  function generatePlayer(id, name, dna) {
-    console.log('WE HAVE DATA: ', id)
-    console.log('NAME: ', name)
-    console.log('DNA: ', dna)
-  }
 
   function handleOnChange(e) {
     setPlayerName(e.target.value)
@@ -33,6 +30,8 @@ const DummyContainer = () => {
 
   function handleOnSubmit(e) {
     e.preventDefault()
+    // CreateRandomPLayer is a solidity function - It just takes player name
+    // On success SOlidity will triger NewPlayer Event - (Basically a Callback for FE)
     PlayerContract.createRandomPlayer(playerName, () => console.log('ok'))
   }
   return (
