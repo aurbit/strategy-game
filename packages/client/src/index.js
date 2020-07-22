@@ -3,10 +3,15 @@ import ReactDOM from 'react-dom'
 import './shared/styles/index.css'
 import Routes from './root-routes'
 import * as serviceWorker from './serviceWorker'
+import UserContext from 'shared/store/user'
+
+import 'shared/utils/web3-listeners'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Routes />
+    <UserContext.Provider>
+      <Routes />
+    </UserContext.Provider>
   </React.StrictMode>,
   document.getElementById('root')
 )
