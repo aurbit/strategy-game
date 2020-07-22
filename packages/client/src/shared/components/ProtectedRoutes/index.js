@@ -3,11 +3,11 @@ import { Route, Redirect } from 'react-router-dom'
 
 // Simple Route Protection
 
-const ProtectedRoutes = ({ component: Component, account, ...rest }) => {
+const ProtectedRoutes = ({ component: Component, account, isMetamaskInstalled, ...rest }) => {
   return (
     <Route
       render={(props) => {
-        if (account === null) {
+        if (account === null || !isMetamaskInstalled) {
           return (
             <Redirect
               to={{
