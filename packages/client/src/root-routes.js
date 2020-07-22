@@ -9,20 +9,26 @@ export default () => {
   const { dispatchInitUser, account } = useUserContext()
 
   React.useEffect(() => {
-    const web3 = new Web3(Web3.givenProvider || 'http://localhost:7545')
-    web3.eth
-      .getAccounts()
-      .then((accounts) => {
-        web3.eth.net.getNetworkType().then(network => {
-          dispatchInitUser({
-            account: accounts[0],
-            networkType: network
+    try {
+      const web3 = new Web3(Web3.givenProvider || 'http://localhost:7545')
+
+      web3.eth
+        .getAccounts()
+        .then((accounts) => {
+          web3.eth.net.getNetworkType().then((network) => {
+            dispatchInitUser({
+              account: accounts[0],
+              networkType: network
+            })
           })
         })
-      })
-      .catch((err) => {
-        console.log('HMM: ', err)
-      })
+        .catch((err) => {
+          console.log('HMM: ', err)
+          web3.eth.net.isListening().then((x) => console.log('LIOST: ', x))
+        })
+    } catch (err) {
+      console.log('ERRO: ', err)
+    }
   }, [])
 
   return (
