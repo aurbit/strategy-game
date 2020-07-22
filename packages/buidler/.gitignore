@@ -1,9 +1,8 @@
 **/aws.json
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-artifacts
-react-app/src/contracts
-cache
+/artifacts
+/cache
 
 # dependencies
 .pnp
