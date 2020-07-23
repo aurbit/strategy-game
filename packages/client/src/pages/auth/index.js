@@ -4,43 +4,62 @@ import MetaMaskOnboarding from '@metamask/onboarding'
 import UserContext, { initUser } from 'shared/store/user'
 import { Container, Card, Button } from 'reactstrap'
 import Modal from 'shared/components/Modal'
+import Toast from 'shared/components/Toast'
+
+const ONBOARD_TEXT = 'Click here to install MetaMask!'
+const CONNECT_TEXT = 'Connect'
+const CONNECTED_TEXT = 'Connected'
 
 const LoginContainer = (props) => {
   const history = useHistory()
-  const { isMetamaskInstalled, dispatchInitUser, account } = useUserContext()
+  const [buttonText, setButtonText] = React.useState(ONBOARD_TEXT)
+  const [isDisabled, setDisabled] = React.useState(false)
+  const [isOpen, setIsOpen] = React.useState(false)
   const onboarding = React.useRef()
+  const { dispatchInitUser, accounts } = useUserContext()
 
   React.useEffect(() => {
-    // window.ethereum
-    //     .request({ method: 'eth_requestAccounts' })
-    //     .then((newAccounts) => {
-
-    //       console.log('WHAT IS THIS: ', newAccounts)
-
-    //     })
     if (!onboarding.current) {
       onboarding.current = new MetaMaskOnboarding()
     }
-  }, [])
-  React.useEffect(() => {
-    if (account && account.length > 0) {
-      // history.push('/map')
-      console.log('REDIRECT')
+    if (MetaMaskOnboarding.isMetaMaskInstalled() && !accounts) {
+      setButtonText(CONNECT_TEXT)
     }
-  }, [account])
+  }, [])
 
   React.useEffect(() => {
     if (MetaMaskOnboarding.isMetaMaskInstalled()) {
-      window.ethereum.on('accountsChanged', handleNewAccounts)
-      window.ethereum
-        .request({ method: 'eth_requestAccounts' })
-        .then(handleNewAccounts)
-
-      return () => {
-        window.ethereum.off('accountsChanged', handleNewAccounts)
-      }
+      window.ethereum.request({ method: 'eth_requestAccounts' }).then((x) => {
+        dispatchInitUser({
+          account: x,
+          networkType: null
+        })
+        history.push('/map')
+      })
     }
   }, [])
+
+  const onClick = () => {
+    if (MetaMaskOnboarding.isMetaMaskInstalled()) {
+      window.ethereum
+        .request({ method: 'eth_requestAccounts' })
+        .then((newAccounts) => {
+          dispatchInitUser({
+            account: newAccounts,
+            networkType: null
+          })
+          history.push('/map')
+        })
+        .catch((err) => {
+          setIsOpen(true)
+          console.log('ERROR : ', err)
+        })
+    } else {
+      console.log('START ON BOARDFING')
+      onboarding.current.startOnboarding()
+      setIsOpen(true)
+    }
+  }
   return (
     <Container
       fluid
@@ -48,47 +67,20 @@ const LoginContainer = (props) => {
     >
       <Card className="p-4">
         <h3 className="text-center">Aurbit</h3>
-        {renderLoginBtn()}
+        <Button disabled={isDisabled} onClick={onClick}>
+          {buttonText}
+        </Button>
       </Card>
-      <Modal isOpen={false} title="Unlock Wallet">
+      {/* <Modal isOpen={isOpen} title="Unlock Wallet">
         <Modal.Body>You may need to click extension</Modal.Body>
-      </Modal>
+      </Modal> */}
+      <Toast
+        isOpen={isOpen}
+        title="Ooops!"
+        text="You may need to open the extension in the browser"
+      />
     </Container>
   )
-
-  function handleNewAccounts(newAccounts) {
-    console.log('HANDLE NEW ACCOUNTS', newAccounts)
-    dispatchInitUser({
-      account: newAccounts,
-      networkType: null
-    })
-  }
-
-  function renderLoginBtn() {
-    if (!isMetamaskInstalled) {
-      return <Button onClick={handleOnClick}>Install Metamask!</Button>
-    } else {
-      return <Button onClick={handleOnClick}>Connect Metamask!</Button>
-    }
-  }
-
-  function handleOnClick() {
-    if (!isMetamaskInstalled) {
-      onboarding.current.startOnboarding()
-    } else {
-      // window.ethereum
-      //   .request({ method: 'eth_requestAccounts' })
-      //   .then((newAccounts) => {
-      //     localStorage.set("TEST", "weee")
-      //     console.log('WHAT IS THIS: ', newAccounts)
-      //     dispatchInitUser({
-      //       account: newAccounts[0],
-      //       networkType: null
-      //     })
-      //   })
-      console.log('BLAAAH')
-    }
-  }
 }
 
 const useUserContext = () => {

@@ -3,11 +3,18 @@ import { Route, Redirect } from 'react-router-dom'
 
 // Simple Route Protection
 
-const ProtectedRoutes = ({ component: Component, account, isMetamaskInstalled, ...rest }) => {
+const ProtectedRoutes = ({
+  component: Component,
+  accounts,
+  isMetamaskInstalled,
+  ...rest
+}) => {
   return (
     <Route
       render={(props) => {
-        if (account === null || !isMetamaskInstalled) {
+        console.log('PROTECTED ROUTE ACCOUNT: ', accounts)
+        console.log('PROTECTED ROUTE IS META INSTALLED: ', isMetamaskInstalled)
+        if (accounts === null || accounts.length < 0 || !isMetamaskInstalled) {
           return (
             <Redirect
               to={{

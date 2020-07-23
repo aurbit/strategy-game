@@ -12,13 +12,13 @@ export default () => {
     account,
     isMetamaskInstalled
   } = useUserContext()
-  React.useEffect(() => {
-    if (!MetaMaskOnboarding.isMetaMaskInstalled()) {
-      dispatchCheckMetamask(false)
-    } else {
-      dispatchCheckMetamask(true)
-    }
-  }, [])
+  // React.useEffect(() => {
+  //   if (!MetaMaskOnboarding.isMetaMaskInstalled()) {
+  //     dispatchCheckMetamask(false)
+  //   } else {
+  //     dispatchCheckMetamask(true)
+  //   }
+  // }, [])
   // React.useEffect(() => {
   //   try {
   //     const web3 = new Web3(Web3.givenProvider || 'http://localhost:7545')
@@ -41,7 +41,7 @@ export default () => {
   //     console.log('ERRO: ', err)
   //   }
   // }, [])
-
+  console.log('ACCOUNT: ', account)
   return (
     <Router>
       <Switch>
@@ -49,7 +49,7 @@ export default () => {
           <Auth />
         </Route>
         <ProtectedRoutes
-          isMetaMaskInstalled={isMetamaskInstalled}
+          isMetamaskInstalled={MetaMaskOnboarding.isMetaMaskInstalled()}
           accounts={account}
           component={AuthenticatedRoutes}
         />
