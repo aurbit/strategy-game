@@ -11,6 +11,13 @@ const LoginContainer = (props) => {
   const onboarding = React.useRef()
 
   React.useEffect(() => {
+    // window.ethereum
+    //     .request({ method: 'eth_requestAccounts' })
+    //     .then((newAccounts) => {
+
+    //       console.log('WHAT IS THIS: ', newAccounts)
+
+    //     })
     if (!onboarding.current) {
       onboarding.current = new MetaMaskOnboarding()
     }
@@ -24,10 +31,11 @@ const LoginContainer = (props) => {
 
   React.useEffect(() => {
     if (MetaMaskOnboarding.isMetaMaskInstalled()) {
+      window.ethereum.on('accountsChanged', handleNewAccounts)
       window.ethereum
         .request({ method: 'eth_requestAccounts' })
         .then(handleNewAccounts)
-      window.ethereum.on('accountsChanged', handleNewAccounts)
+
       return () => {
         window.ethereum.off('accountsChanged', handleNewAccounts)
       }
@@ -42,7 +50,7 @@ const LoginContainer = (props) => {
         <h3 className="text-center">Aurbit</h3>
         {renderLoginBtn()}
       </Card>
-      <Modal isOpen={isMetamaskInstalled} title="Unlock Wallet">
+      <Modal isOpen={false} title="Unlock Wallet">
         <Modal.Body>You may need to click extension</Modal.Body>
       </Modal>
     </Container>
@@ -68,15 +76,17 @@ const LoginContainer = (props) => {
     if (!isMetamaskInstalled) {
       onboarding.current.startOnboarding()
     } else {
-      window.ethereum
-        .request({ method: 'eth_requestAccounts' })
-        .then((newAccounts) => {
-          console.log('WHAT IS THIS: ', newAccounts)
-          dispatchInitUser({
-            account: newAccounts[0],
-            networkType: null
-          })
-        })
+      // window.ethereum
+      //   .request({ method: 'eth_requestAccounts' })
+      //   .then((newAccounts) => {
+      //     localStorage.set("TEST", "weee")
+      //     console.log('WHAT IS THIS: ', newAccounts)
+      //     dispatchInitUser({
+      //       account: newAccounts[0],
+      //       networkType: null
+      //     })
+      //   })
+      console.log('BLAAAH')
     }
   }
 }
