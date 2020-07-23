@@ -3,13 +3,14 @@ pragma solidity ^0.6.2;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-contract Aurbit721 is ERC721 {
+contract AvatarAUR is ERC721 {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
     address payable owner;
+    uint256 public mintingFee = 10**16;
 
-    uint256 dnasize = 16;
-    uint256 dnamod = 10**dnasize;
+    //uint dnasize = 16;
+    //uint dnamod = 10 ** dnasize;
 
     struct Avatar {
         string name;
@@ -19,6 +20,9 @@ contract Aurbit721 is ERC721 {
     Avatar[] public avatars;
     mapping(uint256 => uint256) public TokenIDtoAvID;
 
+    event NewAvatar(uint256 tid, string message);
+    event FeeChanged(uint256 fee, string message);
+
     constructor() public ERC721("Aurbit Avatar", "AURA") {
         owner = msg.sender; //set owner addres as sender on deploy
     }
@@ -27,14 +31,31 @@ contract Aurbit721 is ERC721 {
         owner.transfer(address(this).balance);
     }
 
-    function mintAvatar(string memory name) public payable returns (uint256) {
-        require(msg.value == 10**16, "INSUFFICIENT VALUE");
-        forward(); //enforce fee of 0.01 and forward to owner. bad way?
+    function changeMintingFee(uint256 _mintingFee) public returns (bool) {
+        require(msg.sender == owner, "UNAUTHORIZED");
+        mintingFee = _mintingFee;
+        emit FeeChanged(
+            _mintingFee,
+            "The fee to mint and Aurbit Avatar has changed"
+        );
+    }
+
+    function mintAvatar(string memory name, uint256 _userDNA)
+        public
+        payable
+        returns (uint256)
+    {
+        // user must pay the fee to mint the avatar
+        require(msg.value >= mintingFee, "INSUFFICIENT ETH SENT");
+
+        // TODO
+        // forward the fee to a governance contract
+        forward();
         _tokenIds.increment();
         uint256 newItemId = _tokenIds.current();
         _mint(msg.sender, newItemId);
         //uint dna =
-        _birthAvatar(name, newItemId);
+        _birthAvatar(name, newItemId, _userDNA);
         _setTokenURI(
             newItemId,
             string(
@@ -49,6 +70,10 @@ contract Aurbit721 is ERC721 {
                 )
             )
         );
+
+        // new avatar event
+        emit NewAvatar(newItemId, "A new avatar was born to the Universe!");
+
         //sample description and sample image uri should be replaced with variables, didnt bother declaring them yet
         return newItemId;
     }
@@ -62,15 +87,38 @@ contract Aurbit721 is ERC721 {
         return avatars.length - 1;
     }
 
-    function _mkDNA(string memory _name) private view returns (uint256) {
-        uint256 hash = uint256(
+    function _mkDNA(string memory _name, uint256 _userDNA)
+        private
+        view
+        returns (uint256)
+    {
+        uint256 prand = uint256(
             keccak256(abi.encodePacked(_name, blockhash(block.number)))
         );
-        return hash % dnamod;
+        uint256 intel = (prand % 50) + 50;
+        uint256 vital = ((prand >> 8) % 50) + 50;
+        uint256 strength = ((prand >> 16) % 50) + 50;
+        uint256 out = setbyte(_userDNA, 15, intel);
+        out = setbyte(out, 16, vital);
+        out = setbyte(out, 17, strength);
+        return out;
     }
 
-    function _birthAvatar(string memory _name, uint256 _id) private {
-        uint256 dna = _mkDNA(_name);
+    function setbyte(
+        uint256 _indat,
+        uint16 k,
+        uint256 _setdat
+    ) public pure returns (uint256) {
+        //set kth byte from the right in _indat to _setdat
+        return (_setdat << (8 * k)) + _indat;
+    }
+
+    function _birthAvatar(
+        string memory _name,
+        uint256 _id,
+        uint256 _userDNA
+    ) private {
+        uint256 dna = _mkDNA(_name, _userDNA);
         uint256 aid = storeAvatar(_name, dna);
         TokenIDtoAvID[_id] = aid;
         //return dna; could return DNA to put in description, but parsing numbers to string is a little dumb i think
@@ -78,7 +126,7 @@ contract Aurbit721 is ERC721 {
 
     function getDNA(uint256 tid) public view returns (uint256) {
         //gets DNA from token ID. not sure the exact proper error handling for this.
-        require(tid <= avatars.length, "INVALID TOKEN ID");
+        require(tid <= avatars.length, "INVALID ID");
         return avatars[TokenIDtoAvID[tid]].dna;
     }
 }

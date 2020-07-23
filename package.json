@@ -8,13 +8,9 @@
     "client:build": "yarn workspace client build --max-old-space-size=12288",
     "client:eject": "yarn workspace client eject",
     "client:test": "yarn workspace client test",
-    "eth:chain": "cd packages/buidler && npx buidler node",
-    "eth:console": "cd packages/buidler && npx buidler console",
-    "eth:buidler": "cd packages/buidler && npx buidler",
-    "eth:test": "cd packages/buidler && npx buidler test",
-    "eth:compile": "cd packages/buidler && npx buidler compile",
-    "eth:deploy": "cd packages/buidler && npx buidler run scripts/deploy.js && npx buidler run scripts/publish.js",
-    "eth:watch": "cd packages/buidler && node scripts/watch.js"
+    "truffle:test": "cd packages/truffle && truffle test",
+    "truffle:compile": "cd packages/truffle && truffle compile",
+    "truffle:deploy": "cd packages/truffle && truffle deploy"
   },
   "devDependencies": {
     "@nomiclabs/buidler": "1.3.3-rc.0",
@@ -23,5 +19,8 @@
   },
   "workspaces": {
     "packages": ["packages/*"]
+  },
+  "resolutions": {
+    "**/**/fsevents": "^1.2.9"
   }
 }
