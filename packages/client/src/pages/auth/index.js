@@ -2,18 +2,16 @@ import React from 'react'
 import { useHistory } from 'react-router-dom'
 import MetaMaskOnboarding from '@metamask/onboarding'
 import UserContext, { initUser } from 'shared/store/user'
-import { Container, Card, Button } from 'reactstrap'
-import Modal from 'shared/components/Modal'
+import { Container, Card, Button } from 'react-bootstrap'
 import Toast from 'shared/components/Toast'
 
 const ONBOARD_TEXT = 'Click here to install MetaMask!'
 const CONNECT_TEXT = 'Connect'
-const CONNECTED_TEXT = 'Connected'
+// const CONNECTED_TEXT = 'Connected'
 
 const LoginContainer = (props) => {
   const history = useHistory()
   const [buttonText, setButtonText] = React.useState(ONBOARD_TEXT)
-  const [isDisabled, setDisabled] = React.useState(false)
   const [isOpen, setIsOpen] = React.useState(false)
   const onboarding = React.useRef()
   const { dispatchInitUser, accounts } = useUserContext()
@@ -67,7 +65,7 @@ const LoginContainer = (props) => {
     >
       <Card className="p-4">
         <h3 className="text-center">Aurbit</h3>
-        <Button disabled={isDisabled} onClick={onClick}>
+        <Button variant="secondary" onClick={onClick}>
           {buttonText}
         </Button>
       </Card>

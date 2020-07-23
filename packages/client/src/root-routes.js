@@ -2,16 +2,19 @@ import React from 'react'
 import MetaMaskOnboarding from '@metamask/onboarding'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import ProtectedRoutes from 'shared/components/ProtectedRoutes'
-import UserContext, { initUser, setMetamaskStatus } from 'shared/store/user'
+import Web3Context, { initWeb3 } from 'shared/store/web3'
 import { Map, Planet, Auth } from './pages'
-import Web3 from 'web3'
 
 export default () => {
-  const {
-    dispatchCheckMetamask,
-    account,
-    isMetamaskInstalled
-  } = useUserContext()
+  const { dispatchInitWeb3, web3 } = useWeb3()
+  React.useEffect(() => {
+    // Init Web3 Context
+    console.log('INIT WEB3')
+    dispatchInitWeb3()
+  }, [])
+  if (!web3) {
+    return null
+  }
   // React.useEffect(() => {
   //   if (!MetaMaskOnboarding.isMetaMaskInstalled()) {
   //     dispatchCheckMetamask(false)
@@ -19,29 +22,8 @@ export default () => {
   //     dispatchCheckMetamask(true)
   //   }
   // }, [])
-  // React.useEffect(() => {
-  //   try {
-  //     const web3 = new Web3(Web3.givenProvider || 'http://localhost:7545')
 
-  //     web3.eth
-  //       .getAccounts()
-  //       .then((accounts) => {
-  //         web3.eth.net.getNetworkType().then((network) => {
-  //           dispatchInitUser({
-  //             account: accounts[0],
-  //             networkType: network
-  //           })
-  //         })
-  //       })
-  //       .catch((err) => {
-  //         console.log('HMM: ', err)
-  //         web3.eth.net.isListening().then((x) => console.log('LIOST: ', x))
-  //       })
-  //   } catch (err) {
-  //     console.log('ERRO: ', err)
-  //   }
-  // }, [])
-  console.log('ACCOUNT: ', account)
+  console.log('HMM', web3.currentProvider)
   return (
     <Router>
       <Switch>
@@ -50,7 +32,7 @@ export default () => {
         </Route>
         <ProtectedRoutes
           isMetamaskInstalled={MetaMaskOnboarding.isMetaMaskInstalled()}
-          accounts={account}
+          accounts={[]}
           component={AuthenticatedRoutes}
         />
       </Switch>
@@ -71,16 +53,13 @@ const AuthenticatedRoutes = () => {
   )
 }
 
-const useUserContext = () => {
-  const dispatch = UserContext.useDispatch()
-  const { account, isMetamaskInstalled } = UserContext.useState()
+const useWeb3 = () => {
+  const dispatch = Web3Context.useDispatch()
+  const { web3 } = Web3Context.useState()
 
-  const dispatchInitUser = (name) => initUser(dispatch, name)
-  const dispatchCheckMetamask = (status) => setMetamaskStatus(dispatch, status)
+  const dispatchInitWeb3 = (name) => initWeb3(dispatch, name)
   return {
-    dispatchInitUser,
-    dispatchCheckMetamask,
-    account,
-    isMetamaskInstalled
+    web3,
+    dispatchInitWeb3
   }
 }

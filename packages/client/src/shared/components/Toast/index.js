@@ -1,11 +1,11 @@
 import React from 'react'
-import { Toast, ToastBody, ToastHeader } from 'reactstrap'
+import { Toast } from 'react-bootstrap'
 
 const ToastComponent = ({ isOpen, title, text }) => {
   return (
-    <Toast isOpen={isOpen} style={{ position: 'absolute', bottom: 30 }}>
-      {title && <ToastHeader>{title}</ToastHeader>}
-      <ToastBody>{text}</ToastBody>
+    <Toast show={isOpen} style={{ position: 'absolute', bottom: 30 }}>
+      {title && <Toast.Header>{title}</Toast.Header>}
+      <Toast.Body>{text}</Toast.Body>
     </Toast>
   )
 }
