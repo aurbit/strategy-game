@@ -40,6 +40,8 @@ plannet.address
 
 ## Testing
 
+You must have a ganache-cli or the ganache gui running on port 8545.
+
 The tests are in the `test` folder.
 
 ```

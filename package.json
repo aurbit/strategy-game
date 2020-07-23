@@ -8,7 +8,6 @@
     "client:build": "yarn workspace client build --max-old-space-size=12288",
     "client:eject": "yarn workspace client eject",
     "client:test": "yarn workspace client test",
-    "truffle:test": "cd packages/truffle && truffle test",
     "truffle:compile": "cd packages/truffle && truffle compile",
     "truffle:deploy": "cd packages/truffle && truffle deploy"
   },
