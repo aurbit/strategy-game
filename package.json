@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "licence": "MIT",
+  "engine": {
+    "node": "10.22, 11.15"
+  },
   "scripts": {
     "client:dev": "yarn workspace client start",
     "client:build": "yarn workspace client build --max-old-space-size=12288",
@@ -11,15 +14,7 @@
     "truffle:compile": "cd packages/truffle && truffle compile",
     "truffle:deploy": "cd packages/truffle && truffle deploy"
   },
-  "devDependencies": {
-    "@nomiclabs/buidler": "1.3.3-rc.0",
-    "@nomiclabs/buidler-truffle5": "1.3.3-rc.0",
-    "@nomiclabs/buidler-web3": "1.3.3-rc.0"
-  },
   "workspaces": {
     "packages": ["packages/*"]
-  },
-  "resolutions": {
-    "**/**/fsevents": "^1.2.9"
   }
 }

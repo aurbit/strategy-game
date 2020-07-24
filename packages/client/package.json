@@ -19,11 +19,7 @@
     "lint:fix": "prettier-standard --format"
   },
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
+    "production": [">0.2%", "not dead", "not op_mini all"],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
@@ -41,10 +37,7 @@
     "use-reducer-logger": "^1.0.2"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx}": [
-      "yarn lint",
-      "git add"
-    ]
+    "src/**/*.{js,jsx}": ["yarn lint", "git add"]
   },
   "husky": {
     "hooks": {
