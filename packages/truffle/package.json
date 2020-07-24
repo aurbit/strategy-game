@@ -7,7 +7,13 @@
   "devDependencies": {
     "@openzeppelin/test-helpers": "^0.5.6",
     "@openzeppelin/contracts": "^3.1.0",
+<<<<<<< HEAD
     "web3": "^1.2.11",
     "chai": "^4.2.0"
+=======
+    "ganache-cli": "^6.9.1",
+    "truffle": "^5.1.35",
+    "web3": "^1.2.11"
+>>>>>>> origin/feature/login-onboarding
   }
 }
