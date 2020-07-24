@@ -14,7 +14,7 @@ const ProtectedRoutes = ({
       render={(props) => {
         console.log('PROTECTED ROUTE ACCOUNT: ', accounts)
         console.log('PROTECTED ROUTE IS META INSTALLED: ', isMetamaskInstalled)
-        if (accounts === null || accounts.length < 0 || !isMetamaskInstalled) {
+        if (accounts === null || accounts.length === 0 || !isMetamaskInstalled) {
           return (
             <Redirect
               to={{

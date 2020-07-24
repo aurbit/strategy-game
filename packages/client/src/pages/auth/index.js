@@ -1,61 +1,84 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import MetaMaskOnboarding from '@metamask/onboarding'
-import UserContext, { initUser } from 'shared/store/user'
+import Web3Context, { updateAccount } from 'shared/store/web3'
 import { Container, Card, Button } from 'react-bootstrap'
 import Toast from 'shared/components/Toast'
 
 const ONBOARD_TEXT = 'Click here to install MetaMask!'
-const CONNECT_TEXT = 'Connect'
-// const CONNECTED_TEXT = 'Connected'
+const CONNECT_TEXT = 'Connect Wallet to Aurbit!'
+const CONNECTED_TEXT = 'Wallet already connected!'
 
 const LoginContainer = (props) => {
   const history = useHistory()
   const [buttonText, setButtonText] = React.useState(ONBOARD_TEXT)
-  const [isOpen, setIsOpen] = React.useState(false)
+  const [disabled, setDisabled] = React.useState(ONBOARD_TEXT)
   const onboarding = React.useRef()
-  const { dispatchInitUser, accounts } = useUserContext()
+  const { dispatchUpdateAcct, account } = useWeb3()
+  const isMetamaskInstalled = MetaMaskOnboarding.isMetaMaskInstalled()
 
   React.useEffect(() => {
     if (!onboarding.current) {
       onboarding.current = new MetaMaskOnboarding()
     }
-    if (MetaMaskOnboarding.isMetaMaskInstalled() && !accounts) {
-      setButtonText(CONNECT_TEXT)
-    }
   }, [])
 
   React.useEffect(() => {
-    if (MetaMaskOnboarding.isMetaMaskInstalled()) {
-      window.ethereum.request({ method: 'eth_requestAccounts' }).then((x) => {
-        dispatchInitUser({
-          account: x,
-          networkType: null
+    if (account.length !== 0) {
+      setButtonText(CONNECTED_TEXT)
+      setDisabled(true)
+    }
+  }, [account])
+
+  // function handleNewAccounts(accounts) {
+  //   if (accounts.length > 0) {
+  //     onboarding.current.stopOnboarding()
+  //     history.push('/map')
+  //   }
+  // }
+
+  // React.useEffect(() => {
+  //   window.ethereum && window.ethereum.on('accountsChanged', handleNewAccounts)
+  //   return () => {
+  //     window.ethereum &&
+  //       window.ethereum.off('accountsChanged', handleNewAccounts)
+  //   }
+  // }, [])
+
+  React.useEffect(() => {
+    if (isMetamaskInstalled) {
+      setButtonText(CONNECT_TEXT)
+    }
+  }, [isMetamaskInstalled])
+
+  React.useEffect(() => {
+    if (isMetamaskInstalled) {
+      window.ethereum
+        .request({ method: 'eth_requestAccounts' })
+        .then((accounts) => {
+          // This triggers if there is no pending request on Metamask on page load
+          // The call back will have the users account
+          dispatchUpdateAcct(accounts)
         })
-        history.push('/map')
-      })
+        .catch(() => {
+          // Error when refreshing multiple times
+        })
     }
   }, [])
 
   const onClick = () => {
-    if (MetaMaskOnboarding.isMetaMaskInstalled()) {
+    if (isMetamaskInstalled) {
+      // This triggers - If there are no pending requests and user clicks connect
       window.ethereum
         .request({ method: 'eth_requestAccounts' })
-        .then((newAccounts) => {
-          dispatchInitUser({
-            account: newAccounts,
-            networkType: null
-          })
-          history.push('/map')
+        .then((accounts) => {
+          dispatchUpdateAcct(accounts)
         })
-        .catch((err) => {
-          setIsOpen(true)
-          console.log('ERROR : ', err)
+        .catch(() => {
+          // Error when clicking multiple times
         })
     } else {
-      console.log('START ON BOARDFING')
       onboarding.current.startOnboarding()
-      setIsOpen(true)
     }
   }
   return (
@@ -65,15 +88,12 @@ const LoginContainer = (props) => {
     >
       <Card className="p-4">
         <h3 className="text-center">Aurbit</h3>
-        <Button variant="secondary" onClick={onClick}>
+        <Button disabled={disabled} variant="secondary" onClick={onClick}>
           {buttonText}
         </Button>
       </Card>
-      {/* <Modal isOpen={isOpen} title="Unlock Wallet">
-        <Modal.Body>You may need to click extension</Modal.Body>
-      </Modal> */}
       <Toast
-        isOpen={isOpen}
+        isOpen={isMetamaskInstalled && account.length === 0}
         title="Ooops!"
         text="You may need to open the extension in the browser"
       />
@@ -81,15 +101,13 @@ const LoginContainer = (props) => {
   )
 }
 
-const useUserContext = () => {
-  const dispatch = UserContext.useDispatch()
-  const { account, isMetamaskInstalled } = UserContext.useState()
-
-  const dispatchInitUser = (data) => initUser(dispatch, data)
+const useWeb3 = () => {
+  const dispatch = Web3Context.useDispatch()
+  const { account } = Web3Context.useState()
+  const dispatchUpdateAcct = (data) => updateAccount(dispatch, data)
   return {
-    dispatchInitUser,
-    isMetamaskInstalled,
-    account
+    account,
+    dispatchUpdateAcct
   }
 }
 

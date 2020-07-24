@@ -7,7 +7,7 @@ import * as serviceWorker from './serviceWorker'
 import UserContext from 'shared/store/user'
 import Web3Context from 'shared/store/web3'
 
-import 'shared/utils/web3-listeners'
+// import 'shared/utils/web3-listeners'
 
 // String mode kept on bringing warnins about findDom ref with UI Lib
 ReactDOM.render(
