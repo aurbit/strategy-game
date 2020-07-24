@@ -12,7 +12,7 @@ const CONNECTED_TEXT = 'Wallet already connected!'
 const LoginContainer = (props) => {
   const history = useHistory()
   const [buttonText, setButtonText] = React.useState(ONBOARD_TEXT)
-  const [disabled, setDisabled] = React.useState(ONBOARD_TEXT)
+  const [disabled, setDisabled] = React.useState(false)
   const onboarding = React.useRef()
   const { dispatchUpdateAcct, account } = useWeb3()
   const isMetamaskInstalled = MetaMaskOnboarding.isMetaMaskInstalled()
@@ -21,10 +21,13 @@ const LoginContainer = (props) => {
     if (!onboarding.current) {
       onboarding.current = new MetaMaskOnboarding()
     }
+    if (!isMetamaskInstalled) {
+      setButtonText(ONBOARD_TEXT)
+    }
   }, [])
 
   React.useEffect(() => {
-    if (account.length !== 0) {
+    if (account.length !== 0 && isMetamaskInstalled) {
       setButtonText(CONNECTED_TEXT)
       setDisabled(true)
     }
@@ -59,8 +62,10 @@ const LoginContainer = (props) => {
           // This triggers if there is no pending request on Metamask on page load
           // The call back will have the users account
           dispatchUpdateAcct(accounts)
+          history.push('/map')
         })
         .catch(() => {
+          setDisabled(true)
           // Error when refreshing multiple times
         })
     }
@@ -73,8 +78,10 @@ const LoginContainer = (props) => {
         .request({ method: 'eth_requestAccounts' })
         .then((accounts) => {
           dispatchUpdateAcct(accounts)
+          history.push('/map')
         })
         .catch(() => {
+          setDisabled(true)
           // Error when clicking multiple times
         })
     } else {

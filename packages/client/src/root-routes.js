@@ -25,6 +25,20 @@ export default () => {
     initWeb()
   }, [])
 
+  // React.useEffect(() => {
+  //   setInterval(async function () {
+  //     if (web3) {
+  //       const newAccount = await web3.eth.getAccounts()
+  //       const previousAccount = account
+  //       console.log("NEW:l ", newAccount)
+  //       console.log('prev', previousAccount)
+  //       if (newAccount.length !== previousAccount.length) {
+  //         dispatchUpdateAccount(newAccount)
+  //       }
+  //     }
+  //   }, 1500)
+  // }, [web3])
+
   React.useEffect(() => {
     // Attach listeners if meta mask is installed - THis may be subject to change
     // Metamask will stop injecting in future
