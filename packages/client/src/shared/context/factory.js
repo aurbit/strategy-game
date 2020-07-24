@@ -1,5 +1,5 @@
 import React from 'react'
-import logger from 'use-reducer-logger'
+import logger from './logger'
 
 export const STATUS = {
   INIT: 'INIT',
