@@ -1,11 +1,11 @@
 import React from 'react'
+import SVG from 'react-inlinesvg' // We can maybe replace this with a native fetch and inner HTML - This lib does same
 import { Container, Row, Col } from 'react-bootstrap'
-import CreateCharForm from './Form'
-// import { ReactSVG } from 'react-svg'
-// We can maybe replace this with a native fetch and inner HTML - This lib does same
-import SVG from 'react-inlinesvg'
-import './test.css'
 import { hairOptions, skinOptions, avatarImage } from './avatar-utils'
+
+import logo from 'shared/images/logo.png'
+import CreateCharForm from './Form'
+
 const CreateCharacterContainer = () => {
   const [hairColor, setHairColor] = React.useState('#1b1464')
   const [skinColor, setSkinColor] = React.useState('#ffe0c9')
@@ -34,10 +34,16 @@ const CreateCharacterContainer = () => {
     setAvatarUrl(avatarUrl)
     setGender(e.target.value)
   }
+
+  function handleOnSubmit(e) {
+    e.preventDefault()
+    console.log('Form Submit')
+    // Parse and Submit Gender/ Hair & Skin Color
+  }
   return (
     <Container className="h-100" style={{ backgroundColor: 'black' }}>
       <Row section="top-row" className="mb-3">
-        <h2 style={{ color: 'white', marginTop: 20, marginLeft: 40 }}>LOGO</h2>
+        <img style={{ marginTop: 20, marginLeft: 40, height: 50 }} src={logo} />
       </Row>
       <Row section="create">
         <Col id="avatar">
@@ -50,6 +56,7 @@ const CreateCharacterContainer = () => {
           </h5>
           <CreateCharForm
             gender={gender}
+            onSubmit={handleOnSubmit}
             onChangeRadio={handleOnChangeRadio}
             onChangeRange={handleOnChangeRange}
           />

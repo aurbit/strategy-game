@@ -1,13 +1,20 @@
 import React from 'react'
 import { Form, Button } from 'react-bootstrap'
 
-const CreateCharForm = ({ onChangeRange, onChangeRadio, gender }) => {
+const CreateCharForm = ({ onChangeRange, onChangeRadio, gender, onSubmit }) => {
   return (
-    <Form>
-      <Form.Group controlId="formBasicEmail">
-        <Form.Label>Player Name</Form.Label>
-        <Form.Control type="email" placeholder="Enter Name..." />
+    <Form onSubmit={onSubmit} style={{ marginTop: 40 }}>
+      <Form.Group className="d-flex justify-content-center">
+        <Form.Control
+          style={{ maxWidth: 300 }}
+          type="email"
+          placeholder="Enter Name..."
+        />
+      </Form.Group>
+
+      <Form.Group>
         <div
+          style={{ fontSize: 20 }}
           key="inline-radio"
           className="mt-4 mb-3 d-flex justify-content-center"
         >
@@ -52,7 +59,7 @@ const CreateCharForm = ({ onChangeRange, onChangeRadio, gender }) => {
         />
       </Form.Group>
       <div className="text-center mt-5">
-        <Button style={{ fontSize: 22 }} variant="secondary">
+        <Button type="submit" style={{ fontSize: 22 }} variant="secondary">
           Create Character
         </Button>
       </div>
