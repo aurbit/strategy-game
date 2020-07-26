@@ -84,7 +84,7 @@ export const initWallet = async dispatch => {
   // check if any wallets have been connected
   // check if metamask is connected
   dispatch({ type: actions.INIT_WALLET })
-  if (typeof window.ethereum !== undefined) {
+  if (window.ethereum) {
     dispatch({
       type: actions.SET_WALLET,
       payload: { vendor: availableWallets.METAMASK, wallet: window.ethereum }
