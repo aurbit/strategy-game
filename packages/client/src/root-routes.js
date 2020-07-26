@@ -7,7 +7,7 @@ import Web3Context, {
   updateNetwork,
   updateAccount
 } from 'shared/store/web3'
-import { Map, Planet, Auth } from './pages'
+import { Map, Planet, Auth, CharacterCreate } from './pages'
 import Web3 from 'web3'
 
 export default () => {
@@ -87,6 +87,9 @@ export default () => {
       <Switch>
         <Route exact path="/">
           <Auth />
+        </Route>
+        <Route exact path="/create">
+          <CharacterCreate />
         </Route>
         <ProtectedRoutes
           isMetamaskInstalled={isMetamaskInstalled}
