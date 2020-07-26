@@ -42,29 +42,31 @@ const CreateCharacterContainer = () => {
     // Parse and Submit Gender/ Hair & Skin Color
   }
   return (
-    <Container className="h-100" style={{ backgroundColor: 'black' }}>
-      <Row section="top-row" className="mb-3">
-        <img className={styles.logoWrapper} alt="img" src={logo} />
-      </Row>
-      <Row section="create">
-        <Col id="avatar" xs={12} md={6}>
-          <SVG src={avatarUrl} />
-        </Col>
-        <Col id="form" className="p-5" xs={12} md={6}>
-          <h1 style={{ marginTop: -50 }} className="text-center text-white">
-            Create your character
-          </h1>
-          <h5 className={`${styles.raceTitle} text-center mb-4`}>
-            RACE: HUMAN
-          </h5>
-          <CreateCharForm
-            gender={gender}
-            onSubmit={handleOnSubmit}
-            onChangeRadio={handleOnChangeRadio}
-            onChangeRange={handleOnChangeRange}
-          />
-        </Col>
-      </Row>
+    <Container fluid className="h-100" style={{ backgroundColor: 'black' }}>
+      <Container>
+        <Row section="top-row" className="mb-3">
+          <img className={styles.logoWrapper} alt="img" src={logo} />
+        </Row>
+        <Row section="create">
+          <Col id="avatar" xs={12} md={6}>
+            <SVG src={avatarUrl} />
+          </Col>
+          <Col id="form" className="p-5" xs={12} md={6}>
+            <h1 style={{ marginTop: -50 }} className="text-center text-white">
+              Create your character
+            </h1>
+            <h5 className={`${styles.raceTitle} text-center mb-4`}>
+              RACE: HUMAN
+            </h5>
+            <CreateCharForm
+              gender={gender}
+              onSubmit={handleOnSubmit}
+              onChangeRadio={handleOnChangeRadio}
+              onChangeRange={handleOnChangeRange}
+            />
+          </Col>
+        </Row>
+      </Container>
     </Container>
   )
 }
