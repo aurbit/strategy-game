@@ -43,6 +43,7 @@ const CreateCharForm = ({ onChangeRange, onChangeRadio, gender, onSubmit }) => {
       <Form.Group>
         <Form.Label className="text-white">Hair Color</Form.Label>
         <Form.Control
+          className="custom-range"
           step="25"
           type="range"
           id="hair"
@@ -53,6 +54,7 @@ const CreateCharForm = ({ onChangeRange, onChangeRadio, gender, onSubmit }) => {
         <Form.Label className="text-white">Skin Color</Form.Label>
         <Form.Control
           step="25"
+          className="custom-range"
           type="range"
           id="skin"
           onChange={onChangeRange}

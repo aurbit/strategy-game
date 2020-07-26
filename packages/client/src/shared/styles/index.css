@@ -11,3 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.custom-range::-webkit-slider-thumb {
+  background: blue;
+}
+
+.custom-range::-moz-range-thumb {
+  background: blue;
+}
+
+.custom-range::-ms-thumb {
+  background: blue;
+}
