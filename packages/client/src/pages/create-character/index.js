@@ -3,6 +3,7 @@ import SVG from 'react-inlinesvg' // We can maybe replace this with a native fet
 import { Container, Row, Col } from 'react-bootstrap'
 import { hairOptions, skinOptions, avatarImage } from './avatar-utils'
 
+import styles from './index.module.css'
 import logo from 'shared/images/logo.png'
 import CreateCharForm from './Form'
 
@@ -43,7 +44,7 @@ const CreateCharacterContainer = () => {
   return (
     <Container className="h-100" style={{ backgroundColor: 'black' }}>
       <Row section="top-row" className="mb-3">
-        <img style={{ marginTop: 20, marginLeft: 40, height: 50 }} src={logo} />
+        <img className={styles.logoWrapper} alt="img" src={logo} />
       </Row>
       <Row section="create">
         <Col id="avatar">
@@ -51,7 +52,7 @@ const CreateCharacterContainer = () => {
         </Col>
         <Col id="form" className="p-5">
           <h1 className="text-center text-white">Create your character</h1>
-          <h5 className="text-center mb-4" style={{ color: 'grey' }}>
+          <h5 className={`${styles.raceTitle} text-center mb-4`}>
             RACE: HUMAN
           </h5>
           <CreateCharForm

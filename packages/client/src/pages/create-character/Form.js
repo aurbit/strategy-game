@@ -1,9 +1,9 @@
 import React from 'react'
 import { Form, Button } from 'react-bootstrap'
-
+import styles from './index.module.css'
 const CreateCharForm = ({ onChangeRange, onChangeRadio, gender, onSubmit }) => {
   return (
-    <Form onSubmit={onSubmit} style={{ marginTop: 40 }}>
+    <Form onSubmit={onSubmit} className={styles.formWrapper}>
       <Form.Group className="d-flex justify-content-center">
         <Form.Control
           style={{ maxWidth: 300 }}
@@ -11,7 +11,6 @@ const CreateCharForm = ({ onChangeRange, onChangeRadio, gender, onSubmit }) => {
           placeholder="Enter Name..."
         />
       </Form.Group>
-
       <Form.Group>
         <div
           style={{ fontSize: 20 }}
@@ -61,7 +60,7 @@ const CreateCharForm = ({ onChangeRange, onChangeRadio, gender, onSubmit }) => {
         />
       </Form.Group>
       <div className="text-center mt-5">
-        <Button type="submit" style={{ fontSize: 22 }} variant="secondary">
+        <Button type="submit" className={styles.submitBtn} variant="secondary">
           Create Character
         </Button>
       </div>
