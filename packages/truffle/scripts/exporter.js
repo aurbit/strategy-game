@@ -11,15 +11,28 @@ module.exports = async (contractName, contractAddress, network) => {
   const contractsDir = path.join(__dirname, BUILD_CONTRACTS_DIR)
   const exportsDir = path.join(__dirname, BUILD_EXPORTS_DIR)
 
+  // client contract direction
+  const clientContractsDir = path.join(__dirname, `${CLIENT_CONTRACTS_DIR}`)
   // client destination directory for contract js file
-  const clientContractsDir = path.join(
+  const clientContractsNetworkDir = path.join(
     __dirname,
     `${CLIENT_CONTRACTS_DIR}/${network}`
   )
 
   // create export directory if it doesn't exists
-  const directory =
-    (await fs.existsSync(exportsDir)) || fs.mkdirSync(exportsDir)
+  if (!fs.existsSync(exportsDir)) {
+    fs.mkdirSync(exportsDir)
+  }
+
+  // create the desitination folder in the client package
+  if (!fs.existsSync(clientContractsDir)) {
+    fs.mkdirSync(clientContractsDir)
+  }
+
+  // create the client contracts network directory
+  if (!fs.existsSync(clientContractsNetworkDir)) {
+    fs.mkdirSync(clientContractsNetworkDir)
+  }
 
   // get the json artifact
   const contractJson = await fs.readFileSync(
@@ -34,20 +47,15 @@ module.exports = async (contractName, contractAddress, network) => {
     exportsDir + '/' + contractName + '.js',
     `
     module.exports = {
-      "network": ${network},
-      "address": ${contractAddress},
+      "network": "${network}",
+      "address": "${contractAddress}",
       "artifact": ${contractJson}
     }
   `
   )
 
   const source = exportsDir + '/' + contractName + '.js'
-  const target = clientContractsDir + '/' + contractName + '.js'
-
-  // create the contract folder in the client package if it doesn't exist
-  const clientDirectory =
-    (await fs.existsSync(clientContractsDir)) ||
-    fs.mkdirSync(clientContractsDir)
+  const target = clientContractsNetworkDir + '/' + contractName + '.js'
 
   const targetFile = target
   //if target is a directory a new file with the same name will be created

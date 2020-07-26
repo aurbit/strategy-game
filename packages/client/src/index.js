@@ -6,6 +6,9 @@ import Routes from './root-routes'
 import * as serviceWorker from './serviceWorker'
 import Web3Context from './shared/store/web3'
 
+import AvatarAur from './contracts/development/AURToken'
+
+console.log(AvatarAur.address)
 // String mode kept on bringing warnins about findDom ref with UI Lib
 ReactDOM.render(
   <Web3Context.Provider>
