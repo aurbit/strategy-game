@@ -77,7 +77,7 @@ export const avatarImage = (value) => {
       avatar = 'https://xhad-team-bucket.storage.fleek.co/human_male.svg'
       break
     case 'human_female':
-      avatar = 'https://xhad-team-bucket.storage.fleek.co/human_female.svg'
+      avatar = 'https://xhad-team-bucket.storage.fleek.co/human-female.svg'
       break
     default:
       throw new Error('Out of range')

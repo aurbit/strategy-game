@@ -1,13 +1,24 @@
 import React from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 import CreateCharForm from './Form'
-import Avatar from './female-avatar'
+// import { ReactSVG } from 'react-svg'
+// We can maybe replace this with a native fetch and inner HTML - This lib does same
+import SVG from 'react-inlinesvg'
+import './test.css'
 import { hairOptions, skinOptions, avatarImage } from './color-options'
 const CreateCharacterContainer = () => {
   const [hairColor, setHairColor] = React.useState('#1b1464')
   const [skinColor, setSkinColor] = React.useState('#ffe0c9')
   const [gender, setGender] = React.useState('human_male')
   const [avatarUrl, setAvatarUrl] = React.useState(avatarImage('human_male'))
+
+  React.useEffect(() => {
+    // Update global CSS so style change will affect SVG class
+    const style = document.createElement('style')
+    document.head.appendChild(style)
+    style.sheet.insertRule(`.hair-color {fill: ${hairColor}}`)
+    style.sheet.insertRule(`.skin-color {fill: ${skinColor}}`)
+  }, [hairColor, skinColor])
 
   function handleOnChangeRange(e) {
     const { id, value } = e.target
@@ -30,7 +41,9 @@ const CreateCharacterContainer = () => {
       </Row>
       <Row section="create">
         <Col id="avatar">
-          <img src={avatarUrl} alt="img" />
+          {/* <img src={avatarUrl} alt="img" /> */}
+          <SVG src={avatarUrl} />
+          {/* <FemaleSvg /> */}
           {/* <Avatar  hairColor={hairColor} skinColor={skinColor} /> */}
         </Col>
         <Col id="form" className="p-5">
