@@ -43,7 +43,7 @@
     "use-reducer-logger": "^1.0.2"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx}": ["git add"]
+    "src/**/*.{js,jsx}": ["yarn lint", "git add"]
   },
   "husky": {
     "hooks": {
