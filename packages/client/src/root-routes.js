@@ -1,17 +1,34 @@
 import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import WalletContext, { initWallet, STATUS } from './shared/store/wallet'
+import Web3Context, { setProvider } from './shared/store/web3'
 
 import { Planet, Auth } from './pages'
 
-export default props => {
-  const { walletState, walletDispatch } = useRouteLogic(props)
+export default () => {
+  const { status: walletStatus } = WalletContext.useState()
+  const walletDispatch = WalletContext.useDispatch()
+
+  useEffect(() => {
+    if (walletStatus === STATUS.INIT) {
+      initWallet(walletDispatch)
+    }
+  })
+
+  const { status: web3Status } = Web3Context.useState()
+  const web3Dispatch = Web3Context.useDispatch()
+
+  useEffect(() => {
+    if (web3Status === STATUS.INIT) {
+      setProvider(web3Dispatch, 'development')
+    }
+  })
 
   return (
     <Router>
       <Switch>
         <Route exact path='/'>
-          <Auth walletState={walletState} walletDispatch={walletDispatch} />
+          <Auth />
         </Route>
         <Route path='/planet'>
           <Planet />
@@ -19,17 +36,4 @@ export default props => {
       </Switch>
     </Router>
   )
-}
-
-const useRouteLogic = props => {
-  const walletState = WalletContext.useState()
-  const walletDispatch = WalletContext.useDispatch()
-
-  useEffect(() => {
-    if (walletState.status === STATUS.INIT) {
-      initWallet(walletDispatch)
-    }
-  })
-
-  return { walletState, walletDispatch }
 }
