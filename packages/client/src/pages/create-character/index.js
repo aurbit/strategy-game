@@ -5,7 +5,7 @@ import CreateCharForm from './Form'
 // We can maybe replace this with a native fetch and inner HTML - This lib does same
 import SVG from 'react-inlinesvg'
 import './test.css'
-import { hairOptions, skinOptions, avatarImage } from './color-options'
+import { hairOptions, skinOptions, avatarImage } from './avatar-utils'
 const CreateCharacterContainer = () => {
   const [hairColor, setHairColor] = React.useState('#1b1464')
   const [skinColor, setSkinColor] = React.useState('#ffe0c9')
@@ -41,10 +41,7 @@ const CreateCharacterContainer = () => {
       </Row>
       <Row section="create">
         <Col id="avatar">
-          {/* <img src={avatarUrl} alt="img" /> */}
           <SVG src={avatarUrl} />
-          {/* <FemaleSvg /> */}
-          {/* <Avatar  hairColor={hairColor} skinColor={skinColor} /> */}
         </Col>
         <Col id="form" className="p-5">
           <h1 className="text-center text-white">Create your character</h1>
