@@ -2,7 +2,7 @@
   "name": "aurbit-monorepo",
   "version": "1.0.0",
   "private": true,
-  "licence": "MIT",
+  "license": "MIT",
   "engine": {
     "node": "10.22, 11.15"
   },

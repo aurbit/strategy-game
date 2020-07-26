@@ -1,6 +1,6 @@
 import React from 'react'
 import { Modal, Button, ListGroup, Image, Row, Col } from 'react-bootstrap'
-import WalletContext, { setWalletVendor } from '../../store/wallet'
+import WalletContext, { setWallet, availableWallets } from '../../store/wallet'
 
 export default props => {
   const [modalShow, setModalShow] = React.useState(false)
@@ -67,7 +67,7 @@ const WalletChoices = props => {
 const MetaMask = props => {
   const walletDispatch = WalletContext.useDispatch()
   return (
-    <Row onClick={() => setWalletVendor(walletDispatch, 'metamask')}>
+    <Row onClick={() => setWallet(walletDispatch, availableWallets.METAMASK)}>
       <Col md={2}>
         <Image width={80} height={80} src='images/metamask-logo.png' />
       </Col>
@@ -79,7 +79,9 @@ const MetaMask = props => {
 const WalletConnectItem = props => {
   const walletDispatch = WalletContext.useDispatch()
   return (
-    <Row onClick={() => setWalletVendor(walletDispatch, 'wallet-connect')}>
+    <Row
+      onClick={() => setWallet(walletDispatch, availableWallets.WALLET_CONNECT)}
+    >
       <Col md={2}>
         <Image
           width={80}

@@ -1,45 +1,35 @@
 import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import ProtectedRoutes from 'shared/components/ProtectedRoutes'
-import Web3Context, { setNetwork, STATUS } from './shared/store/web3'
-import WalletContext from './shared/store/wallet'
+import WalletContext, { initWallet, STATUS } from './shared/store/wallet'
 
 import { Planet, Auth } from './pages'
 
 export default props => {
-  // const { walletVendor } = useRouteLogic()
+  const { walletState, walletDispatch } = useRouteLogic(props)
 
   return (
-    <WalletContext.Provider>
-      <Router>
-        <Switch>
-          <Route exact path='/'>
-            <Auth />
-          </Route>
-          <ProtectedRoutes component={AuthenticatedRoutes} />
-        </Switch>
-      </Router>
-    </WalletContext.Provider>
+    <Router>
+      <Switch>
+        <Route exact path='/'>
+          <Auth walletState={walletState} walletDispatch={walletDispatch} />
+        </Route>
+        <Route path='/planet'>
+          <Planet />
+        </Route>
+      </Switch>
+    </Router>
   )
 }
 
-const AuthenticatedRoutes = () => {
-  return (
-    <Switch>
-      <Route path='/planet'>
-        <Planet />
-      </Route>
-    </Switch>
-  )
-}
-
-const useRouteLogic = () => {
-  const { status: web3Status } = Web3Context.useState()
-  const web3Dispatch = Web3Context.useDispatch()
+const useRouteLogic = props => {
+  const walletState = WalletContext.useState()
+  const walletDispatch = WalletContext.useDispatch()
 
   useEffect(() => {
-    if (web3Status === STATUS.INIT) {
-      setNetwork(web3Dispatch, 'mainnet')
+    if (walletState.status === STATUS.INIT) {
+      initWallet(walletDispatch)
     }
   })
+
+  return { walletState, walletDispatch }
 }
