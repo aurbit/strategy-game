@@ -6,14 +6,14 @@ export { STATUS }
 const initialState = {
   status: STATUS.INIT,
   network: null,
-  provider: null
+  web3: null
 }
 
 export const availableNetworks = {
-  DEVELOPMENT: 'DEVELOPMENT',
-  MAINNET: 'MAINNET',
-  ROPSTEN: 'ROPSTEN',
-  RINKEBY: 'RINKEBY'
+  DEVELOPMENT: 'development',
+  MAINNET: 'mainnet',
+  ROPSTEN: 'ropsten',
+  RINKEBY: 'rinkeby'
 }
 
 const actions = {
@@ -27,7 +27,7 @@ export const reducer = (state, action) => {
         ...state,
         status: STATUS.IDLE,
         network: action.payload.network,
-        provider: action.payload.provider
+        web3: action.payload.web3
       }
     }
     default:
@@ -40,19 +40,19 @@ export const setProvider = (dispatch, network) => {
   const key = '0f76dc369ae847dba3d00ac6427f0b42'
 
   const dispatchHelper = () => {
-    const provider = new Web3(url(network, key))
+    const web3 = new Web3(url(network, key))
     dispatch({
       type: actions.SET_WEB3_PROVIDER,
-      payload: { network, provider }
+      payload: { network, web3 }
     })
   }
 
   switch (network) {
     case availableNetworks.DEVELOPMENT: {
-      const provider = new Web3('http://localhost:7545')
+      const web3 = new Web3('http://localhost:7545')
       dispatch({
         type: actions.SET_WEB3_PROVIDER,
-        payload: { network, provider }
+        payload: { network, web3 }
       })
       break
     }
@@ -69,10 +69,10 @@ export const setProvider = (dispatch, network) => {
       break
     }
     default: {
-      const provider = new Web3(url('mainnet', key))
+      const web3 = new Web3(url('mainnet', key))
       dispatch({
         type: actions.SET_WEB3_PROVIDER,
-        payload: { network, provider }
+        payload: { network, web3 }
       })
       break
     }

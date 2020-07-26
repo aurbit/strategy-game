@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import WalletContext, { initWallet, STATUS } from './shared/store/wallet'
-import Web3Context, { setProvider } from './shared/store/web3'
+import Web3Context, {
+  setProvider,
+  availableNetworks
+} from './shared/store/web3'
 
 import { Planet, Auth } from './pages'
 
@@ -20,7 +23,7 @@ export default () => {
 
   useEffect(() => {
     if (web3Status === STATUS.INIT) {
-      setProvider(web3Dispatch, 'development')
+      setProvider(web3Dispatch, availableNetworks.DEVELOPMENT)
     }
   })
 
