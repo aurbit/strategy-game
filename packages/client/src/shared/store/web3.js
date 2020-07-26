@@ -1,60 +1,42 @@
 import contextFactory, { STATUS } from 'shared/context/factory'
 import Web3 from 'web3'
 
+export { STATUS }
+
 const initialState = {
   status: STATUS.INIT,
-  web3: null,
-  account: [],
   network: null,
-  networkId: null,
-  isMetamaskInstalled: null
+  provider: null
 }
 
 const actions = {
-  INIT_WEB3: 'INIT_WEB3',
-  INIT_WEB3_REQUEST: 'INIT_WEB3_REQUEST',
-  INIT_WEB3_SUCCESS: 'INIT_WEB3_SUCCESS',
-  INIT_WEB3_FAILURE: 'INIT_WEB3_FAILURE',
-  UPDATE_NETWORK: 'UPDATE_NETWORK',
-  UPDATE_ACCOUNT: 'UPDATE_ACCOUNT'
+  SET_NETWORK: 'SET_NETWORK'
 }
 
 export const reducer = (state, action) => {
   switch (action.type) {
-    case actions.INIT_WEB3:
+    case actions.SET_NETWORK: {
       return {
         ...state,
-        web3: action.payload.web3,
-        account: action.payload.account,
+        status: STATUS.IDLE,
         network: action.payload.network,
-        isMetamaskInstalled: action.payload.isMetamaskInstalled
+        provider: action.payload.provider
       }
-    case actions.UPDATE_ACCOUNT:
-      return {
-        ...state,
-        account: action.payload
-      }
-    case actions.UPDATE_NETWORK:
-      return {
-        ...state,
-        networkId: action.payload.id,
-        network: action.payload.network
-      }
+    }
     default:
       break
   }
 }
 
-export const initWeb3 = (dispatch, data) => {
-  dispatch({ type: actions.INIT_WEB3, payload: data })
-}
+export const setNetwork = (dispatch, network) => {
+  const provider =
+    network === 'development'
+      ? new Web3('https://localhost:7545')
+      : new Web3(
+          `wss://${network}.infura.io/ws/v3/0f76dc369ae847dba3d00ac6427f0b42`
+        )
 
-export const updateAccount = (dispatch, data) => {
-  dispatch({ type: actions.UPDATE_ACCOUNT, payload: data })
-}
-
-export const updateNetwork = (dispatch, data) => {
-  dispatch({ type: actions.UPDATE_NETWORK, payload: data })
+  dispatch({ type: actions.SET_NETWORK, payload: { network, provider } })
 }
 
 export default contextFactory('Web3', initialState, reducer)
