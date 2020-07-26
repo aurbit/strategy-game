@@ -3,3 +3,5 @@ yarn.lock
 # misc
 .DS_Store
 .env*
+
+packages/austins-app
