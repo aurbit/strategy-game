@@ -51,7 +51,9 @@ const CreateCharacterContainer = () => {
           <SVG src={avatarUrl} />
         </Col>
         <Col id="form" className="p-5">
-          <h1 className="text-center text-white">Create your character</h1>
+          <h1 style={{ marginTop: -50 }} className="text-center text-white">
+            Create your character
+          </h1>
           <h5 className={`${styles.raceTitle} text-center mb-4`}>
             RACE: HUMAN
           </h5>
