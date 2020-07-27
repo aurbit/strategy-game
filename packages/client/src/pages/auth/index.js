@@ -1,6 +1,6 @@
 import React from 'react'
-import WalletSetup from '../../shared/components/WalletSetup'
-import Navbar from '../../shared/components/Layout/Navbar'
+import WalletSetup from 'shared/components/WalletSetup'
+import Navbar from 'shared/components/Layout/Navbar'
 import './style.css'
 
 const AuthPage = props => {
