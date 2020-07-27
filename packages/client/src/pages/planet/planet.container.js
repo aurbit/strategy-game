@@ -1,5 +1,4 @@
 import React from 'react'
-// import styles from './planet.module.css'
 
 import { changePlanet, PlanetContext } from './planet.contex'
 

@@ -1,129 +1,42 @@
-import React from 'react'
-import MetaMaskOnboarding from '@metamask/onboarding'
+import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import ProtectedRoutes from 'shared/components/ProtectedRoutes'
+import WalletContext, { initWallet, STATUS } from './shared/store/wallet'
 import Web3Context, {
-  initWeb3,
-  updateNetwork,
-  updateAccount
-} from 'shared/store/web3'
-import { Map, Planet, Auth } from './pages'
-import Web3 from 'web3'
+  setProvider,
+  availableNetworks
+} from './shared/store/web3'
+
+import { Planet, Auth } from './pages'
 
 export default () => {
-  const [loading, setLoading] = React.useState(true)
-  const {
-    dispatchUpdateNetwork,
-    dispatchInitWeb3,
-    dispatchUpdateAccount,
-    isMetamaskInstalled,
-    account,
-    web3
-  } = useWeb3()
-  React.useEffect(() => {
-    // Init Web3 Context
-    initWeb()
-  }, [])
+  const { status: walletStatus } = WalletContext.useState()
+  const walletDispatch = WalletContext.useDispatch()
 
-  // React.useEffect(() => {
-  //   setInterval(async function () {
-  //     if (web3) {
-  //       const newAccount = await web3.eth.getAccounts()
-  //       const previousAccount = account
-  //       console.log("NEW:l ", newAccount)
-  //       console.log('prev', previousAccount)
-  //       if (newAccount.length !== previousAccount.length) {
-  //         dispatchUpdateAccount(newAccount)
-  //       }
-  //     }
-  //   }, 1500)
-  // }, [web3])
-
-  React.useEffect(() => {
-    // Attach listeners if meta mask is installed - THis may be subject to change
-    // Metamask will stop injecting in future
-    if (isMetamaskInstalled) {
-      console.log('HIT')
-      window.ethereum.on('accountsChanged', function (accounts) {
-        dispatchUpdateAccount(accounts)
-      })
-
-      window.ethereum.on('networkChanged', async function (netId) {
-        const network = await web3.eth.net.getNetworkType()
-        dispatchUpdateNetwork({
-          id: netId,
-          network
-        })
-      })
+  useEffect(() => {
+    if (walletStatus === STATUS.INIT) {
+      initWallet(walletDispatch)
     }
-  }, [isMetamaskInstalled])
+  })
 
-  async function initWeb() {
-    // State management not working - Doing API Call here
-    try {
-      const web3 = new Web3(Web3.givenProvider || 'http://localhost:8545')
-      const account = await web3.eth.getAccounts()
-      const network = await web3.eth.net.getNetworkType()
-      const isMetamaskInstalled = MetaMaskOnboarding.isMetaMaskInstalled()
-      dispatchInitWeb3({
-        web3,
-        account,
-        network,
-        isMetamaskInstalled
-      })
-      setLoading(false)
-    } catch (e) {
-      // Handle Error
-      console.log('ERROR:', e)
+  const { status: web3Status } = Web3Context.useState()
+  const web3Dispatch = Web3Context.useDispatch()
+
+  useEffect(() => {
+    if (web3Status === STATUS.INIT) {
+      setProvider(web3Dispatch, availableNetworks.DEVELOPMENT)
     }
-  }
-
-  if (loading) {
-    return null
-  }
+  })
 
   return (
     <Router>
       <Switch>
-        <Route exact path="/">
+        <Route exact path='/'>
           <Auth />
         </Route>
-        <ProtectedRoutes
-          isMetamaskInstalled={isMetamaskInstalled}
-          accounts={account}
-          component={AuthenticatedRoutes}
-        />
+        <Route path='/planet'>
+          <Planet />
+        </Route>
       </Switch>
     </Router>
   )
-}
-
-const AuthenticatedRoutes = () => {
-  return (
-    <Switch>
-      <Route path="/map">
-        <Map />
-      </Route>
-      <Route path="/planet">
-        <Planet />
-      </Route>
-    </Switch>
-  )
-}
-
-const useWeb3 = () => {
-  const dispatch = Web3Context.useDispatch()
-  const { web3, account, isMetamaskInstalled } = Web3Context.useState()
-
-  const dispatchInitWeb3 = (data) => initWeb3(dispatch, data)
-  const dispatchUpdateNetwork = (data) => updateNetwork(dispatch, data)
-  const dispatchUpdateAccount = (data) => updateAccount(dispatch, data)
-  return {
-    web3,
-    account,
-    isMetamaskInstalled,
-    dispatchInitWeb3,
-    dispatchUpdateNetwork,
-    dispatchUpdateAccount
-  }
 }

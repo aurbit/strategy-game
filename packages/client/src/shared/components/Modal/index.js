@@ -20,10 +20,10 @@ const Footer = ({ children, toggle }) => {
   }
   return (
     <ModalFooter>
-      <Button color="primary" onClick={toggle}>
+      <Button color='primary' onClick={toggle}>
         Okay
       </Button>{' '}
-      <Button color="secondary" onClick={toggle}>
+      <Button color='secondary' onClick={toggle}>
         Cancel
       </Button>
     </ModalFooter>
