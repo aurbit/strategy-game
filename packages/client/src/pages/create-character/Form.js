@@ -1,7 +1,14 @@
 import React from 'react'
 import { Form, Button } from 'react-bootstrap'
 import styles from './index.module.css'
-const CreateCharForm = ({ onChangeRange, onChangeRadio, gender, onSubmit }) => {
+const CreateCharForm = ({
+  onChangeRange,
+  onChangeRadio,
+  onChangeSkin,
+  gender,
+  skinColor,
+  onSubmit
+}) => {
   return (
     <Form onSubmit={onSubmit} className={styles.formWrapper}>
       <Form.Group className="d-flex justify-content-center">
@@ -25,7 +32,7 @@ const CreateCharForm = ({ onChangeRange, onChangeRadio, gender, onSubmit }) => {
             value="human_male"
             label="Male"
             type="radio"
-            id="radio-human-1"
+            id="q157"
           />
           <Form.Check
             inline
@@ -35,7 +42,7 @@ const CreateCharForm = ({ onChangeRange, onChangeRadio, gender, onSubmit }) => {
             className="text-white"
             label="Female"
             type="radio"
-            id="radio-human-2"
+            id="q157"
           />
         </div>
       </Form.Group>
@@ -50,7 +57,7 @@ const CreateCharForm = ({ onChangeRange, onChangeRadio, gender, onSubmit }) => {
         />
       </Form.Group>
       <Form.Group>
-        <Form.Label className="text-white">Skin Color</Form.Label>
+        <Form.Label className="text-white">Eye Color</Form.Label>
         <Form.Control
           step="25"
           className="custom-range"
@@ -58,6 +65,53 @@ const CreateCharForm = ({ onChangeRange, onChangeRadio, gender, onSubmit }) => {
           id="skin"
           onChange={onChangeRange}
         />
+      </Form.Group>
+      <Form.Group>
+        <div style={{ fontSize: 20 }} key="inline-check" className="mt-4 mb-3">
+          <Form.Check
+            inline
+            onChange={onChangeSkin}
+            checked={skinColor === '#C9A440'}
+            value="#C9A440"
+            type="checkbox"
+            id="check-skin-1"
+          />
+          <Form.Check
+            inline
+            onChange={onChangeSkin}
+            value="#C98D40"
+            checked={skinColor === '#C98D40'}
+            className="text-white"
+            type="checkbox"
+            id="check-skin-2"
+          />
+          <Form.Check
+            inline
+            onChange={onChangeSkin}
+            checked={skinColor === '#DBA786'}
+            value="#DBA786"
+            type="checkbox"
+            id="check-skin-3"
+          />
+          <Form.Check
+            inline
+            onChange={onChangeSkin}
+            value="#674732"
+            checked={skinColor === '#674732'}
+            className="text-white"
+            type="checkbox"
+            id="check-skin-4"
+          />
+          <Form.Check
+            inline
+            onChange={onChangeSkin}
+            value="#4A2E1D"
+            checked={skinColor === '#4A2E1D'}
+            className="text-white"
+            type="checkbox"
+            id="check-skin-5"
+          />
+        </div>
       </Form.Group>
       <div className="text-center mt-5">
         <Button type="submit" className={styles.submitBtn} variant="secondary">

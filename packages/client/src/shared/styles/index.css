@@ -13,13 +13,13 @@ code {
 }
 
 .custom-range::-webkit-slider-thumb {
-  background: blue;
+  background: #4287f5;
 }
 
 .custom-range::-moz-range-thumb {
-  background: blue;
+  background: #4287f5;
 }
 
 .custom-range::-ms-thumb {
-  background: blue;
+  background: #4287f5;
 }
