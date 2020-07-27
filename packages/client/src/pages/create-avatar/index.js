@@ -56,7 +56,9 @@ const CreateCharacterContainer = () => {
         </Row>
         <Row section="create">
           <Col id="avatar" xs={12} md={6}>
-            <SVG src={avatarUrl} />
+            <div style={{ transform: 'rotateY(180deg)' }}>
+              <SVG src={avatarUrl} />
+            </div>
           </Col>
           <Col id="form" className="p-5" xs={12} md={6}>
             <h1 style={{ marginTop: -50 }} className="text-center text-white">

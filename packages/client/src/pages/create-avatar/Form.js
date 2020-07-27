@@ -1,7 +1,7 @@
 import React from 'react'
 import { Form, Button } from 'react-bootstrap'
 import styles from './index.module.css'
-
+import { ChromePicker } from 'react-color'
 const SKIN_COLOR = [
   { value: '#4A2E1D', id: 1 },
   { value: '#674732', id: 2 },
@@ -23,6 +23,24 @@ const CreateCharForm = ({
   skinColor,
   onSubmit
 }) => {
+  const [displayPicker, setDisplayPicker] = React.useState(false)
+  const [color, setColor] = React.useState({
+    r: '241',
+    g: '112',
+    b: '19',
+    a: '1'
+  })
+  const handleClick = () => {
+    setDisplayPicker(!displayPicker)
+  }
+
+  const handleClose = () => {
+    setDisplayPicker(false)
+  }
+
+  const handleChange = (color) => {
+    setColor(color.rgb)
+  }
   return (
     <Form onSubmit={onSubmit} className={styles.formWrapper}>
       <Form.Group className="d-flex justify-content-center">
@@ -54,25 +72,39 @@ const CreateCharForm = ({
           })}
         </div>
       </Form.Group>
-      <Form.Group>
+      <Form.Group className="d-flex align-items-center">
         <Form.Label className="text-white">Hair Color</Form.Label>
-        <Form.Control
-          className="custom-range"
-          step="25"
-          type="range"
-          id="hair"
-          onChange={onChangeRange}
-        />
+        <div className={styles.swatch} onClick={handleClick}>
+          <div
+            className={styles.color}
+            style={{
+              background: `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a} )`
+            }}
+          />
+        </div>
+        {displayPicker ? (
+          <div className={styles.popOver}>
+            <div className={styles.cover} onClick={handleClose} />
+            <ChromePicker color={color} onChange={handleChange} />
+          </div>
+        ) : null}
       </Form.Group>
-      <Form.Group>
+      <Form.Group className="d-flex align-items-center">
         <Form.Label className="text-white">Eye Color</Form.Label>
-        <Form.Control
-          step="25"
-          className="custom-range"
-          type="range"
-          id="skin"
-          onChange={onChangeRange}
-        />
+        <div className={styles.swatch} onClick={handleClick}>
+          <div
+            className={styles.color}
+            style={{
+              background: `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a} )`
+            }}
+          />
+        </div>
+        {displayPicker ? (
+          <div className={styles.popOver}>
+            <div className={styles.cover} onClick={handleClose} />
+            <ChromePicker color={color} onChange={handleChange} />
+          </div>
+        ) : null}
       </Form.Group>
       <Form.Group>
         <Form.Label className="text-white">Skin Color</Form.Label>
@@ -102,3 +134,22 @@ const CreateCharForm = ({
 }
 
 export default CreateCharForm
+
+{
+  /* <Form.Control
+          className="custom-range"
+          step="25"
+          type="range"
+          id="hair"
+          onChange={onChangeRange}
+        /> */
+}
+
+
+{/* <Form.Control
+          step="25"
+          className="custom-range"
+          type="range"
+          id="skin"
+          onChange={onChangeRange}
+        /> */}

@@ -20,3 +20,33 @@
 .formWrapper {
   margin-top: 40px;
 }
+
+.swatch {
+  padding: 1px;
+  background: #fff;
+  border-radius: 1px;
+  display: inline-block;
+  cursor: pointer;
+  margin-left: 20px;
+  margin-bottom: 7px;
+}
+
+.color {
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+}
+
+.popOver {
+  position: absolute;
+  z-index: 2;
+  right: 60px;
+}
+
+.cover {
+  position: fixed;
+  top: 0px;
+  right: 100px;
+  bottom: 0px;
+  left: 0px;
+}

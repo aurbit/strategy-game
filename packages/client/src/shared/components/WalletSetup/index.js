@@ -4,12 +4,12 @@ import WalletContext, { setWallet, availableWallets } from 'shared/store/wallet'
 import { ShieldCheck } from 'react-bootstrap-icons'
 import { useHistory } from 'react-router-dom'
 
-export default props => {
+export default (props) => {
   const [modalShow, setModalShow] = React.useState(false)
 
   return (
     <div>
-      <Button variant='light' size='lg' onClick={() => setModalShow(true)}>
+      <Button variant="light" size="lg" onClick={() => setModalShow(true)}>
         {props.buttonText}
       </Button>
       <WalletSelectModal show={modalShow} onHide={() => setModalShow(false)} />
@@ -17,7 +17,7 @@ export default props => {
   )
 }
 
-const WalletSelectModal = props => {
+const WalletSelectModal = (props) => {
   const { activeWallet } = WalletContext.useState()
   const walletDispatch = WalletContext.useDispatch()
   const history = useHistory()
@@ -30,12 +30,12 @@ const WalletSelectModal = props => {
   return (
     <Modal
       {...props}
-      size='lg'
-      aria-labelledby='contained-modal-title-vcenter'
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title id='contained-modal-title-vcenter'>
+        <Modal.Title id="contained-modal-title-vcenter">
           Connect Wallet
         </Modal.Title>
       </Modal.Header>
@@ -44,12 +44,12 @@ const WalletSelectModal = props => {
           {typeof window.ethereum !== 'undefined' ? (
             <ListGroup.Item
               action
-              variant='no-style'
+              variant="no-style"
               active={activeWallet === availableWallets.METAMASK}
               style={{ height: 100 }}
             >
               <Row
-                className='align-items-center'
+                className="align-items-center"
                 onClick={() =>
                   setWallet(walletDispatch, availableWallets.METAMASK)
                 }
@@ -58,29 +58,29 @@ const WalletSelectModal = props => {
                   <Image
                     width={80}
                     height={80}
-                    src='images/metamask-logo.png'
+                    src="images/metamask-logo.png"
                   />
                 </Col>
                 <Col xs={6} md={7}>
                   MetaMask
                 </Col>
-                <Col xs={3} md='auto' order='last'>
+                <Col xs={3} md="auto" order="last">
                   {window.ethereum.selectedAddress &&
                   activeWallet === availableWallets.METAMASK ? (
-                    <ShieldCheck color='white' size={48} />
-                  ) : null}
+                      <ShieldCheck color="white" size={48} />
+                    ) : null}
                 </Col>
               </Row>
             </ListGroup.Item>
           ) : null}
           <ListGroup.Item
             action
-            variant='no-style'
+            variant="no-style"
             active={activeWallet === availableWallets.WALLET_CONNECT}
             style={{ height: 100 }}
           >
             <Row
-              className='align-items-center'
+              className="align-items-center"
               onClick={() =>
                 setWallet(walletDispatch, availableWallets.WALLET_CONNECT)
               }
@@ -89,15 +89,15 @@ const WalletSelectModal = props => {
                 <Image
                   width={80}
                   height={80}
-                  src='images/wallet-connect-logo.png'
+                  src="images/wallet-connect-logo.png"
                 />
               </Col>
               <Col xs={6} md={7}>
                 Wallet Connect
               </Col>
-              <Col xs={2} md='auto' order='last'>
+              <Col xs={2} md="auto" order="last">
                 {activeWallet === availableWallets.WALLET_CONNECT ? (
-                  <ShieldCheck color='white' size={48} />
+                  <ShieldCheck color="white" size={48} />
                 ) : null}
               </Col>
             </Row>
@@ -106,7 +106,7 @@ const WalletSelectModal = props => {
       </Modal.Body>
       <Modal.Footer>
         <Button
-          variant='dark'
+          variant="dark"
           disabled={activeWallet === null}
           onClick={handleContinue}
         >
