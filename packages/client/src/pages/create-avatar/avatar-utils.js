@@ -1,4 +1,4 @@
-export const hairOptions = (value) => {
+export const hairOptions = value => {
   let hex = ''
   switch (parseInt(value, 10)) {
     case 0:
@@ -22,7 +22,7 @@ export const hairOptions = (value) => {
   return hex
 }
 
-export const eyeColor = (value) => {
+export const eyeColor = value => {
   let hex = ''
   switch (value) {
     case 0:
@@ -46,7 +46,7 @@ export const eyeColor = (value) => {
   return hex
 }
 
-export const skinOptions = (value) => {
+export const skinOptions = value => {
   let hex = ''
   switch (parseInt(value)) {
     case 0:
@@ -70,14 +70,14 @@ export const skinOptions = (value) => {
   return hex
 }
 
-export const avatarImage = (value) => {
+export const avatarImage = value => {
   let avatar = ''
   switch (value) {
     case 'human_male':
-      avatar = 'https://xhad-team-bucket.storage.fleek.co/human_male.svg'
+      avatar = 'https://xhad-team-bucket.storage.fleek.co/humanmale.svg'
       break
     case 'human_female':
-      avatar = 'https://xhad-team-bucket.storage.fleek.co/human-female.svg'
+      avatar = 'https://xhad-team-bucket.storage.fleek.co/humanfemale.svg'
       break
     default:
       throw new Error('Out of range')
