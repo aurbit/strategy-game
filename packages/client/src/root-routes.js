@@ -6,7 +6,7 @@ import Web3Context, {
   availableNetworks
 } from './shared/store/web3'
 
-import { Planet, Auth } from './pages'
+import { Planet, Auth, CreateAvatar } from './pages'
 
 export default () => {
   const { status: walletStatus } = WalletContext.useState()
@@ -35,6 +35,9 @@ export default () => {
         </Route>
         <Route path='/planet'>
           <Planet />
+        </Route>
+        <Route path='/avatar'>
+          <CreateAvatar />
         </Route>
       </Switch>
     </Router>
