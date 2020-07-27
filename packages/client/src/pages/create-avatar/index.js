@@ -1,7 +1,7 @@
 import React from 'react'
 import SVG from 'react-inlinesvg' // We can maybe replace this with a native fetch and inner HTML - This lib does same
 import { Container, Row, Col } from 'react-bootstrap'
-import { avatarImage } from './avatar-utils'
+import { avatarImage, parseDataArray } from './avatar-utils'
 
 import styles from './index.module.css'
 import logo from 'shared/images/logo.svg'
@@ -45,6 +45,8 @@ const CreateCharacterContainer = () => {
   function handleOnSubmit(e) {
     e.preventDefault()
     console.log('Form Submit')
+    const data = parseDataArray(hairColor, eyeColor, skinColor, gender)
+    console.log('DATA: ', data)
     // Parse and Submit Gender/ Hair & Skin Color
   }
   return (

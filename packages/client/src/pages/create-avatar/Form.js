@@ -2,32 +2,12 @@ import React from 'react'
 import { Form, Button } from 'react-bootstrap'
 import styles from './index.module.css'
 import { ChromePicker } from 'react-color'
-const SKIN_COLOR = [
-  { value: '#4A2E1D', id: 1 },
-  { value: '#674732', id: 2 },
-  { value: '#DBA786', id: 3 },
-  { value: '#C98D40', id: 4 },
-  { value: '#C9A440', id: 5 }
-]
-
-const AVATARS = [
-  { value: 'human_male', label: 'Male' },
-  { value: 'human_female', label: 'Female' }
-]
-
-const DEFAULT_HAIR = {
-  r: '241',
-  g: '112',
-  b: '19',
-  a: '1'
-}
-
-const DEFAULT_SKIN = {
-  r: '241',
-  g: '112',
-  b: '19',
-  a: '1'
-}
+import {
+  DEFAULT_COLOR,
+  DEFAULT_SKIN,
+  AVATARS,
+  SKIN_COLOR
+} from './avatar-utils'
 
 const CreateCharForm = ({
   onHairChangeComplete,
@@ -40,8 +20,8 @@ const CreateCharForm = ({
 }) => {
   const [displayHairPicker, setDisplayHairPicker] = React.useState(false)
   const [displayEyePicker, setDisplayEyePicker] = React.useState(false)
-  const [tempHairColor, setTempHairColor] = React.useState(DEFAULT_HAIR)
-  const [tempEyeColor, setTempEyeColor] = React.useState(DEFAULT_SKIN)
+  const [tempHairColor, setTempHairColor] = React.useState(DEFAULT_COLOR)
+  const [tempEyeColor, setTempEyeColor] = React.useState(DEFAULT_COLOR)
 
   const handleHairPicker = () => setDisplayHairPicker(!displayHairPicker)
   const handleEyePicker = () => setDisplayEyePicker(!displayEyePicker)
@@ -80,7 +60,9 @@ const CreateCharForm = ({
         </div>
       </Form.Group>
       <Form.Group className="d-flex align-items-center">
-        <Form.Label className="text-white">Hair Color</Form.Label>
+        <Form.Label className="text-white font-weight-bold">
+          Hair Color
+        </Form.Label>
         <div
           className={styles.swatch}
           id="hair-swatch"
@@ -105,8 +87,11 @@ const CreateCharForm = ({
         ) : null}
       </Form.Group>
       <Form.Group className="d-flex align-items-center">
-        <Form.Label className="text-white">Eye Color</Form.Label>
+        <Form.Label className="text-white font-weight-bold">
+          Eye Color
+        </Form.Label>
         <div
+          style={{ marginLeft: 25 }}
           className={styles.swatch}
           id="eye-swatch"
           onClick={handleEyePicker}
@@ -130,7 +115,9 @@ const CreateCharForm = ({
         ) : null}
       </Form.Group>
       <Form.Group>
-        <Form.Label className="text-white">Skin Color</Form.Label>
+        <Form.Label className="text-white font-weight-bold">
+          Skin Color
+        </Form.Label>
         <div key="inline-check" className="mb-3">
           {SKIN_COLOR.map((item, index) => {
             return (
