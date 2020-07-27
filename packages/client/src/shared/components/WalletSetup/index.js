@@ -9,8 +9,8 @@ export default props => {
 
   return (
     <div>
-      <Button variant='danger' size='lg' onClick={() => setModalShow(true)}>
-        Start Game
+      <Button variant='light' size='lg' onClick={() => setModalShow(true)}>
+        {props.buttonText}
       </Button>
       <WalletSelectModal show={modalShow} onHide={() => setModalShow(false)} />
     </div>
@@ -51,7 +51,8 @@ const WalletSelectModal = props => {
               <Row
                 className='align-items-center'
                 onClick={() =>
-                  setWallet(walletDispatch, availableWallets.METAMASK)}
+                  setWallet(walletDispatch, availableWallets.METAMASK)
+                }
               >
                 <Col>
                   <Image
@@ -78,7 +79,8 @@ const WalletSelectModal = props => {
             <Row
               className='align-items-center'
               onClick={() =>
-                setWallet(walletDispatch, availableWallets.WALLET_CONNECT)}
+                setWallet(walletDispatch, availableWallets.WALLET_CONNECT)
+              }
             >
               <Col>
                 <Image

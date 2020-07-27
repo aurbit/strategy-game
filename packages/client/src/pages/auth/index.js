@@ -15,7 +15,7 @@ const AuthPage = props => {
             transform: 'translate(-50%, -50%)'
           }}
         >
-          <WalletSetup />
+          <WalletSetup buttonText='Start Game' />
         </div>
       </div>
     </div>

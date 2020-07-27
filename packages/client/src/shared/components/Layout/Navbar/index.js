@@ -9,7 +9,7 @@ const NavbarComponent = ({ network, account }) => {
       variant='dark'
       className='justify-content-between align-items-center'
     >
-      <Navbar.Brand href='#home'>
+      <Navbar.Brand>
         <img
           alt=''
           src={logo}
