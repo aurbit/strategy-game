@@ -1,6 +1,6 @@
 import React from 'react'
 import { Modal, Button, ListGroup, Image, Row, Col } from 'react-bootstrap'
-import WalletContext, { setWallet, availableWallets } from '../../store/wallet'
+import WalletContext, { setWallet, availableWallets } from 'store/wallet'
 import { ShieldCheck } from 'react-bootstrap-icons'
 import { useHistory } from 'react-router-dom'
 
