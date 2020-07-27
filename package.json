@@ -2,17 +2,19 @@
   "name": "aurbit-monorepo",
   "version": "1.0.0",
   "private": true,
-  "licence": "MIT",
+  "license": "MIT",
   "engine": {
     "node": "10.22, 11.15"
   },
   "scripts": {
+    "start": "yarn workspace client start",
     "client:dev": "yarn workspace client start",
     "client:build": "yarn workspace client build --max-old-space-size=12288",
     "client:eject": "yarn workspace client eject",
     "client:test": "yarn workspace client test",
     "truffle:compile": "cd packages/truffle && truffle compile",
-    "truffle:deploy": "cd packages/truffle && truffle deploy"
+    "truffle:deploy": "cd packages/truffle && truffle deploy -f",
+    "truffle:migrate": "cd packages/truffle && rm -rf build && truffle migrate"
   },
   "workspaces": {
     "packages": ["packages/*"]

@@ -7,7 +7,6 @@ contract AvatarAUR is ERC721 {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
     address payable owner;
-    uint256 public mintingFee = 10**16;
 
     //uint dnasize = 16;
     //uint dnamod = 10 ** dnasize;
@@ -20,9 +19,6 @@ contract AvatarAUR is ERC721 {
     Avatar[] public avatars;
     mapping(uint256 => uint256) public TokenIDtoAvID;
 
-    event NewAvatar(uint256 tid, string message);
-    event FeeChanged(uint256 fee, string message);
-
     constructor() public ERC721("Aurbit Avatar", "AURA") {
         owner = msg.sender; //set owner addres as sender on deploy
     }
@@ -31,26 +27,13 @@ contract AvatarAUR is ERC721 {
         owner.transfer(address(this).balance);
     }
 
-    function changeMintingFee(uint256 _mintingFee) public returns (bool) {
-        require(msg.sender == owner, "UNAUTHORIZED");
-        mintingFee = _mintingFee;
-        emit FeeChanged(
-            _mintingFee,
-            "The fee to mint and Aurbit Avatar has changed"
-        );
-    }
-
     function mintAvatar(string memory name, uint256 _userDNA)
         public
         payable
         returns (uint256)
     {
-        // user must pay the fee to mint the avatar
-        require(msg.value >= mintingFee, "INSUFFICIENT ETH SENT");
-
-        // TODO
-        // forward the fee to a governance contract
-        forward();
+        require(msg.value == 10**16, "pay 0.01 eth");
+        forward(); //enforce fee of 0.01 and forward to owner. bad way?
         _tokenIds.increment();
         uint256 newItemId = _tokenIds.current();
         _mint(msg.sender, newItemId);
@@ -70,10 +53,6 @@ contract AvatarAUR is ERC721 {
                 )
             )
         );
-
-        // new avatar event
-        emit NewAvatar(newItemId, "A new avatar was born to the Universe!");
-
         //sample description and sample image uri should be replaced with variables, didnt bother declaring them yet
         return newItemId;
     }
@@ -126,7 +105,7 @@ contract AvatarAUR is ERC721 {
 
     function getDNA(uint256 tid) public view returns (uint256) {
         //gets DNA from token ID. not sure the exact proper error handling for this.
-        require(tid <= avatars.length, "INVALID ID");
+        require(tid <= avatars.length);
         return avatars[TokenIDtoAvID[tid]].dna;
     }
 }

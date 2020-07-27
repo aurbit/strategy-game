@@ -1,16 +1,55 @@
-# Aurbit Mono Repo
+# Aurbit Strategy Game
 
-### Scripts
+Aurbit is an Interplanetary Strategy game built with Ethereum Contracts. The objective of the game is to hold pixel of land on a planet for as many blocks as possible. Each new block will mint new AUR tokens according to how many land pixels you hold.
+
+## How to Play
+
+Clone the repo onto your computer or hit the url at: https://aurbit.io. To build the repo, you will need the following:
+
+Dependencies:
+
+- NodeJS
+- Yarn
+- Truffle
+
+To get started, build the repo on your machine.
+
+```
+git clone git@github.com:aurbit/strategy-game
+cd strategy-game
+npm i -g yarn
+npm i -g truffle
+
+yarn
+yarn start
+```
+
+## Game Mechanics and Rules
+
+// TODO
+
+## Governence
+
+// TODO
+
+## AUR Token
+
+// TODO
+
+## How to Play
+
+// TODO
+
+### Developers
+
+![Standard Js](https://cdn.rawgit.com/feross/standard/master/badge.svg)
 
 - `yarn client:dev`: This will run the react application development server
 - `yarn eth:chain`: This will run a local EVM node
 - `yarn eth:console`: Compile contracts and attach to an EVM node
 - `yarn eth:compile`: Compile the solidity contracts.
-- `yarn eth:publish`: This will publish the contracts to the ethereum network.
-- `yarn eth:buidler`: Run the buidler cli.
-- `yarn eth:test`: Run the solidity tests.
-- `yarn eth:watch`: Watch for changes to the contracts and recompile.
-- `yarn eth:ipfs`: Connect to jsipfs cli.
+- `yarn eth:deploy`: Compile the solidity contracts.
+- `yarn eth:migrate`: This will publish the contracts to the ethereum network.
 
 ### Monorepo Methodology
 
@@ -20,36 +59,3 @@
 4. In the **root** `package.json` add your script named after the script you made in your project to run what ever you need inside the project I.E
 5. Install project dependant npm packages within the projects `package.json` its self
 6. In the event you need global packages (I.E If we were going to use jest to test in many projects - instead of installing it at each project package level - you could install it at the root project level)
-
-#### Example
-
-## Folder Structure - Root Level
-
-```
-/node_modules
-/packages
-    /buidler
-    /react-app
-    /my-project
-        index.js
-        package.json (name inside this file is "my-project")
-package.json
-README.MD
-```
-
-#### Package.json - My Project
-
-```
-  "scripts": {
-    "server:start": "node index.js",
-  },
-```
-
-#### Package.json - Root Level
-
-```
-  "scripts": {
-    "client:dev": "yarn workspace react-app start",
-    "any:name": "yarn workspace my-project server:start"
-  },
-```

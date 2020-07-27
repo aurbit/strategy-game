@@ -1,60 +1,82 @@
 import contextFactory, { STATUS } from 'shared/context/factory'
 import Web3 from 'web3'
 
+export { STATUS }
+
 const initialState = {
   status: STATUS.INIT,
-  web3: null,
-  account: [],
   network: null,
-  networkId: null,
-  isMetamaskInstalled: null
+  web3: null
+}
+
+export const availableNetworks = {
+  DEVELOPMENT: 'development',
+  MAINNET: 'mainnet',
+  ROPSTEN: 'ropsten',
+  RINKEBY: 'rinkeby'
 }
 
 const actions = {
-  INIT_WEB3: 'INIT_WEB3',
-  INIT_WEB3_REQUEST: 'INIT_WEB3_REQUEST',
-  INIT_WEB3_SUCCESS: 'INIT_WEB3_SUCCESS',
-  INIT_WEB3_FAILURE: 'INIT_WEB3_FAILURE',
-  UPDATE_NETWORK: 'UPDATE_NETWORK',
-  UPDATE_ACCOUNT: 'UPDATE_ACCOUNT'
+  SET_WEB3_PROVIDER: 'SET_WEB3_PROVIDER'
 }
 
 export const reducer = (state, action) => {
   switch (action.type) {
-    case actions.INIT_WEB3:
+    case actions.SET_WEB3_PROVIDER: {
       return {
         ...state,
-        web3: action.payload.web3,
-        account: action.payload.account,
+        status: STATUS.IDLE,
         network: action.payload.network,
-        isMetamaskInstalled: action.payload.isMetamaskInstalled
+        web3: action.payload.web3
       }
-    case actions.UPDATE_ACCOUNT:
-      return {
-        ...state,
-        account: action.payload
-      }
-    case actions.UPDATE_NETWORK:
-      return {
-        ...state,
-        networkId: action.payload.id,
-        network: action.payload.network
-      }
+    }
     default:
       break
   }
 }
 
-export const initWeb3 = (dispatch, data) => {
-  dispatch({ type: actions.INIT_WEB3, payload: data })
-}
+export const setProvider = (dispatch, network) => {
+  const url = (network, key) => `wss://${network}.infura.io/ws/v3/${key}`
+  const key = '0f76dc369ae847dba3d00ac6427f0b42'
 
-export const updateAccount = (dispatch, data) => {
-  dispatch({ type: actions.UPDATE_ACCOUNT, payload: data })
-}
+  const dispatchHelper = () => {
+    const web3 = new Web3(url(network, key))
+    dispatch({
+      type: actions.SET_WEB3_PROVIDER,
+      payload: { network, web3 }
+    })
+  }
 
-export const updateNetwork = (dispatch, data) => {
-  dispatch({ type: actions.UPDATE_NETWORK, payload: data })
+  switch (network) {
+    case availableNetworks.DEVELOPMENT: {
+      const web3 = new Web3('http://localhost:7545')
+      dispatch({
+        type: actions.SET_WEB3_PROVIDER,
+        payload: { network, web3 }
+      })
+      break
+    }
+    case availableNetworks.MAINNET: {
+      dispatchHelper()
+      break
+    }
+    case availableNetworks.ROPSTEN: {
+      dispatchHelper()
+      break
+    }
+    case availableNetworks.RINKEBY: {
+      dispatchHelper()
+      break
+    }
+    default: {
+      const web3 = new Web3(url('mainnet', key))
+      dispatch({
+        type: actions.SET_WEB3_PROVIDER,
+        payload: { network, web3 }
+      })
+      break
+    }
+  }
 }
 
 export default contextFactory('Web3', initialState, reducer)
