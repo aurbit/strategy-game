@@ -1,6 +1,20 @@
 import React from 'react'
 import { Form, Button } from 'react-bootstrap'
 import styles from './index.module.css'
+
+const SKIN_COLOR = [
+  { value: '#4A2E1D', id: 1 },
+  { value: '#674732', id: 2 },
+  { value: '#DBA786', id: 3 },
+  { value: '#C98D40', id: 4 },
+  { value: '#C9A440', id: 5 }
+]
+
+const AVATARS = [
+  { value: 'human_male', label: 'Male' },
+  { value: 'human_female', label: 'Female' }
+]
+
 const CreateCharForm = ({
   onChangeRange,
   onChangeRadio,
@@ -24,26 +38,19 @@ const CreateCharForm = ({
           key="inline-radio"
           className="mt-4 mb-3 d-flex justify-content-center"
         >
-          <Form.Check
-            className="text-white"
-            inline
-            onChange={onChangeRadio}
-            checked={gender === 'human_male'}
-            value="human_male"
-            label="Male"
-            type="radio"
-            id="q157"
-          />
-          <Form.Check
-            inline
-            onChange={onChangeRadio}
-            value="human_female"
-            checked={gender === 'human_female'}
-            className="text-white"
-            label="Female"
-            type="radio"
-            id="q157"
-          />
+          {AVATARS.map((item) => {
+            return (
+              <Form.Check
+                className="text-white"
+                inline
+                onChange={onChangeRadio}
+                checked={gender === item.value}
+                value={item.value}
+                label={item.label}
+                type="radio"
+              />
+            )
+          })}
         </div>
       </Form.Group>
       <Form.Group>
@@ -68,49 +75,18 @@ const CreateCharForm = ({
       </Form.Group>
       <Form.Group>
         <div style={{ fontSize: 20 }} key="inline-check" className="mt-4 mb-3">
-          <Form.Check
-            inline
-            onChange={onChangeSkin}
-            checked={skinColor === '#C9A440'}
-            value="#C9A440"
-            type="checkbox"
-            id="check-skin-1"
-          />
-          <Form.Check
-            inline
-            onChange={onChangeSkin}
-            value="#C98D40"
-            checked={skinColor === '#C98D40'}
-            className="text-white"
-            type="checkbox"
-            id="check-skin-2"
-          />
-          <Form.Check
-            inline
-            onChange={onChangeSkin}
-            checked={skinColor === '#DBA786'}
-            value="#DBA786"
-            type="checkbox"
-            id="check-skin-3"
-          />
-          <Form.Check
-            inline
-            onChange={onChangeSkin}
-            value="#674732"
-            checked={skinColor === '#674732'}
-            className="text-white"
-            type="checkbox"
-            id="check-skin-4"
-          />
-          <Form.Check
-            inline
-            onChange={onChangeSkin}
-            value="#4A2E1D"
-            checked={skinColor === '#4A2E1D'}
-            className="text-white"
-            type="checkbox"
-            id="check-skin-5"
-          />
+          {SKIN_COLOR.map((item) => {
+            return (
+              <Form.Check
+                inline
+                onChange={onChangeSkin}
+                value={item.value}
+                checked={skinColor === item.value}
+                className="text-white"
+                type="checkbox"
+              />
+            )
+          })}
         </div>
       </Form.Group>
       <div className="text-center mt-5">
