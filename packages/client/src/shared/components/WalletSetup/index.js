@@ -1,6 +1,6 @@
 import React from 'react'
 import { Modal, Button, ListGroup, Image, Row, Col } from 'react-bootstrap'
-import WalletContext, { setWallet, availableWallets } from '../../store/wallet'
+import WalletContext, { setWallet, availableWallets } from 'store/wallet'
 import { ShieldCheck } from 'react-bootstrap-icons'
 import { useHistory } from 'react-router-dom'
 
@@ -54,16 +54,19 @@ const WalletSelectModal = props => {
                   setWallet(walletDispatch, availableWallets.METAMASK)
                 }
               >
-                <Col>
+                <Col xs={3}>
                   <Image
                     width={80}
                     height={80}
                     src='images/metamask-logo.png'
                   />
                 </Col>
-                <Col md='auto'>MetaMask</Col>
-                <Col md='auto' order='last'>
-                  {activeWallet === availableWallets.METAMASK ? (
+                <Col xs={6} md={7}>
+                  MetaMask
+                </Col>
+                <Col xs={3} md='auto' order='last'>
+                  {window.ethereum.selectedAddress &&
+                  activeWallet === availableWallets.METAMASK ? (
                     <ShieldCheck color='white' size={48} />
                   ) : null}
                 </Col>
@@ -82,15 +85,17 @@ const WalletSelectModal = props => {
                 setWallet(walletDispatch, availableWallets.WALLET_CONNECT)
               }
             >
-              <Col>
+              <Col xs={3}>
                 <Image
                   width={80}
                   height={80}
                   src='images/wallet-connect-logo.png'
                 />
               </Col>
-              <Col md='auto'>Wallet Connect</Col>
-              <Col md='auto' order='last'>
+              <Col xs={6} md={7}>
+                Wallet Connect
+              </Col>
+              <Col xs={2} md='auto' order='last'>
                 {activeWallet === availableWallets.WALLET_CONNECT ? (
                   <ShieldCheck color='white' size={48} />
                 ) : null}

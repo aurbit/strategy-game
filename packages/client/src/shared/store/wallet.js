@@ -84,7 +84,7 @@ export const initWallet = async dispatch => {
   // check if any wallets have been connected
   // check if metamask is connected
   dispatch({ type: actions.INIT_WALLET })
-  if (window.ethereum) {
+  if (window.ethereum.selectedAddress) {
     dispatch({
       type: actions.SET_WALLET,
       payload: { vendor: availableWallets.METAMASK, wallet: window.ethereum }
@@ -113,10 +113,16 @@ export const setWallet = async (dispatch, vendor) => {
     case availableWallets.METAMASK: {
       const { ethereum } = window
       ethereum.request({ method: 'eth_requestAccounts' })
-      dispatch({
-        type: actions.SET_WALLET,
-        payload: { vendor, wallet: ethereum }
-      })
+
+      const interval = setInterval(() => {
+        if (window.ethereum.selectedAddress) {
+          dispatch({
+            type: actions.SET_WALLET,
+            payload: { vendor, wallet: ethereum }
+          })
+          clearInterval(interval)
+        }
+      }, 100)
 
       // TODO need to move or clean up the wallet
       // event handling
@@ -129,6 +135,11 @@ export const setWallet = async (dispatch, vendor) => {
       ethereum.on('accountsChanged', accounts => {})
 
       ethereum.on('chainChanged', chainId => {
+        window.location.reload()
+      })
+
+      ethereum.on('disconnected', () => {
+        console.log('ereh')
         window.location.reload()
       })
 

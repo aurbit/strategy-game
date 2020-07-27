@@ -1,4 +1,4 @@
-export const hairOptions = (value) => {
+export const hairOptions = value => {
   let hex = ''
   switch (parseInt(value, 10)) {
     case 0:
@@ -46,7 +46,7 @@ export const eyeOptions = (value) => {
   return hex
 }
 
-export const avatarImage = (value) => {
+export const avatarImage = value => {
   let avatar = ''
   switch (value) {
     case 'human_male':
