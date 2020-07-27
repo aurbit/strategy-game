@@ -38,9 +38,10 @@ const CreateCharForm = ({
           key="inline-radio"
           className="mt-4 mb-3 d-flex justify-content-center"
         >
-          {AVATARS.map((item) => {
+          {AVATARS.map((item, index) => {
             return (
               <Form.Check
+                key={index}
                 className="text-white"
                 inline
                 onChange={onChangeRadio}
@@ -76,10 +77,11 @@ const CreateCharForm = ({
       <Form.Group>
         <Form.Label className="text-white">Skin Color</Form.Label>
         <div key="inline-check" className="mb-3">
-          {SKIN_COLOR.map((item) => {
+          {SKIN_COLOR.map((item, index) => {
             return (
               <Form.Check
                 inline
+                key={index}
                 onChange={onChangeSkin}
                 value={item.value}
                 checked={skinColor === item.value}
