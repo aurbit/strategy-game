@@ -1,12 +1,7 @@
 import React from 'react'
 import SVG from 'react-inlinesvg' // We can maybe replace this with a native fetch and inner HTML - This lib does same
 import { Container, Row, Col } from 'react-bootstrap'
-import {
-  hairOptions,
-  skinOptions,
-  eyeOptions,
-  avatarImage
-} from './avatar-utils'
+import { hairOptions, eyeOptions, avatarImage } from './avatar-utils'
 
 import styles from './index.module.css'
 import logo from 'shared/images/logo.svg'
