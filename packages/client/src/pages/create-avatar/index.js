@@ -1,7 +1,7 @@
 import React from 'react'
 import SVG from 'react-inlinesvg' // We can maybe replace this with a native fetch and inner HTML - This lib does same
 import { Container, Row, Col } from 'react-bootstrap'
-import { hairOptions, eyeOptions, avatarImage } from './avatar-utils'
+import { avatarImage } from './avatar-utils'
 
 import styles from './index.module.css'
 import logo from 'shared/images/logo.svg'
@@ -23,13 +23,12 @@ const CreateCharacterContainer = () => {
     style.sheet.insertRule(`.skin-color {fill: ${skinColor}}`)
   }, [hairColor, eyeColor, skinColor])
 
-  function handleOnChangeRange(e) {
-    const { id, value } = e.target
-    if (id === 'hair') {
-      setHairColor(hairOptions(value))
-    } else {
-      setEyeColor(eyeOptions(value))
-    }
+  function handleOnHairChangeComplete(color) {
+    setHairColor(color.hex)
+  }
+
+  function handleOnEyeChangeComplete(color) {
+    setEyeColor(color.hex)
   }
 
   function handleOnChangeRadio(e) {
@@ -72,8 +71,9 @@ const CreateCharacterContainer = () => {
               skinColor={skinColor}
               onSubmit={handleOnSubmit}
               onChangeRadio={handleOnChangeRadio}
-              onChangeRange={handleOnChangeRange}
               onChangeSkin={handleOnChangeSkin}
+              onHairChangeComplete={handleOnHairChangeComplete}
+              onEyeChangeComplete={handleOnEyeChangeComplete}
             />
           </Col>
         </Row>

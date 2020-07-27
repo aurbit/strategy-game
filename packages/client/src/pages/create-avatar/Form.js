@@ -30,7 +30,8 @@ const DEFAULT_SKIN = {
 }
 
 const CreateCharForm = ({
-  onChangeRange,
+  onHairChangeComplete,
+  onEyeChangeComplete,
   onChangeRadio,
   onChangeSkin,
   gender,
@@ -80,7 +81,11 @@ const CreateCharForm = ({
       </Form.Group>
       <Form.Group className="d-flex align-items-center">
         <Form.Label className="text-white">Hair Color</Form.Label>
-        <div className={styles.swatch} id="hair-swatch" onClick={handleHairPicker}>
+        <div
+          className={styles.swatch}
+          id="hair-swatch"
+          onClick={handleHairPicker}
+        >
           <div
             className={styles.color}
             style={{
@@ -91,13 +96,21 @@ const CreateCharForm = ({
         {displayHairPicker ? (
           <div className={styles.popOver}>
             <div className={styles.cover} onClick={handleHairPicker} />
-            <ChromePicker color={tempHairColor} onChange={handleChangeHair} />
+            <ChromePicker
+              color={tempHairColor}
+              onChange={handleChangeHair}
+              onChangeComplete={onHairChangeComplete}
+            />
           </div>
         ) : null}
       </Form.Group>
       <Form.Group className="d-flex align-items-center">
         <Form.Label className="text-white">Eye Color</Form.Label>
-        <div className={styles.swatch} id="eye-swatch" onClick={handleEyePicker}>
+        <div
+          className={styles.swatch}
+          id="eye-swatch"
+          onClick={handleEyePicker}
+        >
           <div
             className={styles.color}
             style={{
@@ -108,7 +121,11 @@ const CreateCharForm = ({
         {displayEyePicker ? (
           <div className={styles.popOver}>
             <div className={styles.cover} onClick={handleEyePicker} />
-            <ChromePicker color={tempEyeColor} onChange={handleChangeEye} />
+            <ChromePicker
+              color={tempEyeColor}
+              onChange={handleChangeEye}
+              onChangeComplete={onEyeChangeComplete}
+            />
           </div>
         ) : null}
       </Form.Group>
