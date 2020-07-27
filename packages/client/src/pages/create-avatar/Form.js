@@ -15,6 +15,20 @@ const AVATARS = [
   { value: 'human_female', label: 'Female' }
 ]
 
+const DEFAULT_HAIR = {
+  r: '241',
+  g: '112',
+  b: '19',
+  a: '1'
+}
+
+const DEFAULT_SKIN = {
+  r: '241',
+  g: '112',
+  b: '19',
+  a: '1'
+}
+
 const CreateCharForm = ({
   onChangeRange,
   onChangeRadio,
@@ -23,24 +37,16 @@ const CreateCharForm = ({
   skinColor,
   onSubmit
 }) => {
-  const [displayPicker, setDisplayPicker] = React.useState(false)
-  const [color, setColor] = React.useState({
-    r: '241',
-    g: '112',
-    b: '19',
-    a: '1'
-  })
-  const handleClick = () => {
-    setDisplayPicker(!displayPicker)
-  }
+  const [displayHairPicker, setDisplayHairPicker] = React.useState(false)
+  const [displayEyePicker, setDisplayEyePicker] = React.useState(false)
+  const [tempHairColor, setTempHairColor] = React.useState(DEFAULT_HAIR)
+  const [tempEyeColor, setTempEyeColor] = React.useState(DEFAULT_SKIN)
 
-  const handleClose = () => {
-    setDisplayPicker(false)
-  }
+  const handleHairPicker = () => setDisplayHairPicker(!displayHairPicker)
+  const handleEyePicker = () => setDisplayEyePicker(!displayEyePicker)
+  const handleChangeHair = (color) => setTempHairColor(color.rgb)
+  const handleChangeEye = (color) => setTempEyeColor(color.rgb)
 
-  const handleChange = (color) => {
-    setColor(color.rgb)
-  }
   return (
     <Form onSubmit={onSubmit} className={styles.formWrapper}>
       <Form.Group className="d-flex justify-content-center">
@@ -74,35 +80,35 @@ const CreateCharForm = ({
       </Form.Group>
       <Form.Group className="d-flex align-items-center">
         <Form.Label className="text-white">Hair Color</Form.Label>
-        <div className={styles.swatch} onClick={handleClick}>
+        <div className={styles.swatch} id="hair-swatch" onClick={handleHairPicker}>
           <div
             className={styles.color}
             style={{
-              background: `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a} )`
+              background: `rgba(${tempHairColor.r}, ${tempHairColor.g}, ${tempHairColor.b}, ${tempHairColor.a} )`
             }}
           />
         </div>
-        {displayPicker ? (
+        {displayHairPicker ? (
           <div className={styles.popOver}>
-            <div className={styles.cover} onClick={handleClose} />
-            <ChromePicker color={color} onChange={handleChange} />
+            <div className={styles.cover} onClick={handleHairPicker} />
+            <ChromePicker color={tempHairColor} onChange={handleChangeHair} />
           </div>
         ) : null}
       </Form.Group>
       <Form.Group className="d-flex align-items-center">
         <Form.Label className="text-white">Eye Color</Form.Label>
-        <div className={styles.swatch} onClick={handleClick}>
+        <div className={styles.swatch} id="eye-swatch" onClick={handleEyePicker}>
           <div
             className={styles.color}
             style={{
-              background: `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a} )`
+              background: `rgba(${tempEyeColor.r}, ${tempEyeColor.g}, ${tempEyeColor.b}, ${tempEyeColor.a} )`
             }}
           />
         </div>
-        {displayPicker ? (
+        {displayEyePicker ? (
           <div className={styles.popOver}>
-            <div className={styles.cover} onClick={handleClose} />
-            <ChromePicker color={color} onChange={handleChange} />
+            <div className={styles.cover} onClick={handleEyePicker} />
+            <ChromePicker color={tempEyeColor} onChange={handleChangeEye} />
           </div>
         ) : null}
       </Form.Group>
@@ -134,22 +140,3 @@ const CreateCharForm = ({
 }
 
 export default CreateCharForm
-
-{
-  /* <Form.Control
-          className="custom-range"
-          step="25"
-          type="range"
-          id="hair"
-          onChange={onChangeRange}
-        /> */
-}
-
-
-{/* <Form.Control
-          step="25"
-          className="custom-range"
-          type="range"
-          id="skin"
-          onChange={onChangeRange}
-        /> */}
