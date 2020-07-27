@@ -74,7 +74,8 @@ const CreateCharForm = ({
         />
       </Form.Group>
       <Form.Group>
-        <div style={{ fontSize: 20 }} key="inline-check" className="mt-4 mb-3">
+        <Form.Label className="text-white">Skin Color</Form.Label>
+        <div key="inline-check" className="mb-3">
           {SKIN_COLOR.map((item) => {
             return (
               <Form.Check
