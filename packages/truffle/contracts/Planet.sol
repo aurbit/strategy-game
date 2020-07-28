@@ -38,7 +38,7 @@ contract Planet is IERC777Recipient {
     event PlayerBalanceChange(uint _avatarId,uint _balance_ammount); //implemented
 
    
-    uint8[N / 8] public map;
+    uint8[N / 8] map;
     //actually should have ownership array. maps tile to owner
     struct tile {
         uint16 ind; // tile address/index
@@ -51,8 +51,8 @@ contract Planet is IERC777Recipient {
         uint256 avatarId; //tokenid of avatar
         uint256 balance; //BALANCE OF UNALOCATED TOKENS
     }
-    Player[] Players;
-    tile[] Tiles;
+    Player[] public Players;
+    tile[] public Tiles;
     constructor(address payable _avatarContract, uint8[N / 8] memory _map)//,address payable addyerc1820)
         public
     {
@@ -333,6 +333,9 @@ contract Planet is IERC777Recipient {
            return x;
         }
 
+    }
+    function getMap() public view returns(uint8[N/8] memory){
+        return(map);
     }
     function RiskRoll(uint mybal, uint opbal) public view returns (uint,uint){
         //does risk style roll. thing is it operates on sats! so this loop is quite long. 
