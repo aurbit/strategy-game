@@ -9,12 +9,20 @@ import "./IPlanet.sol";
 contract AURGov{
 address payable owner;
 address[] Planets;
-address payable[] Admins;
+//address payable[] Admins;
 address tokenContract;
+address avatarContract;
+mapping (address => bool) Admins;
+string UNAUTHMSG = 'UNAUTHORIZED';
 IAUR private AURToken;
 
-constructor() public {
+constructor(address initplanet,address _tokenContract,address _avatarContract) public {
 owner = msg.sender;
+Admins[owner] = true;
+Admins[address(0x0)] = false;
+addPlanet(initplanet);
+setTokenContract(_tokenContract);
+avatarContract = _avatarContract;
 }
 
 
@@ -22,11 +30,17 @@ owner = msg.sender;
         require(isAuthed());
         msg.sender.transfer(address(this).balance);
     }
-   function setTokenContract(address payable _tokencontract) public{
+   function setTokenContract(address _tokencontract) public{
        require(isAuthed());
        tokenContract = _tokencontract;
        AURToken = IAUR(_tokencontract);
     }
+   function setAvatarContract(address _avatarcontract) public{
+     //have to have this so you can replace the avatar contract address in planet. or just not have it...
+     require(isAuthed());
+     avatarContract = _avatarcontract;     
+   }
+   
 
    function addPlanet(address _newplanet) public{
       require(isAuthed());
@@ -36,28 +50,14 @@ owner = msg.sender;
 
    function addAdmin(address payable _newadmin) public{
       require(isAuthed());
-      Admins.push(_newadmin);
+      Admins[_newadmin] = true;
    }
    function disableAdmin(address _rmadmin) public{
-      for(uint i=0;i<=Admins.length;i++){
-          if (_rmadmin==Admins[i]){
-              Admins[i] = Admins[Admins.length-1];
-              //Admins.length--;
-              delete Admins[Admins.length-1];
-              break;
-          }
-      }
+      Admins[_rmadmin] = false;
    }
    function isAuthed() private view returns(bool){
-     bool out = false;
-     for(uint i=0;i<=Admins.length;i++){
-         if (msg.sender==Admins[i]){
-            out = true;
-            break;
-         }
-     }
-     return out;
+       return Admins[msg.sender];
    }
-   
+      
 
 }
