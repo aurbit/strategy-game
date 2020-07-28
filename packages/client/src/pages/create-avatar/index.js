@@ -2,7 +2,7 @@ import React from 'react'
 import SVG from 'react-inlinesvg' // We can maybe replace this with a native fetch and inner HTML - This lib does same
 import { Container, Row, Col } from 'react-bootstrap'
 import { avatarImage, parseDataArray } from './avatar-utils'
-
+// import Avatar from 'shared/components/PlayerAvatar'
 import styles from './index.module.css'
 import logo from 'shared/images/logo.svg'
 import CreateCharForm from './Form'
