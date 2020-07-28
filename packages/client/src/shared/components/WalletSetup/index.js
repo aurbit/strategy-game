@@ -28,7 +28,6 @@ const WalletSelectModal = props => {
 
   const handleContinue = () => {
     props.onHide()
-
     if (props.link) {
       history.push(props.link)
     }

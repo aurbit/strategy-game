@@ -1,7 +1,8 @@
-import { availablePlanets } from 'shared/store/planet'
-import { availableNetworks } from 'shared/store/web3'
+import PlanetContext, { availablePlanets } from 'shared/store/planet'
+import Web3Context, { availableNetworks } from 'shared/store/web3'
+import WalletContext, { availableWallets } from 'shared/store/wallet'
 
-import PlanetEarthDevelopment from 'contracts/development/Planet'
+import PlanetDevelopment from 'contracts/development/Planet'
 import AvatarDevelopment from 'contracts/development/AvatarAur'
 import TokenDevelopment from 'contracts/development/AURToken'
 
@@ -21,35 +22,31 @@ import TokenDevelopment from 'contracts/development/AURToken'
 // PLANET.sol
 // get the map from Planet.sol
 
-const useAurbit = ({
-  planetState,
-  planetDispatch,
-  web3State,
-  web3Dispatch,
-  walletState,
-  walletDispatch
-}) => {
+const useAurbit = () => {
   // need to handle metamask or wallet connect
+  const { web3, network } = Web3Context.useState()
+  const { onPlanet } = PlanetContext.useState()
+  const { activeWallet, wallets } = WalletContext.useState()
 
   // toss errors if it's not used correctly
-  if (!web3State) {
-    throw new Error('You must provide the web3 context state object [web3State')
-  }
-
-  const { network, web3 } = web3State
+  // if (!web3State) {
+  //   throw new Error(
+  //     'You must provide the web3 context state object [web3State]'
+  //   )
+  // }
 
   // set the contracts artifacts according to the network
-  const useEarthArtifacts = () => {
+  const usePlanetArtifacts = () => {
     switch (network) {
       case availableNetworks.DEVELOPMENT: {
-        const { address, artifact } = PlanetEarthDevelopment
+        const { address, artifact } = PlanetDevelopment
         return { address, abi: artifact.abi }
       }
       case availableNetworks.MAINNET:
       case availableNetworks.ROPSTEN:
       case availableNetworks.RINKEBY:
       default: {
-        const { address, abi } = PlanetEarthDevelopment
+        const { address, abi } = PlanetDevelopment
         return { address, abi }
       }
     }
@@ -104,23 +101,23 @@ const useAurbit = ({
 
   // allows passing in a new address to override the
   // default planet that was created
-  const useEarthContract = addressOverride => {
-    const { address, abi } = useEarthArtifacts()
+  const usePlanetContract = addressOverride => {
+    const { address, abi } = usePlanetArtifacts()
     const useAddy = addressOverride ? addressOverride : address
     const planet = new web3.eth.Contract(abi, useAddy)
-    return { planet, useAddy, abi }
+    return { planet, address: useAddy, abi }
   }
   // use web3 provider for public network calls
 
   // should return all of the methods for the Planet contracts
-  const usePlanet = planetName => {
-    const isPlanet = Object.keys(availablePlanets).includes(planetName)
+  const usePlanet = () => {
+    const isPlanet = Object.keys(availablePlanets).includes(onPlanet)
 
     if (!isPlanet) {
       throw new Error('Invalid Planet being called from useAurbit')
     }
 
-    const { earth } = useEarthContract()
+    const { planet } = usePlanetContract()
     // need to handle swtiching different planets
     // store the map arrays in Fleek to make it easier
     const getMap = async planetName => {
@@ -146,10 +143,29 @@ const useAurbit = ({
       }
     }
 
-    return { getMap }
+    return { getMap, planet }
   }
 
-  return { usePlanet }
+  const useWallet = () => {
+    // handle wallet events
+    switch (activeWallet) {
+      case availableWallets.METAMASK: {
+        window.ethereum.on('accountsChanged', () => document.reload())
+      }
+    }
+    const getAddress = () => {
+      switch (activeWallet) {
+        case availableWallets.METAMASK:
+          return wallets[availableWallets.METAMASK].selectedAddress
+        case availableWallets.WALLET_CONNECT:
+          return wallets[availableWallets.WALLET_CONNECT].accounts[0]
+      }
+    }
+
+    return { getAddress }
+  }
+
+  return { usePlanet, useWallet }
 }
 
 export default useAurbit
