@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Navbar from 'shared/components/Layout/Navbar'
 import { Container, Col, Row } from 'react-bootstrap'
 import ControlPanel from 'pages/planet/components/ControlPanel'
@@ -15,23 +15,28 @@ const styles = {
     padding: 0
   },
   control: {
-    backgroundColor: '#fff',
-    border: '2px solid #4d4d1d',
-    marginLeft: 1
+    padding: 1
   }
 }
 
 export default props => {
+  const [mapReady, setMapReady] = useState(false)
+  const [hoverTile, setHoverTile] = useState(0)
   return (
     <MapContext.Provider>
       <Navbar />
       <Container fluid>
         <Row style={styles.row}>
           <Col style={styles.col} md='auto'>
-            <Map />
+            <Map
+              mapReady={mapReady}
+              setMapReady={setMapReady}
+              hoverTile={hoverTile}
+              setHoverTile={setHoverTile}
+            />
           </Col>
           <Col style={styles.control}>
-            <ControlPanel />
+            <ControlPanel mapReady={mapReady} hoverTile={hoverTile} />
           </Col>
         </Row>
       </Container>
