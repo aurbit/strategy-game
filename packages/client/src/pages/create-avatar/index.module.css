@@ -51,3 +51,20 @@
   bottom: 0px;
   left: 0px;
 }
+
+.avatarInput {
+  max-width: 300px;
+  background-color: black;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-radius: 0;
+  border-width: 3px;
+}
+
+.avatarInput::placeholder {
+  color: white;
+  text-align: center;
+  font-size: 20px;
+  color: gray;
+}

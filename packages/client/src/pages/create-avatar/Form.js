@@ -34,9 +34,9 @@ const CreateCharForm = ({
     <Form onSubmit={onSubmit} className={styles.formWrapper}>
       <Form.Group className="d-flex justify-content-center">
         <Form.Control
-          style={{ maxWidth: 300 }}
           type="email"
-          placeholder="Enter Name..."
+          className={styles.avatarInput}
+          placeholder="Your Name"
         />
       </Form.Group>
       <Form.Group>
