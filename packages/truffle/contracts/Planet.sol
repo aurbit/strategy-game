@@ -18,7 +18,7 @@ contract Planet is IERC777Recipient {
     address payable avatarContract;
     uint256 constant Nx = 112; //must be div by 8
     uint256 constant Ny = 64;
-    uint256 constant N = Nx * Ny;
+    uint256 public constant N = Nx * Ny;
     string UNAUTHMSG = "UNAUTHORIZED";
     address payable tokenContract;
     IAUR private AURToken;
@@ -70,7 +70,15 @@ contract Planet is IERC777Recipient {
         //mkmap();
     }
 
-    function bytes2uint(bytes memory b) public pure returns (uint256) {
+    function getMap() public {
+        return map;
+    }
+
+    function bytes2uint(bytes memory b)
+        public
+        pure
+        returns (uint256[N / 8] memory)
+    {
         uint256 number;
         for (uint256 i = 0; i < b.length; i++) {
             number =

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Modal, Button, ListGroup, Image, Row, Col } from 'react-bootstrap'
-import WalletContext, { setWallet, availableWallets } from 'store/wallet'
+import WalletContext, { setWallet, availableWallets } from 'shared/store/wallet'
 import { ShieldCheck } from 'react-bootstrap-icons'
 import { useHistory } from 'react-router-dom'
 
@@ -12,7 +12,11 @@ export default props => {
       <Button variant='light' size='lg' onClick={() => setModalShow(true)}>
         {props.buttonText}
       </Button>
-      <WalletSelectModal show={modalShow} onHide={() => setModalShow(false)} />
+      <WalletSelectModal
+        link={props.link}
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+      />
     </div>
   )
 }
@@ -24,7 +28,10 @@ const WalletSelectModal = props => {
 
   const handleContinue = () => {
     props.onHide()
-    history.push('/planet')
+
+    if (props.link) {
+      history.push(props.link)
+    }
   }
 
   return (

@@ -1,7 +1,7 @@
 import React from 'react'
 import WalletSetup from 'shared/components/WalletSetup'
 import Navbar from 'shared/components/Layout/Navbar'
-import './style.css'
+import 'shared/styles/stars.css'
 
 const AuthPage = props => {
   return (
@@ -17,7 +17,7 @@ const AuthPage = props => {
             transform: 'translate(-50%, -50%)'
           }}
         >
-          <WalletSetup buttonText='Start Game' />
+          <WalletSetup buttonText='Start Game' link={'/avatar'} />
         </div>
       </div>
     </div>
