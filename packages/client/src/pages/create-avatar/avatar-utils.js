@@ -1,5 +1,5 @@
 const hexToRgb = (hex) => {
-  var c
+  let c
   if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
     c = hex.substring(1).split('')
     if (c.length === 3) {
@@ -42,12 +42,12 @@ export const avatarImage = (value) => {
   return avatar
 }
 
-export const SKIN_COLOR = [
-  { value: '#4A2E1D', id: 1 },
-  { value: '#674732', id: 2 },
-  { value: '#DBA786', id: 3 },
-  { value: '#C98D40', id: 4 },
-  { value: '#C9A440', id: 5 }
+export const SKIN_COLORS = [
+  '#4A2E1D',
+  '#674732',
+  '#DBA786',
+  '#C98D40',
+  '#C9A440'
 ]
 
 export const AVATARS = [

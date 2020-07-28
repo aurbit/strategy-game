@@ -2,9 +2,11 @@ import React from 'react'
 import { Form, Button } from 'react-bootstrap'
 import styles from './index.module.css'
 import { ChromePicker } from 'react-color'
+import ColorBoxes from 'shared/components/ColorBoxes'
 import {
   DEFAULT_COLOR,
   DEFAULT_SKIN,
+  SKIN_COLORS,
   AVATARS,
   SKIN_COLOR
 } from './avatar-utils'
@@ -118,21 +120,11 @@ const CreateCharForm = ({
         <Form.Label className="text-white font-weight-bold">
           Skin Color
         </Form.Label>
-        <div key="inline-check" className="mb-3">
-          {SKIN_COLOR.map((item, index) => {
-            return (
-              <Form.Check
-                inline
-                key={index}
-                onChange={onChangeSkin}
-                value={item.value}
-                checked={skinColor === item.value}
-                className="text-white"
-                type="checkbox"
-              />
-            )
-          })}
-        </div>
+        <ColorBoxes
+          defaultValue={skinColor}
+          colors={SKIN_COLORS}
+          onClick={onChangeSkin}
+        />
       </Form.Group>
       <div className="text-center mt-5">
         <Button type="submit" className={styles.submitBtn} variant="secondary">

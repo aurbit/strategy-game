@@ -24,3 +24,8 @@ code {
 .custom-range::-ms-thumb {
   background: #4287f5;
 }
+
+.custom-control-input:checked~.custom-checkbox::before {
+  color: white !important;
+  background-color: green !important;
+}

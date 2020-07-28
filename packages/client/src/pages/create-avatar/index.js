@@ -37,9 +37,8 @@ const CreateCharacterContainer = () => {
     setGender(e.target.value)
   }
 
-  function handleOnChangeSkin(e) {
-    console.log(e.target.value)
-    setSkinColor(e.target.value)
+  function handleOnChangeSkin(value) {
+    setSkinColor(value)
   }
 
   function handleOnSubmit(e) {
