@@ -1,0 +1,11 @@
+.colors {
+  height: 30px;
+  width: 30px;
+  margin-right: 15px;
+  cursor: pointer;
+  border: 1px solid grey;
+}
+
+.colors:hover {
+  border: 1px solid red;
+}

@@ -1,73 +1,30 @@
-export const hairOptions = value => {
-  let hex = ''
-  switch (parseInt(value, 10)) {
-    case 0:
-      hex = '#FF2D00'
-      break
-    case 25:
-      hex = '#FFF700'
-      break
-    case 50:
-      hex = '#00FF0A'
-      break
-    case 75:
-      hex = '#00E3FF'
-      break
-    case 100:
-      hex = '#5A00FF'
-      break
-    default:
-      console.log('ERROR')
+const hexToRgb = hex => {
+  let c
+  if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
+    c = hex.substring(1).split('')
+    if (c.length === 3) {
+      c = [c[0], c[0], c[1], c[1], c[2], c[2]]
+    }
+    c = '0x' + c.join('')
+    return [(c >> 16) & 255, (c >> 8) & 255, c & 255]
   }
-  return hex
+  throw new Error('Bad Hex')
 }
 
-export const eyeColor = value => {
-  let hex = ''
-  switch (value) {
-    case 0:
-      hex = '#a83232'
-      break
-    case 25:
-      hex = '#a83232'
-      break
-    case 50:
-      hex = '#a83232'
-      break
-    case 75:
-      hex = '#a83232'
-      break
-    case 100:
-      hex = '#a83232'
-      break
-    default:
-      throw new Error('Out of range')
+const parseGender = gender => {
+  if (gender === 'human_male') {
+    return 1
+  } else {
+    return 2
   }
-  return hex
 }
 
-export const skinOptions = value => {
-  let hex = ''
-  switch (parseInt(value)) {
-    case 0:
-      hex = '#C9A440'
-      break
-    case 25:
-      hex = '#C98D40'
-      break
-    case 50:
-      hex = '#DBA786'
-      break
-    case 75:
-      hex = '#674732'
-      break
-    case 100:
-      hex = '#4A2E1D'
-      break
-    default:
-      throw new Error('Out of range')
-  }
-  return hex
+export const parseDataArray = (hair, eyes, skin, gender) => {
+  const rgbHair = hexToRgb(hair)
+  const rgbEyes = hexToRgb(eyes)
+  const rgbSkin = hexToRgb(skin)
+  const genderResult = parseGender(gender)
+  return [...rgbHair, ...rgbEyes, ...rgbSkin, 0, 0, 0, 0, 0, genderResult]
 }
 
 export const avatarImage = value => {
@@ -83,4 +40,31 @@ export const avatarImage = value => {
       throw new Error('Out of range')
   }
   return avatar
+}
+
+export const SKIN_COLORS = [
+  '#4A2E1D',
+  '#674732',
+  '#DBA786',
+  '#C98D40',
+  '#C9A440'
+]
+
+export const AVATARS = [
+  { value: 'human_male', label: 'Male' },
+  { value: 'human_female', label: 'Female' }
+]
+
+export const DEFAULT_COLOR = {
+  r: '27',
+  g: '20',
+  b: '100',
+  a: '1'
+}
+
+export const DEFAULT_SKIN = {
+  r: '241',
+  g: '112',
+  b: '19',
+  a: '1'
 }
