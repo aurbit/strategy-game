@@ -1,6 +1,7 @@
 import React from 'react'
 import { Navbar } from 'react-bootstrap'
 import logo from 'shared/images/logo_full.svg'
+import NavUserBox from 'shared/components/NavUserBox'
 
 const styles = {
   brand: {
@@ -14,7 +15,7 @@ const NavbarComponent = ({ network, account }) => {
         <img alt='' src={logo} width='120' height='60' />
       </Navbar.Brand>
       <div style={{ color: 'white' }}>
-        {network} & {account}
+        <NavUserBox />
       </div>
     </Navbar>
   )
