@@ -1,5 +1,7 @@
 import React from 'react'
-import Aurbit from 'shared/services/aurbit'
+import { Col, Row } from 'react-bootstrap'
+
+import { usePlanet, useWallet } from 'shared/services/Aurbit'
 
 const styles = {
   container: {
@@ -8,14 +10,15 @@ const styles = {
   }
 }
 export default ({ mapReady }) => {
-  const { usePlanet, useWallet } = Aurbit()
-
-  const { planet } = usePlanet()
-  const { getAddress } = useWallet()
+  const { planetName } = usePlanet()
+  const { selectedAddress } = useWallet()
 
   return mapReady ? (
-    <div style={styles.container}>
-      <p>{mapReady}HERE</p>
-    </div>
+    <Row style={styles.container}>
+      <Col>
+        <Row>Planet: {planetName}</Row>
+        <Row>Wallet Address: {selectedAddress}</Row>
+      </Col>
+    </Row>
   ) : null
 }
