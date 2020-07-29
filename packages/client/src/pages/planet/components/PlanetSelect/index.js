@@ -13,38 +13,40 @@ import PlanetContext, {
   changePlanet,
   availablePlanets
 } from 'shared/store/planet'
-import 'shared/styles/stars.css'
+// import 'shared/styles/stars.css'
+
 export default props => {
   const { EARTH, MARS, VENUS } = availablePlanets
   return (
-    <div className='stars'>
-      <div className='twinkling'>
-        <Navbar />
-        <Container>
-          <Row className='mt-5'></Row>
-          <Row className='mt-5'></Row>
-          <Row className='mt-5'>
-            <h1>Choose your mission...</h1>
-          </Row>
-          <Row className='mt-5'></Row>
+    <div>
+      {/* <div className='twinkling'> */}
+      <Navbar />
+      <Container>
+        <Row className='mt-5'></Row>
+        <Row className='mt-5'></Row>
+        <Row className='mt-5'>
+          <h1>Choose your mission...</h1>
+        </Row>
+        <Row className='mt-5'></Row>
 
-          <Row className='mt-5'>
-            <Col md={4}>
-              <PlanetImage src={earthImage} />
-              <PlayPlanetButton planet={EARTH} />
-            </Col>
-            <Col md={4}>
-              <PlanetImage src={marsImage} />
-              <PlayPlanetButton planet={MARS} />
-            </Col>
-            <Col md={4}>
-              <PlanetImage src={venusImage} />
-              <PlayPlanetButton planet={VENUS} />
-            </Col>
-          </Row>
-        </Container>
-      </div>
+        <Row className='mt-5'>
+          <Col md={4}>
+            <PlanetImage src={earthImage} />
+            <PlayPlanetButton planet={EARTH} />
+          </Col>
+          <Col md={4}>
+            <PlanetImage src={marsImage} />
+            <PlayPlanetButton planet={MARS} />
+          </Col>
+          <Col md={4}>
+            <PlanetImage src={venusImage} />
+            <PlayPlanetButton planet={VENUS} />
+          </Col>
+        </Row>
+      </Container>
+      //{' '}
     </div>
+    // </div>
   )
 }
 

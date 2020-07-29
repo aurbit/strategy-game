@@ -18,7 +18,7 @@ contract Planet is IERC777Recipient {
     address payable avatarContract;
     uint256 constant Nx = 112; //must be div by 8
     uint256 constant Ny = 64;
-    uint256 public constant N = Nx * Ny;
+    uint256 constant N = Nx * Ny;
     uint256 launchBlockNumber;
     string UNAUTHMSG = "UNAUTHORIZED";
     string ERR_INSUF_VAL = "insufficient funds sent";
@@ -56,7 +56,7 @@ contract Planet is IERC777Recipient {
     event NewPlayer(uint256 _avatarId); //implemented
     event PlayerBalanceChange(uint256 _avatarId, uint256 _balance_ammount); //implemented
 
-    uint8[N / 8] map;
+    uint8[N / 8] public map;
     //actually should have ownership array. maps tile to owner
     struct tile {
         uint16 ind; // tile address/index
@@ -69,8 +69,8 @@ contract Planet is IERC777Recipient {
         uint256 avatarId; //tokenid of avatar
         uint256 balance; //BALANCE OF UNALOCATED TOKENS
     }
-    Player[] public Players;
-    tile[] public Tiles;
+    Player[] Players;
+    tile[] Tiles;
 
     constructor(
         address payable _avatarContract,
@@ -87,18 +87,10 @@ contract Planet is IERC777Recipient {
         launchBlockNumber = block.number;
         TileBuyFee = 10**16; //buy in in ether
         minAURUnit = 10**16;
-        satsPerBlockPerTile = 10**14;
+        satsPerBlockPerTile = 10**4;
     }
 
-    function getMap() public {
-        return map;
-    }
-
-    function bytes2uint(bytes memory b)
-        public
-        pure
-        returns (uint256[N / 8] memory)
-    {
+    function bytes2uint(bytes memory b) public pure returns (uint256) {
         uint256 number;
         for (uint256 i = 0; i < b.length; i++) {
             number =
@@ -464,18 +456,6 @@ contract Planet is IERC777Recipient {
         } else {
             return x;
         }
-    }
-
-    function getMap() public view returns (uint8[N / 8] memory) {
-        return (map);
-    }
-
-    function getPlayers() public view returns (uint256[] memory) {
-        uint256[] memory out;
-        for (uint256 i; i <= Players.length; i++) {
-            out[i] = Players[i].avatarId;
-        }
-        return (out);
     }
 
     function RiskRoll(uint256 mybal, uint256 opbal)

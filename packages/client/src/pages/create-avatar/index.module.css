@@ -4,14 +4,67 @@
 
 .logoWrapper {
   margin-top: 20px;
-  margin-left: 40px;
+  margin-left: 20px;
   height: 50px;
 }
 
 .submitBtn {
-  font-size: 22px;
+  background-color: white;
+  color: gray;
+  font-size: 25px;
+  font-weight: 700;
+  padding-left: 50px;
+  padding-right: 50px;
 }
 
 .formWrapper {
   margin-top: 40px;
+}
+
+.swatch {
+  padding: 1px;
+  background: #fff;
+  border-radius: 1px;
+  display: inline-block;
+  cursor: pointer;
+  margin-left: 20px;
+  margin-bottom: 7px;
+}
+
+.color {
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+}
+
+.popOver {
+  position: absolute;
+  z-index: 2;
+  bottom: 25px;
+  /* right: 5rem; */
+}
+
+.cover {
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+}
+
+.avatarInput {
+  max-width: 300px;
+  background-color: black;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-radius: 0;
+  border-width: 3px;
+}
+
+.avatarInput::placeholder {
+  color: white;
+  text-align: center;
+  font-size: 20px;
+  color: gray;
 }

@@ -13,7 +13,8 @@ export const availableNetworks = {
   DEVELOPMENT: 'development',
   MAINNET: 'mainnet',
   ROPSTEN: 'ropsten',
-  RINKEBY: 'rinkeby'
+  RINKEBY: 'rinkeby',
+  KOVAN: 'kovan'
 }
 
 const actions = {
