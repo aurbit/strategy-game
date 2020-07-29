@@ -80,6 +80,11 @@ export const reducer = (state, action) => {
   }
 }
 
+const WalletContext = contextFactory('Wallet', initialState, reducer)
+
+export default WalletContext
+// Control Functions here
+
 export const initWallet = async dispatch => {
   // check if any wallets have been connected
   // check if metamask is connected
@@ -124,25 +129,6 @@ export const setWallet = async (dispatch, vendor) => {
         }
       }, 100)
 
-      // TODO need to move or clean up the wallet
-      // event handling
-      ethereum.on('connect', () =>
-        dispatch({
-          type: actions.SET_WALLET,
-          payload: { vendor, wallet: window.ethereum }
-        })
-      )
-      ethereum.on('accountsChanged', accounts => {})
-
-      ethereum.on('chainChanged', chainId => {
-        window.location.reload()
-      })
-
-      ethereum.on('disconnected', () => {
-        console.log('ereh')
-        window.location.reload()
-      })
-
       break
     }
 
@@ -168,43 +154,19 @@ export const setWallet = async (dispatch, vendor) => {
               type: actions.SET_WALLET,
               payload: { vendor, wallet: connector }
             })
-            // // Get provided accounts and chainId
-            // const { accounts, chainId } = payload.params[0]
-          }
-        })
-
-        // TODO
-        // need to clean up all of this wallet events code
-        connector.on('session_update', (error, payload) => {
-          if (error) {
-            throw error
-          }
-
-          // Get updated accounts and chainId
-          // const { accounts, chainId } = payload.params[0]
-        })
-
-        connector.on('disconnect', (error, payload) => {
-          if (error) {
-            throw error
-          }
-
-          dispatch({
-            type: actions.UNSET_WALLET,
-            payload: { vendor: availableWallets.WALLET_CONNECT }
-          })
-        })
-        break
-      } else {
-        dispatch({
-          type: actions.SET_WALLET,
-          payload: {
-            vendor,
-            wallet: connector
           }
         })
         break
       }
+
+      dispatch({
+        type: actions.SET_WALLET,
+        payload: {
+          vendor,
+          wallet: connector
+        }
+      })
+      break
     }
     default: {
       dispatch({ type: actions.SET_WALLET_FAILED })
@@ -213,4 +175,6 @@ export const setWallet = async (dispatch, vendor) => {
   }
 }
 
-export default contextFactory('Wallet', initialState, reducer)
+export const unSetWallet = (dispatch, vendor) => {
+  dispatch({ type: actions.UNSET_WALLET, payload: { vendor } })
+}

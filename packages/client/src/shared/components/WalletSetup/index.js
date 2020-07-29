@@ -3,6 +3,8 @@ import { Modal, Button, ListGroup, Image, Row, Col } from 'react-bootstrap'
 import WalletContext, { setWallet, availableWallets } from 'shared/store/wallet'
 import { ShieldCheck } from 'react-bootstrap-icons'
 import { useHistory } from 'react-router-dom'
+import MetaMaskLogo from 'shared/images/metamask-logo.png'
+import WalletConnectLogo from 'shared/images/wallet-connect-logo.png'
 
 export default props => {
   const [modalShow, setModalShow] = React.useState(false)
@@ -28,7 +30,6 @@ const WalletSelectModal = props => {
 
   const handleContinue = () => {
     props.onHide()
-
     if (props.link) {
       history.push(props.link)
     }
@@ -62,11 +63,7 @@ const WalletSelectModal = props => {
                 }
               >
                 <Col xs={3}>
-                  <Image
-                    width={80}
-                    height={80}
-                    src='images/metamask-logo.png'
-                  />
+                  <Image width={80} height={80} src={MetaMaskLogo} />
                 </Col>
                 <Col xs={6} md={7}>
                   MetaMask
@@ -93,11 +90,7 @@ const WalletSelectModal = props => {
               }
             >
               <Col xs={3}>
-                <Image
-                  width={80}
-                  height={80}
-                  src='images/wallet-connect-logo.png'
-                />
+                <Image width={80} height={80} src={WalletConnectLogo} />
               </Col>
               <Col xs={6} md={7}>
                 Wallet Connect

@@ -1,6 +1,7 @@
 const AvatarAUR = artifacts.require('AvatarAUR')
 const Planet = artifacts.require('Planet')
 const AURToken = artifacts.require('AURToken')
+const AURGov =  artifacts.require('AURGov')
 const earthMap = require('../constants/earth-coords')
 
 require('@openzeppelin/test-helpers/configure')({
@@ -19,10 +20,12 @@ module.exports = (deployer, network, accounts) => {
 
     const avatar = await deployer.deploy(AvatarAUR)
     // the exporter builds a JS artifact file for the client src/contract directory
-    await exporter('AvatarAur', avatar.address, network)
+    await exporter('AvatarAUR', avatar.address, network)
     const planet = await deployer.deploy(Planet, avatar.address, earthMap)
     await exporter('Planet', planet.address, network)
     const token = await deployer.deploy(AURToken, planet.address)
     await exporter('AURToken', token.address, network)
+    const gov = await deployer.deploy(AURGov,planet.address,token.address,avatar.address)
+    await exporter('AURGov', gov.address, network)
   })
 }

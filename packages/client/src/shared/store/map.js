@@ -13,14 +13,17 @@ const availableMaps = {
 const initialState = {
   map: {
     status: STATUS.INIT,
-    tiles: []
+    tiles: [],
+    activeTile: null
   }
 }
 
 const actions = {
   GET_MAP_REQUEST: 'GET_MAP_REQUEST',
   GET_MAP_SUCCESS: 'GET_MAP_SUCCESS',
-  GET_MAP_FAILED: 'GET_MAP_FAILED'
+  GET_MAP_FAILED: 'GET_MAP_FAILED',
+
+  SET_ACTIVE_TILE: 'SET_ACTIVE_TILE'
 }
 
 export function reducer (state, action) {
@@ -49,6 +52,13 @@ export function reducer (state, action) {
           grid: []
         }
       }
+    case actions.SET_ACTIVE_TILE: {
+      const newMap = Object.assign(state.map, { activeTile: action.payload })
+      return {
+        ...state,
+        map: newMap
+      }
+    }
     default:
       break
   }
@@ -65,7 +75,13 @@ export const getMap = async (dispatch, planet) => {
         ? dispatch({ type: actions.GET_MAP_SUCCESS, payload: grid })
         : dispatch({ type: actions.GET_MAP_FAILED })
     }
+    default:
+      break
   }
+}
+
+export const setActiveTile = (dispatch, tileNumber) => {
+  dispatch({ type: actions.SET_ACTIVE_TILE, payload: tileNumber })
 }
 
 export default contextFactory('Map', initialState, reducer)
