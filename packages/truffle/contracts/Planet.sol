@@ -337,6 +337,13 @@ contract Planet is IERC777Recipient {
     function getMap() public view returns(uint8[N/8] memory){
         return(map);
     }
+    function getPlayers() public view returns(uint[] memory){
+         uint[] memory out;
+         for (uint i; i<= Players.length;i++){
+            out[i] = Players[i].avatarId;
+         }
+         return(out);
+    }
     function RiskRoll(uint mybal, uint opbal) public view returns (uint,uint){
         //does risk style roll. thing is it operates on sats! so this loop is quite long. 
         //mnake sure you use safe math if you switch from sats or you will be in a world of hurt. 

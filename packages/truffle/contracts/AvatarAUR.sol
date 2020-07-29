@@ -50,14 +50,20 @@ contract AvatarAUR is ERC721 {
         avatars.push(Avatar(_name, _dna));
         return avatars.length - 1;
     }
+    function pullcrumb(uint8 b, uint8 pos) public pure returns (uint8) {
+        //pulls bits in 2 bit pairs i call crumbs
+        //8 bits a byte 4 bits a niddle 2 bits a crumb. 
+        return ((b & (3 << 2*pos)) >> 2*pos);
+    } 
     function _mkDNA(string memory _name,uint256 _userDNA) private view returns (uint) {
         uint prand = uint(keccak256(abi.encodePacked(_name,blockhash(block.number))));
-        uint intel = prand%50 + 50;
-        uint vital = (prand>>8)%50 + 50;
-        uint strength = (prand>>16)%50 + 50;
+        uint8 race = uint8(_userDNA&255);//pulls first byte, the race
+        uint8 intel = uint8(prand%60) + pullcrumb(race,0)*10;//first 2 bits littleendian gives intel
+        uint8 vital = uint8((prand>>8)%60) + pullcrumb(race,1)*10;//second is vital
+        uint8 strength = uint8((prand>>16)%60) + pullcrumb(race,2)*10; //third is strength
         uint out = setbyte(_userDNA ,15,intel);
 	out = setbyte(out ,16,vital);
-        out = setbyte(out ,17,strength);
+        out = setbyte(out ,17,strength);//this is the first of the batch when returned as array...
         return out;
     }
     function setbyte(uint256 _indat,uint16 k,uint256 _setdat) public pure returns (uint256){
