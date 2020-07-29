@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { Spinner } from 'react-bootstrap'
+
 import WalletContext, { initWallet, STATUS } from './shared/store/wallet'
 import Web3Context, {
   setProvider,
@@ -27,6 +29,17 @@ export default () => {
     }
   })
 
+  // we need to instantiate the wallet and web3 libraries first
+  const initialized = web3Status === STATUS.IDLE && walletStatus === STATUS.IDLE
+
+  return initialized ? (
+    <RouteComponents />
+  ) : (
+    <Spinner animation='grow' variant='warning' />
+  )
+}
+
+const RouteComponents = () => {
   return (
     <Router>
       <Switch>

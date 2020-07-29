@@ -1,18 +1,19 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
-import Planet from './planet.container'
-import { PlanetContext } from './planet.contex'
-import Navbar from '../../shared/components/Layout/Navbar'
+import PlanetSelect from './components/PlanetSelect'
+import PlanetContext from 'shared/store/planet'
+import Planet from './components/Planet'
 
 function PlanetPage () {
   return (
     <PlanetContext.Provider>
-      <Navbar />
       <Switch>
-        <Route path='/'>
+        <Route exact path='/planet'>
+          <PlanetSelect />
+        </Route>
+        <Route path='/:planetName'>
           <Planet />
         </Route>
-        <Route path='/leaderboard'>{/* <PlanetLeaderboard /> */}</Route>
       </Switch>
     </PlanetContext.Provider>
   )
