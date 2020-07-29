@@ -17,7 +17,7 @@ contract Planet is IERC777Recipient {
     address payable avatarContract;
     uint256 constant Nx = 112; //must be div by 8
     uint256 constant Ny = 64;
-    uint256 constant N = Nx * Ny;
+    uint256 constant public N = Nx * Ny;
     uint launchBlockNumber; 
     string UNAUTHMSG = "UNAUTHORIZED";   
     string ERR_INSUF_VAL = 'insufficient funds sent';
@@ -38,7 +38,7 @@ contract Planet is IERC777Recipient {
     event PlayerBalanceChange(uint _avatarId,uint _balance_ammount); //implemented
 
    
-    uint8[N / 8] public map;
+    uint8[N / 8] map;
     //actually should have ownership array. maps tile to owner
     struct tile {
         uint16 ind; // tile address/index
@@ -51,8 +51,8 @@ contract Planet is IERC777Recipient {
         uint256 avatarId; //tokenid of avatar
         uint256 balance; //BALANCE OF UNALOCATED TOKENS
     }
-    Player[] Players;
-    tile[] Tiles;
+    Player[] public Players;
+    tile[] public Tiles;
     constructor(address payable _avatarContract, uint8[N / 8] memory _map)//,address payable addyerc1820)
         public
     {
@@ -63,7 +63,7 @@ contract Planet is IERC777Recipient {
         launchBlockNumber = block.number;
         TileBuyFee = 10**16;//buy in in ether
         minAURUnit = 10**16;
-        satsPerBlockPerTile = 10**4; 
+        satsPerBlockPerTile = 10**14; 
     }
     function bytes2uint(bytes memory b) public pure returns (uint256){
      uint256 number;
@@ -333,6 +333,16 @@ contract Planet is IERC777Recipient {
            return x;
         }
 
+    }
+    function getMap() public view returns(uint8[N/8] memory){
+        return(map);
+    }
+    function getPlayers() public view returns(uint[] memory){
+         uint[] memory out;
+         for (uint i; i<= Players.length;i++){
+            out[i] = Players[i].avatarId;
+         }
+         return(out);
     }
     function RiskRoll(uint mybal, uint opbal) public view returns (uint,uint){
         //does risk style roll. thing is it operates on sats! so this loop is quite long. 

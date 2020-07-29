@@ -1,37 +1,38 @@
 import React from 'react'
 import { Col, Row, Button } from 'react-bootstrap'
+import { useWallet } from 'shared/services/Aurbit'
+import { addressShortener } from 'shared/utils/wallets'
+import WalletSetup from 'shared/components/WalletSetup'
+
 import AurLogo from 'shared/images/logo_A.svg'
 import SVG from 'react-inlinesvg'
-const styles = {}
 
 export default () => {
-  const Address = () => {
-    return <div>'0x0000...00000'</div>
-  }
+  const { selectedAddress } = useWallet()
 
   const Avatar = () => {
     return <></>
   }
 
   const AurBalance = () => {
-    logo.style.fill = 'black'
     return (
-      <Button variant='light'>
-        0.000
+      <Button variant='light' size='lg'>
+        10000000.000
         <SVG
+          style={styles.aurLogo}
+          height={17}
           description='The React logo'
-          loader={<span>Loading...</span>}
-          onError={error => console.log(error.message)}
-          onLoad={(src, hasCache) => {}}
+          loader={' ...'}
           preProcessor={code => code.replace(/fill=".*?"/g, 'fill="black"')}
           src={AurLogo}
           title='React'
           uniqueHash='a1f8d1'
           uniquifyIDs={true}
-        />{' '}
+        />
       </Button>
     )
   }
+
   return (
     <Row>
       <Col>
@@ -39,8 +40,15 @@ export default () => {
       </Col>
       <Col>
         <Avatar />
-        <Address />
+        <WalletSetup buttonText={addressShortener(selectedAddress)} />
       </Col>
     </Row>
   )
+}
+
+const styles = {
+  aurLogo: {
+    marginBottom: 4,
+    marginLeft: 5
+  }
 }

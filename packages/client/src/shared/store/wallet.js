@@ -174,3 +174,7 @@ export const setWallet = async (dispatch, vendor) => {
     }
   }
 }
+
+export const unSetWallet = (dispatch, vendor) => {
+  dispatch({ type: actions.UNSET_WALLET, payload: { vendor } })
+}
