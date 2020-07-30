@@ -1,9 +1,12 @@
 //SPDX-License-Identifier: MIT
 pragma solidity >=0.5.0 <0.7.0;
+pragma experimental ABIEncoderV2;
 
-import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+//import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 //import "@openzeppelin/contracts/token/ERC777/IERC777.sol";
 import "./IAUR.sol";
+import "./IAvatar.sol";
+import "./IAURGov.sol";
 import "@openzeppelin/contracts/introspection/IERC1820Registry.sol";//figure out what this actually does
 import "@openzeppelin/contracts/token/ERC777/IERC777Recipient.sol";
 /*
@@ -25,8 +28,10 @@ contract Planet is IERC777Recipient {
     uint TileBuyFee;
     uint minAURUnit; 
     uint satsPerBlockPerTile;
-    address payable tokenContract;
+    address payable public tokenContract;
+    address govContract;
     IAUR private AURToken;
+    IAURGov private AURGov;
     IERC1820Registry private _erc1820 = IERC1820Registry(0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24);
     //figure out what the fuck this address is and why i need it here. 
     bytes32 constant private TOKENS_RECIPIENT_INTERFACE_HASH = keccak256("ERC777TokensRecipient");
@@ -51,8 +56,8 @@ contract Planet is IERC777Recipient {
         uint256 avatarId; //tokenid of avatar
         uint256 balance; //BALANCE OF UNALOCATED TOKENS
     }
-    Player[] public Players;
-    tile[] public Tiles;
+    Player[] Players;
+    tile[] Tiles;
     constructor(address payable _avatarContract, uint8[N / 8] memory _map)//,address payable addyerc1820)
         public
     {
@@ -100,6 +105,12 @@ contract Planet is IERC777Recipient {
        AURToken = IAUR(_tokencontract);        
 
     }
+    function setGovContract(address _govContract) public{
+          require(msg.sender == owner, UNAUTHMSG);
+          govContract = _govContract; 
+          AURGov = IAURGov(_govContract);
+    }
+
     function mintTokens(uint _ammount) private{//must change to private after test
            AURToken.mintInternal(_ammount);
     }
@@ -174,6 +185,10 @@ contract Planet is IERC777Recipient {
           //do this if not minted coins, IE they are deposited to some id
           //this needs to be done with events... so its more proper
             uint256 _avatarId = bytes2uint(userData);
+            if (_avatarId==0){
+                _avatarId=IAvatar(avatarContract).tokenOfOwnerByIndex(tx.origin,0); 
+                //this reverts to senders first avatar if none specified
+            }
     	    (,uint pid) = getPlayerId(_avatarId); 
             if (tx.origin==getPlayerAddress(_avatarId)){
                Players[pid].balance += amount;
@@ -184,6 +199,7 @@ contract Planet is IERC777Recipient {
            }
         }
         emit ReceivedDeposit(operator, from, to, amount, userData, operatorData);
+        //throwing event costs gas and is not necessary
     }
     function WithdrawTokens(uint _amt,uint256 _avatarId) public returns (bool){
         require(msg.sender==getPlayerAddress(_avatarId),UNAUTHMSG);
@@ -200,7 +216,7 @@ contract Planet is IERC777Recipient {
     }
     function getPlayerAddress(uint256 avatarId) public view returns (address){
         require(isPlaying(avatarId),'not playing');
-        return IERC721(avatarContract).ownerOf(avatarId);
+        return IAvatar(avatarContract).ownerOf(avatarId);
     }
 
     function BuyATile(uint16 _ind,uint256 _avatarId) public payable returns (bool) {
@@ -337,13 +353,25 @@ contract Planet is IERC777Recipient {
     function getMap() public view returns(uint8[N/8] memory){
         return(map);
     }
-    function getPlayers() public view returns(uint[] memory){
-         uint[] memory out;
-         for (uint i; i<= Players.length;i++){
-            out[i] = Players[i].avatarId;
-         }
-         return(out);
+    function getPlayers() public view returns(Player[] memory){
+         return(Players);
     }
+    function getTiles() public view returns(tile[] memory){
+         return(Tiles);
+    }
+         //outputs all the avatarIDs of current players...
+   //      uint[] memory out = new uint[](Players.length);
+         //uint[] memory outbal;
+   //      for (uint i; i<= Players.length;i++){
+   //         Player storage player = Players[i];
+   //         out[i] = player.avatarId;
+            //outbal[i] = Players[i].balance;
+   //      }
+    //     return out;
+   // }
+    //function getTiles(){
+    //  return true;
+    //}
     function RiskRoll(uint mybal, uint opbal) public view returns (uint,uint){
         //does risk style roll. thing is it operates on sats! so this loop is quite long. 
         //mnake sure you use safe math if you switch from sats or you will be in a world of hurt. 
@@ -395,7 +423,8 @@ contract Planet is IERC777Recipient {
     }
     function CreateNewPlayer(uint256 _avatarId) public payable returns(uint){
         //initializes gameplay, adding player to player struct
-    	require(msg.sender==IERC721(avatarContract).ownerOf(_avatarId),UNAUTHMSG);
+        require(AURGov.isRaceAuthed(uint8(IAvatar(avatarContract).getDNA(_avatarId)&255)),'Race Unauthorized');
+    	require(msg.sender==IAvatar(avatarContract).ownerOf(_avatarId),UNAUTHMSG);
         //this above line checks if the sender is owner of _avatarId. 
         //this is needed because the function for it checks isPlaying too...
 	require(isPlaying(_avatarId)==false,'YOU ARE ALREADY INITIALIZED');

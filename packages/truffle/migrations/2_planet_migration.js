@@ -27,5 +27,7 @@ module.exports = (deployer, network, accounts) => {
     await exporter('AURToken', token.address, network)
     const gov = await deployer.deploy(AURGov,planet.address,token.address,avatar.address)
     await exporter('AURGov', gov.address, network)
+    await planet.setTokenContract(token.address);
+    await planet.setGovContract(gov.address);
   })
 }
