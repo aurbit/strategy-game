@@ -4,14 +4,17 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './shared/styles/index.css'
 import Routes from './root-routes'
 import * as serviceWorker from './serviceWorker'
-import WalletContext from './shared/store/wallet'
-import Web3Context from './shared/store/web3'
+import WalletContext from 'shared/store/wallet'
+import Web3Context from 'shared/store/web3'
+import PlanetContext from 'shared/store/planet'
 
 // String mode kept on bringing warnins about findDom ref with UI Lib
 ReactDOM.render(
   <Web3Context.Provider>
     <WalletContext.Provider>
-      <Routes />
+      <PlanetContext.Provider>
+        <Routes />
+      </PlanetContext.Provider>
     </WalletContext.Provider>
   </Web3Context.Provider>,
   document.getElementById('root')

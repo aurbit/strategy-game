@@ -1,4 +1,4 @@
-import PlanetContext, { availablePlanets, setPlanet } from 'shared/store/planet'
+import PlanetContext, { availablePlanets } from 'shared/store/planet'
 import PlanetContractsDEV from 'contracts/development/Planet'
 import Web3Context, { availableNetworks } from 'shared/store/web3'
 

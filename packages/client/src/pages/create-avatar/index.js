@@ -1,10 +1,11 @@
 import React from 'react'
 import SVG from 'react-inlinesvg' // We can maybe replace this with a native fetch and inner HTML - This lib does same
 import { Container, Row, Col } from 'react-bootstrap'
+import Navbar from 'shared/components/Layout/Navbar'
+
 import { avatarImage, parseDataArray } from './avatar-utils'
 // import Avatar from 'shared/components/PlayerAvatar'
 import styles from './index.module.css'
-import logo from 'shared/images/logo.svg'
 import CreateCharForm from './Form'
 
 const CreateCharacterContainer = () => {
@@ -23,25 +24,29 @@ const CreateCharacterContainer = () => {
     style.sheet.insertRule(`.skin-color {fill: ${skinColor}}`)
   }, [hairColor, eyeColor, skinColor])
 
-  function handleOnHairChangeComplete(color) {
+  function handleOnHairChangeComplete (color) {
     setHairColor(color.hex)
   }
 
-  function handleOnEyeChangeComplete(color) {
+  function handleOnEyeChangeComplete (color) {
     setEyeColor(color.hex)
   }
 
-  function handleOnChangeRadio(e) {
+  function handleOnSkinChangeComplete (color) {
+    setSkinColor(color.hex)
+  }
+
+  function handleOnChangeRadio (e) {
     const avatarUrl = avatarImage(e.target.value)
     setAvatarUrl(avatarUrl)
     setGender(e.target.value)
   }
 
-  function handleOnChangeSkin(value) {
+  function handleOnChangeSkin (value) {
     setSkinColor(value)
   }
 
-  function handleOnSubmit(e) {
+  function handleOnSubmit (e) {
     e.preventDefault()
     console.log('Form Submit')
     const data = parseDataArray(hairColor, eyeColor, skinColor, gender)
@@ -49,36 +54,31 @@ const CreateCharacterContainer = () => {
     // Parse and Submit Gender/ Hair & Skin Color
   }
   return (
-    <Container fluid className="h-100" style={{ backgroundColor: 'black' }}>
-      <Container>
-        <Row section="top-row" className="mb-3">
-          <img className={styles.logoWrapper} alt="img" src={logo} />
-        </Row>
-        <Row section="create">
-          <Col id="avatar" xs={12} md={6}>
-            <div style={{ transform: 'rotateY(180deg)' }}>
-              <SVG src={avatarUrl} />
-            </div>
-          </Col>
-          <Col id="form" className="p-5" xs={12} md={6}>
-            <h1 style={{ marginTop: -50 }} className="text-center text-white">
-              Create your character
-            </h1>
-            <h5 className={`${styles.raceTitle} text-center mb-4`}>
-              RACE: HUMAN
-            </h5>
-            <CreateCharForm
-              gender={gender}
-              skinColor={skinColor}
-              onSubmit={handleOnSubmit}
-              onChangeRadio={handleOnChangeRadio}
-              onChangeSkin={handleOnChangeSkin}
-              onHairChangeComplete={handleOnHairChangeComplete}
-              onEyeChangeComplete={handleOnEyeChangeComplete}
-            />
-          </Col>
-        </Row>
-      </Container>
+    <Container fluid style={{ backgroundColor: 'black' }}>
+      <Navbar />
+      <Row section='create'>
+        <Col id='avatar' xs={12} md={6}>
+          <div style={{ transform: 'rotateY(180deg)' }}>
+            <SVG src={avatarUrl} />
+          </div>
+        </Col>
+        <Col id='form' xs={12} md={5} className='ml-5'>
+          <h1 style={{ marginTop: 50 }} className=' text-white'>
+            Create your Avatar
+          </h1>
+          <h5 className={`${styles.raceTitle} mb-4`}>RACE: HUMAN</h5>
+          <CreateCharForm
+            gender={gender}
+            skinColor={skinColor}
+            onSubmit={handleOnSubmit}
+            onChangeRadio={handleOnChangeRadio}
+            onChangeSkin={handleOnChangeSkin}
+            onHairChangeComplete={handleOnHairChangeComplete}
+            onEyeChangeComplete={handleOnEyeChangeComplete}
+            onSkinChangeComplete={handleOnSkinChangeComplete}
+          />
+        </Col>
+      </Row>
     </Container>
   )
 }

@@ -33,14 +33,6 @@ export default () => {
   const initialized = web3Status === STATUS.IDLE && walletStatus === STATUS.IDLE
 
   return initialized ? (
-    <RouteComponents />
-  ) : (
-    <Spinner animation='grow' variant='warning' />
-  )
-}
-
-const RouteComponents = () => {
-  return (
     <Router>
       <Switch>
         <Route exact path='/'>
@@ -54,5 +46,7 @@ const RouteComponents = () => {
         </Route>
       </Switch>
     </Router>
+  ) : (
+    <Spinner animation='grow' variant='warning' />
   )
 }
