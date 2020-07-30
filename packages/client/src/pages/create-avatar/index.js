@@ -1,6 +1,6 @@
 import React from 'react'
 import SVG from 'react-inlinesvg' // We can maybe replace this with a native fetch and inner HTML - This lib does same
-import { Container, Row, Col } from 'react-bootstrap'
+import { Container, Row, Col, Spinner } from 'react-bootstrap'
 import Navbar from 'shared/components/Layout/Navbar'
 
 import { avatarImage, parseDataArray } from './avatar-utils'
@@ -59,7 +59,11 @@ const CreateCharacterContainer = () => {
       <Row section='create'>
         <Col id='avatar' xs={12} md={6}>
           <div style={{ transform: 'rotateY(180deg)' }}>
-            <SVG src={avatarUrl} />
+            <SVG
+              loader={<Spinner animation='grow' />}
+              // preProcessor={code => code.id['avatarUrl']}
+              src={avatarUrl}
+            />
           </div>
         </Col>
         <Col id='form' xs={12} md={5} className='ml-5'>

@@ -110,9 +110,9 @@ const CreateCharForm = ({
           <div className={styles.popOver}>
             <div className={styles.cover} onClick={handleEyePicker} />
             <ChromePicker
-              color={tempSkinColor}
-              onChange={handleChangeSkin}
-              onChangeComplete={onSkinChangeComplete}
+              color={tempEyeColor}
+              onChange={handleChangeEye}
+              onChangeComplete={onEyeChangeComplete}
             />
           </div>
         ) : null}
@@ -125,7 +125,7 @@ const CreateCharForm = ({
           style={{ marginLeft: 25 }}
           className={styles.swatch}
           id='eye-swatch'
-          onClick={handleEyePicker}
+          onClick={handleSkinPicker}
         >
           <div
             className={styles.color}
@@ -138,9 +138,9 @@ const CreateCharForm = ({
           <div className={styles.popOver}>
             <div className={styles.cover} onClick={handleSkinPicker} />
             <ChromePicker
-              color={tempEyeColor}
-              onChange={handleChangeEye}
-              onChangeComplete={onEyeChangeComplete}
+              color={tempSkinColor}
+              onChange={handleChangeSkin}
+              onChangeComplete={onSkinChangeComplete}
             />
           </div>
         ) : null}
