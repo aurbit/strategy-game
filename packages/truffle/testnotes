@@ -1,0 +1,10 @@
+planet = new Planet(Planet.address)
+avatar = new AvatarAUR(AvatarAUR.address)
+gov = new AURGov(AURGov.address)
+gov.addRace(255);//race must be approved to create player
+avatar.mintAvatar('bob','255',{value:10000000000000000})
+planet.CreateNewPlayer(1)
+avatar.mintAvatar('bob','65',{value:10000000000000000})
+gov.addRace(65);//race must be approved to create player
+planet.CreateNewPlayer(2)
+
