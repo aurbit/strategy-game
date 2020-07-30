@@ -10,7 +10,7 @@ IAURGov private AURGov;
 address payable govContract;
 //address payable planet;
 //maybe have a list of admins and a list of planets rather than just "minters"
-address payable[] minters; //array of authed minters, which will be planet cotnracts
+//address payable[] minters; //array of authed minters, which will be planet cotnracts
 //address[] dOperators;//dunno what would go here but not needed
     constructor(
         address payable govaddy
@@ -44,7 +44,8 @@ address payable[] minters; //array of authed minters, which will be planet cotnr
         burn(amount, "");
     }
     function ismintAuthed() private view returns (bool){ 
-        return AURGov.isPlanet(msg.sender)||(owner==msg.sender)||(msg.sender==govContract); //can mint if planet or owner
+        //gov contract and planets and owner can mint or burn
+        return AURGov.isPlanet(msg.sender)||(owner==msg.sender)||(msg.sender==govContract); 
     }
 //    function ismintAuthed() public view returns (bool){
 //	bool out = false;
@@ -59,7 +60,7 @@ address payable[] minters; //array of authed minters, which will be planet cotnr
     //function approveInternal(address holder, address spender, uint256 value) public {
     //    _approve(holder, spender, value);
     //}
-    function authMinter(address payable _minter) public{
+/*    function authMinter(address payable _minter) public{
        require(ismintAuthed());
        minters.push(_minter);
     }
@@ -70,5 +71,6 @@ address payable[] minters; //array of authed minters, which will be planet cotnr
           //  what i will get when i call minter[i] now? if it sets to 0 that is ok. must test
         } 
     }
+*/
 }
 

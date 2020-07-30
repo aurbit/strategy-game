@@ -3,7 +3,7 @@ const Planet = artifacts.require('Planet')
 const AURToken = artifacts.require('AURToken')
 const AURGov =  artifacts.require('AURGov')
 const earthMap = require('../constants/earth-coords')
-
+const venusMap = require('../constants/venus-coords')
 require('@openzeppelin/test-helpers/configure')({
   provider: web3.currentProvider,
   environment: 'truffle'
@@ -27,7 +27,11 @@ module.exports = (deployer, network, accounts) => {
     await exporter('AURToken', token.address, network)
     const planet = await deployer.deploy(Planet, gov.address, earthMap)
     await exporter('Planet', planet.address, network)
+    const venus = await deployer.deploy(Planet, gov.address, venusMap)
+    await exporter('Planet', venus.address, network)
     await gov.addPlanet(planet.address)
+    await gov.addPlanet(venus.address)
     await gov.setTokenContract(token.address)
+   
   })
 }

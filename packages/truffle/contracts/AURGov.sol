@@ -117,4 +117,15 @@ avatarContract = _avatarContract;
        return out;
    } 
 
+//  function burnAUR(uint _amt){
+//     require(isAuthed());
+//     AURToken.burnInternal(_amt); 
+//  }//thing need token receive function for this, do we even need to burn?
+//would need to send tokens into here first then run this cmd
+//  function mintAUR(uint _amt){
+//    require(isAuthed());
+//    AURToken.mintInternal(_amt);
+//  }
+//need proper handling of receiving tokens to here and sending them from here for this to work
+
 }
