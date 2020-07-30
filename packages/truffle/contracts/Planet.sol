@@ -17,7 +17,7 @@ interface AvatarI {//Avatar Interface
 
 contract Planet is IERC777Recipient {
     address payable owner;
-    address payable avatarContract;
+    address avatarContract;
     uint256 constant Nx = 112; //must be div by 8
     uint256 constant Ny = 64;
     uint256 constant public N = Nx * Ny;
@@ -28,9 +28,10 @@ contract Planet is IERC777Recipient {
     uint TileBuyFee;
     uint minAURUnit; 
     uint satsPerBlockPerTile;
-    address payable public tokenContract;
-    address govContract;
+    address tokenContract;
+    address payable govContract;
     IAUR private AURToken;
+    IAvatar private Avatar;
     IAURGov private AURGov;
     IERC1820Registry private _erc1820 = IERC1820Registry(0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24);
     //figure out what the fuck this address is and why i need it here. 
@@ -58,12 +59,12 @@ contract Planet is IERC777Recipient {
     }
     Player[] Players;
     tile[] Tiles;
-    constructor(address payable _avatarContract, uint8[N / 8] memory _map)//,address payable addyerc1820)
+    constructor(address payable _govContract, uint8[N / 8] memory _map)//,address payable addyerc1820)
         public
     {
         _erc1820.setInterfaceImplementer(address(this), TOKENS_RECIPIENT_INTERFACE_HASH, address(this));
         owner = msg.sender;
-        avatarContract = _avatarContract;
+        setGovContract(_govContract);
         map = _map;
         launchBlockNumber = block.number;
         TileBuyFee = 10**16;//buy in in ether
@@ -78,35 +79,40 @@ contract Planet is IERC777Recipient {
      return number;
     }
     function forward() private{
-        owner.transfer(address(this).balance);
+        govContract.transfer(address(this).balance);
     }
 
-    function changeContractOwner(address payable _newOwner) public returns (address) {
-        require(msg.sender == owner, UNAUTHMSG);
-        owner = _newOwner;
-    }
+    //function changeContractOwner(address payable _newOwner) public returns (address) {
+    //    require(msg.sender == owner, UNAUTHMSG);
+    //    owner = _newOwner;
+    //}
     function setTileBuyFee(uint _newfee) public{
-       require(msg.sender == owner, UNAUTHMSG);
+       require(msg.sender == govContract, UNAUTHMSG);
        TileBuyFee = _newfee;
     }
     function setMiningRate(uint _newrate) public{
-       require(msg.sender == owner, UNAUTHMSG);
+       require(msg.sender == govContract, UNAUTHMSG);
        satsPerBlockPerTile = _newrate;
     }
     function setminAURUnit(uint _newunit) public{
        //this is the unit of AUR tokens used for one 'roll' in the riskroll function
        //should be 10**16 or more i guess. depends on value
-       require(msg.sender == owner, UNAUTHMSG);
+       require(msg.sender == govContract, UNAUTHMSG);
        minAURUnit = _newunit;
     }
-    function setTokenContract(address payable _tokencontract) public{
-       require(msg.sender == owner, UNAUTHMSG);
+    function setTokenContract(address _tokencontract) public{
+       require(msg.sender == govContract, UNAUTHMSG);
        tokenContract = _tokencontract;     
        AURToken = IAUR(_tokencontract);        
 
     }
-    function setGovContract(address _govContract) public{
-          require(msg.sender == owner, UNAUTHMSG);
+    function setAvatarContract(address _avatarContract) public{
+      require(msg.sender == govContract, UNAUTHMSG);
+      avatarContract = _avatarContract;
+      Avatar = IAvatar(avatarContract);
+    }
+    function setGovContract(address payable _govContract) private{
+          //require(msg.sender == owner, UNAUTHMSG);
           govContract = _govContract; 
           AURGov = IAURGov(_govContract);
     }
@@ -186,7 +192,7 @@ contract Planet is IERC777Recipient {
           //this needs to be done with events... so its more proper
             uint256 _avatarId = bytes2uint(userData);
             if (_avatarId==0){
-                _avatarId=IAvatar(avatarContract).tokenOfOwnerByIndex(tx.origin,0); 
+                _avatarId=Avatar.tokenOfOwnerByIndex(tx.origin,0); 
                 //this reverts to senders first avatar if none specified
             }
     	    (,uint pid) = getPlayerId(_avatarId); 
@@ -216,7 +222,7 @@ contract Planet is IERC777Recipient {
     }
     function getPlayerAddress(uint256 avatarId) public view returns (address){
         require(isPlaying(avatarId),'not playing');
-        return IAvatar(avatarContract).ownerOf(avatarId);
+        return Avatar.ownerOf(avatarId);
     }
 
     function BuyATile(uint16 _ind,uint256 _avatarId) public payable returns (bool) {
@@ -423,8 +429,8 @@ contract Planet is IERC777Recipient {
     }
     function CreateNewPlayer(uint256 _avatarId) public payable returns(uint){
         //initializes gameplay, adding player to player struct
-        require(AURGov.isRaceAuthed(uint8(IAvatar(avatarContract).getDNA(_avatarId)&255)),'Race Unauthorized');
-    	require(msg.sender==IAvatar(avatarContract).ownerOf(_avatarId),UNAUTHMSG);
+        require(AURGov.isRaceAuthed(uint8(Avatar.getDNA(_avatarId)&255)),'Race Unauthorized');
+    	require(msg.sender==Avatar.ownerOf(_avatarId),UNAUTHMSG);
         //this above line checks if the sender is owner of _avatarId. 
         //this is needed because the function for it checks isPlaying too...
 	require(isPlaying(_avatarId)==false,'YOU ARE ALREADY INITIALIZED');

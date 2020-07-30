@@ -21,13 +21,12 @@ address authedonce = address(0x0);
 uint whatwasauthed; 
 
 
-constructor(address initplanet,address _tokenContract,address _avatarContract) public {
+constructor(address _avatarContract) public {
 owner = msg.sender;
 Admins[owner] = true;
 Admins[address(0x0)] = false;
 Races[0] = false; //THIS NEEDS TO BE FALSE THIS IS ONLY FOR TESTING
-addPlanet(initplanet);
-setTokenContract(_tokenContract);
+//setTokenContract(_tokenContract);
 avatarContract = _avatarContract;
 }
 
@@ -51,7 +50,12 @@ avatarContract = _avatarContract;
    function addPlanet(address _newplanet) public{
       require(isAuthed());
       Planets.push(_newplanet);
-   
+      setUpPlanet(_newplanet);
+   }
+   function setUpPlanet(address _newplanet) public{
+      IPlanet Pl = IPlanet(_newplanet);
+      Pl.setTokenContract(tokenContract);
+      Pl.setAvatarContract(avatarContract);
    }
    function addRace(uint8 _newrace) public{
      require(isAuthed());//maybe use mapping for this?
@@ -71,6 +75,32 @@ avatarContract = _avatarContract;
    function isRaceAuthed(uint8 _race) public view returns(bool){
       return Races[_race];
    }
+   function isPlanet(address _address) public view returns(bool){
+     bool out = false;
+     for (uint i=0;i<=Planets.length;i++){
+         if (_address==Planets[i]){
+             out = true;
+             break;
+         }
+     }
+     return out;
+   }
+   function setPlanetTileBuyFee(address _planet,uint _tilebuyfee) public{
+       require(isAuthed());
+       IPlanet Pl = IPlanet(_planet);
+       Pl.setTileBuyFee(_tilebuyfee);
+   }
+   function setPlanetMiningRate(address _planet,uint _miningrate) public{
+       require(isAuthed());
+       IPlanet Pl = IPlanet(_planet); 
+       Pl.setMiningRate(_miningrate);
+   }
+   function setMinAURUnit(address _planet,uint _minaurunit) public{
+       require(isAuthed());
+       IPlanet Pl = IPlanet(_planet);
+       Pl.setminAURUnit(_minaurunit);
+   }
+
    function doubleAuth(uint _whatwasauthed) private returns(bool){
        require(isAuthed());
        bool out=false;

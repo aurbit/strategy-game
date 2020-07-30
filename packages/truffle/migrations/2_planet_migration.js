@@ -21,13 +21,13 @@ module.exports = (deployer, network, accounts) => {
     const avatar = await deployer.deploy(AvatarAUR)
     // the exporter builds a JS artifact file for the client src/contract directory
     await exporter('AvatarAUR', avatar.address, network)
-    const planet = await deployer.deploy(Planet, avatar.address, earthMap)
-    await exporter('Planet', planet.address, network)
-    const token = await deployer.deploy(AURToken, planet.address)
-    await exporter('AURToken', token.address, network)
-    const gov = await deployer.deploy(AURGov,planet.address,token.address,avatar.address)
+    const gov = await deployer.deploy(AURGov,avatar.address)
     await exporter('AURGov', gov.address, network)
-    await planet.setTokenContract(token.address);
-    await planet.setGovContract(gov.address);
+    const token = await deployer.deploy(AURToken,gov.address)
+    await exporter('AURToken', token.address, network)
+    const planet = await deployer.deploy(Planet, gov.address, earthMap)
+    await exporter('Planet', planet.address, network)
+    await gov.addPlanet(planet.address)
+    await gov.setTokenContract(token.address)
   })
 }
