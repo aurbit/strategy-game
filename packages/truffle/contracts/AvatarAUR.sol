@@ -56,11 +56,13 @@ contract AvatarAUR is ERC721 {
         return ((b & (3 << 2*pos)) >> 2*pos);
     } 
     function _mkDNA(string memory _name,uint256 _userDNA) private view returns (uint) {
-        uint prand = uint(keccak256(abi.encodePacked(_name,blockhash(block.number))));
+        uint prand = uint(keccak256(abi.encodePacked(_name,blockhash(block.number),block.number)));
+        //uint prand = uint(blockhash(block.number));
         uint8 race = uint8(_userDNA&255);//pulls first byte, the race
-        uint8 intel = uint8(prand%((pullcrumb(race,0)+1)*15)) + 40;//first 2 bits littleendian gives intel
-        uint8 vital = uint8((prand>>8)%((pullcrumb(race,1)+1)*15)) + 40;//second is vital
-        uint8 strength = uint8((prand>>16)%((pullcrumb(race,2)+1)*15)) + 40; //third is strength
+        
+        uint intel = prand%((pullcrumb(race,0)+1)*15) + 40;//first 2 bits littleendian gives intel
+        uint vital = (prand>>8)%((pullcrumb(race,1)+1)*15) + 40;//second is vital
+        uint strength = (prand>>16)%((pullcrumb(race,2)+1)*15) + 40; //third is strength
         uint out = setbyte(_userDNA ,15,intel);
 	out = setbyte(out ,16,vital);
         out = setbyte(out ,17,strength);//this is the first of the batch when returned as array...
