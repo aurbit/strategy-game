@@ -1,9 +1,9 @@
 import React from 'react'
-import { Col, Row, Button, Container } from 'react-bootstrap'
-import { useWallet, usePlanet } from 'shared/services/Aurbit'
+import { Col, Row, Button } from 'react-bootstrap'
+import { useWallet } from 'shared/services/Aurbit'
 import { addressShortener } from 'shared/utils/wallets'
 import WalletSetup from 'shared/components/WalletSetup'
-import PlayerAvatar from 'shared/components/PlayerAvatar'
+// import PlayerAvatar from 'shared/components/PlayerAvatar'
 import { PersonCircle } from 'react-bootstrap-icons'
 import { useHistory } from 'react-router-dom'
 
@@ -12,7 +12,6 @@ import SVG from 'react-inlinesvg'
 
 export default () => {
   const { selectedAddress } = useWallet()
-  const { planetName } = usePlanet()
 
   const Avatar = () => {
     const history = useHistory()

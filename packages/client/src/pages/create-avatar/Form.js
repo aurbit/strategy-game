@@ -2,26 +2,29 @@ import React from 'react'
 import { Form, Button } from 'react-bootstrap'
 import styles from './index.module.css'
 import { ChromePicker } from 'react-color'
-import ColorBoxes from 'shared/components/ColorBoxes'
-import { DEFAULT_COLOR, SKIN_COLORS, AVATARS } from './avatar-utils'
+
+import {
+  DEFAULT_HAIR_COLOR,
+  DEFAULT_EYE_COLOR,
+  DEFAULT_SKIN_COLOR,
+  AVATARS
+} from './avatar-utils'
 
 const CreateCharForm = ({
   onHairChangeComplete,
   onEyeChangeComplete,
   onSkinChangeComplete,
   onChangeRadio,
-  onChangeSkin,
   gender,
-  skinColor,
   onSubmit
 }) => {
   const [displayHairPicker, setDisplayHairPicker] = React.useState(false)
   const [displayEyePicker, setDisplayEyePicker] = React.useState(false)
   const [displaySkinPicker, setDisplaySkinPicker] = React.useState(false)
 
-  const [tempHairColor, setTempHairColor] = React.useState(DEFAULT_COLOR)
-  const [tempEyeColor, setTempEyeColor] = React.useState(DEFAULT_COLOR)
-  const [tempSkinColor, setTempSkinColor] = React.useState(DEFAULT_COLOR)
+  const [tempHairColor, setTempHairColor] = React.useState(DEFAULT_HAIR_COLOR)
+  const [tempEyeColor, setTempEyeColor] = React.useState(DEFAULT_EYE_COLOR)
+  const [tempSkinColor, setTempSkinColor] = React.useState(DEFAULT_SKIN_COLOR)
 
   const handleHairPicker = () => setDisplayHairPicker(!displayHairPicker)
   const handleEyePicker = () => setDisplayEyePicker(!displayEyePicker)

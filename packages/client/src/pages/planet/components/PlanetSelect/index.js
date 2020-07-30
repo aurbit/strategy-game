@@ -18,7 +18,7 @@ import PlanetContext, {
 export default props => {
   const { EARTH, MARS, VENUS } = availablePlanets
   return (
-    <div>
+    <Container fluid style={{ backgroundColor: 'black' }}>
       {/* <div className='twinkling'> */}
       <Navbar />
       <Container>
@@ -44,8 +44,7 @@ export default props => {
           </Col>
         </Row>
       </Container>
-      //{' '}
-    </div>
+    </Container>
     // </div>
   )
 }

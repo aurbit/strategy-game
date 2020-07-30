@@ -39,7 +39,6 @@
 .popOver {
   position: absolute;
   z-index: 2;
-  bottom: 25px;
   /* right: 5rem; */
 }
 

@@ -9,9 +9,9 @@ import styles from './index.module.css'
 import CreateCharForm from './Form'
 
 const CreateCharacterContainer = () => {
-  const [hairColor, setHairColor] = React.useState('#1b1464')
-  const [eyeColor, setEyeColor] = React.useState('#1b1464')
-  const [skinColor, setSkinColor] = React.useState('#C98D40')
+  const [hairColor, setHairColor] = React.useState('#402801')
+  const [eyeColor, setEyeColor] = React.useState('#196e22')
+  const [skinColor, setSkinColor] = React.useState('#f7d39c')
   const [gender, setGender] = React.useState('human_male')
   const [avatarUrl, setAvatarUrl] = React.useState(avatarImage('human_male'))
 
@@ -53,27 +53,47 @@ const CreateCharacterContainer = () => {
     console.log('DATA: ', data)
     // Parse and Submit Gender/ Hair & Skin Color
   }
+
+  const AvatarImage = ({ avatarUrl }) => {
+    return (
+      <SVG
+        loader={<Spinner animation='grow' />}
+        src={avatarUrl}
+        onLoad={(src, hasCache) => {
+          const male = document.getElementById(
+            'f10be708-fc62-40d8-abc3-ffce71448a8b'
+          )
+
+          const female = document.getElementById(
+            'e025dcff-7455-4990-87bb-413b227009ba'
+          )
+
+          if (male) {
+            male.style.visibility = 'hidden'
+          } else if (female) {
+            female.style.visibility = 'hidden'
+          }
+        }}
+      />
+    )
+  }
+
   return (
     <Container fluid style={{ backgroundColor: 'black' }}>
       <Navbar />
       <Row section='create'>
         <Col id='avatar' xs={12} md={6}>
           <div style={{ transform: 'rotateY(180deg)' }}>
-            <SVG
-              loader={<Spinner animation='grow' />}
-              // preProcessor={code => code.id['avatarUrl']}
-              src={avatarUrl}
-            />
+            <AvatarImage avatarUrl={avatarUrl} />
           </div>
         </Col>
-        <Col id='form' xs={12} md={5} className='ml-5'>
+        <Col md={{ span: 3, offset: 1 }} className='mt-5' id='form'>
           <h1 style={{ marginTop: 50 }} className=' text-white'>
             Create your Avatar
           </h1>
           <h5 className={`${styles.raceTitle} mb-4`}>RACE: HUMAN</h5>
           <CreateCharForm
             gender={gender}
-            skinColor={skinColor}
             onSubmit={handleOnSubmit}
             onChangeRadio={handleOnChangeRadio}
             onChangeSkin={handleOnChangeSkin}
@@ -81,6 +101,15 @@ const CreateCharacterContainer = () => {
             onEyeChangeComplete={handleOnEyeChangeComplete}
             onSkinChangeComplete={handleOnSkinChangeComplete}
           />
+          <Row>
+            <p style={{ color: 'white', marginTop: 50, fontSize: 20 }}>
+              Your Avatar is a NFT on Ethereum with unique DNA that cannot be
+              changed. Once born, your avatar will be used to hold the AUR
+              tokens mined during gameplay. If you lose the private key to your
+              avatar, you will no longer have access to the AUR tokens kept on
+              Planets.
+            </p>
+          </Row>
         </Col>
       </Row>
     </Container>

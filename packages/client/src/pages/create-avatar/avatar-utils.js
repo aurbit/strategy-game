@@ -55,16 +55,23 @@ export const AVATARS = [
   { value: 'human_female', label: 'Female' }
 ]
 
-export const DEFAULT_COLOR = {
-  r: '27',
-  g: '20',
-  b: '100',
+export const DEFAULT_HAIR_COLOR = {
+  r: '64',
+  g: '40',
+  b: '1',
   a: '1'
 }
 
-export const DEFAULT_SKIN = {
-  r: '241',
-  g: '112',
-  b: '19',
+export const DEFAULT_SKIN_COLOR = {
+  r: '247',
+  g: '211',
+  b: '156',
+  a: '1'
+}
+
+export const DEFAULT_EYE_COLOR = {
+  r: '25',
+  g: '110',
+  b: '34',
   a: '1'
 }

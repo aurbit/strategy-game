@@ -24,8 +24,9 @@ export default props => {
   const [hoverTile, setHoverTile] = useState(0)
   return (
     <MapContext.Provider>
-      <Navbar />
-      <Container fluid>
+      <Container fluid style={{ backgroundColor: 'black' }}>
+        <Navbar />
+
         <Row style={styles.row}>
           <Col style={styles.col} md='auto'>
             <Map
