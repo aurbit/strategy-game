@@ -1,12 +1,10 @@
 import React from 'react'
 import WalletSetup from 'shared/components/WalletSetup'
-import Navbar from 'shared/components/Layout/Navbar'
 import { Container } from 'react-bootstrap'
 
 const AuthPage = props => {
   return (
     <Container fluid style={{ backgroundColor: 'black' }}>
-      <Navbar />
       <div
         style={{
           position: 'absolute',

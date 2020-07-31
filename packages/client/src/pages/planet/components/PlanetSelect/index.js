@@ -1,6 +1,5 @@
 import React from 'react'
 import { Container, Col, Row, Image, Button } from 'react-bootstrap'
-import Navbar from 'shared/components/Layout/Navbar'
 import { useHistory } from 'react-router-dom'
 
 import earthImage from 'shared/images/earth.svg'
@@ -20,7 +19,6 @@ export default props => {
   return (
     <Container fluid style={{ backgroundColor: 'black' }}>
       {/* <div className='twinkling'> */}
-      <Navbar />
       <Container>
         <Row className='mt-5'></Row>
         <Row className='mt-5'></Row>

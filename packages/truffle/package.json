@@ -5,9 +5,13 @@
   "private": true,
   "license": "ISC",
   "devDependencies": {
-    "@openzeppelin/test-helpers": "^0.5.6",
     "@openzeppelin/contracts": "^3.1.0",
-    "web3": "^1.2.11",
-    "chai": "^4.2.0"
+    "@openzeppelin/test-helpers": "^0.5.6",
+    "chai": "^4.2.0",
+    "ganache-cli": "^6.9.1",
+    "web3": "^1.2.11"
+  },
+  "dependencies": {
+    "ganache-cli": "^6.9.1"
   }
 }

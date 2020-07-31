@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import { Modal, Button, ListGroup, Image, Row, Col } from 'react-bootstrap'
 import WalletContext, { setWallet, availableWallets } from 'shared/store/wallet'
+import TokenContext, { setAurBalance, STATUS } from 'shared/store/token'
+import { useToken } from 'shared/services/provider'
+
 import { ShieldCheck } from 'react-bootstrap-icons'
 import { useHistory } from 'react-router-dom'
 import MetaMaskLogo from 'shared/images/metamask-logo.png'
@@ -11,7 +14,11 @@ export default props => {
 
   return (
     <div>
-      <Button variant='light' size='lg' onClick={() => setModalShow(true)}>
+      <Button
+        variant={props.variant || 'dark'}
+        size='lg'
+        onClick={() => setModalShow(true)}
+      >
         {props.buttonText}
       </Button>
       <WalletSelectModal
@@ -24,16 +31,38 @@ export default props => {
 }
 
 const WalletSelectModal = props => {
-  const { activeWallet } = WalletContext.useState()
+  const { activeWallet, address } = WalletContext.useState()
   const walletDispatch = WalletContext.useDispatch()
+  const tokenDispatch = TokenContext.useDispatch()
+  const { token } = useToken()
+
+  const [vendor, setVendor] = useState(activeWallet)
   const history = useHistory()
 
+  // the continue button on the modal
   const handleContinue = () => {
     props.onHide()
     if (props.link) {
       history.push(props.link)
     }
   }
+
+  // when the users switches wallet
+  const handleWalletUpdate = wallet => {
+    setWallet(walletDispatch, wallet)
+    setVendor(wallet)
+  }
+
+  /// if address updates, check for aur balance
+  useMemo(() => {
+    if (address)
+      token.methods
+        .balanceOf(address)
+        .call()
+        .then(data => {
+          setAurBalance(tokenDispatch, data)
+        })
+  }, [address])
 
   return (
     <Modal
@@ -49,18 +78,16 @@ const WalletSelectModal = props => {
       </Modal.Header>
       <Modal.Body>
         <ListGroup>
-          {typeof window.ethereum !== 'undefined' ? (
+          {typeof window?.ethereum !== 'undefined' ? (
             <ListGroup.Item
               action
               variant='no-style'
-              active={activeWallet === availableWallets.METAMASK}
+              active={vendor === availableWallets.METAMASK}
               style={{ height: 100 }}
             >
               <Row
                 className='align-items-center'
-                onClick={() =>
-                  setWallet(walletDispatch, availableWallets.METAMASK)
-                }
+                onClick={() => handleWalletUpdate(availableWallets.METAMASK)}
               >
                 <Col xs={3}>
                   <Image width={80} height={80} src={MetaMaskLogo} />
@@ -69,8 +96,8 @@ const WalletSelectModal = props => {
                   MetaMask
                 </Col>
                 <Col xs={3} md='auto' order='last'>
-                  {window.ethereum.selectedAddress &&
-                  activeWallet === availableWallets.METAMASK ? (
+                  {window?.ethereum.selectedAddress &&
+                  vendor === availableWallets.METAMASK ? (
                     <ShieldCheck color='white' size={48} />
                   ) : null}
                 </Col>
@@ -80,13 +107,13 @@ const WalletSelectModal = props => {
           <ListGroup.Item
             action
             variant='no-style'
-            active={activeWallet === availableWallets.WALLET_CONNECT}
+            active={vendor === availableWallets.WALLET_CONNECT}
             style={{ height: 100 }}
           >
             <Row
               className='align-items-center'
               onClick={() =>
-                setWallet(walletDispatch, availableWallets.WALLET_CONNECT)
+                handleWalletUpdate(availableWallets.WALLET_CONNECT)
               }
             >
               <Col xs={3}>
@@ -96,7 +123,7 @@ const WalletSelectModal = props => {
                 Wallet Connect
               </Col>
               <Col xs={2} md='auto' order='last'>
-                {activeWallet === availableWallets.WALLET_CONNECT ? (
+                {vendor === availableWallets.WALLET_CONNECT ? (
                   <ShieldCheck color='white' size={48} />
                 ) : null}
               </Col>

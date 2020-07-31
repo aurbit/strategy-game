@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import Navbar from 'shared/components/Layout/Navbar'
 import { Container, Col, Row } from 'react-bootstrap'
 import ControlPanel from 'pages/planet/components/ControlPanel'
 import Map from 'pages/planet/components/Map'
@@ -25,8 +24,6 @@ export default props => {
   return (
     <MapContext.Provider>
       <Container fluid style={{ backgroundColor: 'black' }}>
-        <Navbar />
-
         <Row style={styles.row}>
           <Col style={styles.col} md='auto'>
             <Map

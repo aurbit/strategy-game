@@ -1,10 +1,18 @@
 import React from 'react'
 import SVG from 'react-inlinesvg' // We can maybe replace this with a native fetch and inner HTML - This lib does same
 import { Container, Row, Col, Spinner } from 'react-bootstrap'
-import Navbar from 'shared/components/Layout/Navbar'
 
 import { avatarImage, parseDataArray } from './avatar-utils'
 // import Avatar from 'shared/components/PlayerAvatar'
+
+// stuff for ethereum
+import { useAvatar } from 'shared/services/provider'
+import { mintAvatar } from 'shared/services/metamask'
+
+import web3 from 'web3'
+
+import WalletContext from 'shared/store/wallet'
+
 import styles from './index.module.css'
 import CreateCharForm from './Form'
 
@@ -14,6 +22,10 @@ const CreateCharacterContainer = () => {
   const [skinColor, setSkinColor] = React.useState('#f7d39c')
   const [gender, setGender] = React.useState('human_male')
   const [avatarUrl, setAvatarUrl] = React.useState(avatarImage('human_male'))
+
+  // import the avatar contract provider
+  const { avatar, abi, address: avatarAddress, provider } = useAvatar()
+  const { address: walletAddress } = WalletContext.useState()
 
   React.useEffect(() => {
     // Update global CSS so style change will affect SVG class
@@ -46,12 +58,31 @@ const CreateCharacterContainer = () => {
     setSkinColor(value)
   }
 
-  function handleOnSubmit (e) {
+  async function handleOnSubmit (e) {
     e.preventDefault()
-    console.log('Form Submit')
     const data = parseDataArray(hairColor, eyeColor, skinColor, gender)
-    console.log('DATA: ', data)
+    const name = e.target['name'].value
+
+    // dna = [165,228,239,117,68,239,5,4,239,153,5,2,9,3,85]
+    // dnaC = web3.utils.hexToNumberString(web3.utils.bytesToHex(dna))
+    // avatar.mintAvatar('bob',dnaC,{value:10000000000000000})
     // Parse and Submit Gender/ Hair & Skin Color
+    // var address = "0xf15090c01bec877a122b567e5552504e5fd22b79";
+    // var abi = [{"constant":true,"inputs":[],"name":"getCount","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"increment","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[{"name":"_count","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"}];
+
+    const dnaC = await web3.utils.hexToNumberString(web3.utils.bytesToHex(data))
+
+    mintAvatar({
+      avatar,
+      provider,
+      from: walletAddress,
+      to: avatarAddress,
+      value: '0.01',
+      name,
+      dnaC
+    }).then(result => {
+      console.log(result)
+    })
   }
 
   const AvatarImage = ({ avatarUrl }) => {
@@ -80,9 +111,8 @@ const CreateCharacterContainer = () => {
 
   return (
     <Container fluid style={{ backgroundColor: 'black' }}>
-      <Navbar />
       <Row section='create'>
-        <Col id='avatar' xs={12} md={6}>
+        <Col id='avatar' xs={12} md={7}>
           <div style={{ transform: 'rotateY(180deg)' }}>
             <AvatarImage avatarUrl={avatarUrl} />
           </div>

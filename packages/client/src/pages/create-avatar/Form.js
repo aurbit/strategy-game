@@ -39,6 +39,7 @@ const CreateCharForm = ({
       <Form.Group className='d-flex'>
         <Form.Control
           type='text'
+          id='name'
           className={styles.avatarInput}
           placeholder='Your Name'
         />

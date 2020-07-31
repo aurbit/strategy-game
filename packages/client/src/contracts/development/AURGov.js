@@ -1,7 +1,7 @@
 
     module.exports = {
       "network": "development",
-      "address": "0x7ACE6BB024ff717B94B38Dee8cfEc728b4Ee8CFb",
+      "address": "0xbDDCaBaB323E0F2FE8eEf7F76CFFF28006D46819",
       "artifact": {
   "contractName": "AURGov",
   "abi": [
@@ -4638,7 +4638,7 @@
   },
   "networks": {},
   "schemaVersion": "3.2.3",
-  "updatedAt": "2020-07-29T17:13:06.469Z",
+  "updatedAt": "2020-07-30T18:24:26.825Z",
   "devdoc": {
     "methods": {}
   },

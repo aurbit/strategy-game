@@ -1,51 +1,48 @@
 import React from 'react'
 import { Col, Row, Button } from 'react-bootstrap'
-import { useWallet } from 'shared/services/Aurbit'
 import { addressShortener } from 'shared/utils/wallets'
 import WalletSetup from 'shared/components/WalletSetup'
-// import PlayerAvatar from 'shared/components/PlayerAvatar'
+
 import { PersonCircle } from 'react-bootstrap-icons'
 import { useHistory } from 'react-router-dom'
 
 import AurLogo from 'shared/images/logo_A.svg'
 import SVG from 'react-inlinesvg'
 
+// for getting the token balance
+import TokenContext from 'shared/store/token'
+import WalletContext from 'shared/store/wallet'
+
+import './index.module.css'
+
 export default () => {
-  const { selectedAddress } = useWallet()
+  const history = useHistory()
+  const tokenState = TokenContext.useState()
+  const { address } = WalletContext.useState()
 
   const Avatar = () => {
-    const history = useHistory()
     return (
-      <Button styles={styles.avatarButton} variant='no-style'>
+      <Button variant='no-style'>
         <PersonCircle
           styles={styles.avatarIcon}
           size={40}
-          onClick={() => history.push('/avatar')}
+          color='gray'
+          onClick={() => history.push('/create-avatar')}
         />
       </Button>
-      // <SVG
-      //   height={17}
-      //   description='The React logo'
-      //   loader={' ...'}
-      //   preProcessor={code => code.replace(/fill=".*?"/g, 'fill="white"')}
-      //   src={PersonCircle}
-      //   title='React'
-      //   uniqueHash='a1f8ds'
-      //   uniquifyIDs={true}
-      // />
     )
   }
 
   const AurBalance = () => {
     return (
-      <Button variant='light' size='lg'>
-        10000000.000
+      <Button variant='dark' size='lg'>
+        {tokenState.balance}
         <SVG
           style={styles.aurLogo}
-          height={17}
-          description='The React logo'
+          height={23}
+          description='Aurbit logo'
           loader={' ...'}
-          preProcessor={code => code.replace(/fill=".*?"/g, 'fill="black"')}
+          preProcessor={code => code.replace(/fill=".*?"/g, 'fill="white"')}
           src={AurLogo}
           title='React'
           uniqueHash='a1f8d1'
@@ -60,13 +57,14 @@ export default () => {
       <Col className='text-right'>
         <AurBalance styles={styles.balance} />
       </Col>
-      <Col className='text-right'>
+      <Col md={3} className='text-right'>
         <WalletSetup
+          variant='dark'
           styles={styles.wallet}
-          buttonText={addressShortener(selectedAddress)}
+          buttonText={addressShortener(address)}
         />
       </Col>
-      <Col md={2} className='text-right'>
+      <Col md={1} className='text-right'>
         <Avatar className='text-right' styles={styles.avatar} />
       </Col>
     </Row>
@@ -74,7 +72,10 @@ export default () => {
 }
 
 const styles = {
-  aurLogo: {},
+  aurLogo: {
+    marginLeft: 8,
+    marginBottom: 5
+  },
   balance: {
     marginRight: '10px',
     minWidth: 300
@@ -83,7 +84,8 @@ const styles = {
     margin: 10
   },
   avatarIcon: {
-    paddingBottom: 0
+    paddingBottom: 10,
+    cursor: 'pointer'
   },
   avatarButton: {
     paddingBottom: 0

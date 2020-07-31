@@ -1,0 +1,21 @@
+.aurLogo {
+  margin-left: 8;
+  margin-bottom: 5;
+}
+
+.balance {
+  margin-right: '10px';
+  min-width: 300;
+}
+
+.wallet {
+  margin: 10;
+}
+
+.avatarIcon {
+  cursor: pointer;
+}
+
+.avatarButton {
+  padding-bottom: 0;
+}

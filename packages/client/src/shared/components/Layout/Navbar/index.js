@@ -2,7 +2,6 @@ import React from 'react'
 import { Navbar, Col, Button } from 'react-bootstrap'
 import AurLogo from 'shared/images/logo_full.svg'
 import NavUserBox from 'shared/components/NavUserBox'
-import PlanetIcon from 'shared/components/PlanetIcon'
 import SVG from 'react-inlinesvg'
 import { useHistory } from 'react-router-dom'
 
@@ -30,10 +29,7 @@ const NavbarComponent = ({ network, account }) => {
           />
         </Button>
       </Navbar.Brand>
-      <Col>
-        <PlanetIcon />
-      </Col>
-      <Col sm={6} md={5} style={{ color: 'white' }}>
+      <Col style={{ color: 'white' }}>
         <NavUserBox />
       </Col>
     </Navbar>
