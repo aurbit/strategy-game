@@ -83,6 +83,7 @@ planet.BattleTile(4,1,5)
 planet.getTiles()
 
 
-
-
-
+//aerial attack on tile 55 with 0.1 tokens(i think), using avatar 1
+planet.AerialAttack(55,1,'100000000000000000')
+//check result
+planet.getTiles()
