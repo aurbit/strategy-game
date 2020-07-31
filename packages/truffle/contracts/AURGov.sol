@@ -5,6 +5,7 @@ pragma solidity ^0.6.0;
 //import "@openzeppelin/contracts/token/ERC777/IERC777.sol";
 import "./IAUR.sol";
 import "./IPlanet.sol";
+import "./IAvatar.sol";
 
 contract AURGov{
 address payable owner;
@@ -17,19 +18,19 @@ mapping (address => bool) Admins;
 mapping (uint8 => bool) Races;
 string UNAUTHMSG = 'UNAUTHORIZED';
 IAUR private AURToken;
+IAvatar private Avatar;
 address authedonce = address(0x0);
 uint whatwasauthed; 
 
 
-constructor(address _avatarContract) public {
+constructor() public {
 owner = msg.sender;
 Admins[owner] = true;
 Admins[address(0x0)] = false;
 Races[0] = false; //THIS NEEDS TO BE FALSE THIS IS ONLY FOR TESTING
 //setTokenContract(_tokenContract);
-avatarContract = _avatarContract;
 }
-
+   receive() external payable {} //fallback function for recieving fees
 
     function withdraw() public{
         require(isAuthed());
@@ -43,9 +44,13 @@ avatarContract = _avatarContract;
    function setAvatarContract(address _avatarcontract) public{
      //have to have this so you can replace the avatar contract address in planet. or just not have it...
      require(isAuthed());
-     avatarContract = _avatarcontract;     
+     avatarContract = _avatarcontract;
+     Avatar = IAvatar(avatarContract);     
    }
-   
+   function setcreateAvatarFee(uint _newfee) public{
+       require(isAuthed());
+       Avatar.setcreateAvatarFee(_newfee);
+   }
 
    function addPlanet(address _newplanet) public{
       require(isAuthed());

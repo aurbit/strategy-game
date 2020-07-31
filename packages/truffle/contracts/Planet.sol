@@ -226,6 +226,7 @@ contract Planet is IERC777Recipient {
     }
 
     function BuyATile(uint16 _ind,uint256 _avatarId) public payable returns (bool) {
+         
          //this is how you start. it costs ether
          //change to if it is owned u can buy it for 3x
          require(_ind < N,TILEOFFMAP);
@@ -249,6 +250,7 @@ contract Planet is IERC777Recipient {
               revert(ERR_INSUF_VAL);
          }
         }
+         forward();
          return true;
     }
     function newTileOwner(uint16 _ind,uint256 _avatarId) private returns(uint){

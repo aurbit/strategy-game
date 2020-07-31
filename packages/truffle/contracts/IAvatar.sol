@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/token/ERC721/IERC721Enumerable.sol";
 
 interface IAvatar is IERC721 , IERC721Enumerable {
    function getDNA(uint tid) external view returns (uint);
-    
+   function setcreateAvatarFee(uint _newfee) external;    
 //function approveInternal(address holder, address spender, uint256 value) public {
     //    _approve(holder, spender, value);
     //}

@@ -10,7 +10,7 @@ contract AvatarAUR is ERC721 {
     uint createAvatarFee = 10**16;
     //uint dnasize = 16;
     //uint dnamod = 10 ** dnasize;
-    
+    address payable govContract;
     struct Avatar {
         string name;
         uint dna;
@@ -21,15 +21,16 @@ contract AvatarAUR is ERC721 {
 
 
 
-    constructor() ERC721("Aurbit Avatar", "AURA") public {
+    constructor(address payable _govContract) ERC721("Aurbit Avatar", "AURA") public {
+    govContract = _govContract;
     owner = msg.sender; //set owner addres as sender on deploy
     }
     function forward() private{
-	owner.transfer(address(this).balance);
+	govContract.transfer(address(this).balance);
     }
 
     function mintAvatar(string memory name,uint256 _userDNA) payable public returns (uint256) {
-	require(msg.value == createAvatarFee,"pay 0.01 eth"); forward();//enforce fee of 0.01 and forward to owner. bad way?
+	require(msg.value == createAvatarFee,"pay fee"); forward();//enforce fee of 0.01 and forward to owner. bad way?
         _tokenIds.increment();
         uint256 newItemId = _tokenIds.current();
         _mint(msg.sender, newItemId);
@@ -41,7 +42,7 @@ contract AvatarAUR is ERC721 {
     }
   
     function setcreateAvatarFee(uint _newfee) public{
-         require(owner==msg.sender);
+         require(govContract==msg.sender);
          createAvatarFee = _newfee;
     }
 
