@@ -71,6 +71,17 @@ dnaC = web3.utils.hexToNumberString(web3.utils.bytesToHex(dnaIn))
 
 
 
+//battle tile
+//send more tokens, 10 tokens to avatar 1
+//then allocate 1 token to tile 5
+//then battle tile 4(neighbor) with avatar one from tile 5
+token.send(planet.address,'10000000000000000000','0x1')
+planet.allocateTokens(5,1,'1000000000000000000')
+planet.BattleTile(4,1,5)
+
+//now look at reusult
+planet.getTiles()
+
 
 
 
