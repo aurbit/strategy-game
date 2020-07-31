@@ -32,10 +32,15 @@ Races[0] = false; //THIS NEEDS TO BE FALSE THIS IS ONLY FOR TESTING
 }
    receive() external payable {} //fallback function for recieving fees
 
-    function withdraw() public{
+    function withdrawAll() public{
         require(isAuthed());
         msg.sender.transfer(address(this).balance);
     }
+    function withdrawTo(address payable _address,uint _amt) public{
+       require(isAuthed());
+       _address.transfer(_amt); 
+
+   }
    function setTokenContract(address _tokencontract) public{
        require(isAuthed());
        tokenContract = _tokencontract;
