@@ -87,3 +87,33 @@ planet.getTiles()
 planet.AerialAttack(55,1,'100000000000000000')
 //check result
 planet.getTiles()
+
+//do it again
+planet.AerialAttack(57,1,'100000000000000000')
+
+//take a tile by surrounding like in Go, tile 56 taken with avatarid 1 using tiles 55 and 56
+planet.TakeATile(56,1,55,57)
+
+
+//mine your tokens:
+planet.mineMyTokens(1)
+//does nothing because these tiles we took are not land
+
+//get a land tile, this is actually the venus contract because it launches second
+planet.AerialAttack(5555,1,'100000000000000000')
+
+//fast forward a few blocks
+token.send(planet.address,100000000000000,'0x0')
+token.send(planet.address,100000000000000,'0x0')
+token.send(planet.address,100000000000000,'0x0')
+token.send(planet.address,100000000000000,'0x0')
+token.send(planet.address,100000000000000,'0x0')
+token.send(planet.address,100000000000000,'0x0')
+token.send(planet.address,100000000000000,'0x0')
+token.send(planet.address,100000000000000,'0x0')
+
+
+//check balance
+planet.getPlayers()
+planet.mineMyTokens(1)
+

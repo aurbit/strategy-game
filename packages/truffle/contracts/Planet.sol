@@ -130,7 +130,7 @@ contract Planet is IERC777Recipient {
          uint256 _add = 0;
          for (uint i; i<Tiles.length;i++){
               if (isLand(Tiles[i].ind)&&(_avatarId==Tiles[i].owner)){
-                    _add += Tiles[i].bal*getMineRatio(i);
+                    _add += getMineRatio(i);//used to be multipled by tile balance
                     Tiles[i].LastMineBlockTime = block.number;
               }
          }
