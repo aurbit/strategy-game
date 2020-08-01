@@ -8,7 +8,9 @@ interface IPlanet {
     function setTileBuyFee(uint _newfee) external;
     function setMiningRate(uint _newrate) external;
     function setminAURUnit(uint _newunit) external;
-    function setTokenContract(address payable _tokencontract) external;
+    function setTokenContract(address _tokencontract) external;
+//    function setGovContract(address payable _govContract) external;
+    function setAvatarContract(address _avatarContract) external;
 
 
 
