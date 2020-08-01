@@ -10,7 +10,7 @@ contract AvatarAUR is ERC721 {
     uint createAvatarFee = 10**16;
     //uint dnasize = 16;
     //uint dnamod = 10 ** dnasize;
-    
+    address payable govContract;
     struct Avatar {
         string name;
         uint dna;
@@ -21,27 +21,28 @@ contract AvatarAUR is ERC721 {
 
 
 
-    constructor() ERC721("Aurbit Avatar", "AURA") public {
+    constructor(address payable _govContract) ERC721("Aurbit Avatar", "AURA") public {
+    govContract = _govContract;
     owner = msg.sender; //set owner addres as sender on deploy
     }
     function forward() private{
-	owner.transfer(address(this).balance);
+	govContract.transfer(address(this).balance);
     }
 
     function mintAvatar(string memory name,uint256 _userDNA) payable public returns (uint256) {
-	require(msg.value == createAvatarFee,"pay 0.01 eth"); forward();//enforce fee of 0.01 and forward to owner. bad way?
+	require(msg.value == createAvatarFee,"pay fee"); forward();//enforce fee of 0.01 and forward to owner. bad way?
         _tokenIds.increment();
         uint256 newItemId = _tokenIds.current();
         _mint(msg.sender, newItemId);
 	//uint dna = 
 	_birthAvatar(name,newItemId, _userDNA);
-        _setTokenURI(newItemId, string(abi.encodePacked('{"name": "', name, '", "description": "','sample description','", "image": "','sample image uri' ,'"}')));
+        _setTokenURI(newItemId, string(abi.encodePacked('{"name": "', name, '", "description": "','Aurbit avatar','", "image": "','sample image uri' ,'"}')));
 	//sample description and sample image uri should be replaced with variables, didnt bother declaring them yet
         return newItemId;
     }
   
     function setcreateAvatarFee(uint _newfee) public{
-         require(owner==msg.sender);
+         require(govContract==msg.sender);
          createAvatarFee = _newfee;
     }
 
@@ -56,11 +57,13 @@ contract AvatarAUR is ERC721 {
         return ((b & (3 << 2*pos)) >> 2*pos);
     } 
     function _mkDNA(string memory _name,uint256 _userDNA) private view returns (uint) {
-        uint prand = uint(keccak256(abi.encodePacked(_name,blockhash(block.number))));
+        uint prand = uint(keccak256(abi.encodePacked(_name,blockhash(block.number),block.number)));
+        //uint prand = uint(blockhash(block.number));
         uint8 race = uint8(_userDNA&255);//pulls first byte, the race
-        uint8 intel = uint8(prand%60) + pullcrumb(race,0)*10;//first 2 bits littleendian gives intel
-        uint8 vital = uint8((prand>>8)%60) + pullcrumb(race,1)*10;//second is vital
-        uint8 strength = uint8((prand>>16)%60) + pullcrumb(race,2)*10; //third is strength
+        
+        uint intel = prand%((pullcrumb(race,0)+1)*15) + 40;//first 2 bits littleendian gives intel
+        uint vital = (prand>>8)%((pullcrumb(race,1)+1)*15) + 40;//second is vital
+        uint strength = (prand>>16)%((pullcrumb(race,2)+1)*15) + 40; //third is strength
         uint out = setbyte(_userDNA ,15,intel);
 	out = setbyte(out ,16,vital);
         out = setbyte(out ,17,strength);//this is the first of the batch when returned as array...
