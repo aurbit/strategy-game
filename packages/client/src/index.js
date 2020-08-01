@@ -8,14 +8,17 @@ import WalletContext from 'shared/store/wallet'
 import Web3Context from 'shared/store/web3'
 import PlanetContext from 'shared/store/planet'
 import TokenContext from 'shared/store/token'
-
+import { Provider } from 'react-redux'
+import { store } from './store'
 // String mode kept on bringing warnins about findDom ref with UI Lib
 ReactDOM.render(
   <TokenContext.Provider>
     <Web3Context.Provider>
       <WalletContext.Provider>
         <PlanetContext.Provider>
-          <Routes />
+          <Provider store={store}>
+            <Routes />
+          </Provider>
         </PlanetContext.Provider>
       </WalletContext.Provider>
     </Web3Context.Provider>{' '}

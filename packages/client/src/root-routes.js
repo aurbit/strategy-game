@@ -6,7 +6,7 @@ import Navbar from 'shared/components/Layout/Navbar'
 import TokenContext, { getAurBalance } from 'shared/store/token'
 import WalletContext, { initWallet, STATUS } from 'shared/store/wallet'
 
-import { Planet, Auth, CreateAvatar, Avatar } from './pages'
+import { Planet, Auth, CreateAvatar, Avatar, TestPage } from './pages'
 
 export default () => {
   // init the wallets
@@ -27,22 +27,25 @@ export default () => {
         <Navbar />
 
         <Switch>
-          <Route exact path='/'>
+          <Route exact path="/">
             <Auth />
           </Route>
-          <Route path='/planet'>
+          <Route path="/planet">
             <Planet />
           </Route>
-          <Route path='/create-avatar'>
+          <Route path="/create-avatar">
             <CreateAvatar />
           </Route>
-          <Route path='/avatar'>
+          <Route path="/avatar">
             <Avatar />
+          </Route>
+          <Route path="/test">
+            <TestPage />
           </Route>
         </Switch>
       </Router>
     </div>
   ) : (
-    <Spinner animation='grow' variant='warning' />
+    <Spinner animation="grow" variant="warning" />
   )
 }
