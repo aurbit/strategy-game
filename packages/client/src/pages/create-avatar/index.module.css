@@ -8,14 +8,13 @@
   height: 50px;
 }
 
-.submitBtn {
+/* .submitBtn {
   background-color: white;
   color: gray;
   font-size: 25px;
   font-weight: 700;
   padding-left: 50px;
-  padding-right: 50px;
-}
+  padding-right: 50px; } */
 
 .formWrapper {
   margin-top: 40px;
@@ -40,7 +39,6 @@
 .popOver {
   position: absolute;
   z-index: 2;
-  bottom: 25px;
   /* right: 5rem; */
 }
 
@@ -55,6 +53,7 @@
 .avatarInput {
   max-width: 300px;
   background-color: black;
+  text-align: left;
   border-top: none;
   border-left: none;
   border-right: none;
@@ -64,7 +63,11 @@
 
 .avatarInput::placeholder {
   color: white;
-  text-align: center;
+  text-align: left;
   font-size: 20px;
   color: gray;
+}
+
+.controls {
+  padding: 50px !important;
 }

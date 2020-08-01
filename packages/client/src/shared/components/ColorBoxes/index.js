@@ -3,19 +3,17 @@ import styles from './index.module.css'
 
 const ColorBoxContainer = ({ defaultValue, colors, onClick }) => {
   const [selected, setSelected] = React.useState(null)
-  React.useEffect(() => {
-    if (defaultValue) {
-      // Find matching color in array and set state
-      const colorIndex = colors.findIndex(findColorIndex)
-      setSelected(colorIndex)
-    }
-  }, [])
-  return <div className="d-flex flex-row">{renderColors()}</div>
+  // Find matching color in array and set state
+  const colorIndex = React.useCallback(() => colors.findIndex(findColorIndex))
+  setSelected(colorIndex)
 
-  function renderColors() {
+  return <div className='d-flex flex-row'>{renderColors()}</div>
+
+  function renderColors () {
     return colors.map((color, index) => {
       return (
         <div
+          key={index}
           id={index}
           onClick={handleOnClick}
           className={styles.colors}
@@ -29,13 +27,13 @@ const ColorBoxContainer = ({ defaultValue, colors, onClick }) => {
     })
   }
 
-  function handleOnClick(e) {
+  function handleOnClick (e) {
     const { id } = e.target
     setSelected(id)
     onClick(colors[id])
   }
 
-  function findColorIndex(color) {
+  function findColorIndex (color) {
     return color === defaultValue
   }
 }

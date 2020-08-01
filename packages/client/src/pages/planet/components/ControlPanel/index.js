@@ -1,7 +1,8 @@
 import React from 'react'
 import { Col, Row } from 'react-bootstrap'
 
-import { usePlanet, useWallet } from 'shared/services/Aurbit'
+import WalletContext from 'shared/store/wallet'
+import PlanetContext from 'shared/store/planet'
 
 const styles = {
   container: {
@@ -10,14 +11,14 @@ const styles = {
   }
 }
 export default ({ mapReady }) => {
-  const { planetName } = usePlanet()
-  const { selectedAddress } = useWallet()
+  const { address } = WalletContext.useState()
+  const { planetName } = PlanetContext.useState()
 
   return mapReady ? (
     <Row style={styles.container}>
       <Col>
         <Row>Planet: {planetName}</Row>
-        <Row>Wallet Address: {selectedAddress}</Row>
+        <Row>Wallet Address: {address}</Row>
       </Col>
     </Row>
   ) : null

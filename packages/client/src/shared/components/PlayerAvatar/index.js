@@ -2,7 +2,7 @@
   RENDER PLAYER AVATAR BASED OFF DNA
 */
 
-import React from 'react'
+import React, { useCallback } from 'react'
 import SVG from 'react-inlinesvg'
 import { avatarImage, rgbToHex } from './avatar-utils'
 
@@ -12,15 +12,13 @@ const PlayerAvatar = ({ dna }) => {
   const [skin, setSkin] = React.useState(null)
   const [avatar, setAvatar] = React.useState(null)
 
-  React.useEffect(() => {
-    parseDna()
-  }, [])
+  useCallback(parseDna())
 
   React.useEffect(() => {
     updateGlobalCSS()
-  }, [hair, eye, skin])
+  }, [updateGlobalCSS])
 
-  function parseDna() {
+  function parseDna () {
     // Parse Array back to values to render Avatar
     const hairArray = dna.splice(0, 3)
     const eyeArray = dna.splice(0, 3)
@@ -32,7 +30,7 @@ const PlayerAvatar = ({ dna }) => {
     setAvatar(avatarImage(avatarArray[0]))
   }
 
-  function updateGlobalCSS() {
+  function updateGlobalCSS () {
     const style = document.createElement('style')
     document.head.appendChild(style)
     style.sheet.insertRule(`.eye-color {fill: ${eye}}`)

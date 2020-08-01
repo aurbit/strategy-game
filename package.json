@@ -14,6 +14,7 @@
     "client:test": "yarn workspace client test",
     "truffle:compile": "cd packages/truffle && truffle compile",
     "truffle:deploy": "cd packages/truffle && truffle deploy -f",
+    "truffle:chain": "npx ganache-cli -p 7545",
     "truffle:migrate": "cd packages/truffle && rm -rf build && truffle migrate"
   },
   "workspaces": {
