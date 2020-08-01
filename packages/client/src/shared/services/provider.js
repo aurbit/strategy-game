@@ -13,10 +13,10 @@ export const useProvider = (network, port) => {
 
   switch (network) {
     case availableNetworks.DEVELOPMENT: {
-      // const wsPro = new Web3.providers.WebsocketProvider(
-      //   `ws://localhost:${port || 7545}`
-      // )
-      const wsPro = new Web3(`http://localhost:${port || 7545}`)
+      const wsPro = new Web3.providers.WebsocketProvider(
+        `ws://0.0.0.0:${port || 7545}`
+      )
+      // const wsPro = new Web3(`http://localhost:${port || 7545}`)
       return new Web3(wsPro)
     }
     case availableNetworks.MAINNET: {
