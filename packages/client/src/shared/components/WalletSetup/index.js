@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Modal, Button, ListGroup, Image, Row, Col } from 'react-bootstrap'
 import { WALLETS, ACTIONS } from 'shared/store/wallet'
@@ -34,17 +34,12 @@ export default props => {
 }
 
 const WalletSelectModal = props => {
-  const vendor = useSelector(selectVendor)
   const address = useSelector(selectAddress)
-
   const network = useSelector(selectNetwork)
-
-  console.log(vendor)
+  const vendor = useSelector(selectVendor)
   const dispatch = useDispatch()
-
   const history = useHistory()
-
-  const { token } = useToken() //'development')
+  const { token } = useToken()
 
   // the continue button on the modal
   const handleContinue = () => {

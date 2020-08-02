@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux'
 import WalletSetup from 'shared/components/WalletSetup'
 import { Container, Button } from 'react-bootstrap'
 import { selectAddress } from 'shared/store/wallet'
-import { selectNetwork } from 'shared/store/chain/selectors'
 
 const AuthPage = props => {
   const history = useHistory()

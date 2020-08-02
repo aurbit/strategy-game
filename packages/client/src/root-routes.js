@@ -5,7 +5,6 @@ import { Spinner } from 'react-bootstrap'
 import Navbar from 'shared/components/Layout/Navbar'
 import { ACTIONS } from 'shared/store/wallet'
 import { selectWalletInitalized } from 'shared/store/wallet/selectors'
-import { selectChainInitialzed } from 'shared/store/chain/selectors'
 
 import { Planet, Auth, CreateAvatar, Avatar } from './pages'
 
@@ -13,7 +12,6 @@ export default () => {
   // init the wallets
   const dispatch = useDispatch()
   const initialized = useSelector(selectWalletInitalized)
-  const chainInitialized = useSelector(selectChainInitialzed)
 
   useEffect(() => {
     dispatch(ACTIONS.initWallet())
