@@ -1,8 +1,8 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Col, Row } from 'react-bootstrap'
-import { selectAddress } from 'shared/store/wallet/index'
-import { selectCurrentPlanet } from 'shared/store/planet/index'
+import { selectAddress } from 'shared/store/wallet'
+import { selectCurrentPlanet } from 'shared/store/planet'
 
 const styles = {
   container: {

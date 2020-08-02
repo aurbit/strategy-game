@@ -1,4 +1,5 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import SVG from 'react-inlinesvg' // We can maybe replace this with a native fetch and inner HTML - This lib does same
 import { Container, Row, Col, Spinner } from 'react-bootstrap'
 
@@ -11,7 +12,7 @@ import { mintAvatar } from 'shared/services/metamask'
 
 import web3 from 'web3'
 
-import WalletContext from 'shared/store/wallet'
+import { selectAddress } from 'shared/store/wallet'
 
 import styles from './index.module.css'
 import CreateCharForm from './Form'
@@ -24,8 +25,8 @@ const CreateCharacterContainer = () => {
   const [avatarUrl, setAvatarUrl] = React.useState(avatarImage('human_male'))
 
   // import the avatar contract provider
-  const { avatar, abi, address: avatarAddress, provider } = useAvatar()
-  const { address: walletAddress } = WalletContext.useState()
+  const { avatar, address: avatarAddress, provider } = useAvatar()
+  const walletAddress = useSelector(selectAddress)
 
   React.useEffect(() => {
     // Update global CSS so style change will affect SVG class
@@ -36,29 +37,29 @@ const CreateCharacterContainer = () => {
     style.sheet.insertRule(`.skin-color {fill: ${skinColor}}`)
   }, [hairColor, eyeColor, skinColor])
 
-  function handleOnHairChangeComplete (color) {
+  function handleOnHairChangeComplete(color) {
     setHairColor(color.hex)
   }
 
-  function handleOnEyeChangeComplete (color) {
+  function handleOnEyeChangeComplete(color) {
     setEyeColor(color.hex)
   }
 
-  function handleOnSkinChangeComplete (color) {
+  function handleOnSkinChangeComplete(color) {
     setSkinColor(color.hex)
   }
 
-  function handleOnChangeRadio (e) {
+  function handleOnChangeRadio(e) {
     const avatarUrl = avatarImage(e.target.value)
     setAvatarUrl(avatarUrl)
     setGender(e.target.value)
   }
 
-  function handleOnChangeSkin (value) {
+  function handleOnChangeSkin(value) {
     setSkinColor(value)
   }
 
-  async function handleOnSubmit (e) {
+  async function handleOnSubmit(e) {
     e.preventDefault()
     const data = parseDataArray(hairColor, eyeColor, skinColor, gender)
     const name = e.target['name'].value
@@ -80,7 +81,7 @@ const CreateCharacterContainer = () => {
       value: '0.01',
       name,
       dnaC
-    }).then(result => {
+    }).then((result) => {
       console.log(result)
     })
   }
@@ -88,7 +89,7 @@ const CreateCharacterContainer = () => {
   const AvatarImage = ({ avatarUrl }) => {
     return (
       <SVG
-        loader={<Spinner animation='grow' />}
+        loader={<Spinner animation="grow" />}
         src={avatarUrl}
         onLoad={(src, hasCache) => {
           const male = document.getElementById(
@@ -111,14 +112,14 @@ const CreateCharacterContainer = () => {
 
   return (
     <Container fluid style={{ backgroundColor: 'black' }}>
-      <Row section='create'>
-        <Col id='avatar' xs={12} md={7}>
+      <Row section="create">
+        <Col id="avatar" xs={12} md={7}>
           <div style={{ transform: 'rotateY(180deg)' }}>
             <AvatarImage avatarUrl={avatarUrl} />
           </div>
         </Col>
-        <Col md={{ span: 3, offset: 1 }} className='mt-5' id='form'>
-          <h1 style={{ marginTop: 50 }} className=' text-white'>
+        <Col md={{ span: 3, offset: 1 }} className="mt-5" id="form">
+          <h1 style={{ marginTop: 50 }} className=" text-white">
             Create your Avatar
           </h1>
           <h5 className={`${styles.raceTitle} mb-4`}>RACE: HUMAN</h5>

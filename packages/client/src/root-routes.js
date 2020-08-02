@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { Spinner } from 'react-bootstrap'
 import Navbar from 'shared/components/Layout/Navbar'
-import { ACTIONS } from 'shared/store/wallet/index'
+import { ACTIONS } from 'shared/store/wallet'
 import { selectWalletInitalized } from 'shared/store/wallet/selectors'
-import { Planet, Auth, CreateAvatar, Avatar, TestPage } from './pages'
+import { Planet, Auth, CreateAvatar, Avatar } from './pages'
 
 export default () => {
   // init the wallets
@@ -20,7 +20,6 @@ export default () => {
     <div>
       <Router>
         <Navbar />
-
         <Switch>
           <Route exact path="/">
             <Auth />
@@ -33,9 +32,6 @@ export default () => {
           </Route>
           <Route path="/avatar">
             <Avatar />
-          </Route>
-          <Route path="/test">
-            <TestPage />
           </Route>
         </Switch>
       </Router>

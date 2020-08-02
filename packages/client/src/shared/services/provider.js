@@ -63,7 +63,7 @@ export const useAvatar = network => {
     return { avatar, address, artifact }
   }
 
-  const { avatar, address, artifact, eth } = useAvatarContract()
+  const { avatar, address, artifact } = useAvatarContract()
 
   avatar.events.allEvents({ fromBlock: 'latest' }, console.log)
 
