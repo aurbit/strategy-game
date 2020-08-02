@@ -5,7 +5,7 @@ import { Spinner } from 'react-bootstrap'
 import Navbar from 'shared/components/Layout/Navbar'
 import { ACTIONS } from 'shared/store/wallet/index'
 import { selectWalletInitalized } from 'shared/store/wallet/selectors'
-import { Planet, Auth, CreateAvatar, Avatar, TestPage } from './pages'
+import { Planet, Auth, CreateAvatar, Avatar } from './pages'
 
 export default () => {
   // init the wallets
@@ -33,9 +33,6 @@ export default () => {
           </Route>
           <Route path="/avatar">
             <Avatar />
-          </Route>
-          <Route path="/test">
-            <TestPage />
           </Route>
         </Switch>
       </Router>

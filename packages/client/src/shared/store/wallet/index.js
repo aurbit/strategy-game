@@ -71,4 +71,4 @@ export const walletReducer = createReducer(initialState, {
   }
 })
 
-export const selectAddress = (state) => state.wallet.address || 'FIx'
+export const selectAddress = (state) => state.wallet.address

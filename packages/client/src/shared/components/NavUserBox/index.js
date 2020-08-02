@@ -12,13 +12,13 @@ import AurLogo from 'shared/images/logo_A.svg'
 import SVG from 'react-inlinesvg'
 
 // for getting the token balance
-import WalletContext from 'shared/store/wallet'
+import { selectAddress } from 'shared/store/wallet'
 
 import './index.module.css'
 
 export default () => {
   const history = useHistory()
-  const { address } = WalletContext.useState()
+  const address = useSelector(selectAddress)
   const balance = useSelector(selectBalance)
 
   const Avatar = () => {

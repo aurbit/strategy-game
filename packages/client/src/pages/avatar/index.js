@@ -1,6 +1,5 @@
 import React from 'react'
 import { Container, Col, Row } from 'react-bootstrap'
-import AvatarContext, { getAvatars, STATUS } from 'shared/store/avatar'
 
 export default () => {
   // get the dna from the wallet
