@@ -47,10 +47,12 @@ export const useProvider = () => {
   }
 }
 
-export const useAvatar = network => {
-  const provider = useProvider(network)
+export const useAvatar = () => {
+  const provider = useProvider()
+  const network = useSelector(selectNetwork)
+
   const useAvatarArtifacts = () => {
-    switch (provider.network) {
+    switch (network) {
       case NETWORKS.DEVELOPMENT: {
         const { address, artifact } = AvatarContractsDEV
         return { address, artifact }
@@ -59,7 +61,7 @@ export const useAvatar = network => {
       case NETWORKS.ROPSTEN:
       case NETWORKS.RINKEBY:
       default: {
-        throw new Error('Network unknown')
+        throw new Error('Network Currently Unsupported')
       }
     }
   }
@@ -71,7 +73,6 @@ export const useAvatar = network => {
     const avatar = new provider.eth.Contract(artifact.abi, address)
     return { avatar, address, artifact }
   }
-
   const { avatar, address, artifact } = useAvatarContract()
   return { address, abi: artifact.abi, avatar, provider, eth: provider.eth }
 }
@@ -80,11 +81,13 @@ export const useAvatar = network => {
 // artifacts and address
 export const usePlanet = addressOverride => {
   const currentPlanet = useSelector(selectCurrentPlanet)
-  const provider = useProvider(network)
+  const provider = useProvider()
+  const network = useSelector(selectNetwork)
+
   const isPlanet = Object.keys(PLANETS).includes(currentPlanet)
 
   const usePlanetArtifacts = () => {
-    switch (provider.network) {
+    switch (network) {
       case NETWORKS.DEVELOPMENT: {
         const { address, artifact } = PlanetContractsDEV
         return { address, artifact }
@@ -93,7 +96,7 @@ export const usePlanet = addressOverride => {
       case NETWORKS.ROPSTEN:
       case NETWORKS.RINKEBY:
       default: {
-        throw new Error('Network unknown')
+        throw new Error('Network Currently Unsupported')
       }
     }
   }
@@ -120,7 +123,9 @@ export const usePlanet = addressOverride => {
 // useToken exports the Token contract provider, abi,
 // artifacts and address
 export const useToken = () => {
-  const provider = useProvider(network)
+  const provider = useProvider()
+  const network = useSelector(selectNetwork)
+
   const useTokenArtifacts = () => {
     switch (network) {
       case NETWORKS.DEVELOPMENT: {
@@ -131,7 +136,7 @@ export const useToken = () => {
       case NETWORKS.ROPSTEN:
       case NETWORKS.RINKEBY:
       default: {
-        throw new Error('Network unknown')
+        throw new Error('Network Currently Unsupported')
       }
     }
   }

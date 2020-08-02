@@ -17,13 +17,15 @@ const INITIAL_STATE = {
 // Action Types
 const TYPES = {
   INIT_CHAIN: 'INIT_CHAIN',
-  SET_NETWORK: 'SET_NETWORK'
+  SET_NETWORK: 'SET_NETWORK',
+  CONTACT_EVENT: 'CONTRACT_EVENT'
 }
 
 // Action Creators
 export const ACTIONS = {
   initChain: makeAction(TYPES.INIT_CHAIN, 'payload'),
-  setNetwork: makeAction(TYPES.SET_NETWORK, 'payload')
+  setNetwork: makeAction(TYPES.SET_NETWORK, 'payload'),
+  contractEvent: makeAction(TYPES.CONTACT_EVENT, 'payload')
 }
 
 // Reducer
