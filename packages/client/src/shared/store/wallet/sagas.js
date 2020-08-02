@@ -1,5 +1,3 @@
-import WalletConnect from '@walletconnect/client'
-import QRCodeModal from '@walletconnect/qrcode-modal'
 import { store } from 'store'
 import { TYPES, ACTIONS, WALLETS } from './index'
 import { takeLatest, put } from 'redux-saga/effects'
@@ -9,7 +7,7 @@ import {
   walletConnectListeners
 } from './window-listeners'
 
-function* initWallet() {
+function * initWallet () {
   if (window.ethereum) {
     const { ethereum } = window
     yield put(
@@ -33,7 +31,7 @@ function* initWallet() {
   }
 }
 
-function setWallet(vendor) {
+function setWallet (vendor) {
   switch (vendor) {
     case WALLETS.METAMASK:
       handleMetaMask(vendor)
@@ -42,11 +40,11 @@ function setWallet(vendor) {
       handleWalletConnect()
       break
     default:
-      // throw new Error('Invalid Wallet')
+    // throw new Error('Invalid Wallet')
   }
 }
 
-function handleMetaMask(vendor) {
+function handleMetaMask (vendor) {
   const { ethereum } = window
   if (!ethereum.selectedAddress) {
     ethereum.enable()
@@ -75,17 +73,14 @@ function handleMetaMask(vendor) {
   }
 }
 
-function handleWalletConnect() {
-  const connector = new WalletConnect({
-    bridge: 'https://bridge.walletconnect.org', // Required
-    qrcodeModal: QRCodeModal
-  })
-
-  // THESE SEEM DUPLICATED IN LISTENERS - INVESTIGATE
-  if (connector.connected) {
+function handleWalletConnect () {
+  if (window?.connector.connected) {
     // Check if connection is already established
 
+    const { connector } = window
     // Subscribe to connection events
+
+    store.dispatch(ACTIONS.setAddress({ address: connector._accounts[0] }))
     connector.on('connect', (error, payload) => {
       if (error) {
         throw error
@@ -93,9 +88,11 @@ function handleWalletConnect() {
 
       // Get provided accounts and chainId
       const { accounts } = payload.params[0]
-      store.dispatch(ACTIONS.setAddress({
-        address: accounts[0]
-      }))
+      store.dispatch(
+        ACTIONS.setAddress({
+          address: accounts[0]
+        })
+      )
     })
 
     connector.on('session_update', (error, payload) => {
@@ -105,24 +102,28 @@ function handleWalletConnect() {
 
       // Get updated accounts and chainId
       const { accounts } = payload.params[0]
-      store.dispatch(ACTIONS.setAddress({
-        address: accounts[0]
-      }))
+      store.dispatch(
+        ACTIONS.setAddress({
+          address: accounts[0]
+        })
+      )
     })
 
     connector.on('disconnect', (error, payload) => {
       if (error) {
         throw error
       }
-      store.dispatch(ACTIONS.setAddress({
-        address: 'Connect Wallet'
-      }))
+      store.dispatch(
+        ACTIONS.setAddress({
+          address: 'Connect Wallet'
+        })
+      )
       // Delete connector
     })
   }
 }
 
-export function* rootWalletSagas() {
+export function * rootWalletSagas () {
   yield takeLatest(TYPES.INIT_WALLET, initWallet)
   yield takeLatest(TYPES.SET_WALLET, setWallet)
 }

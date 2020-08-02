@@ -14,29 +14,29 @@ export default () => {
 
   useEffect(() => {
     dispatch(ACTIONS.initWallet())
-  }, [])
+  }, [dispatch])
 
   return initialized ? (
     <div>
       <Router>
         <Navbar />
         <Switch>
-          <Route exact path="/">
+          <Route exact path='/'>
             <Auth />
           </Route>
-          <Route path="/planet">
+          <Route path='/planet'>
             <Planet />
           </Route>
-          <Route path="/create-avatar">
+          <Route path='/create-avatar'>
             <CreateAvatar />
           </Route>
-          <Route path="/avatar">
+          <Route path='/avatar'>
             <Avatar />
           </Route>
         </Switch>
       </Router>
     </div>
   ) : (
-    <Spinner animation="grow" variant="warning" />
+    <Spinner animation='grow' variant='warning' />
   )
 }

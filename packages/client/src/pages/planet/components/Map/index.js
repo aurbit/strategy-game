@@ -11,10 +11,11 @@ export default ({ setMapReady, mapReady }) => {
   const loading = useSelector(selectMapApiStatus)
   const planet = useSelector(selectCurrentPlanet)
   const [map, setMap] = useState(false)
-  console.log('LOADING: ', loading)
+
   React.useEffect(() => {
     dispatch(ACTIONS.getMap({ planet }))
-  }, [])
+  }, [dispatch, planet])
+
   return (
     <Map
       mapReady={loading}
@@ -31,16 +32,16 @@ const Map = ({ setMapReady, mapReady, map, setMap }) => {
   const [width, height] = useWindowSize()
   const styles = useStyles(height, width)
 
-  function handleTileClick(e) {
+  function handleTileClick (e) {
     dispatch(ACTIONS.setActiveTile(e.target.id))
   }
 
-  function handleTileMouseOver(e) {
+  function handleTileMouseOver (e) {
     const tile = document.getElementById(e.target.id)
     tile.style.border = '1px solid white'
   }
 
-  function handleTileMouseOut(e) {
+  function handleTileMouseOut (e) {
     const tile = document.getElementById(e.target.id)
     tile.style.borderLeft = '1px solid #011d4a'
     tile.style.borderBottom = ''
@@ -67,7 +68,7 @@ const Map = ({ setMapReady, mapReady, map, setMap }) => {
               onClick={handleTileClick}
               onMouseOver={handleTileMouseOver}
               onMouseOut={handleTileMouseOut}
-              className="tile"
+              className='tile'
               key={j}
               id={tileCount}
               style={grid[i][j] === '1' ? styles.land : styles.sea}
@@ -97,13 +98,13 @@ const Map = ({ setMapReady, mapReady, map, setMap }) => {
     build()
   }
 
-  return mapReady ? <Spinner animation="grow" /> : map
+  return mapReady ? <Spinner animation='grow' /> : map
 }
 
 const useWindowSize = () => {
   const [size, setSize] = useState([0, 0])
   useLayoutEffect(() => {
-    function updateSize() {
+    function updateSize () {
       setSize([window.innerWidth, window.innerHeight])
     }
     window.addEventListener('resize', updateSize)
