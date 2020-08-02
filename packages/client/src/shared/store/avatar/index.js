@@ -1,9 +1,6 @@
-// Place these into a folder - Incase a store starts having many actions / sagas etc
-// We can easily split them up into separate files
-import { takeLatest } from 'redux-saga/effects'
 import { makeAction, createReducer } from 'shared/utils/redux-utils'
 
-const initialState = {
+const INITIAL_STATE = {
   loading: false,
   tokens: []
 }
@@ -19,18 +16,8 @@ export const ACTIONS = {
 }
 
 // Reducer
-export const avatarReducer = createReducer(initialState, {
+export const avatarReducer = createReducer(INITIAL_STATE, {
   [TYPES.AVATAR_REQUEST]: (state, action) => {
     return { ...state, loading: true }
   }
 })
-
-// Sagas
-
-function* fetchAvatar() {
-  console.log('FETCHING')
-}
-
-export function* rootAvatarSagas() {
-  yield takeLatest(TYPES.AVATAR_REQUEST, fetchAvatar)
-}

@@ -1,8 +1,8 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { Col, Row } from 'react-bootstrap'
-
-import WalletContext from 'shared/store/wallet'
-import PlanetContext from 'shared/store/planet'
+import { selectAddress } from 'shared/store/wallet/index'
+import { selectCurrentPlanet } from 'shared/store/planet/index'
 
 const styles = {
   container: {
@@ -11,8 +11,8 @@ const styles = {
   }
 }
 export default ({ mapReady }) => {
-  const { address } = WalletContext.useState()
-  const { planetName } = PlanetContext.useState()
+  const address = useSelector(selectAddress)
+  const planetName = useSelector(selectCurrentPlanet)
 
   return mapReady ? (
     <Row style={styles.container}>

@@ -18,8 +18,11 @@ export const ACTIONS = {
 }
 
 // Reducer
-export const avatarReducer = createReducer(INITIAL_STATE, {
+export const tokenReducer = createReducer(INITIAL_STATE, {
   [TYPES.SET_AUR_BALANCE]: (state, action) => {
     return { ...state, balance: utils.fromWei(action.payload) }
   }
 })
+
+// Selectors
+export const selectBalance = (state) => state.token.balance

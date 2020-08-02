@@ -2,7 +2,7 @@
 // We can easily split them up into separate files
 import { makeAction, createReducer } from 'shared/utils/redux-utils'
 
-const NETWORKS = {
+export const NETWORKS = {
   DEVELOPMENT: 'development',
   MAINNET: 'mainnet',
   ROPSTEN: 'ropsten',

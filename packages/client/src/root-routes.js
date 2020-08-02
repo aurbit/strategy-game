@@ -1,25 +1,20 @@
 import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { Spinner } from 'react-bootstrap'
 import Navbar from 'shared/components/Layout/Navbar'
-
-import TokenContext, { getAurBalance } from 'shared/store/token'
-import WalletContext, { initWallet, STATUS } from 'shared/store/wallet'
-
+import { ACTIONS } from 'shared/store/wallet/index'
+import { selectWalletInitalized } from 'shared/store/wallet/selectors'
 import { Planet, Auth, CreateAvatar, Avatar, TestPage } from './pages'
 
 export default () => {
   // init the wallets
-  const { status: walletStatus } = WalletContext.useState()
-  const walletDispatch = WalletContext.useDispatch()
-  useEffect(() => {
-    if (walletStatus === STATUS.INIT) {
-      initWallet(walletDispatch)
-    }
-  })
+  const dispatch = useDispatch()
+  const initialized = useSelector(selectWalletInitalized)
 
-  // we need to instantiate the wallet and web3 libraries first
-  const initialized = walletStatus === STATUS.IDLE
+  useEffect(() => {
+    dispatch(ACTIONS.initWallet())
+  }, [])
 
   return initialized ? (
     <div>

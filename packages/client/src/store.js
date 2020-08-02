@@ -2,7 +2,8 @@ import { createStore, applyMiddleware } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import { all } from 'redux-saga/effects'
 import logger from 'redux-logger'
-import { rootAvatarSagas } from 'shared/store/avatar/index'
+import { rootWalletSagas } from 'shared/store/wallet/sagas'
+import { rootMapSagas } from 'shared/store/map/sagas'
 import rootReducer from './root-reducer'
 // we need an initialState otherwise , store will freak out
 const initialState = {}
@@ -10,7 +11,7 @@ const initialState = {}
 const sagaMiddleware = createSagaMiddleware()
 
 function* rootSaga() {
-  yield all([rootAvatarSagas()])
+  yield all([rootWalletSagas(), rootMapSagas()])
 }
 
 // redux sagas is a middleware that we apply to the store

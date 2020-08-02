@@ -23,8 +23,11 @@ export const ACTIONS = {
 }
 
 // Reducer
-export const avatarReducer = createReducer(initialState, {
+export const planetReducer = createReducer(initialState, {
   [TYPES.SET_PLANET]: (state, action) => {
     return { ...state, onPlanet: action.payload }
   }
 })
+
+// Selectors
+export const selectCurrentPlanet = (state) => state.planet.onPlanet
