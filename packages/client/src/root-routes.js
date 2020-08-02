@@ -20,7 +20,6 @@ export default () => {
     <div>
       <Router>
         <Navbar />
-
         <Switch>
           <Route exact path="/">
             <Auth />

@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom'
 import earthImage from 'shared/images/earth.svg'
 import marsImage from 'shared/images/mars.svg'
 import venusImage from 'shared/images/venus.svg'
-import { PLANETS, ACTIONS } from 'shared/store/planet/index'
+import { PLANETS, ACTIONS } from 'shared/store/planet'
 
 import './planet-select.css'
 
