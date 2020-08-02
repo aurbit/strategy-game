@@ -94,7 +94,7 @@ const WalletContext = contextFactory('Wallet', initialState, reducer)
 export default WalletContext
 // Control Functions here
 
-export const initWallet = async dispatch => {
+export const initWallet = async (dispatch) => {
   // check if any wallets have been connected
   // check if metamask is connected
 
@@ -117,24 +117,24 @@ export const initWallet = async dispatch => {
       })
     })
 
-    window.ethereum.on('chainChanged', chainId => {
+    window.ethereum.on('chainChanged', (chainId) => {
       switch (chainId) {
         case '0x3': {
-          alert('We currently on support Local Development Chain on 7545')
+          alert('We currently on support Local Development Chain on 7545AA')
           break
         }
 
         case '0x1': {
-          alert('We currently on support Local Development Chain on 7545')
+          alert('We currently on support Local Development Chain on 7545BB')
           break
         }
         case '0x2a': {
-          alert('We currently on support Local Development Chain on 7545')
+          alert('We currently on support Local Development Chain on 7545CC')
           break
         }
 
         case '0x4': {
-          alert('We currently on support Local Development Chain on 7545')
+          alert('We currently on support Local Development Chain on 7545DD')
           break
         }
         default: {
@@ -144,7 +144,7 @@ export const initWallet = async dispatch => {
       }
     })
 
-    window.ethereum.on('accountsChanged', data => {
+    window.ethereum.on('accountsChanged', (data) => {
       dispatch({ type: actions.SET_ADDRESS, payload: data[0] })
     })
 
@@ -200,6 +200,7 @@ export const initWallet = async dispatch => {
 // sets the wallet vendor to the map of available
 // wallets and sets this wallet as active
 export const setWallet = async (dispatch, vendor) => {
+  console.log('VENDOR: ', vendor)
   switch (vendor) {
     // metamask case
     case availableWallets.METAMASK: {

@@ -2,8 +2,8 @@ import PlanetContractsDEV from 'contracts/development/Planet'
 import TokenContractsDEV from 'contracts/development/AURToken'
 import AvatarContractsDEV from 'contracts/development/AvatarAur'
 
-import { availablePlanets } from 'shared/store/planet'
-import { availableNetworks } from 'shared/store/web3'
+import { PLANETS } from 'shared/store/planet'
+import { NETWORKS } from 'shared/store/web3'
 
 import Web3 from 'web3'
 
@@ -12,23 +12,23 @@ export const useProvider = (network, port) => {
   const key = '0f76dc369ae847dba3d00ac6427f0b42'
 
   switch (network) {
-    case availableNetworks.DEVELOPMENT: {
+    case NETWORKS.DEVELOPMENT: {
       // const wsPro = new Web3.providers.WebsocketProvider(
       //   `ws://localhost:${port || 7545}`
       // )
       const wsPro = new Web3(`http://localhost:${port || 7545}`)
       return new Web3(wsPro)
     }
-    case availableNetworks.MAINNET: {
+    case NETWORKS.MAINNET: {
       return new Web3(url(network, key))
     }
-    case availableNetworks.ROPSTEN: {
+    case NETWORKS.ROPSTEN: {
       return new Web3(url(network, key))
     }
-    case availableNetworks.KOVAN: {
+    case NETWORKS.KOVAN: {
       return new Web3(url(network, key))
     }
-    case availableNetworks.RINKEBY: {
+    case NETWORKS.RINKEBY: {
       return new Web3(url(network, key))
     }
     default: {
@@ -41,13 +41,13 @@ export const useAvatar = network => {
   const provider = useProvider(network)
   const useAvatarArtifacts = () => {
     switch (network) {
-      case availableNetworks.DEVELOPMENT: {
+      case NETWORKS.DEVELOPMENT: {
         const { address, artifact } = AvatarContractsDEV
         return { address, artifact }
       }
-      case availableNetworks.MAINNET:
-      case availableNetworks.ROPSTEN:
-      case availableNetworks.RINKEBY:
+      case NETWORKS.MAINNET:
+      case NETWORKS.ROPSTEN:
+      case NETWORKS.RINKEBY:
       default: {
         const { address, artifact } = AvatarContractsDEV
         return { address, artifact }
@@ -63,7 +63,7 @@ export const useAvatar = network => {
     return { avatar, address, artifact }
   }
 
-  const { avatar, address, artifact, eth } = useAvatarContract()
+  const { avatar, address, artifact } = useAvatarContract()
 
   avatar.events.allEvents({ fromBlock: 'latest' }, console.log)
 
@@ -72,17 +72,17 @@ export const useAvatar = network => {
 
 export const usePlanet = (network, planetName) => {
   const provider = useProvider(network)
-  const isPlanet = Object.keys(availablePlanets).includes(planetName)
+  const isPlanet = Object.keys(PLANETS).includes(planetName)
 
   const usePlanetArtifacts = () => {
     switch (network) {
-      case availableNetworks.DEVELOPMENT: {
+      case NETWORKS.DEVELOPMENT: {
         const { address, artifact } = PlanetContractsDEV
         return { address, artifact }
       }
-      case availableNetworks.MAINNET:
-      case availableNetworks.ROPSTEN:
-      case availableNetworks.RINKEBY:
+      case NETWORKS.MAINNET:
+      case NETWORKS.ROPSTEN:
+      case NETWORKS.RINKEBY:
       default: {
         const { address, artifact } = PlanetContractsDEV
         return { address, artifact }
@@ -113,13 +113,13 @@ export const useToken = network => {
   const provider = useProvider(network)
   const useTokenArtifacts = () => {
     switch (network) {
-      case availableNetworks.DEVELOPMENT: {
+      case NETWORKS.DEVELOPMENT: {
         const { address, artifact } = TokenContractsDEV
         return { address, artifact }
       }
-      case availableNetworks.MAINNET:
-      case availableNetworks.ROPSTEN:
-      case availableNetworks.RINKEBY:
+      case NETWORKS.MAINNET:
+      case NETWORKS.ROPSTEN:
+      case NETWORKS.RINKEBY:
       default: {
         const { address, artifact } = TokenContractsDEV
         return { address, artifact }

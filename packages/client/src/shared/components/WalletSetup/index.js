@@ -1,7 +1,9 @@
-import React, { useState, useMemo, useEffect } from 'react'
+import React, { useState, useMemo } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { Modal, Button, ListGroup, Image, Row, Col } from 'react-bootstrap'
-import WalletContext, { setWallet, availableWallets } from 'shared/store/wallet'
-import TokenContext, { setAurBalance, STATUS } from 'shared/store/token'
+import { WALLETS, ACTIONS } from 'shared/store/wallet'
+import { ACTIONS as TOKEN_ACTIONS } from 'shared/store/token'
+import { selectAddress, selectWallet } from 'shared/store/wallet/selectors'
 import { useToken } from 'shared/services/provider'
 
 import { ShieldCheck } from 'react-bootstrap-icons'
@@ -9,14 +11,14 @@ import { useHistory } from 'react-router-dom'
 import MetaMaskLogo from 'shared/images/metamask-logo.png'
 import WalletConnectLogo from 'shared/images/wallet-connect-logo.png'
 
-export default props => {
+export default (props) => {
   const [modalShow, setModalShow] = React.useState(false)
 
   return (
     <div>
       <Button
         variant={props.variant || 'dark'}
-        size='lg'
+        size="lg"
         onClick={() => setModalShow(true)}
       >
         {props.buttonText}
@@ -30,10 +32,10 @@ export default props => {
   )
 }
 
-const WalletSelectModal = props => {
-  const { activeWallet, address } = WalletContext.useState()
-  const walletDispatch = WalletContext.useDispatch()
-  const tokenDispatch = TokenContext.useDispatch()
+const WalletSelectModal = (props) => {
+  const activeWallet = useSelector(selectWallet)
+  const address = useSelector(selectAddress)
+  const dispatch = useDispatch()
   const { token } = useToken()
 
   const [vendor, setVendor] = useState(activeWallet)
@@ -48,31 +50,36 @@ const WalletSelectModal = props => {
   }
 
   // when the users switches wallet
-  const handleWalletUpdate = wallet => {
-    setWallet(walletDispatch, wallet)
+  const handleWalletUpdate = (wallet) => {
+    dispatch(ACTIONS.setWallet(wallet))
     setVendor(wallet)
   }
 
   /// if address updates, check for aur balance
-  useMemo(() => {
-    if (address)
+  // Should this not be a Use Effect to listen to changes to props?
+  React.useEffect(() => {
+    if (address) {
       token.methods
         .balanceOf(address)
         .call()
-        .then(data => {
-          setAurBalance(tokenDispatch, data)
+        .then((data) => {
+          dispatch(TOKEN_ACTIONS.setAurBalance(data))
         })
+        .catch((err) => {
+          dispatch(TOKEN_ACTIONS.setAurBalanceError(err))
+        })
+    }
   }, [address])
 
   return (
     <Modal
       {...props}
-      size='lg'
-      aria-labelledby='contained-modal-title-vcenter'
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title id='contained-modal-title-vcenter'>
+        <Modal.Title id="contained-modal-title-vcenter">
           Connect Wallet
         </Modal.Title>
       </Modal.Header>
@@ -81,13 +88,13 @@ const WalletSelectModal = props => {
           {typeof window?.ethereum !== 'undefined' ? (
             <ListGroup.Item
               action
-              variant='no-style'
-              active={vendor === availableWallets.METAMASK}
+              variant="no-style"
+              active={vendor === WALLETS.METAMASK}
               style={{ height: 100 }}
             >
               <Row
-                className='align-items-center'
-                onClick={() => handleWalletUpdate(availableWallets.METAMASK)}
+                className="align-items-center"
+                onClick={() => handleWalletUpdate(WALLETS.METAMASK)}
               >
                 <Col xs={3}>
                   <Image width={80} height={80} src={MetaMaskLogo} />
@@ -95,10 +102,10 @@ const WalletSelectModal = props => {
                 <Col xs={6} md={7}>
                   MetaMask
                 </Col>
-                <Col xs={3} md='auto' order='last'>
+                <Col xs={3} md="auto" order="last">
                   {window?.ethereum.selectedAddress &&
-                  vendor === availableWallets.METAMASK ? (
-                    <ShieldCheck color='white' size={48} />
+                  vendor === WALLETS.METAMASK ? (
+                    <ShieldCheck color="white" size={48} />
                   ) : null}
                 </Col>
               </Row>
@@ -106,15 +113,13 @@ const WalletSelectModal = props => {
           ) : null}
           <ListGroup.Item
             action
-            variant='no-style'
-            active={vendor === availableWallets.WALLET_CONNECT}
+            variant="no-style"
+            active={vendor === WALLETS.WALLET_CONNECT}
             style={{ height: 100 }}
           >
             <Row
-              className='align-items-center'
-              onClick={() =>
-                handleWalletUpdate(availableWallets.WALLET_CONNECT)
-              }
+              className="align-items-center"
+              onClick={() => handleWalletUpdate(WALLETS.WALLET_CONNECT)}
             >
               <Col xs={3}>
                 <Image width={80} height={80} src={WalletConnectLogo} />
@@ -122,9 +127,9 @@ const WalletSelectModal = props => {
               <Col xs={6} md={7}>
                 Wallet Connect
               </Col>
-              <Col xs={2} md='auto' order='last'>
-                {vendor === availableWallets.WALLET_CONNECT ? (
-                  <ShieldCheck color='white' size={48} />
+              <Col xs={2} md="auto" order="last">
+                {vendor === WALLETS.WALLET_CONNECT ? (
+                  <ShieldCheck color="white" size={48} />
                 ) : null}
               </Col>
             </Row>
@@ -133,7 +138,7 @@ const WalletSelectModal = props => {
       </Modal.Body>
       <Modal.Footer>
         <Button
-          variant='dark'
+          variant="dark"
           disabled={activeWallet === null}
           onClick={handleContinue}
         >

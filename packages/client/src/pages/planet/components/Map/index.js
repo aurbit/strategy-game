@@ -1,70 +1,52 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react'
+import React, { useLayoutEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Spinner } from 'react-bootstrap'
-import PlanetContext from 'shared/store/planet'
-import MapContext, { getMap, setActiveTile, STATUS } from 'shared/store/map'
+import { ACTIONS } from 'shared/store/map'
+import { selectMapApiStatus, selectMapGrid } from 'shared/store/map/selectors'
+import { selectCurrentPlanet } from 'shared/store/planet/index'
 
 export default ({ setMapReady, mapReady }) => {
+  const dispatch = useDispatch()
+  // Loading is the Map API status - but loading seems to be coming from somewhere else
+  const loading = useSelector(selectMapApiStatus)
+  const planet = useSelector(selectCurrentPlanet)
   const [map, setMap] = useState(false)
+  console.log('LOADING: ', loading)
+  React.useEffect(() => {
+    dispatch(ACTIONS.getMap({ planet }))
+  }, [])
   return (
-    <div>
-      <Map
-        mapReady={mapReady}
-        setMapReady={setMapReady}
-        map={map}
-        setMap={setMap}
-      />
-    </div>
+    <Map
+      mapReady={loading}
+      setMapReady={setMapReady}
+      map={map}
+      setMap={setMap}
+    />
   )
 }
 
-const useMapLogic = () => {
-  const { onPlanet } = PlanetContext.useState()
-  const mapState = MapContext.useState()
-  const mapDispatch = MapContext.useDispatch()
-  const { grid, status: mapStatus } = mapState.map
+const Map = ({ setMapReady, mapReady, map, setMap }) => {
+  const dispatch = useDispatch()
+  const grid = useSelector(selectMapGrid)
+  const [width, height] = useWindowSize()
+  const styles = useStyles(height, width)
 
-  useEffect(() => {
-    if (mapStatus === STATUS.INIT) {
-      getMap(mapDispatch, onPlanet)
-    }
-  })
-
-  const handleTileClick = ev => {
-    setActiveTile(mapDispatch, ev.target.id)
+  function handleTileClick(e) {
+    dispatch(ACTIONS.setActiveTile(e.target.id))
   }
 
-  const handleTileMouseOver = ev => {
-    const tile = document.getElementById(ev.target.id)
+  function handleTileMouseOver(e) {
+    const tile = document.getElementById(e.target.id)
     tile.style.border = '1px solid white'
   }
 
-  const handleTileMouseOut = ev => {
-    const tile = document.getElementById(ev.target.id)
+  function handleTileMouseOut(e) {
+    const tile = document.getElementById(e.target.id)
     tile.style.borderLeft = '1px solid #011d4a'
     tile.style.borderBottom = ''
     tile.style.borderRight = ''
     tile.style.borderTop = '1px solid #011d4a'
   }
-
-  return {
-    grid,
-    mapStatus,
-    handleTileClick,
-    handleTileMouseOver,
-    handleTileMouseOut
-  }
-}
-
-const Map = ({ setMapReady, mapReady, map, setMap }) => {
-  const {
-    grid = [],
-    handleTileClick,
-    handleTileMouseOver,
-    handleTileMouseOut
-  } = useMapLogic()
-
-  const [width, height] = useWindowSize()
-  const styles = useStyles(height, width)
 
   const build = () => {
     let x, y
@@ -76,16 +58,16 @@ const Map = ({ setMapReady, mapReady, map, setMap }) => {
       y = grid.length
 
       // loop over rows and items in the grid array
-      for (let i in grid) {
-        let rowTemplate = []
+      for (const i in grid) {
+        const rowTemplate = []
 
-        for (let j in grid[i]) {
+        for (const j in grid[i]) {
           rowTemplate.push(
             <div
               onClick={handleTileClick}
               onMouseOver={handleTileMouseOver}
               onMouseOut={handleTileMouseOut}
-              className='tile'
+              className="tile"
               key={j}
               id={tileCount}
               style={grid[i][j] === '1' ? styles.land : styles.sea}
@@ -115,13 +97,13 @@ const Map = ({ setMapReady, mapReady, map, setMap }) => {
     build()
   }
 
-  return mapReady ? map : <Spinner animation='grow' />
+  return mapReady ? <Spinner animation="grow" /> : map
 }
 
 const useWindowSize = () => {
   const [size, setSize] = useState([0, 0])
   useLayoutEffect(() => {
-    function updateSize () {
+    function updateSize() {
       setSize([window.innerWidth, window.innerHeight])
     }
     window.addEventListener('resize', updateSize)
