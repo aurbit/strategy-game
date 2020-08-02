@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Spinner } from 'react-bootstrap'
-import { ACTIONS } from 'shared/store/map/index'
+import { ACTIONS } from 'shared/store/map'
 import { selectMapApiStatus, selectMapGrid } from 'shared/store/map/selectors'
 import { selectCurrentPlanet } from 'shared/store/planet/index'
 
@@ -11,12 +11,13 @@ export default ({ setMapReady, mapReady }) => {
   const loading = useSelector(selectMapApiStatus)
   const planet = useSelector(selectCurrentPlanet)
   const [map, setMap] = useState(false)
+  console.log('LOADING: ', loading)
   React.useEffect(() => {
     dispatch(ACTIONS.getMap({ planet }))
   }, [])
   return (
     <Map
-      mapReady={mapReady}
+      mapReady={loading}
       setMapReady={setMapReady}
       map={map}
       setMap={setMap}
@@ -96,7 +97,7 @@ const Map = ({ setMapReady, mapReady, map, setMap }) => {
     build()
   }
 
-  return mapReady ? map : <Spinner animation="grow" />
+  return mapReady ? <Spinner animation="grow" /> : map
 }
 
 const useWindowSize = () => {

@@ -24,22 +24,23 @@ export const ACTIONS = {
 // Reducer
 export const mapReducer = createReducer(INITIAL_STATE, {
   [TYPES.GET_MAP_REQUEST]: (state, action) => {
-    return { ...state, map: { ...state.map, loading: true } }
+    return { ...state, loading: true, activeTile: null, grid: [] }
   },
   [TYPES.GET_MAP_SUCCESS]: (state, action) => {
     return {
       ...state,
-      map: { ...state.map, loading: false, grid: action.payload.grid }
+      loading: false,
+      grid: action.payload.grid
     }
   },
   [TYPES.GET_MAP_FAILED]: (state, action) => {
     return { ...state, map: { ...state.map, loading: false } }
   },
   [TYPES.SET_ACTIVE_TILE]: (state, action) => {
-    const newMap = Object.assign(state.map, { activeTile: action.payload })
+    // const newMap = Object.assign(state.map, { activeTile: action.payload })
     return {
       ...state,
-      map: newMap
+      activeTile: action.payload
     }
   }
 })

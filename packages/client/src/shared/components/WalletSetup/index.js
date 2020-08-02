@@ -59,13 +59,15 @@ const WalletSelectModal = (props) => {
   // Should this not be a Use Effect to listen to changes to props?
   React.useEffect(() => {
     if (address) {
-      console.log("TOKEN: ", address)
-      // token.methods
-      //   .balanceOf(address)
-      //   .call()
-      //   .then((data) => {
-      //     dispatch(TOKEN_ACTIONS.setAurBalance(data))
-      //   })
+      token.methods
+        .balanceOf(address)
+        .call()
+        .then((data) => {
+          dispatch(TOKEN_ACTIONS.setAurBalance(data))
+        })
+        .catch((err) => {
+          dispatch(TOKEN_ACTIONS.setAurBalanceError(err))
+        })
     }
   }, [address])
 
