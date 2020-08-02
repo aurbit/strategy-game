@@ -11,27 +11,25 @@ export const NETWORKS = {
 }
 
 const INITIAL_STATE = {
-  network: null,
-  web3: null
+  network: NETWORKS.DEVELOPMENT
 }
 
 // Action Types
 const TYPES = {
+  INIT_CHAIN: 'INIT_CHAIN',
   SET_NETWORK: 'SET_NETWORK'
 }
 
 // Action Creators
 export const ACTIONS = {
+  initChain: makeAction(TYPES.INIT_CHAIN, 'payload'),
   setNetwork: makeAction(TYPES.SET_NETWORK, 'payload')
 }
 
 // Reducer
-export const avatarReducer = createReducer(INITIAL_STATE, {
-  [TYPES.SET_AUR_BALANCE]: (state, action) => {
-    return {
-      ...state,
-      network: action.payload.network,
-      web3: action.payload.web3
-    }
+export const chainReducer = createReducer(INITIAL_STATE, {
+  [TYPES.SET_NETWORK]: (state, action) => {
+    const { network } = action.payload
+    return { ...state, network }
   }
 })

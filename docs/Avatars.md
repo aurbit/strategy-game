@@ -10,3 +10,7 @@ struct Avatar {
   uint dna;
 }
 ```
+
+An AURA token has a user selected name and a partly user generated and partly randomized DNA. The following outlines the structure of the Avatar DNA:
+
+000 000 000 000 000 000 000 000 000 000 000 000 000 000 000

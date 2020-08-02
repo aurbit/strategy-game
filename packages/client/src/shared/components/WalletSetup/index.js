@@ -5,9 +5,10 @@ import { WALLETS, ACTIONS } from 'shared/store/wallet'
 import { ACTIONS as TOKEN_ACTIONS } from 'shared/store/token'
 import { selectAddress, selectWallet } from 'shared/store/wallet/selectors'
 import { useToken } from 'shared/services/provider'
-
+import { selectNetwork } from 'shared/store/chain/selectors'
 import { ShieldCheck } from 'react-bootstrap-icons'
 import { useHistory } from 'react-router-dom'
+
 import MetaMaskLogo from 'shared/images/metamask-logo.png'
 import WalletConnectLogo from 'shared/images/wallet-connect-logo.png'
 
@@ -33,13 +34,19 @@ export default props => {
 }
 
 const WalletSelectModal = props => {
-  const activeWallet = useSelector(selectWallet)
+  const wallet = useSelector(selectWallet)
   const address = useSelector(selectAddress)
-  const dispatch = useDispatch()
-  const { token } = useToken()
 
-  const [vendor, setVendor] = useState(activeWallet)
+  const network = useSelector(selectNetwork)
+
+  const dispatch = useDispatch()
+
+  console.log('HERJHLKJALKSJ', network)
+
+  const [vendor, setVendor] = useState(wallet)
   const history = useHistory()
+
+  const { token } = useToken(network) //'development')
 
   // the continue button on the modal
   const handleContinue = () => {
@@ -139,10 +146,10 @@ const WalletSelectModal = props => {
       <Modal.Footer>
         <Button
           variant='dark'
-          disabled={activeWallet === null}
+          disabled={wallet === null}
           onClick={handleContinue}
         >
-          Continue
+          {network}
         </Button>
       </Modal.Footer>
     </Modal>

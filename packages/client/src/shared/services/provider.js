@@ -3,20 +3,27 @@ import TokenContractsDEV from 'contracts/development/AURToken'
 import AvatarContractsDEV from 'contracts/development/AvatarAur'
 
 import { PLANETS } from 'shared/store/planet'
-import { NETWORKS } from 'shared/store/web3'
+import { NETWORKS } from 'shared/store/chain'
+
+import { useSelector } from 'react-redux'
+import { selectNetwork } from 'shared/store/chain/selectors'
+import { selectCurrentPlanet } from 'shared/store/planet'
 
 import Web3 from 'web3'
 
-export const useProvider = (network, port) => {
+export const useProvider = () => {
+  const network = useSelector(selectNetwork)
+
+  if (!network) throw new Error('You must pass the current network in')
+  const port = process.env.NETWORK_PORT || 7545
   const url = (network, key) => `wss://${network}.infura.io/ws/v3/${key}`
   const key = '0f76dc369ae847dba3d00ac6427f0b42'
 
   switch (network) {
     case NETWORKS.DEVELOPMENT: {
-      // const wsPro = new Web3.providers.WebsocketProvider(
-      //   `ws://localhost:${port || 7545}`
-      // )
-      const wsPro = new Web3(`http://localhost:${port || 7545}`)
+      const wsPro = new Web3.providers.WebsocketProvider(
+        `ws://localhost:${port}`
+      )
       return new Web3(wsPro)
     }
     case NETWORKS.MAINNET: {
@@ -32,7 +39,10 @@ export const useProvider = (network, port) => {
       return new Web3(url(network, key))
     }
     default: {
-      return new Web3(`http://localhost:${port || 7545}`)
+      const wsPro = new Web3.providers.WebsocketProvider(
+        `ws://localhost:${port}`
+      )
+      return new Web3(wsPro)
     }
   }
 }
@@ -40,7 +50,7 @@ export const useProvider = (network, port) => {
 export const useAvatar = network => {
   const provider = useProvider(network)
   const useAvatarArtifacts = () => {
-    switch (network) {
+    switch (provider.network) {
       case NETWORKS.DEVELOPMENT: {
         const { address, artifact } = AvatarContractsDEV
         return { address, artifact }
@@ -49,8 +59,7 @@ export const useAvatar = network => {
       case NETWORKS.ROPSTEN:
       case NETWORKS.RINKEBY:
       default: {
-        const { address, artifact } = AvatarContractsDEV
-        return { address, artifact }
+        throw new Error('Network unknown')
       }
     }
   }
@@ -64,18 +73,18 @@ export const useAvatar = network => {
   }
 
   const { avatar, address, artifact } = useAvatarContract()
-
-  avatar.events.allEvents({ fromBlock: 'latest' }, console.log)
-
   return { address, abi: artifact.abi, avatar, provider, eth: provider.eth }
 }
 
-export const usePlanet = (network, planetName) => {
+// usePlanet exports the Planet contract provider, abi,
+// artifacts and address
+export const usePlanet = addressOverride => {
+  const currentPlanet = useSelector(selectCurrentPlanet)
   const provider = useProvider(network)
-  const isPlanet = Object.keys(PLANETS).includes(planetName)
+  const isPlanet = Object.keys(PLANETS).includes(currentPlanet)
 
   const usePlanetArtifacts = () => {
-    switch (network) {
+    switch (provider.network) {
       case NETWORKS.DEVELOPMENT: {
         const { address, artifact } = PlanetContractsDEV
         return { address, artifact }
@@ -84,8 +93,7 @@ export const usePlanet = (network, planetName) => {
       case NETWORKS.ROPSTEN:
       case NETWORKS.RINKEBY:
       default: {
-        const { address, artifact } = PlanetContractsDEV
-        return { address, artifact }
+        throw new Error('Network unknown')
       }
     }
   }
@@ -105,11 +113,13 @@ export const usePlanet = (network, planetName) => {
   if (!isPlanet) {
     throw new Error('Invalid Planet being called from useAurbit')
   }
-  const { address, planet, abi } = usePlanetContract()
+  const { address, planet, abi } = usePlanetContract(addressOverride)
   return { planet, address, abi, provider, eth: provider.eth }
 }
 
-export const useToken = network => {
+// useToken exports the Token contract provider, abi,
+// artifacts and address
+export const useToken = () => {
   const provider = useProvider(network)
   const useTokenArtifacts = () => {
     switch (network) {
@@ -121,8 +131,7 @@ export const useToken = network => {
       case NETWORKS.ROPSTEN:
       case NETWORKS.RINKEBY:
       default: {
-        const { address, artifact } = TokenContractsDEV
-        return { address, artifact }
+        throw new Error('Network unknown')
       }
     }
   }

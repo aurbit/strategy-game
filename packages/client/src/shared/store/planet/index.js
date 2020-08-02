@@ -30,4 +30,4 @@ export const planetReducer = createReducer(initialState, {
 })
 
 // Selectors
-export const selectCurrentPlanet = (state) => state.planet.onPlanet
+export const selectCurrentPlanet = state => state.planet.onPlanet
