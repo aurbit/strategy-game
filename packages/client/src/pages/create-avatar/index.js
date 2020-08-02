@@ -8,10 +8,10 @@ import { avatarImage, parseDataArray } from './avatar-utils'
 // stuff for ethereum
 import { useAvatar } from 'shared/services/provider'
 import { mintAvatar } from 'shared/services/metamask'
+import { useSelector } from 'react-redux'
+import { selectAddress } from 'shared/store/wallet'
 
 import web3 from 'web3'
-
-import WalletContext from 'shared/store/wallet'
 
 import styles from './index.module.css'
 import CreateCharForm from './Form'
@@ -25,7 +25,7 @@ const CreateCharacterContainer = () => {
 
   // import the avatar contract provider
   const { avatar, abi, address: avatarAddress, provider } = useAvatar()
-  const { address: walletAddress } = WalletContext.useState()
+  const address = useSelector(selectAddress)
 
   React.useEffect(() => {
     // Update global CSS so style change will affect SVG class
@@ -75,7 +75,7 @@ const CreateCharacterContainer = () => {
     mintAvatar({
       avatar,
       provider,
-      from: walletAddress,
+      from: address,
       to: avatarAddress,
       value: '0.01',
       name,
