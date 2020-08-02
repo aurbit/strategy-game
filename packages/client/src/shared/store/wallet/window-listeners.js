@@ -4,7 +4,7 @@ import WalletConnect from '@walletconnect/client'
 import QRCodeModal from '@walletconnect/qrcode-modal'
 
 export const ethereumEventListeners = () => {
-  window.ethereum.on('chainChanged', (chainId) => {
+  window.ethereum.on('chainChanged', chainId => {
     switch (chainId) {
       case '0x3': {
         store.dispatch(ACTIONS.setNetwork({ network: 'dsd' }))
@@ -39,17 +39,19 @@ export const ethereumEventListeners = () => {
     store.dispatch(ACTIONS.setNetwork({ vendor: WALLETS.METAMASK }))
   })
 
-  window.ethereum.on('accountsChanged', (data) => {
+  window.ethereum.on('accountsChanged', data => {
     store.dispatch(ACTIONS.setAddress({ address: data[0] }))
   })
 }
 
 export const walletConnectListeners = () => {
   // Should this live here?
-  const connector = new WalletConnect({
+  window.connector = new WalletConnect({
     bridge: 'https://bridge.walletconnect.org', // Required
     qrcodeModal: QRCodeModal
   })
+
+  const { connector } = window
 
   if (connector.connected) {
     // Check if connection is already established

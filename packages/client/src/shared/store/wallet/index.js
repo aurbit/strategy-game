@@ -9,13 +9,8 @@ export const WALLETS = {
 }
 
 const initialState = {
-  activeWallet: null,
-  address: null,
-  network: null,
-  wallets: {
-    [WALLETS.METAMASK]: null,
-    [WALLETS.WALLET_CONNECT]: null
-  }
+  vendor: null,
+  address: null
 }
 
 // Action Types
@@ -40,27 +35,26 @@ export const ACTIONS = {
 // Reducer
 export const walletReducer = createReducer(initialState, {
   [TYPES.SET_WALLET]: (state, action) => {
-    const { vendor, wallet, address } = action.payload
-    const walletMap = { [vendor]: wallet }
-    const newWallets = Object.assign(state.wallets, walletMap)
+    const { vendor } = action.payload
+    const address =
+      vendor === WALLETS.METAMASK
+        ? window.ethereum.selectedAddress
+        : vendor === WALLETS.WALLET_CONNECT
+        ? window.connector._accounts[0]
+        : 'Disconnected'
     const newState = Object.assign(state, {
-      activeWallet: vendor,
-      wallets: newWallets,
+      vendor,
       address
     })
     return newState
   },
   [TYPES.UNSET_WALLET]: (state, action) => {
     const { vendor } = action.payload
-    const { activeWallet, wallets } = state
-    const newActiveWallet = activeWallet === vendor ? null : activeWallet
-    const walletMap = { [vendor]: null }
-    const newWallets = Object.assign(wallets, walletMap)
-
+    const newVendor = state.vendor === vendor ? null : vendor
+    const newAddress = state.vendor === vendor ? null : state.address
     return {
-      ...state,
-      activeWallet: newActiveWallet,
-      wallets: newWallets
+      vendor: newVendor,
+      address: newAddress
     }
   },
   [TYPES.SET_ADDRESS]: (state, action) => {
@@ -71,4 +65,4 @@ export const walletReducer = createReducer(initialState, {
   }
 })
 
-export const selectAddress = (state) => state.wallet.address
+export const selectAddress = state => state.wallet.address
