@@ -1,18 +1,26 @@
 import React from 'react'
-import { Container, Col, Row } from 'react-bootstrap'
+import { Route, Switch } from 'react-router-dom'
+import MyAvatars from './avatar-list'
+import CreateAvatar from './create-avatar'
+import AvatarView from './avatar-view'
 
-export default () => {
-  // get the dna from the wallet
-  // if no avatar, link to create avatar
-  // render the avatar and show a description
+function AvatarContainer () {
+  // need to get the list of all the avtars from the connect wallet
+  // need to check for avatars from the dna in the url
 
   return (
-    <Container>
-      <Row>
-        <Col>
-          <p style={{ color: 'white' }}>HERE</p>
-        </Col>
-      </Row>
-    </Container>
+    <Switch>
+      <Route exact path='/avatar/create'>
+        <CreateAvatar />
+      </Route>
+      <Route exact path='/avatar/:address/:avatarId'>
+        <AvatarView />
+      </Route>
+      <Route exact path='/avatar/:address'>
+        <MyAvatars />
+      </Route>
+    </Switch>
   )
 }
+
+export default AvatarContainer

@@ -23,12 +23,12 @@ export default () => {
 
   const Avatar = () => {
     return (
-      <Button variant="no-style">
+      <Button variant='no-style'>
         <PersonCircle
           styles={styles.avatarIcon}
           size={40}
-          color="gray"
-          onClick={() => history.push('/create-avatar')}
+          color='gray'
+          onClick={() => history.push('/avatar/create')}
         />
       </Button>
     )
@@ -36,17 +36,17 @@ export default () => {
 
   const AurBalance = () => {
     return (
-      <Button variant="dark" size="lg">
+      <Button variant='dark' size='lg'>
         {balance}
         <SVG
           style={styles.aurLogo}
           height={23}
-          description="Aurbit logo"
+          description='Aurbit logo'
           loader={' ...'}
-          preProcessor={(code) => code.replace(/fill=".*?"/g, 'fill="white"')}
+          preProcessor={code => code.replace(/fill=".*?"/g, 'fill="white"')}
           src={AurLogo}
-          title="React"
-          uniqueHash="a1f8d1"
+          title='React'
+          uniqueHash='a1f8d1'
           uniquifyIDs={true}
         />
       </Button>
@@ -55,18 +55,20 @@ export default () => {
 
   return (
     <Row>
-      <Col className="text-right">
+      <Col xs={7} sm={5} className='text-right'>
         <AurBalance styles={styles.balance} />
       </Col>
-      <Col md={3} className="text-right">
-        <WalletSetup
-          variant="dark"
-          styles={styles.wallet}
-          buttonText={addressShortener(address)}
-        />
-      </Col>
-      <Col md={1} className="text-right">
-        <Avatar className="text-right" styles={styles.avatar} />
+      {window.innerWidth >= 700 ? (
+        <Col xs={4} sm={5} className='text-right'>
+          <WalletSetup
+            variant='dark'
+            styles={styles.wallet}
+            buttonText={addressShortener(address)}
+          />
+        </Col>
+      ) : null}
+      <Col xs={3} sm={1} className='text-right'>
+        <Avatar className='text-right' styles={styles.avatar} />
       </Col>
     </Row>
   )

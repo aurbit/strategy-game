@@ -5,18 +5,10 @@ import WalletSetup from 'shared/components/WalletSetup'
 import { Container, Button } from 'react-bootstrap'
 import { selectAddress } from 'shared/store/wallet'
 
-const AuthPage = (props) => {
+const AuthPage = props => {
   const history = useHistory()
   const address = useSelector(selectAddress)
-  function onBtnClick() {
-    history.push('/planet')
-  }
-  function renderButton() {
-    if (address) {
-      return <Button onClick={onBtnClick}>Hello</Button>
-    }
-    return <WalletSetup buttonText="Start Game" link={'/planet'} />
-  }
+
   return (
     <Container fluid style={{ backgroundColor: 'black' }}>
       <div
@@ -27,7 +19,7 @@ const AuthPage = (props) => {
           transform: 'translate(-50%, -50%)'
         }}
       >
-        {renderButton()}
+        <WalletSetup buttonText='Start Game' link={'/planet'} />
       </div>
     </Container>
   )

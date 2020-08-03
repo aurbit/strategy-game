@@ -23,15 +23,15 @@ The numbers of the array map to the following:
 
 ```
 [
-  haircolor[0],haircolor[1],haircolor[2],
-  eyecolor[0],eyecolor[1],eyecolor[2],
-  skincolor[0],skincolor[1],skincolor[2],
-  hairtype,
-  eyetype,
-  skintype,
-  mouth,
-  gender,
-  race
+  0-3, haircolor[0],haircolor[1],haircolor[2],
+  4-6, eyecolor[0],eyecolor[1],eyecolor[2],
+  7-9, skincolor[0],skincolor[1],skincolor[2],
+  10, hairtype,
+  11, eyetype,
+  12, skintype,
+  13, mouth,
+  14, gender,
+  15, race
 ]
 ```
 
