@@ -36,7 +36,7 @@ export default () => {
 
   const AurBalance = () => {
     return (
-      <div>
+      <Button variant='dark' size='lg'>
         {balance}
         <SVG
           style={styles.aurLogo}
@@ -49,7 +49,7 @@ export default () => {
           uniqueHash='a1f8d1'
           uniquifyIDs={true}
         />
-      </div>
+      </Button>
     )
   }
 
