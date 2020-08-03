@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { HashRouter as Router, Switch, Route } from 'react-router-dom'
 import { Spinner } from 'react-bootstrap'
 import Navbar from 'shared/components/Layout/Navbar'
 import { ACTIONS } from 'shared/store/wallet'
