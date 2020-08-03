@@ -2,34 +2,31 @@ import { store } from 'store'
 import { ACTIONS, WALLETS } from './index'
 import WalletConnect from '@walletconnect/client'
 import QRCodeModal from '@walletconnect/qrcode-modal'
+import { NETWORKS } from 'shared/store/chain'
 
 export const ethereumEventListeners = () => {
   window.ethereum.on('chainChanged', chainId => {
+    console.log(chainId)
     switch (chainId) {
       case '0x3': {
-        store.dispatch(ACTIONS.setNetwork({ network: 'dsd' }))
-        // alert('We currently on support Local Development Chain on 7545')
+        store.dispatch(ACTIONS.setNetwork({ network: NETWORKS.ROPSTEN }))
         break
       }
       case '0x1': {
-        store.dispatch(ACTIONS.setNetwork({ network: 'dsd' }))
-        // alert('We currently on support Local Development Chain on 7545')
+        store.dispatch(ACTIONS.setNetwork({ network: NETWORKS.MAINNET }))
         break
       }
       case '0x2a': {
-        store.dispatch(ACTIONS.setNetwork({ network: 'dsd' }))
-        // alert('We currently on support Local Development Chain on 7545')
+        store.dispatch(ACTIONS.setNetwork({ network: NETWORKS.KOVAN }))
         break
       }
 
       case '0x4': {
-        store.dispatch(ACTIONS.setNetwork({ network: 'dsd' }))
-        // alert('We currently on support Local Development Chain on 7545')
+        store.dispatch(ACTIONS.setNetwork({ network: NETWORKS.RINKEBY }))
         break
       }
       default: {
-        store.dispatch(ACTIONS.setNetwork({ network: 'dsd' }))
-        // alert('We currently on support Local Development Chain on 7545')
+        store.dispatch(ACTIONS.setNetwork({ network: NETWORKS.DEVELOPMENT }))
         break
       }
     }

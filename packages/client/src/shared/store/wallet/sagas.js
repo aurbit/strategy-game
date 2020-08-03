@@ -26,9 +26,9 @@ function * initWallet () {
         })
       )
     }
-    // Attach wallet connect listeners
-    walletConnectListeners()
   }
+  // Attach wallet connect listeners
+  walletConnectListeners()
 }
 
 function setWallet (vendor) {
