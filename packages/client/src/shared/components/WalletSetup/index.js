@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Modal, Button, ListGroup, Image, Row, Col } from 'react-bootstrap'
 import { WALLETS, ACTIONS } from 'shared/store/wallet'
 import { ACTIONS as TOKEN_ACTIONS } from 'shared/store/token'
-import { selectAddress, selectWallet } from 'shared/store/wallet/selectors'
+import { selectAddress, selectVendor } from 'shared/store/wallet/selectors'
 import { useToken } from 'shared/services/provider'
-
+import { selectNetwork } from 'shared/store/chain/selectors'
 import { ShieldCheck } from 'react-bootstrap-icons'
 import { useHistory } from 'react-router-dom'
+
 import MetaMaskLogo from 'shared/images/metamask-logo.png'
 import WalletConnectLogo from 'shared/images/wallet-connect-logo.png'
 
@@ -33,13 +34,12 @@ export default props => {
 }
 
 const WalletSelectModal = props => {
-  const activeWallet = useSelector(selectWallet)
   const address = useSelector(selectAddress)
+  const network = useSelector(selectNetwork)
+  const vendor = useSelector(selectVendor)
   const dispatch = useDispatch()
-  const { token } = useToken()
-
-  const [vendor, setVendor] = useState(activeWallet)
   const history = useHistory()
+  const { token } = useToken()
 
   // the continue button on the modal
   const handleContinue = () => {
@@ -52,7 +52,6 @@ const WalletSelectModal = props => {
   // when the users switches wallet
   const handleWalletUpdate = wallet => {
     dispatch(ACTIONS.setWallet({ vendor: wallet }))
-    setVendor(wallet)
   }
 
   /// if address updates, check for aur balance
@@ -139,10 +138,10 @@ const WalletSelectModal = props => {
       <Modal.Footer>
         <Button
           variant='dark'
-          disabled={activeWallet === null}
+          disabled={vendor === null}
           onClick={handleContinue}
         >
-          Continue
+          {network}
         </Button>
       </Modal.Footer>
     </Modal>
