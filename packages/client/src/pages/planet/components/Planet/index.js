@@ -17,13 +17,13 @@ const styles = {
   }
 }
 
-export default (props) => {
+export default props => {
   const [mapReady, setMapReady] = useState(false)
   const [hoverTile, setHoverTile] = useState(0)
   return (
     <Container fluid style={{ backgroundColor: 'black' }}>
       <Row style={styles.row}>
-        <Col style={styles.col} md="auto">
+        <Col style={styles.col} md={window.innerWidth <= 1000 ? 12 : 'auto'}>
           <Map
             mapReady={mapReady}
             setMapReady={setMapReady}
