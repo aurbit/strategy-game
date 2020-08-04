@@ -30,7 +30,7 @@ const PlayerAvatar = ({ dna, name }) => {
     // const eyeType = dna[11]
     // const skinType = dna[12]
     // const mouth = dna[13]
-    const gender = dna[14]
+    const gender = dna[17]
     // const race = dna[15]
 
     setHair(rgbToHex(hairArray))
@@ -49,21 +49,13 @@ const PlayerAvatar = ({ dna, name }) => {
   }
 
   return (
-    <Container>
+    <>
       {ready ? (
-        <Card>
-          <SVG src={avatar} />
-          <Card.Body>
-            <Card.Title>
-              {name} - [{dna.toString()}]
-            </Card.Title>
-            <Card.Text></Card.Text>
-          </Card.Body>
-        </Card>
+        <SVG src={avatar} />
       ) : (
         <Spinner animation='grow' variant='warning' />
       )}
-    </Container>
+    </>
   )
 }
 

@@ -8,7 +8,14 @@ export const selectTokenContract = state => state.chain.tokenContract
 export const selectPlanetContract = state => state.chain.planetContract
 export const selectAvatarContract = state => state.chain.avatarContract
 export const selectChainInitialzed = state => {
-  if (state.chain.network) {
+  const aaR = state.chain.avatarArtifacts
+  const taR = state.chain.tokenArtifacts
+  const paR = state.chain.planetArtifacts
+  const acR = state.chain.avatarContract
+  const tcR = state.chain.tokenContract
+  const pcR = state.chain.planetContract
+  const providersReady = aaR && taR && paR && acR && tcR && pcR
+  if (state.chain.network && providersReady) {
     return true
   } else {
     return false

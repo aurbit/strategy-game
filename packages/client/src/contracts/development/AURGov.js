@@ -1,7 +1,7 @@
 
     module.exports = {
       "network": "development",
-      "address": "0x1305EedDc30ca6092Fd85b8906382f2a89D87445",
+      "address": "0x855A4945E95f2377A8dB540821220112d367b1Af",
       "artifact": {
   "contractName": "AURGov",
   "abi": [
@@ -309,7 +309,7 @@
         "id": 2,
         "nodeType": "ImportDirective",
         "scope": 538,
-        "sourceUnit": 1088,
+        "sourceUnit": 1091,
         "src": "138:20:0",
         "symbolAliases": [],
         "unitAlias": ""
@@ -320,7 +320,7 @@
         "id": 3,
         "nodeType": "ImportDirective",
         "scope": 538,
-        "sourceUnit": 1154,
+        "sourceUnit": 1157,
         "src": "159:23:0",
         "symbolAliases": [],
         "unitAlias": ""
@@ -331,7 +331,7 @@
         "id": 4,
         "nodeType": "ImportDirective",
         "scope": 538,
-        "sourceUnit": 1126,
+        "sourceUnit": 1129,
         "src": "183:23:0",
         "symbolAliases": [],
         "unitAlias": ""
@@ -619,7 +619,7 @@
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_contract$_IAUR_$1087",
+              "typeIdentifier": "t_contract$_IAUR_$1090",
               "typeString": "contract IAUR"
             },
             "typeName": {
@@ -627,10 +627,10 @@
               "id": 25,
               "name": "IAUR",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 1087,
+              "referencedDeclaration": 1090,
               "src": "573:4:0",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_IAUR_$1087",
+                "typeIdentifier": "t_contract$_IAUR_$1090",
                 "typeString": "contract IAUR"
               }
             },
@@ -648,7 +648,7 @@
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_contract$_IAvatar_$1125",
+              "typeIdentifier": "t_contract$_IAvatar_$1128",
               "typeString": "contract IAvatar"
             },
             "typeName": {
@@ -656,10 +656,10 @@
               "id": 27,
               "name": "IAvatar",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 1125,
+              "referencedDeclaration": 1128,
               "src": "600:7:0",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_IAvatar_$1125",
+                "typeIdentifier": "t_contract$_IAvatar_$1128",
                 "typeString": "contract IAvatar"
               }
             },
@@ -2021,7 +2021,7 @@
                       "referencedDeclaration": 26,
                       "src": "1506:8:0",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IAUR_$1087",
+                        "typeIdentifier": "t_contract$_IAUR_$1090",
                         "typeString": "contract IAUR"
                       }
                     },
@@ -2055,10 +2055,10 @@
                         "name": "IAUR",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 1087,
+                        "referencedDeclaration": 1090,
                         "src": "1517:4:0",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_IAUR_$1087_$",
+                          "typeIdentifier": "t_type$_t_contract$_IAUR_$1090_$",
                           "typeString": "type(contract IAUR)"
                         }
                       },
@@ -2073,13 +2073,13 @@
                       "src": "1517:20:0",
                       "tryCall": false,
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IAUR_$1087",
+                        "typeIdentifier": "t_contract$_IAUR_$1090",
                         "typeString": "contract IAUR"
                       }
                     },
                     "src": "1506:31:0",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IAUR_$1087",
+                      "typeIdentifier": "t_contract$_IAUR_$1090",
                       "typeString": "contract IAUR"
                     }
                   },
@@ -2331,7 +2331,7 @@
                       "referencedDeclaration": 28,
                       "src": "1811:6:0",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IAvatar_$1125",
+                        "typeIdentifier": "t_contract$_IAvatar_$1128",
                         "typeString": "contract IAvatar"
                       }
                     },
@@ -2365,10 +2365,10 @@
                         "name": "IAvatar",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 1125,
+                        "referencedDeclaration": 1128,
                         "src": "1820:7:0",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_IAvatar_$1125_$",
+                          "typeIdentifier": "t_type$_t_contract$_IAvatar_$1128_$",
                           "typeString": "type(contract IAvatar)"
                         }
                       },
@@ -2383,13 +2383,13 @@
                       "src": "1820:23:0",
                       "tryCall": false,
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IAvatar_$1125",
+                        "typeIdentifier": "t_contract$_IAvatar_$1128",
                         "typeString": "contract IAvatar"
                       }
                     },
                     "src": "1811:32:0",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IAvatar_$1125",
+                      "typeIdentifier": "t_contract$_IAvatar_$1128",
                       "typeString": "contract IAvatar"
                     }
                   },
@@ -2612,7 +2612,7 @@
                         "referencedDeclaration": 28,
                         "src": "1959:6:0",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IAvatar_$1125",
+                          "typeIdentifier": "t_contract$_IAvatar_$1128",
                           "typeString": "contract IAvatar"
                         }
                       },
@@ -2623,7 +2623,7 @@
                       "lValueRequested": false,
                       "memberName": "setcreateAvatarFee",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 1124,
+                      "referencedDeclaration": 1127,
                       "src": "1959:25:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_nonpayable$_t_uint256_$returns$__$",
@@ -3152,7 +3152,7 @@
                       "stateVariable": false,
                       "storageLocation": "default",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IPlanet_$1153",
+                        "typeIdentifier": "t_contract$_IPlanet_$1156",
                         "typeString": "contract IPlanet"
                       },
                       "typeName": {
@@ -3160,10 +3160,10 @@
                         "id": 217,
                         "name": "IPlanet",
                         "nodeType": "UserDefinedTypeName",
-                        "referencedDeclaration": 1153,
+                        "referencedDeclaration": 1156,
                         "src": "2273:7:0",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IPlanet_$1153",
+                          "typeIdentifier": "t_contract$_IPlanet_$1156",
                           "typeString": "contract IPlanet"
                         }
                       },
@@ -3200,10 +3200,10 @@
                       "name": "IPlanet",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 1153,
+                      "referencedDeclaration": 1156,
                       "src": "2286:7:0",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_type$_t_contract$_IPlanet_$1153_$",
+                        "typeIdentifier": "t_type$_t_contract$_IPlanet_$1156_$",
                         "typeString": "type(contract IPlanet)"
                       }
                     },
@@ -3218,7 +3218,7 @@
                     "src": "2286:19:0",
                     "tryCall": false,
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IPlanet_$1153",
+                      "typeIdentifier": "t_contract$_IPlanet_$1156",
                       "typeString": "contract IPlanet"
                     }
                   },
@@ -3259,7 +3259,7 @@
                         "referencedDeclaration": 218,
                         "src": "2315:2:0",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IPlanet_$1153",
+                          "typeIdentifier": "t_contract$_IPlanet_$1156",
                           "typeString": "contract IPlanet"
                         }
                       },
@@ -3270,7 +3270,7 @@
                       "lValueRequested": false,
                       "memberName": "setTokenContract",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 1147,
+                      "referencedDeclaration": 1150,
                       "src": "2315:19:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_nonpayable$_t_address_$returns$__$",
@@ -3330,7 +3330,7 @@
                         "referencedDeclaration": 218,
                         "src": "2359:2:0",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IPlanet_$1153",
+                          "typeIdentifier": "t_contract$_IPlanet_$1156",
                           "typeString": "contract IPlanet"
                         }
                       },
@@ -3341,7 +3341,7 @@
                       "lValueRequested": false,
                       "memberName": "setAvatarContract",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 1152,
+                      "referencedDeclaration": 1155,
                       "src": "2359:20:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_nonpayable$_t_address_$returns$__$",
@@ -5185,7 +5185,7 @@
                       "stateVariable": false,
                       "storageLocation": "default",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IPlanet_$1153",
+                        "typeIdentifier": "t_contract$_IPlanet_$1156",
                         "typeString": "contract IPlanet"
                       },
                       "typeName": {
@@ -5193,10 +5193,10 @@
                         "id": 379,
                         "name": "IPlanet",
                         "nodeType": "UserDefinedTypeName",
-                        "referencedDeclaration": 1153,
+                        "referencedDeclaration": 1156,
                         "src": "3636:7:0",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IPlanet_$1153",
+                          "typeIdentifier": "t_contract$_IPlanet_$1156",
                           "typeString": "contract IPlanet"
                         }
                       },
@@ -5233,10 +5233,10 @@
                       "name": "IPlanet",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 1153,
+                      "referencedDeclaration": 1156,
                       "src": "3649:7:0",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_type$_t_contract$_IPlanet_$1153_$",
+                        "typeIdentifier": "t_type$_t_contract$_IPlanet_$1156_$",
                         "typeString": "type(contract IPlanet)"
                       }
                     },
@@ -5251,7 +5251,7 @@
                     "src": "3649:16:0",
                     "tryCall": false,
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IPlanet_$1153",
+                      "typeIdentifier": "t_contract$_IPlanet_$1156",
                       "typeString": "contract IPlanet"
                     }
                   },
@@ -5292,7 +5292,7 @@
                         "referencedDeclaration": 380,
                         "src": "3675:2:0",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IPlanet_$1153",
+                          "typeIdentifier": "t_contract$_IPlanet_$1156",
                           "typeString": "contract IPlanet"
                         }
                       },
@@ -5303,7 +5303,7 @@
                       "lValueRequested": false,
                       "memberName": "setTileBuyFee",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 1132,
+                      "referencedDeclaration": 1135,
                       "src": "3675:16:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_nonpayable$_t_uint256_$returns$__$",
@@ -5553,7 +5553,7 @@
                       "stateVariable": false,
                       "storageLocation": "default",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IPlanet_$1153",
+                        "typeIdentifier": "t_contract$_IPlanet_$1156",
                         "typeString": "contract IPlanet"
                       },
                       "typeName": {
@@ -5561,10 +5561,10 @@
                         "id": 406,
                         "name": "IPlanet",
                         "nodeType": "UserDefinedTypeName",
-                        "referencedDeclaration": 1153,
+                        "referencedDeclaration": 1156,
                         "src": "3843:7:0",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IPlanet_$1153",
+                          "typeIdentifier": "t_contract$_IPlanet_$1156",
                           "typeString": "contract IPlanet"
                         }
                       },
@@ -5601,10 +5601,10 @@
                       "name": "IPlanet",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 1153,
+                      "referencedDeclaration": 1156,
                       "src": "3856:7:0",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_type$_t_contract$_IPlanet_$1153_$",
+                        "typeIdentifier": "t_type$_t_contract$_IPlanet_$1156_$",
                         "typeString": "type(contract IPlanet)"
                       }
                     },
@@ -5619,7 +5619,7 @@
                     "src": "3856:16:0",
                     "tryCall": false,
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IPlanet_$1153",
+                      "typeIdentifier": "t_contract$_IPlanet_$1156",
                       "typeString": "contract IPlanet"
                     }
                   },
@@ -5660,7 +5660,7 @@
                         "referencedDeclaration": 407,
                         "src": "3882:2:0",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IPlanet_$1153",
+                          "typeIdentifier": "t_contract$_IPlanet_$1156",
                           "typeString": "contract IPlanet"
                         }
                       },
@@ -5671,7 +5671,7 @@
                       "lValueRequested": false,
                       "memberName": "setMiningRate",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 1137,
+                      "referencedDeclaration": 1140,
                       "src": "3882:16:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_nonpayable$_t_uint256_$returns$__$",
@@ -5921,7 +5921,7 @@
                       "stateVariable": false,
                       "storageLocation": "default",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IPlanet_$1153",
+                        "typeIdentifier": "t_contract$_IPlanet_$1156",
                         "typeString": "contract IPlanet"
                       },
                       "typeName": {
@@ -5929,10 +5929,10 @@
                         "id": 433,
                         "name": "IPlanet",
                         "nodeType": "UserDefinedTypeName",
-                        "referencedDeclaration": 1153,
+                        "referencedDeclaration": 1156,
                         "src": "4044:7:0",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IPlanet_$1153",
+                          "typeIdentifier": "t_contract$_IPlanet_$1156",
                           "typeString": "contract IPlanet"
                         }
                       },
@@ -5969,10 +5969,10 @@
                       "name": "IPlanet",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 1153,
+                      "referencedDeclaration": 1156,
                       "src": "4057:7:0",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_type$_t_contract$_IPlanet_$1153_$",
+                        "typeIdentifier": "t_type$_t_contract$_IPlanet_$1156_$",
                         "typeString": "type(contract IPlanet)"
                       }
                     },
@@ -5987,7 +5987,7 @@
                     "src": "4057:16:0",
                     "tryCall": false,
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IPlanet_$1153",
+                      "typeIdentifier": "t_contract$_IPlanet_$1156",
                       "typeString": "contract IPlanet"
                     }
                   },
@@ -6028,7 +6028,7 @@
                         "referencedDeclaration": 434,
                         "src": "4083:2:0",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IPlanet_$1153",
+                          "typeIdentifier": "t_contract$_IPlanet_$1156",
                           "typeString": "contract IPlanet"
                         }
                       },
@@ -6039,7 +6039,7 @@
                       "lValueRequested": false,
                       "memberName": "setminAURUnit",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 1142,
+                      "referencedDeclaration": 1145,
                       "src": "4083:16:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_nonpayable$_t_uint256_$returns$__$",
@@ -7301,7 +7301,7 @@
         "id": 2,
         "nodeType": "ImportDirective",
         "scope": 538,
-        "sourceUnit": 1088,
+        "sourceUnit": 1091,
         "src": "138:20:0",
         "symbolAliases": [],
         "unitAlias": ""
@@ -7312,7 +7312,7 @@
         "id": 3,
         "nodeType": "ImportDirective",
         "scope": 538,
-        "sourceUnit": 1154,
+        "sourceUnit": 1157,
         "src": "159:23:0",
         "symbolAliases": [],
         "unitAlias": ""
@@ -7323,7 +7323,7 @@
         "id": 4,
         "nodeType": "ImportDirective",
         "scope": 538,
-        "sourceUnit": 1126,
+        "sourceUnit": 1129,
         "src": "183:23:0",
         "symbolAliases": [],
         "unitAlias": ""
@@ -7611,7 +7611,7 @@
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_contract$_IAUR_$1087",
+              "typeIdentifier": "t_contract$_IAUR_$1090",
               "typeString": "contract IAUR"
             },
             "typeName": {
@@ -7619,10 +7619,10 @@
               "id": 25,
               "name": "IAUR",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 1087,
+              "referencedDeclaration": 1090,
               "src": "573:4:0",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_IAUR_$1087",
+                "typeIdentifier": "t_contract$_IAUR_$1090",
                 "typeString": "contract IAUR"
               }
             },
@@ -7640,7 +7640,7 @@
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_contract$_IAvatar_$1125",
+              "typeIdentifier": "t_contract$_IAvatar_$1128",
               "typeString": "contract IAvatar"
             },
             "typeName": {
@@ -7648,10 +7648,10 @@
               "id": 27,
               "name": "IAvatar",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 1125,
+              "referencedDeclaration": 1128,
               "src": "600:7:0",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_IAvatar_$1125",
+                "typeIdentifier": "t_contract$_IAvatar_$1128",
                 "typeString": "contract IAvatar"
               }
             },
@@ -9013,7 +9013,7 @@
                       "referencedDeclaration": 26,
                       "src": "1506:8:0",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IAUR_$1087",
+                        "typeIdentifier": "t_contract$_IAUR_$1090",
                         "typeString": "contract IAUR"
                       }
                     },
@@ -9047,10 +9047,10 @@
                         "name": "IAUR",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 1087,
+                        "referencedDeclaration": 1090,
                         "src": "1517:4:0",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_IAUR_$1087_$",
+                          "typeIdentifier": "t_type$_t_contract$_IAUR_$1090_$",
                           "typeString": "type(contract IAUR)"
                         }
                       },
@@ -9065,13 +9065,13 @@
                       "src": "1517:20:0",
                       "tryCall": false,
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IAUR_$1087",
+                        "typeIdentifier": "t_contract$_IAUR_$1090",
                         "typeString": "contract IAUR"
                       }
                     },
                     "src": "1506:31:0",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IAUR_$1087",
+                      "typeIdentifier": "t_contract$_IAUR_$1090",
                       "typeString": "contract IAUR"
                     }
                   },
@@ -9323,7 +9323,7 @@
                       "referencedDeclaration": 28,
                       "src": "1811:6:0",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IAvatar_$1125",
+                        "typeIdentifier": "t_contract$_IAvatar_$1128",
                         "typeString": "contract IAvatar"
                       }
                     },
@@ -9357,10 +9357,10 @@
                         "name": "IAvatar",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 1125,
+                        "referencedDeclaration": 1128,
                         "src": "1820:7:0",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_IAvatar_$1125_$",
+                          "typeIdentifier": "t_type$_t_contract$_IAvatar_$1128_$",
                           "typeString": "type(contract IAvatar)"
                         }
                       },
@@ -9375,13 +9375,13 @@
                       "src": "1820:23:0",
                       "tryCall": false,
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IAvatar_$1125",
+                        "typeIdentifier": "t_contract$_IAvatar_$1128",
                         "typeString": "contract IAvatar"
                       }
                     },
                     "src": "1811:32:0",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IAvatar_$1125",
+                      "typeIdentifier": "t_contract$_IAvatar_$1128",
                       "typeString": "contract IAvatar"
                     }
                   },
@@ -9604,7 +9604,7 @@
                         "referencedDeclaration": 28,
                         "src": "1959:6:0",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IAvatar_$1125",
+                          "typeIdentifier": "t_contract$_IAvatar_$1128",
                           "typeString": "contract IAvatar"
                         }
                       },
@@ -9615,7 +9615,7 @@
                       "lValueRequested": false,
                       "memberName": "setcreateAvatarFee",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 1124,
+                      "referencedDeclaration": 1127,
                       "src": "1959:25:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_nonpayable$_t_uint256_$returns$__$",
@@ -10144,7 +10144,7 @@
                       "stateVariable": false,
                       "storageLocation": "default",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IPlanet_$1153",
+                        "typeIdentifier": "t_contract$_IPlanet_$1156",
                         "typeString": "contract IPlanet"
                       },
                       "typeName": {
@@ -10152,10 +10152,10 @@
                         "id": 217,
                         "name": "IPlanet",
                         "nodeType": "UserDefinedTypeName",
-                        "referencedDeclaration": 1153,
+                        "referencedDeclaration": 1156,
                         "src": "2273:7:0",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IPlanet_$1153",
+                          "typeIdentifier": "t_contract$_IPlanet_$1156",
                           "typeString": "contract IPlanet"
                         }
                       },
@@ -10192,10 +10192,10 @@
                       "name": "IPlanet",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 1153,
+                      "referencedDeclaration": 1156,
                       "src": "2286:7:0",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_type$_t_contract$_IPlanet_$1153_$",
+                        "typeIdentifier": "t_type$_t_contract$_IPlanet_$1156_$",
                         "typeString": "type(contract IPlanet)"
                       }
                     },
@@ -10210,7 +10210,7 @@
                     "src": "2286:19:0",
                     "tryCall": false,
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IPlanet_$1153",
+                      "typeIdentifier": "t_contract$_IPlanet_$1156",
                       "typeString": "contract IPlanet"
                     }
                   },
@@ -10251,7 +10251,7 @@
                         "referencedDeclaration": 218,
                         "src": "2315:2:0",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IPlanet_$1153",
+                          "typeIdentifier": "t_contract$_IPlanet_$1156",
                           "typeString": "contract IPlanet"
                         }
                       },
@@ -10262,7 +10262,7 @@
                       "lValueRequested": false,
                       "memberName": "setTokenContract",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 1147,
+                      "referencedDeclaration": 1150,
                       "src": "2315:19:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_nonpayable$_t_address_$returns$__$",
@@ -10322,7 +10322,7 @@
                         "referencedDeclaration": 218,
                         "src": "2359:2:0",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IPlanet_$1153",
+                          "typeIdentifier": "t_contract$_IPlanet_$1156",
                           "typeString": "contract IPlanet"
                         }
                       },
@@ -10333,7 +10333,7 @@
                       "lValueRequested": false,
                       "memberName": "setAvatarContract",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 1152,
+                      "referencedDeclaration": 1155,
                       "src": "2359:20:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_nonpayable$_t_address_$returns$__$",
@@ -12177,7 +12177,7 @@
                       "stateVariable": false,
                       "storageLocation": "default",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IPlanet_$1153",
+                        "typeIdentifier": "t_contract$_IPlanet_$1156",
                         "typeString": "contract IPlanet"
                       },
                       "typeName": {
@@ -12185,10 +12185,10 @@
                         "id": 379,
                         "name": "IPlanet",
                         "nodeType": "UserDefinedTypeName",
-                        "referencedDeclaration": 1153,
+                        "referencedDeclaration": 1156,
                         "src": "3636:7:0",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IPlanet_$1153",
+                          "typeIdentifier": "t_contract$_IPlanet_$1156",
                           "typeString": "contract IPlanet"
                         }
                       },
@@ -12225,10 +12225,10 @@
                       "name": "IPlanet",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 1153,
+                      "referencedDeclaration": 1156,
                       "src": "3649:7:0",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_type$_t_contract$_IPlanet_$1153_$",
+                        "typeIdentifier": "t_type$_t_contract$_IPlanet_$1156_$",
                         "typeString": "type(contract IPlanet)"
                       }
                     },
@@ -12243,7 +12243,7 @@
                     "src": "3649:16:0",
                     "tryCall": false,
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IPlanet_$1153",
+                      "typeIdentifier": "t_contract$_IPlanet_$1156",
                       "typeString": "contract IPlanet"
                     }
                   },
@@ -12284,7 +12284,7 @@
                         "referencedDeclaration": 380,
                         "src": "3675:2:0",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IPlanet_$1153",
+                          "typeIdentifier": "t_contract$_IPlanet_$1156",
                           "typeString": "contract IPlanet"
                         }
                       },
@@ -12295,7 +12295,7 @@
                       "lValueRequested": false,
                       "memberName": "setTileBuyFee",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 1132,
+                      "referencedDeclaration": 1135,
                       "src": "3675:16:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_nonpayable$_t_uint256_$returns$__$",
@@ -12545,7 +12545,7 @@
                       "stateVariable": false,
                       "storageLocation": "default",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IPlanet_$1153",
+                        "typeIdentifier": "t_contract$_IPlanet_$1156",
                         "typeString": "contract IPlanet"
                       },
                       "typeName": {
@@ -12553,10 +12553,10 @@
                         "id": 406,
                         "name": "IPlanet",
                         "nodeType": "UserDefinedTypeName",
-                        "referencedDeclaration": 1153,
+                        "referencedDeclaration": 1156,
                         "src": "3843:7:0",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IPlanet_$1153",
+                          "typeIdentifier": "t_contract$_IPlanet_$1156",
                           "typeString": "contract IPlanet"
                         }
                       },
@@ -12593,10 +12593,10 @@
                       "name": "IPlanet",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 1153,
+                      "referencedDeclaration": 1156,
                       "src": "3856:7:0",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_type$_t_contract$_IPlanet_$1153_$",
+                        "typeIdentifier": "t_type$_t_contract$_IPlanet_$1156_$",
                         "typeString": "type(contract IPlanet)"
                       }
                     },
@@ -12611,7 +12611,7 @@
                     "src": "3856:16:0",
                     "tryCall": false,
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IPlanet_$1153",
+                      "typeIdentifier": "t_contract$_IPlanet_$1156",
                       "typeString": "contract IPlanet"
                     }
                   },
@@ -12652,7 +12652,7 @@
                         "referencedDeclaration": 407,
                         "src": "3882:2:0",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IPlanet_$1153",
+                          "typeIdentifier": "t_contract$_IPlanet_$1156",
                           "typeString": "contract IPlanet"
                         }
                       },
@@ -12663,7 +12663,7 @@
                       "lValueRequested": false,
                       "memberName": "setMiningRate",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 1137,
+                      "referencedDeclaration": 1140,
                       "src": "3882:16:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_nonpayable$_t_uint256_$returns$__$",
@@ -12913,7 +12913,7 @@
                       "stateVariable": false,
                       "storageLocation": "default",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IPlanet_$1153",
+                        "typeIdentifier": "t_contract$_IPlanet_$1156",
                         "typeString": "contract IPlanet"
                       },
                       "typeName": {
@@ -12921,10 +12921,10 @@
                         "id": 433,
                         "name": "IPlanet",
                         "nodeType": "UserDefinedTypeName",
-                        "referencedDeclaration": 1153,
+                        "referencedDeclaration": 1156,
                         "src": "4044:7:0",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IPlanet_$1153",
+                          "typeIdentifier": "t_contract$_IPlanet_$1156",
                           "typeString": "contract IPlanet"
                         }
                       },
@@ -12961,10 +12961,10 @@
                       "name": "IPlanet",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 1153,
+                      "referencedDeclaration": 1156,
                       "src": "4057:7:0",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_type$_t_contract$_IPlanet_$1153_$",
+                        "typeIdentifier": "t_type$_t_contract$_IPlanet_$1156_$",
                         "typeString": "type(contract IPlanet)"
                       }
                     },
@@ -12979,7 +12979,7 @@
                     "src": "4057:16:0",
                     "tryCall": false,
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IPlanet_$1153",
+                      "typeIdentifier": "t_contract$_IPlanet_$1156",
                       "typeString": "contract IPlanet"
                     }
                   },
@@ -13020,7 +13020,7 @@
                         "referencedDeclaration": 434,
                         "src": "4083:2:0",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_contract$_IPlanet_$1153",
+                          "typeIdentifier": "t_contract$_IPlanet_$1156",
                           "typeString": "contract IPlanet"
                         }
                       },
@@ -13031,7 +13031,7 @@
                       "lValueRequested": false,
                       "memberName": "setminAURUnit",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 1142,
+                      "referencedDeclaration": 1145,
                       "src": "4083:16:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_external_nonpayable$_t_uint256_$returns$__$",
@@ -14272,7 +14272,7 @@
   },
   "networks": {},
   "schemaVersion": "3.2.3",
-  "updatedAt": "2020-08-04T11:40:45.505Z",
+  "updatedAt": "2020-08-04T16:56:37.629Z",
   "devdoc": {
     "methods": {}
   },

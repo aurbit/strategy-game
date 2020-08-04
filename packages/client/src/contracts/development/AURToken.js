@@ -1,7 +1,7 @@
 
     module.exports = {
       "network": "development",
-      "address": "0x2a00f1D717d5029f74b07d51Bc8Ae4e6E0591678",
+      "address": "0xfa4C76c5F696535B3565960A1D2d0A012d2C87aB",
       "artifact": {
   "contractName": "AURToken",
   "abi": [
@@ -632,7 +632,7 @@
         "id": 540,
         "nodeType": "ImportDirective",
         "scope": 655,
-        "sourceUnit": 5978,
+        "sourceUnit": 5981,
         "src": "77:57:1",
         "symbolAliases": [],
         "unitAlias": ""
@@ -643,7 +643,7 @@
         "id": 541,
         "nodeType": "ImportDirective",
         "scope": 655,
-        "sourceUnit": 1105,
+        "sourceUnit": 1108,
         "src": "135:23:1",
         "symbolAliases": [],
         "unitAlias": ""
@@ -658,10 +658,10 @@
               "id": 542,
               "name": "ERC777",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 5977,
+              "referencedDeclaration": 5980,
               "src": "239:6:1",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_ERC777_$5977",
+                "typeIdentifier": "t_contract$_ERC777_$5980",
                 "typeString": "contract ERC777"
               }
             },
@@ -671,10 +671,10 @@
           }
         ],
         "contractDependencies": [
-          3434,
-          3834,
-          5977,
-          6122
+          3437,
+          3837,
+          5980,
+          6125
         ],
         "contractKind": "contract",
         "documentation": "Author: Chris Markov 2020\nProject Aurbit",
@@ -682,10 +682,10 @@
         "id": 654,
         "linearizedBaseContracts": [
           654,
-          5977,
-          3834,
-          6122,
-          3434
+          5980,
+          3837,
+          6125,
+          3437
         ],
         "name": "AURToken",
         "nodeType": "ContractDefinition",
@@ -729,7 +729,7 @@
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_contract$_IAURGov_$1104",
+              "typeIdentifier": "t_contract$_IAURGov_$1107",
               "typeString": "contract IAURGov"
             },
             "typeName": {
@@ -737,10 +737,10 @@
               "id": 546,
               "name": "IAURGov",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 1104,
+              "referencedDeclaration": 1107,
               "src": "279:7:1",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_IAURGov_$1104",
+                "typeIdentifier": "t_contract$_IAURGov_$1107",
                 "typeString": "contract IAURGov"
               }
             },
@@ -989,7 +989,7 @@
                       "referencedDeclaration": 547,
                       "src": "947:6:1",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IAURGov_$1104",
+                        "typeIdentifier": "t_contract$_IAURGov_$1107",
                         "typeString": "contract IAURGov"
                       }
                     },
@@ -1023,10 +1023,10 @@
                         "name": "IAURGov",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 1104,
+                        "referencedDeclaration": 1107,
                         "src": "956:7:1",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_IAURGov_$1104_$",
+                          "typeIdentifier": "t_type$_t_contract$_IAURGov_$1107_$",
                           "typeString": "type(contract IAURGov)"
                         }
                       },
@@ -1041,13 +1041,13 @@
                       "src": "956:16:1",
                       "tryCall": false,
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IAURGov_$1104",
+                        "typeIdentifier": "t_contract$_IAURGov_$1107",
                         "typeString": "contract IAURGov"
                       }
                     },
                     "src": "947:25:1",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IAURGov_$1104",
+                      "typeIdentifier": "t_contract$_IAURGov_$1107",
                       "typeString": "contract IAURGov"
                     }
                   },
@@ -1191,7 +1191,7 @@
                       "name": "_mint",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 5604,
+                      "referencedDeclaration": 5607,
                       "src": "1046:5:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_address_$_t_uint256_$_t_bytes_memory_ptr_$_t_bytes_memory_ptr_$returns$__$",
@@ -1347,10 +1347,10 @@
                   "name": "ERC777",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 5977,
+                  "referencedDeclaration": 5980,
                   "src": "674:6:1",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_type$_t_contract$_ERC777_$5977_$",
+                    "typeIdentifier": "t_type$_t_contract$_ERC777_$5980_$",
                     "typeString": "type(contract ERC777)"
                   }
                 },
@@ -1596,7 +1596,7 @@
                       "name": "_mint",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 5604,
+                      "referencedDeclaration": 5607,
                       "src": "1430:5:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_address_$_t_uint256_$_t_bytes_memory_ptr_$_t_bytes_memory_ptr_$returns$__$",
@@ -1812,7 +1812,7 @@
                       "name": "burn",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 5203,
+                      "referencedDeclaration": 5206,
                       "src": "1752:4:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_uint256_$_t_bytes_memory_ptr_$returns$__$",
@@ -1973,7 +1973,7 @@
                             "referencedDeclaration": 547,
                             "src": "1924:6:1",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_contract$_IAURGov_$1104",
+                              "typeIdentifier": "t_contract$_IAURGov_$1107",
                               "typeString": "contract IAURGov"
                             }
                           },
@@ -1984,7 +1984,7 @@
                           "lValueRequested": false,
                           "memberName": "isPlanet",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 1103,
+                          "referencedDeclaration": 1106,
                           "src": "1924:15:1",
                           "typeDescriptions": {
                             "typeIdentifier": "t_function_external_view$_t_address_$returns$_t_bool_$",
@@ -2273,7 +2273,7 @@
         "id": 540,
         "nodeType": "ImportDirective",
         "scope": 655,
-        "sourceUnit": 5978,
+        "sourceUnit": 5981,
         "src": "77:57:1",
         "symbolAliases": [],
         "unitAlias": ""
@@ -2284,7 +2284,7 @@
         "id": 541,
         "nodeType": "ImportDirective",
         "scope": 655,
-        "sourceUnit": 1105,
+        "sourceUnit": 1108,
         "src": "135:23:1",
         "symbolAliases": [],
         "unitAlias": ""
@@ -2299,10 +2299,10 @@
               "id": 542,
               "name": "ERC777",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 5977,
+              "referencedDeclaration": 5980,
               "src": "239:6:1",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_ERC777_$5977",
+                "typeIdentifier": "t_contract$_ERC777_$5980",
                 "typeString": "contract ERC777"
               }
             },
@@ -2312,10 +2312,10 @@
           }
         ],
         "contractDependencies": [
-          3434,
-          3834,
-          5977,
-          6122
+          3437,
+          3837,
+          5980,
+          6125
         ],
         "contractKind": "contract",
         "documentation": "Author: Chris Markov 2020\nProject Aurbit",
@@ -2323,10 +2323,10 @@
         "id": 654,
         "linearizedBaseContracts": [
           654,
-          5977,
-          3834,
-          6122,
-          3434
+          5980,
+          3837,
+          6125,
+          3437
         ],
         "name": "AURToken",
         "nodeType": "ContractDefinition",
@@ -2370,7 +2370,7 @@
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_contract$_IAURGov_$1104",
+              "typeIdentifier": "t_contract$_IAURGov_$1107",
               "typeString": "contract IAURGov"
             },
             "typeName": {
@@ -2378,10 +2378,10 @@
               "id": 546,
               "name": "IAURGov",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 1104,
+              "referencedDeclaration": 1107,
               "src": "279:7:1",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_IAURGov_$1104",
+                "typeIdentifier": "t_contract$_IAURGov_$1107",
                 "typeString": "contract IAURGov"
               }
             },
@@ -2630,7 +2630,7 @@
                       "referencedDeclaration": 547,
                       "src": "947:6:1",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IAURGov_$1104",
+                        "typeIdentifier": "t_contract$_IAURGov_$1107",
                         "typeString": "contract IAURGov"
                       }
                     },
@@ -2664,10 +2664,10 @@
                         "name": "IAURGov",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 1104,
+                        "referencedDeclaration": 1107,
                         "src": "956:7:1",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_IAURGov_$1104_$",
+                          "typeIdentifier": "t_type$_t_contract$_IAURGov_$1107_$",
                           "typeString": "type(contract IAURGov)"
                         }
                       },
@@ -2682,13 +2682,13 @@
                       "src": "956:16:1",
                       "tryCall": false,
                       "typeDescriptions": {
-                        "typeIdentifier": "t_contract$_IAURGov_$1104",
+                        "typeIdentifier": "t_contract$_IAURGov_$1107",
                         "typeString": "contract IAURGov"
                       }
                     },
                     "src": "947:25:1",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IAURGov_$1104",
+                      "typeIdentifier": "t_contract$_IAURGov_$1107",
                       "typeString": "contract IAURGov"
                     }
                   },
@@ -2832,7 +2832,7 @@
                       "name": "_mint",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 5604,
+                      "referencedDeclaration": 5607,
                       "src": "1046:5:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_address_$_t_uint256_$_t_bytes_memory_ptr_$_t_bytes_memory_ptr_$returns$__$",
@@ -2988,10 +2988,10 @@
                   "name": "ERC777",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 5977,
+                  "referencedDeclaration": 5980,
                   "src": "674:6:1",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_type$_t_contract$_ERC777_$5977_$",
+                    "typeIdentifier": "t_type$_t_contract$_ERC777_$5980_$",
                     "typeString": "type(contract ERC777)"
                   }
                 },
@@ -3237,7 +3237,7 @@
                       "name": "_mint",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 5604,
+                      "referencedDeclaration": 5607,
                       "src": "1430:5:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_address_$_t_uint256_$_t_bytes_memory_ptr_$_t_bytes_memory_ptr_$returns$__$",
@@ -3453,7 +3453,7 @@
                       "name": "burn",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 5203,
+                      "referencedDeclaration": 5206,
                       "src": "1752:4:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_uint256_$_t_bytes_memory_ptr_$returns$__$",
@@ -3614,7 +3614,7 @@
                             "referencedDeclaration": 547,
                             "src": "1924:6:1",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_contract$_IAURGov_$1104",
+                              "typeIdentifier": "t_contract$_IAURGov_$1107",
                               "typeString": "contract IAURGov"
                             }
                           },
@@ -3625,7 +3625,7 @@
                           "lValueRequested": false,
                           "memberName": "isPlanet",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 1103,
+                          "referencedDeclaration": 1106,
                           "src": "1924:15:1",
                           "typeDescriptions": {
                             "typeIdentifier": "t_function_external_view$_t_address_$returns$_t_bool_$",
@@ -3893,7 +3893,7 @@
   },
   "networks": {},
   "schemaVersion": "3.2.3",
-  "updatedAt": "2020-08-04T11:40:45.509Z",
+  "updatedAt": "2020-08-04T16:56:37.633Z",
   "devdoc": {
     "methods": {
       "allowance(address,address)": {

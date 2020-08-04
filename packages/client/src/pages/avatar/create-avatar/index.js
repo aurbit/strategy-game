@@ -1,19 +1,12 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
-import SVG from 'react-inlinesvg' // We can maybe replace this with a native fetch and inner HTML - This lib does same
+import { utils } from 'web3'
+import SVG from 'react-inlinesvg'
+import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import { Container, Row, Col, Spinner } from 'react-bootstrap'
-
+import { selectMintAvatarSuccess } from 'shared/store/avatar/selectors'
 import { avatarImage, parseDataArray } from './avatar-utils'
-// import Avatar from 'shared/components/PlayerAvatar'
-
-// stuff for ethereum
-import { useAvatar } from 'shared/services/provider'
-import { mintAvatar } from 'shared/services/metamask'
-
-import web3 from 'web3'
-
-import { selectAddress } from 'shared/store/wallet'
-
+import { ACTIONS } from 'shared/store/avatar'
 import styles from './index.module.css'
 import CreateAvatarForm from './Form'
 
@@ -23,10 +16,15 @@ const CreateAvatarContainer = () => {
   const [skinColor, setSkinColor] = React.useState('#f7d39c')
   const [gender, setGender] = React.useState('human_male')
   const [avatarUrl, setAvatarUrl] = React.useState(avatarImage('human_male'))
+  const history = useHistory()
+  const dispatch = useDispatch()
+  const mintAvatarSuccess = useSelector(selectMintAvatarSuccess)
 
-  // import the avatar contract provider
-  const { avatar, address: avatarAddress, provider } = useAvatar()
-  const walletAddress = useSelector(selectAddress)
+  React.useEffect(() => {
+    if (mintAvatarSuccess) {
+      history.push('/avatar')
+    }
+  }, [mintAvatarSuccess, history])
 
   React.useEffect(() => {
     // Update global CSS so style change will affect SVG class
@@ -61,53 +59,14 @@ const CreateAvatarContainer = () => {
 
   async function handleOnSubmit (e) {
     e.preventDefault()
-    const data = parseDataArray(hairColor, eyeColor, skinColor, gender)
     const name = e.target['name'].value
-
-    // dna = [165,228,239,117,68,239,5,4,239,153,5,2,9,3,85]
-    // dnaC = web3.utils.hexToNumberString(web3.utils.bytesToHex(dna))
-    // avatar.mintAvatar('bob',dnaC,{value:10000000000000000})
-    // Parse and Submit Gender/ Hair & Skin Color
-    // var address = "0xf15090c01bec877a122b567e5552504e5fd22b79";
-    // var abi = [{"constant":true,"inputs":[],"name":"getCount","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"increment","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[{"name":"_count","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"}];
-
-    const dnaC = await web3.utils.hexToNumberString(web3.utils.bytesToHex(data))
-
-    mintAvatar({
-      avatar,
-      provider,
-      from: walletAddress,
-      to: avatarAddress,
-      value: '0.01',
-      name,
-      dnaC
-    }).then(result => {
-      console.log(result)
-    })
+    const data = parseDataArray(hairColor, eyeColor, skinColor, gender)
+    const dna = await utils.hexToNumberString(utils.bytesToHex(data))
+    dispatch(ACTIONS.callMintAvatar({ name, dna }))
   }
 
   const AvatarImage = ({ avatarUrl }) => {
-    return (
-      <SVG
-        loader={<Spinner animation='grow' />}
-        src={avatarUrl}
-        // onLoad={(src, hasCache) => {
-        //   const male = document.getElementById(
-        //     'f10be708-fc62-40d8-abc3-ffce71448a8b'
-        //   )
-
-        //   const female = document.getElementById(
-        //     'e025dcff-7455-4990-87bb-413b227009ba'
-        //   )
-
-        //   if (male) {
-        //     male.style.visibility = 'visible'
-        //   } else if (female) {
-        //     female.style.visibility = 'visible'
-        //   }
-        // }}
-      />
-    )
+    return <SVG loader={<Spinner animation='grow' />} src={avatarUrl} />
   }
 
   return (

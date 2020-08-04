@@ -1,8 +1,7 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
-import MyAvatars from './avatar-list'
-import CreateAvatar from './create-avatar'
 import AvatarView from './avatar-view'
+import CreateAvatar from './create-avatar'
 
 function AvatarContainer () {
   // need to get the list of all the avtars from the connect wallet
@@ -13,11 +12,8 @@ function AvatarContainer () {
       <Route exact path='/avatar/create'>
         <CreateAvatar />
       </Route>
-      <Route exact path='/avatar/:address/:avatarId'>
+      <Route exact path='/avatar/'>
         <AvatarView />
-      </Route>
-      <Route exact path='/avatar/:address'>
-        <MyAvatars />
       </Route>
     </Switch>
   )

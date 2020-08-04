@@ -1,11 +1,13 @@
 import Web3 from 'web3'
 import { store } from 'store'
 import { TYPES, ACTIONS } from './index'
+import { ACTIONS as AVATAR_ACTIONS, AVATAR_EVENTS } from 'shared/store/avatar'
 import { NETWORKS } from 'shared/store/chain'
 import PlanetContractsDEV from 'contracts/development/Planet'
 import TokenContractsDEV from 'contracts/development/AURToken'
 import AvatarContractsDEV from 'contracts/development/AvatarAUR'
 import { takeLatest, put, select } from 'redux-saga/effects'
+import { selectAddress } from 'shared/store/wallet/selectors'
 import {
   selectNetwork,
   selectProvider,
@@ -116,13 +118,29 @@ function * initContracts () {
   tokenListener.on('data', console.log)
 }
 
-function * avatarEvent (action) {
-  console.log(action)
+function * avatarContractEvent (action) {
+  const address = yield select(selectAddress)
+  const {
+    payload: {
+      event,
+      returnValues: { sender, dna, avatarId, name }
+    }
+  } = action
+
+  // check for user Minted Avatar Event
+  switch (event) {
+    case AVATAR_EVENTS.Minted: {
+      if (sender.toUpperCase() === address.toUpperCase())
+        store.dispatch(
+          AVATAR_ACTIONS.callMintAvatarSuccess({ name, dna, avatarId })
+        )
+    }
+  }
 }
 
 export function * rootChainSagas () {
   yield takeLatest(TYPES.INIT_PROVIDER, initProvider)
   yield takeLatest(TYPES.INIT_ARTIFACTS, initArtifacts)
   yield takeLatest(TYPES.INIT_CONTRACTS, initContracts)
-  yield takeLatest(TYPES.AVATAR_EVENT, avatarEvent)
+  yield takeLatest(TYPES.AVATAR_CONTRACT_EVENT, avatarContractEvent)
 }

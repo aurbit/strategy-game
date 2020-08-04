@@ -1,12 +1,7 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { ACTIONS as AVATAR_ACTIONS } from 'shared/store/avatar'
 import { ACTIONS as CHAIN_ACTIONS } from 'shared/store/chain'
-
-import {
-  selectProvider,
-  selectAvatarContract
-} from 'shared/store/chain/selectors'
 
 const TestPage = () => {
   const dispatch = useDispatch()
