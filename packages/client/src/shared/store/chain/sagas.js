@@ -1,18 +1,17 @@
 import Web3 from 'web3'
+import { store } from 'store'
 import { TYPES, ACTIONS } from './index'
 import { NETWORKS } from 'shared/store/chain'
 import PlanetContractsDEV from 'contracts/development/Planet'
 import TokenContractsDEV from 'contracts/development/AURToken'
 import AvatarContractsDEV from 'contracts/development/AvatarAUR'
-import { selectAddress } from 'shared/store/wallet/selectors'
-import { takeLatest, put, select, call } from 'redux-saga/effects'
+import { takeLatest, put, select } from 'redux-saga/effects'
 import {
   selectNetwork,
   selectProvider,
   selectAvatarArtifacts,
   selectPlanetArtifacts,
-  selectTokenArtifacts,
-  selectAvatarContract
+  selectTokenArtifacts
 } from 'shared/store/chain/selectors'
 
 /*
@@ -105,100 +104,25 @@ function * initContracts () {
   const token = new provider.eth.Contract(t2.abi, t1)
 
   yield put(ACTIONS.setContracts({ avatar, planet, token }))
+
+  // if a contract emits an event, dispatch that event
+  // add sit to the store
+  const avatarListener = avatar.events.allEvents()
+  avatarListener.on('data', data => store.dispatch(ACTIONS.avatarEvent(data)))
+  // todo
+  const planetListener = planet.events.allEvents()
+  planetListener.on('data', console.log)
+  const tokenListener = token.events.allEvents()
+  tokenListener.on('data', console.log)
 }
 
-function * callMintAvatar ({ payload }) {
-  const metaAddress = yield select(selectAddress)
-  const provider = yield select(selectProvider)
-  const contract = yield select(selectAvatarContract)
-  const { name, dna } = payload
-
-  const rawTrx = yield contract.methods.mintAvatar(name, dna).encodeABI()
-  const value = provider.utils.toHex(provider.utils.toWei('0.01', 'ether'))
-
-  const txObject = {
-    from: metaAddress,
-    to: contract._address,
-    value,
-    gasLimit: provider.utils.toHex(21000),
-    gasPrice: provider.utils.toHex(provider.utils.toWei('10', 'gwei')),
-    data: rawTrx
-  }
-
-  window.ethereum.send(
-    {
-      method: 'eth_sendTransaction',
-      params: [txObject]
-    },
-    (err, data) => console.log(err, data)
-  )
-
-  // const value = provider.utils.toWei('0.01', 'ether')
-  // console.log('PAYLOAD: ', value)
-
-  // contract.methods
-  //   .mintAvatar(payload.name, payload.dna, {
-  //     from: '0xfb27CDdcC85EeDa47Db0cAC81B32A694AC498F0B',
-  //     value
-  //   })
-  //   .call()
-
-  // console.log(contract.events)
-  // const rawTrx = yield contract.methods.mintAvatar(name, dna).encodeABI()
-
-  // yield provider.eth
-  //   .sendTransaction({
-  //     to: contract._address,
-  //     from: '0xfb27CDdcC85EeDa47Db0cAC81B32A694AC498F0B',
-  //     data: rawTrx
-  //   })
-  //   .once('transactionHash', function (hash) {
-  //     console.log('HASH: ', hash)
-  //   })
-  //   .once('receipt', function (receipt) {
-  //     console.log('receipt: ', receipt)
-  //   })
-  //   .on('confirmation', function (confNumber, receipt) {
-  //     console.log('confNumber: ', confNumber)
-  //   })
-  //   .on('error', function (error) {
-  //     console.log('error: ', error)
-  //   })
-  //   .on('data', function (x) {
-  //     console.log('DATA: ', x)
-  //   })
-  //   .then(function (receipt) {
-  //     console.log('receipt: ', receipt)
-  //   })
+function * avatarEvent (action) {
+  console.log(action)
 }
 
 export function * rootChainSagas () {
   yield takeLatest(TYPES.INIT_PROVIDER, initProvider)
   yield takeLatest(TYPES.INIT_ARTIFACTS, initArtifacts)
   yield takeLatest(TYPES.INIT_CONTRACTS, initContracts)
-  yield takeLatest(TYPES.CALL_MINT_AVATAR, callMintAvatar)
+  yield takeLatest(TYPES.AVATAR_EVENT, avatarEvent)
 }
-
-// const web3 = new Web3(Web3.givenProvider || 'http://localhost:8080')
-// const network = await web3.eth.net.getNetworkType();
-// console.log(network) // should give you main if you're connected to the main network via metamask...
-// const accounts = await web3.eth.getAccounts()
-// this.setState({account: accounts[0]})
-
-// function onClick() {
-//   const dna = [165, 228, 239, 117, 68, 239, 5, 4, 239, 153, 5, 2, 9, 3, 85]
-//   // dispatch(ACTIONS.callMintAvatar({ name: 'Nate', dna }))
-// const value = provider.utils.toWei('0.01', 'ether')
-// const from = '0xfb27CDdcC85EeDa47Db0cAC81B32A694AC498F0B'
-// const txObject = {
-//   from,
-//   to: avatarContract.address,
-//   value: provider.utils.toHex(provider.utils.toWei(value, 'ether')),
-//   gasLimit: provider.utils.toHex(21000),
-//   gasPrice: provider.utils.toHex(provider.utils.toWei('10', 'gwei'))
-// }
-
-//   console.log('PAYLOAD: ', value)
-//   // const contract = yield select(selectAvatarContract)
-//   avatarContract.methods.mintAvatar('Nate', dna).call(txObject)
-// }

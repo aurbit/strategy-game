@@ -1,7 +1,8 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { ACTIONS } from 'shared/store/chain'
-// import { selectAvatarContract } from 'shared/store/chain/selectors'
+import { ACTIONS as AVATAR_ACTIONS } from 'shared/store/avatar'
+import { ACTIONS as CHAIN_ACTIONS } from 'shared/store/chain'
+
 import {
   selectProvider,
   selectAvatarContract
@@ -9,21 +10,19 @@ import {
 
 const TestPage = () => {
   const dispatch = useDispatch()
-  const provider = useSelector(selectProvider)
-  // Access the avatar Contract
-  const avatarContract = useSelector(selectAvatarContract)
+
   React.useEffect(() => {
     // BEGIN TO INIT PROVIDER
-    dispatch(ACTIONS.initProvider())
+    dispatch(CHAIN_ACTIONS.initProvider())
     // START TO INIT ARTIFACTS - store/chain/sagas - check initArtifacts() function
-    dispatch(ACTIONS.initArtifacts())
+    dispatch(CHAIN_ACTIONS.initArtifacts())
     // CREATE CONTRACT BASED ON ARTIFACTS - store/chain/sagas - check initContracts() function
-    dispatch(ACTIONS.initContracts())
+    dispatch(CHAIN_ACTIONS.initContracts())
   }, [])
 
-  function onClick() {
+  function onClick () {
     const dna = [165, 228, 239, 117, 68, 239, 5, 4, 239, 153, 5, 2, 9, 3, 85]
-    dispatch(ACTIONS.callMintAvatar({ name: 'df', dna }))
+    dispatch(AVATAR_ACTIONS.callMintAvatar({ name: 'df', dna }))
   }
 
   return (

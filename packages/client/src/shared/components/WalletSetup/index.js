@@ -51,13 +51,17 @@ const WalletSelectModal = props => {
 
   // when the users switches wallet
   const handleWalletUpdate = wallet => {
-    dispatch(ACTIONS.setWallet({ vendor: wallet }))
+    if (!window.connector.connected && wallet == WALLETS.WALLET_CONNECT) {
+      window.connector.createSession()
+    } else {
+      dispatch(ACTIONS.setWallet({ vendor: wallet }))
+    }
   }
 
   /// if address updates, check for aur balance
   // Should this not be a Use Effect to listen to changes to props?
   React.useEffect(() => {
-    if (address) {
+    if (address && address !== 'Connect Wallet') {
       token.methods
         .balanceOf(address)
         .call()
