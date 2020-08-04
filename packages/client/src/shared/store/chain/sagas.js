@@ -4,13 +4,14 @@ import { NETWORKS } from 'shared/store/chain'
 import PlanetContractsDEV from 'contracts/development/Planet'
 import TokenContractsDEV from 'contracts/development/AURToken'
 import AvatarContractsDEV from 'contracts/development/AvatarAur'
-import { takeLatest, put, select } from 'redux-saga/effects'
+import { takeLatest, put, select, call } from 'redux-saga/effects'
 import {
   selectNetwork,
   selectProvider,
   selectAvatarArtifacts,
   selectPlanetArtifacts,
-  selectTokenArtifacts
+  selectTokenArtifacts,
+  selectAvatarContract
 } from 'shared/store/chain/selectors'
 
 /*
@@ -105,8 +106,74 @@ function* initContracts() {
   yield put(ACTIONS.setContracts({ avatar, planet, token }))
 }
 
+function* callMintAvatar({ payload }) {
+  console.log('sdfsd')
+  const provider = yield select(selectProvider)
+  const contract = yield select(selectAvatarContract)
+  const { name, dna } = payload
+  // const value = provider.utils.toWei('0.01', 'ether')
+  // console.log('PAYLOAD: ', value)
+
+  // contract.methods
+  //   .mintAvatar(payload.name, payload.dna, {
+  //     from: '0xfb27CDdcC85EeDa47Db0cAC81B32A694AC498F0B',
+  //     value
+  //   })
+  //   .call()
+
+  console.log(contract.events)
+  const rawTrx = yield contract.methods.mintAvatar(name, dna).encodeABI()
+
+  yield provider.eth
+    .sendTransaction({
+      to: contract._address,
+      from: '0xfb27CDdcC85EeDa47Db0cAC81B32A694AC498F0B',
+      data: rawTrx
+    })
+    .once('transactionHash', function (hash) {
+      console.log('HASH: ', hash)
+    })
+    .once('receipt', function (receipt) {
+      console.log('receipt: ', receipt)
+    })
+    .on('confirmation', function (confNumber, receipt) {
+      console.log('confNumber: ', confNumber)
+    })
+    .on('error', function (error) {
+      console.log('error: ', error)
+    })
+    .then(function (receipt) {
+      console.log('receipt: ', receipt)
+    })
+}
+
 export function* rootChainSagas() {
   yield takeLatest(TYPES.INIT_PROVIDER, initProvider)
   yield takeLatest(TYPES.INIT_ARTIFACTS, initArtifacts)
   yield takeLatest(TYPES.INIT_CONTRACTS, initContracts)
+  yield takeLatest(TYPES.CALL_MINT_AVATAR, callMintAvatar)
 }
+
+// const web3 = new Web3(Web3.givenProvider || 'http://localhost:8080')
+// const network = await web3.eth.net.getNetworkType();
+// console.log(network) // should give you main if you're connected to the main network via metamask...
+// const accounts = await web3.eth.getAccounts()
+// this.setState({account: accounts[0]})
+
+// function onClick() {
+//   const dna = [165, 228, 239, 117, 68, 239, 5, 4, 239, 153, 5, 2, 9, 3, 85]
+//   // dispatch(ACTIONS.callMintAvatar({ name: 'Nate', dna }))
+//   const value = provider.utils.toWei('0.01', 'ether')
+//   const from = '0xfb27CDdcC85EeDa47Db0cAC81B32A694AC498F0B'
+//   const txObject = {
+//     from,
+//     to: avatarContract.address,
+//     value: provider.utils.toHex(provider.utils.toWei(value, 'ether')),
+//     gasLimit: provider.utils.toHex(21000),
+//     gasPrice: provider.utils.toHex(provider.utils.toWei('10', 'gwei'))
+//   }
+
+//   console.log('PAYLOAD: ', value)
+//   // const contract = yield select(selectAvatarContract)
+//   avatarContract.methods.mintAvatar('Nate', dna).call(txObject)
+// }

@@ -1,10 +1,15 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ACTIONS } from 'shared/store/chain'
-import { selectAvatarContract } from 'shared/store/chain/selectors'
+// import { selectAvatarContract } from 'shared/store/chain/selectors'
+import {
+  selectProvider,
+  selectAvatarContract
+} from 'shared/store/chain/selectors'
 
 const TestPage = () => {
   const dispatch = useDispatch()
+  const provider = useSelector(selectProvider)
   // Access the avatar Contract
   const avatarContract = useSelector(selectAvatarContract)
   React.useEffect(() => {
@@ -16,9 +21,16 @@ const TestPage = () => {
     dispatch(ACTIONS.initContracts())
   }, [])
 
-  console.log('AVATAR CONTRACT: ', avatarContract)
+  function onClick() {
+    const dna = [165, 228, 239, 117, 68, 239, 5, 4, 239, 153, 5, 2, 9, 3, 85]
+    dispatch(ACTIONS.callMintAvatar({ name: 'df', dna }))
+  }
 
-  return <div>Test Page</div>
+  return (
+    <div>
+      <button onClick={onClick}>SUBMIT</button>
+    </div>
+  )
 }
 
 export default TestPage

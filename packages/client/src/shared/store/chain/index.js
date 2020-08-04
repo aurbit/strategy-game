@@ -34,7 +34,8 @@ export const TYPES = {
   INIT_ARTIFACTS: 'INIT_ARTIFACTS',
   SET_ARTIFACTS: 'SET_ARTIFACTS',
   INIT_CONTRACTS: 'INIT_CONTRACTS',
-  SET_CONTRACTS: 'SET_CONTRACTS'
+  SET_CONTRACTS: 'SET_CONTRACTS',
+  CALL_MINT_AVATAR: 'CALL_MINT_AVATAR'
 }
 
 // INIT Actions will be used to trigger a SAGA - Do required logic in Saga - then use SET Action to dispatch this into reducer
@@ -49,7 +50,8 @@ export const ACTIONS = {
   initArtifacts: makeAction(TYPES.INIT_ARTIFACTS),
   setArtifacts: makeAction(TYPES.SET_ARTIFACTS, 'payload'),
   initContracts: makeAction(TYPES.INIT_CONTRACTS),
-  setContracts: makeAction(TYPES.SET_CONTRACTS, 'payload')
+  setContracts: makeAction(TYPES.SET_CONTRACTS, 'payload'),
+  callMintAvatar: makeAction(TYPES.CALL_MINT_AVATAR, 'payload')
 }
 
 // Reducer
