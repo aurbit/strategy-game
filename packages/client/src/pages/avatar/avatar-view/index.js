@@ -4,7 +4,6 @@ import PlayerAvatar from 'shared/components/PlayerAvatar'
 import { useHistory } from 'react-router-dom'
 
 export default () => {
-  const history = useHistory()
   // should have dna in the url
   var name = 'Gary'
   var dna = [
