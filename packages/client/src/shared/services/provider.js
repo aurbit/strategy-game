@@ -1,6 +1,6 @@
 import PlanetContractsDEV from 'contracts/development/Planet'
 import TokenContractsDEV from 'contracts/development/AURToken'
-import AvatarContractsDEV from 'contracts/development/AvatarAur'
+import AvatarContractsDEV from 'contracts/development/AvatarAUR'
 
 import { PLANETS } from 'shared/store/planet'
 import { NETWORKS } from 'shared/store/chain'

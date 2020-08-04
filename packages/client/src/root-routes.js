@@ -30,6 +30,9 @@ export default () => {
           <Route path='/avatar'>
             <Avatar />
           </Route>
+          <Route path='/test'>
+            <TestPage />
+          </Route>
         </Switch>
       </Router>
     </div>
