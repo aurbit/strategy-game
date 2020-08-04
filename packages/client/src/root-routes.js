@@ -5,7 +5,7 @@ import { Spinner } from 'react-bootstrap'
 import Navbar from 'shared/components/Layout/Navbar'
 import { ACTIONS } from 'shared/store/wallet'
 import { selectWalletInitalized } from 'shared/store/wallet/selectors'
-import { Planet, Auth, Avatar } from './pages'
+import { Planet, Auth, Avatar, TestPage } from './pages'
 
 export default () => {
   // init the wallets
