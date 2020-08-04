@@ -23,7 +23,7 @@ FLOW
 
 */
 
-function* initProvider() {
+function * initProvider () {
   // Example of getting State from Store in a Saga
   const network = yield select(selectNetwork)
   if (!network) {
@@ -69,7 +69,7 @@ function* initProvider() {
 }
 
 // Can maybe do this a bit better - But it works for now
-function* initArtifacts() {
+function * initArtifacts () {
   let planet = null
   let avatar = null
   let token = null
@@ -94,7 +94,7 @@ function* initArtifacts() {
   yield put(ACTIONS.setArtifacts({ avatar, token, planet }))
 }
 
-function* initContracts() {
+function * initContracts () {
   // Could probably do this in the same function of initArtifact saga - But not sure if it needs to be kept seperate
   const provider = yield select(selectProvider)
   const { address: a1, artifact: a2 } = yield select(selectAvatarArtifacts)
@@ -107,7 +107,7 @@ function* initContracts() {
   yield put(ACTIONS.setContracts({ avatar, planet, token }))
 }
 
-function* callMintAvatar({ payload }) {
+function * callMintAvatar ({ payload }) {
   const metaAddress = yield select(selectAddress)
   const provider = yield select(selectProvider)
   const contract = yield select(selectAvatarContract)
@@ -124,10 +124,14 @@ function* callMintAvatar({ payload }) {
     gasPrice: provider.utils.toHex(provider.utils.toWei('10', 'gwei')),
     data: rawTrx
   }
-  window.ethereum.request({
-    method: 'eth_sendTransaction',
-    params: [txObject]
-  })
+
+  window.ethereum.send(
+    {
+      method: 'eth_sendTransaction',
+      params: [txObject]
+    },
+    (err, data) => console.log(err, data)
+  )
 
   // const value = provider.utils.toWei('0.01', 'ether')
   // console.log('PAYLOAD: ', value)
@@ -168,7 +172,7 @@ function* callMintAvatar({ payload }) {
   //   })
 }
 
-export function* rootChainSagas() {
+export function * rootChainSagas () {
   yield takeLatest(TYPES.INIT_PROVIDER, initProvider)
   yield takeLatest(TYPES.INIT_ARTIFACTS, initArtifacts)
   yield takeLatest(TYPES.INIT_CONTRACTS, initContracts)
