@@ -3,13 +3,13 @@ import { Route, Switch } from 'react-router-dom'
 import PlanetSelect from './components/PlanetSelect'
 import Planet from './components/Planet'
 
-function PlanetPage() {
+function PlanetPage () {
   return (
     <Switch>
-      <Route exact path="/planet">
+      {/* <Route exact path="/planet">
         <PlanetSelect />
-      </Route>
-      <Route path="/:planetName">
+      </Route> */}
+      <Route path='/planet'>
         <Planet />
       </Route>
     </Switch>

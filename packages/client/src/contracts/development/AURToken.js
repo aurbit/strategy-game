@@ -1,7 +1,7 @@
 
     module.exports = {
       "network": "development",
-      "address": "0xfa4C76c5F696535B3565960A1D2d0A012d2C87aB",
+      "address": "0xC0d749c5371AAD3e46A0262dDE84e42D5f37E65A",
       "artifact": {
   "contractName": "AURToken",
   "abi": [
@@ -3893,7 +3893,7 @@
   },
   "networks": {},
   "schemaVersion": "3.2.3",
-  "updatedAt": "2020-08-04T16:56:37.633Z",
+  "updatedAt": "2020-08-05T18:31:05.099Z",
   "devdoc": {
     "methods": {
       "allowance(address,address)": {

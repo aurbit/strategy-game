@@ -16,17 +16,10 @@ export default ({ setMapReady, mapReady }) => {
     dispatch(ACTIONS.getMap({ planet }))
   }, [dispatch, planet])
 
-  return (
-    <Map
-      mapReady={loading}
-      setMapReady={setMapReady}
-      map={map}
-      setMap={setMap}
-    />
-  )
+  return <Map setMapReady={setMapReady} map={map} setMap={setMap} />
 }
 
-const Map = ({ setMapReady, mapReady, map, setMap }) => {
+const Map = ({ setMapReady, map, setMap }) => {
   const dispatch = useDispatch()
   const grid = useSelector(selectMapGrid)
   const [width, height] = useWindowSize()
@@ -98,7 +91,8 @@ const Map = ({ setMapReady, mapReady, map, setMap }) => {
     build()
   }
 
-  return mapReady ? <Spinner animation='grow' variant='warning' /> : map
+  // return mapReady ? <Spinner animation='grow' variant='warning' /> : map
+  return map ? map : <Spinner animation='grow' variant='warning' />
 }
 
 const useWindowSize = () => {

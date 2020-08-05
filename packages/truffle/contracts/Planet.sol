@@ -25,7 +25,7 @@ contract Planet is IERC777Recipient {
     string UNAUTHMSG = "UNAUTHORIZED";
     string ERR_INSUF_VAL = "insufficient funds sent";
     string TILEOFFMAP = "Tile index invalid/off map";
-    uint256 TileBuyFee;
+    uint256 public TileBuyFee;
     uint256 minAURUnit;
     uint256 satsPerBlockPerTile;
     address tokenContract;

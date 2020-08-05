@@ -1,7 +1,7 @@
 
     module.exports = {
       "network": "development",
-      "address": "0x542e2c74dF94c9E1AA332488D24E7F25D304caDB",
+      "address": "0xBBde2899aF88aA48Aa21921CD28d1dD7C5faD0d7",
       "artifact": {
   "contractName": "AvatarAUR",
   "abi": [
@@ -12557,7 +12557,7 @@
   },
   "networks": {},
   "schemaVersion": "3.2.3",
-  "updatedAt": "2020-08-04T16:56:37.634Z",
+  "updatedAt": "2020-08-05T18:31:05.102Z",
   "devdoc": {
     "methods": {
       "approve(address,uint256)": {
