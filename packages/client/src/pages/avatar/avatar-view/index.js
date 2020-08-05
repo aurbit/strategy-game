@@ -34,7 +34,7 @@ const AvatarCard = ({ name, dna }) => {
         <Card.Body>
           <Card.Title>{name}</Card.Title>
           <Card.Text>{dna}</Card.Text>
-          <Button variant='primary' onClick={handleRouteClick}>
+          <Button variant='primary' onClick={() => handleRouteClick()}>
             Play Now
           </Button>
         </Card.Body>

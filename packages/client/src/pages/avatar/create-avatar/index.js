@@ -20,11 +20,11 @@ const CreateAvatarContainer = () => {
   const dispatch = useDispatch()
   const mintAvatarSuccess = useSelector(selectMintAvatarSuccess)
 
-  React.useEffect(() => {
-    if (mintAvatarSuccess) {
-      history.push('/avatar')
-    }
-  }, [mintAvatarSuccess, history])
+  // React.useEffect(() => {
+  //   if (mintAvatarSuccess) {
+  //     history.push('/avatar')
+  //   }
+  // }, [mintAvatarSuccess, history])
 
   React.useEffect(() => {
     // Update global CSS so style change will affect SVG class

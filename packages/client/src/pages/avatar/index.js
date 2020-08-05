@@ -25,11 +25,7 @@ function AvatarContainer () {
         <CreateAvatar />
       </Route>
       <Route exact path='/avatar/'>
-        {avatar ? (
-          <AvatarView avatar={avatar} />
-        ) : (
-          <Spinner animation='grow' variant='warning' />
-        )}
+        <AvatarView avatar={avatar} />
       </Route>
     </Switch>
   )
