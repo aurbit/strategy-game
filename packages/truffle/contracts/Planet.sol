@@ -284,7 +284,7 @@ contract Planet is IERC777Recipient {
         return Avatar.ownerOf(avatarId);
     }
 
-    function BuyATile(uint16 _ind, uint256 _avatarId)
+    function buyTile(uint16 _ind, uint256 _avatarId)
         public
         payable
         returns (bool)

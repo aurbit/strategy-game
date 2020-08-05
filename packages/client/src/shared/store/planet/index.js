@@ -14,6 +14,11 @@ const initialState = {
     loading: false,
     error: null,
     value: 0
+  },
+  buyTile: {
+    loading: false,
+    error: null,
+    message: null
   }
 }
 
@@ -22,7 +27,10 @@ export const TYPES = {
   SET_PLANET: 'SET_PLANET',
   GET_TILE_FEE_REQUEST: 'GET_TILE_FEE_REQUEST',
   GET_TILE_FEE_SUCCESS: 'GET_TILE_FEE_SUCCESS',
-  GET_TILE_FEE_FAILURE: 'GET_TILE_FEE_FAILURE'
+  GET_TILE_FEE_FAILURE: 'GET_TILE_FEE_FAILURE',
+  CALL_BUY_TILE_REQUEST: 'CALL_BUY_TILE_REQUEST',
+  CALL_BUY_TILE_SUCCESS: 'CALL_BUY_TILE_SUCCESS',
+  CALL_BUY_TILE_FAILURE: 'CALL_BUY_TILE_FAILURE'
 }
 
 // Action Creators
@@ -30,7 +38,10 @@ export const ACTIONS = {
   changePlanet: makeAction(TYPES.SET_PLANET, 'payload'),
   getTileFeeRequest: makeAction(TYPES.GET_TILE_FEE_REQUEST, 'payload'),
   getTileFeeSuccess: makeAction(TYPES.GET_TILE_FEE_SUCCESS, 'payload'),
-  getTileFeeFailure: makeAction(TYPES.GET_TILE_FEE_FAILURE, 'payload')
+  getTileFeeFailure: makeAction(TYPES.GET_TILE_FEE_FAILURE, 'payload'),
+  callBuyTileRequest: makeAction(TYPES.CALL_BUY_TILE_REQUEST, 'payload'),
+  callBuyTileSuccess: makeAction(TYPES.CALL_BUY_TILE_SUCCESS, 'payload'),
+  callBuyTileFailure: makeAction(TYPES.CALL_BUY_TILE_FAILURE, 'payload')
 }
 
 // Reducer
@@ -48,6 +59,17 @@ export const planetReducer = createReducer(initialState, {
   [TYPES.GET_TILE_FEE_FAILURE]: (state, action) => {
     const tileFee = { loading: false, error: action.payload, value: 0 }
     return { ...state, tileFee }
+  },
+  [TYPES.CALL_BUY_TILE_REQUEST]: state => {
+    return { ...state, buyTile: { loading: true, error: null, message: null } }
+  },
+  [TYPES.CALL_BUY_TILE_SUCCESS]: (state, action) => {
+    const buyTile = { loading: false, error: null, message: action.payload }
+    return { ...state, buyTile }
+  },
+  [TYPES.CALL_BUY_TILE_FAILURE]: (state, action) => {
+    const buyTile = { loading: false, error: action.payload, message: null }
+    return { ...state, buyTile }
   }
 })
 
