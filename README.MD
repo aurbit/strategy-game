@@ -1,34 +1,12 @@
 <img src="https://xhad-team-bucket.storage.fleek.co/aurbit-banner.png" />
 
-Aurbit is a map based strategy game built with Ethereum Contracts. The objective of the game is to hold pixels, or tiles of land coordinates on a planet for as many blocks as possible. Each new block will mint you new AUR tokens according to how many land pixels you hold. Aurbit is an Interplanetary Strategy game build for HackFS, and ETHGlobal hackathon in 2020.
+Aurbit is a map based strategy game built with Ethereum Contracts. The objective of the game is to hold pixels, or tiles of land coordinates on a planet for as many blocks as possible. Each new block will mint you new AUR tokens according to how many land pixels you hold. Aurbit is an Interplanetary Strategy game built for <a href="https://hackfs.com/">HackFS</a>, an <a href="https://ethglobal.co/">ETHGlobal</a> hackathon in 2020.
 
-## Local Setup
+<a href="https://aurbit.io">https://www.aurbit.io</a>
 
-Clone the repo onto your computer or hit the url at: https://aurbit.io. To build the repo, you will need the following:
+## Overview
 
-Dependencies:
-
-- NodeJS
-- Yarn
-
-To get started, build the repo on your machine. You must have the Ganache GUI running or start a dev chai in a seperate terminal window to build the development contracts and have them available to the client. Follow these commands to get started:
-
-```
-git clone git@github.com:aurbit/strategy-game
-cd strategy-game
-npm i -g yarn
-
-yarn
-
-yarn truffle:chain
-yarn truffle:migrate
-```
-
-In a Second terminal:
-
-```
-yarn start
-```
+Project Aurbit is an entry to the HackFS ETHGlobal Hackathon sponsored by Protocol Labs, among others. Aurbit is a game that uses Fungible and Non-Fungible tokens on Planet Contracts. Assets are Stored on IPFS and the client applicaiton is hosted and deployed with Fleek Hosting.
 
 ## Game Play
 
@@ -38,7 +16,9 @@ There are two types of tiles, land and water. In gameplay their only difference 
 
 ## Governance
 
-The Aurbit Contracts and AUR Tokens are controlled via the AURGov contract which seeks to preserve transparency, fairness and community engagement. The AURGov contract seeks to develop the Aurbit Interplanetary Game and fullfill the
+<a href="https://app.ens.domains/name/aurbit.eth">Aurbit.eth [<a href="https://https://ens.domains/">ENS]</a>
+
+The Aurbit Contracts and AUR Tokens are controlled via the AURGov contract which seeks to preserve transparency, fairness and community engagement. The AURGov contract of Aurbit should fullfill the
 vision of building safe and high-quality Ethereum dAPPS.
 
 Aurbit seeks to be an open and positive community. <a href="https://github.com/aurbit/strategy-game/blob/master/docs/Governance.md">Read More</a>
