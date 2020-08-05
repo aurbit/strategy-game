@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
-import PlanetSelect from './components/PlanetSelect'
-import Planet from './components/Planet'
+// import PlanetSelect from './components/PlanetSelect'
+import Planet from './planet'
 
 function PlanetPage () {
   return (
