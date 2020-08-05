@@ -41,7 +41,7 @@ const CreateCharForm = ({
           type='text'
           id='name'
           className={styles.avatarInput}
-          placeholder='Your Name'
+          placeholder='AURA Name'
         />
       </Form.Group>
       <Form.Group>

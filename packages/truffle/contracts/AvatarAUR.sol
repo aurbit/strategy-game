@@ -30,7 +30,7 @@ contract AvatarAUR is ERC721 {
     Avatar[] public avatars;
     mapping(uint256 => uint256) public TokenIDtoAvID;
 
-    event Minted(address sender, uint256 dna, uint256 avatarId);
+    event Minted(address sender, uint256 dna, uint256 avatarId, string name);
     event FeeUpdated(uint256 newFee);
 
     constructor(address payable _govContract)
@@ -137,7 +137,7 @@ contract AvatarAUR is ERC721 {
         uint256 aid = storeAvatar(_name, dna);
         TokenIDtoAvID[_id] = aid;
         //return dna; could return DNA to put in description, but parsing numbers to string is a little dumb i think
-        emit Minted(msg.sender, dna, aid);
+        emit Minted(msg.sender, dna, aid, _name);
     }
 
     function getDNA(uint256 tid) public view returns (uint256) {

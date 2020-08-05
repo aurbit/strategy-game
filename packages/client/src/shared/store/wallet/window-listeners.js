@@ -50,37 +50,35 @@ export const walletConnectListeners = () => {
 
   const { connector } = window
 
-  if (connector.connected) {
-    // Check if connection is already established
+  // Check if connection is already established
+  // Subscribe to connection events
+  connector.on('connect', (error, payload) => {
+    if (error) {
+      throw error
+    }
 
-    // Subscribe to connection events
-    connector.on('connect', (error, payload) => {
-      if (error) {
-        throw error
-      }
+    // Get provided accounts and chainId
+    store.dispatch(ACTIONS.setWallet({ vendor: WALLETS.WALLET_CONNECT }))
+  })
 
-      // Get provided accounts and chainId
-      const { accounts } = payload.params[0]
-      store.dispatch(ACTIONS.setAddress({ address: accounts[0] }))
-    })
+  connector.on('session_update', (error, payload) => {
+    if (error) {
+      throw error
+    }
 
-    connector.on('session_update', (error, payload) => {
-      if (error) {
-        throw error
-      }
+    // Get updated accounts and chainId
+    const { accounts } = payload.params[0]
+    store.dispatch(ACTIONS.setAddress({ address: accounts[0] }))
+  })
 
-      // Get updated accounts and chainId
-      const { accounts } = payload.params[0]
-      store.dispatch(ACTIONS.setAddress({ address: accounts[0] }))
-    })
+  connector.on('disconnect', (error, payload) => {
+    if (error) {
+      throw error
+    }
 
-    connector.on('disconnect', (error, payload) => {
-      if (error) {
-        throw error
-      }
+    // Delete connector
+    store.dispatch(ACTIONS.setAddress({ address: 'Connect Wallet' }))
+  })
 
-      // Delete connector
-      store.dispatch(ACTIONS.setAddress({ address: 'Connect Wallet' }))
-    })
-  }
+  connector.on('error', console.log)
 }

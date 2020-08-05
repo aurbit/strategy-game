@@ -98,7 +98,7 @@ const Map = ({ setMapReady, mapReady, map, setMap }) => {
     build()
   }
 
-  return mapReady ? <Spinner animation='grow' /> : map
+  return mapReady ? <Spinner animation='grow' variant='warning' /> : map
 }
 
 const useWindowSize = () => {
@@ -115,12 +115,13 @@ const useWindowSize = () => {
 }
 
 const useStyles = (height, width) => {
+  let kw = window.innerWidth >= 1000 ? 138 : 106.5
   const styles = {
     land: {
       float: 'left',
       backgroundColor: 'green',
       height: Math.floor(height / 90),
-      width: Math.floor(width / 138),
+      width: Math.floor(width / kw),
       borderLeft: '1px solid #011d4a',
       borderTop: '1px solid #011d4a'
     },
@@ -128,7 +129,7 @@ const useStyles = (height, width) => {
       float: 'left',
       backgroundColor: 'rgb(23,43,70)',
       height: Math.floor(height / 90),
-      width: Math.floor(width / 138),
+      width: Math.floor(width / kw),
       borderLeft: '1px solid #011d4a',
       borderTop: '1px solid #011d4a'
     },
