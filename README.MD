@@ -29,7 +29,7 @@ In the Spirit of IPFS and the ETHGlobal community, Aurbit is a game takes place 
 
 AUR Tokens can be allocated to a tile which bolsters defences against attack from another player. An attack will burn tokens for both players, but having more AUR allocated to a tile will greatly improve the chances of defending an attack.
 
-The above rules apply to the first Planet contract, Earth. Aurbit is designe to be Interplanetary, and more Planet games are being considered with different game rules.
+The above rules apply to the first Planet contract, Earth. Aurbit is designe to be Interplanetary, and more Planet games are being considered with different game rules. <a href="https://github.com/aurbit/strategy-game/blob/master/docs/AvatarAUR.md">Read More</a>
 
 ## Avatar AUR
 
@@ -38,7 +38,7 @@ The Avatar AUR contract is an ERC 721 collectible token that holds AUR tokens. I
 
 ## AUR Token
 
-The AUR Token is the in-game resource that is minted to avatars that hold tiles of land on Planet maps and burned during attacks to acquire other another players' tile. The Token is based on ERC777 and is ERC20 compatible. There is an initial 100 Million AUR tokens created on Mainnet and new tokens are minted or burned during game play.
+The AUR Token is the in-game resource that is minted to avatars that hold tiles of land on Planet maps and burned during attacks. The Token is based on ERC777 and is ERC20 compatible. 100 Million AUR tokens were minted on Mainnet and new tokens are minted or burned during game play.
 <a href="https://github.com/aurbit/strategy-game/blob/master/docs/AURToken.md">Read More</a>
 
 ### Developers
