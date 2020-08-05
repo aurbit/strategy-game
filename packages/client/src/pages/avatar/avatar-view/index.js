@@ -2,40 +2,17 @@ import React from 'react'
 import { utils } from 'web3'
 import { Container, Col, Row, Card, Button, Spinner } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { ACTIONS } from 'shared/store/avatar'
-import {
-  selectAvatars,
-  selectGetAvatarsLoading,
-  selectGetAvatarsSuccess
-} from 'shared/store/avatar/selectors'
-import { selectAddress } from 'shared/store/wallet/selectors'
+
 import PlayerAvatar from 'shared/components/PlayerAvatar'
-export default () => {
-  const history = useHistory()
-  const dispatch = useDispatch()
-  const avatars = useSelector(selectAvatars)
-  const address = useSelector(selectAddress)
 
-  const loading = useSelector(selectGetAvatarsLoading)
-  const success = useSelector(selectGetAvatarsSuccess)
-
-  const keys = Object.keys(avatars)
-
-  React.useEffect(() => {
-    if (address) dispatch(ACTIONS.getAvatarsRequest())
-  }, [])
-
-  const avatar = avatars[keys[keys.length - 1]]
+export default ({ avatar }) => {
   return (
     <Container className='mt-5'>
       <Row>
-        {loading ? (
+        {!avatar ? (
           <Spinner animation='grow' variant='warning' />
-        ) : success ? (
-          <AvatarCard name={avatar.name} dna={avatar.dna} />
         ) : (
-          <Spinner animation='grow' variant='info' />
+          <AvatarCard name={avatar.name} dna={avatar.dna} />
         )}
       </Row>
     </Container>
@@ -43,6 +20,10 @@ export default () => {
 }
 
 const AvatarCard = ({ name, dna }) => {
+  const history = useHistory()
+  const handleRouteClick = () => {
+    history.push('/planet')
+  }
   let toHex = utils.toHex(dna)
   let padLeft = utils.padLeft(toHex, 36)
   let dnaArray = utils.hexToBytes(padLeft)
@@ -53,7 +34,9 @@ const AvatarCard = ({ name, dna }) => {
         <Card.Body>
           <Card.Title>{name}</Card.Title>
           <Card.Text>{dna}</Card.Text>
-          <Button variant='primary'>Go somewhere</Button>
+          <Button variant='primary' onClick={handleRouteClick}>
+            Play Now
+          </Button>
         </Card.Body>
       </Card>
     </Col>
