@@ -43,7 +43,7 @@ Aurbit seeks to be an open and positive community. <a href="https://github.com/a
 
 ## Planets
 
-In the Spirit of IPFS and the ETHGlobal community, Aurbit is a game takes place on Planets. Each planet is a map of land and water 112 X 63 pixels. Ownership of land tiles on the map mints the Avatar that owns it new AUR tokens on every new block. The tokens can be claimed at anytime and withdrawn to a wallet or used by the Avatar during game play.
+In the Spirit of IPFS and the ETHGlobal community, Aurbit is an Interplanetary strategy game. Planets are maps of land and water 112 X 63 pixels. Ownership of land tiles rewards your Avatar with new AUR tokens every block. The tokens can be claimed at anytime and withdrawn to a wallet or used by the Avatar during game play.
 
 AUR Tokens can be allocated to a tile which bolsters defences against attack from another player. An attack will burn tokens for both players, but having more AUR allocated to a tile will greatly improve the chances of defending an attack.
 
