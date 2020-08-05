@@ -14,6 +14,7 @@ export default ({ mapReady }) => {
   const address = useSelector(selectAddress)
   const planetName = useSelector(selectCurrentPlanet)
 
+  console.log('MAP READY', mapReady)
   return mapReady ? (
     <Row style={styles.container}>
       <Col>

@@ -5,7 +5,7 @@ import { ACTIONS } from 'shared/store/map'
 import { selectMapApiStatus, selectMapGrid } from 'shared/store/map/selectors'
 import { selectCurrentPlanet } from 'shared/store/planet/index'
 
-export default ({ setMapReady, mapReady }) => {
+export default ({ setMapReady }) => {
   const dispatch = useDispatch()
   // Loading is the Map API status - but loading seems to be coming from somewhere else
   const loading = useSelector(selectMapApiStatus)
@@ -16,7 +16,11 @@ export default ({ setMapReady, mapReady }) => {
     dispatch(ACTIONS.getMap({ planet }))
   }, [dispatch, planet])
 
-  return <Map setMapReady={setMapReady} map={map} setMap={setMap} />
+  return loading ? (
+    <Spinner animation='grow' variant='warning' />
+  ) : (
+    <Map setMapReady={setMapReady} map={map} setMap={setMap} />
+  )
 }
 
 const Map = ({ setMapReady, map, setMap }) => {
@@ -87,25 +91,14 @@ const Map = ({ setMapReady, map, setMap }) => {
     }
   }
 
-  if (!map) {
-    build()
-  }
+  if (!map) build()
 
   // return mapReady ? <Spinner animation='grow' variant='warning' /> : map
-  return map ? map : <Spinner animation='grow' variant='warning' />
+  return map
 }
 
 const useWindowSize = () => {
-  const [size, setSize] = useState([0, 0])
-  useLayoutEffect(() => {
-    function updateSize () {
-      setSize([window.innerWidth, window.innerHeight])
-    }
-    window.addEventListener('resize', updateSize)
-    updateSize()
-    return () => window.removeEventListener('resize', updateSize)
-  }, [])
-  return size
+  return [window.innerWidth, window.innerHeight]
 }
 
 const useStyles = (height, width) => {

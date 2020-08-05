@@ -83,7 +83,7 @@ function * getAvatarsRequest () {
     }
     if (address) getTokenId(counter)
     counter++
-  }, 200)
+  }, 100)
 
   // gets the Avatar
   const getAvatar = avatarId => {

@@ -27,6 +27,7 @@ export default props => {
 
   // get the tile price
   React.useEffect(() => {
+    setMapReady(false)
     dispatch(ACTIONS.getTileFeeRequest())
   }, [])
 
@@ -38,7 +39,6 @@ export default props => {
       <Row style={styles.row}>
         <Col style={styles.col} md={window.innerWidth <= 1000 ? 12 : 'auto'}>
           <Map
-            mapReady={mapReady}
             setMapReady={setMapReady}
             hoverTile={hoverTile}
             setHoverTile={setHoverTile}
