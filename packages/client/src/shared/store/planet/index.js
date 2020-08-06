@@ -29,6 +29,16 @@ const initialState = {
     loading: false,
     error: null,
     result: null
+  },
+  players: {
+    loading: false,
+    error: null,
+    result: null
+  },
+  tiles: {
+    loading: false,
+    error: null,
+    result: null
   }
 }
 
@@ -46,7 +56,13 @@ export const TYPES = {
   CALL_NEW_PLAYER_FAILURE: 'CALL_NEW_PLAYER_FAILURE',
   GET_IS_PLAYING_REQUEST: 'GET_IS_PLAYING_REQUEST',
   GET_IS_PLAYING_SUCCESS: 'GET_IS_PLAYING_SUCCESS',
-  GET_IS_PLAYING_FAILURE: 'GET_IS_PLAYING_FAILURE'
+  GET_IS_PLAYING_FAILURE: 'GET_IS_PLAYING_FAILURE',
+  GET_PLAYERS_REQUEST: 'GET_PLAYERS_REQUEST',
+  GET_PLAYERS_SUCCESS: 'GET_PLAYERS_SUCCESS',
+  GET_PLAYERS_FAILURE: 'GET_PLAYERS_FAILURE',
+  GET_TILES_REQUEST: 'GET_TILES_REQUEST',
+  GET_TILES_SUCCESS: 'GET_TILES_SUCCESS',
+  GET_TILES_FAILURE: 'GET_TILES_FAILURE'
 }
 
 // Action Creators
@@ -63,7 +79,13 @@ export const ACTIONS = {
   callNewPlayerFailure: makeAction(TYPES.CALL_NEW_PLAYER_FAILURE, 'payload'),
   getIsPlayingRequest: makeAction(TYPES.GET_IS_PLAYING_REQUEST, 'payload'),
   getIsPlayingSuccess: makeAction(TYPES.GET_IS_PLAYING_SUCCESS, 'payload'),
-  getIsPlayingFailure: makeAction(TYPES.GET_IS_PLAYING_FAILURE, 'payload')
+  getIsPlayingFailure: makeAction(TYPES.GET_IS_PLAYING_FAILURE, 'payload'),
+  getPlayersRequest: makeAction(TYPES.GET_PLAYERS_REQUEST, 'payload'),
+  getPlayersSuccess: makeAction(TYPES.GET_PLAYERS_SUCCESS, 'payload'),
+  getPlayersFailure: makeAction(TYPES.GET_PLAYERS_FAILURE, 'payload'),
+  getTilesRequest: makeAction(TYPES.GET_TILES_REQUEST, 'payload'),
+  getTilesSuccess: makeAction(TYPES.GET_TILES_SUCCESS, 'payload'),
+  getTilesFailure: makeAction(TYPES.GET_TILES_FAILURE, 'payload')
 }
 
 // Reducer
@@ -114,6 +136,28 @@ export const planetReducer = createReducer(initialState, {
   [TYPES.GET_IS_PLAYING_FAILURE]: (state, action) => {
     const isPlaying = { loading: false, error: action.payload, message: null }
     return { ...state, isPlaying }
+  },
+  [TYPES.GET_PLAYERS_REQUEST]: state => {
+    return { ...state, players: { loading: true, error: null, result: null } }
+  },
+  [TYPES.GET_PLAYERS_SUCCESS]: (state, action) => {
+    const players = { loading: false, error: null, result: action.payload }
+    return { ...state, players }
+  },
+  [TYPES.GET_IS_PLAYING_FAILURE]: (state, action) => {
+    const players = { loading: false, error: action.payload, result: null }
+    return { ...state, players }
+  },
+  [TYPES.GET_TILES_REQUEST]: state => {
+    return { ...state, tiles: { loading: true, error: null, result: null } }
+  },
+  [TYPES.GET_TILES_SUCCESS]: (state, action) => {
+    const tiles = { loading: false, error: null, result: action.payload }
+    return { ...state, tiles }
+  },
+  [TYPES.GET_TILES_FAILURE]: (state, action) => {
+    const tiles = { loading: false, error: action.payload, result: null }
+    return { ...state, tiles }
   }
 })
 

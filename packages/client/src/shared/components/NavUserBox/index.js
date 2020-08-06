@@ -36,7 +36,11 @@ export default () => {
 
   const AurBalance = () => {
     return (
-      <Button variant='dark' size='lg'>
+      <Button
+        variant='dark'
+        size='lg'
+        onClick={() => history.push('/planet/earth')}
+      >
         {balance}
         <SVG
           style={styles.aurLogo}

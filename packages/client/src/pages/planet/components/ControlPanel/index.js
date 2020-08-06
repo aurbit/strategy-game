@@ -1,9 +1,16 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Col, Row } from 'react-bootstrap'
+import { Col, Row, Button } from 'react-bootstrap'
 import { selectActiveTile } from 'shared/store/map/selectors'
 
-export default ({ mapReady, handleBuyTileClick }) => {
+export default ({
+  mapReady,
+  handleBuyTileClick,
+  handleCreateNewPlayer,
+  handleGetPlayersClick,
+  handleGetTilesClick,
+  handleIsPlayingClick
+}) => {
   const activeTile = useSelector(selectActiveTile)
   const [activeMenu, setActiveMenu] = React.useState(0)
 
@@ -43,7 +50,20 @@ export default ({ mapReady, handleBuyTileClick }) => {
             )}
           </div>
         ) : (
-          <div style={styles.info}>Avatar Info</div>
+          <Col style={styles.info}>
+            <Row className='m-3'>
+              <Button onClick={handleCreateNewPlayer}>Join Game</Button>
+            </Row>
+            <Row className='m-3'>
+              <Button onClick={handleGetPlayersClick}>Get Players</Button>
+            </Row>
+            <Row className='m-3'>
+              <Button onClick={handleGetTilesClick}>Get Tiles</Button>
+            </Row>
+            <Row className='m-3'>
+              <Button onClick={handleIsPlayingClick}>Is Playing?</Button>
+            </Row>
+          </Col>
         )}
       </Row>
       <Row className='flex-grow-1' style={styles.messages}>

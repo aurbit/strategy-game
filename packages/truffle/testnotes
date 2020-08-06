@@ -1,0 +1,119 @@
+initialize:
+token = new AURToken(AURToken.address)
+planet = new Planet(Planet.address)
+avatar = new AvatarAUR(AvatarAUR.address)
+gov = new AURGov(AURGov.address)
+
+//mint avatar with dna of 255, this sets the race to 255 and the rest is 0s
+
+avatar.mintAvatar('bob','255',{value:10000000000000000})
+
+//this adds the race so it can be played
+gov.addRace(255);//race must be approved to create player
+
+//now you can initialize gameplay but creating a player on one of hte planets
+planet.CreateNewPlayer(1)
+
+
+//initial buy of a tile
+planet.BuyATile(5,1,{value:10000000000000000})
+
+
+
+//get map
+planet.getMap()
+
+//now pull player struct:
+planet.getPlayers();
+
+//pull tile struct
+planet.getTiles()
+
+//get planets, list of addresses
+gov.getPlanets()
+
+//get token balance, is uint256 so comes out as a few ints. 
+//tokens are sent to the owner right now...
+token.balanceOf(accounts[0])
+
+//or in web3 u can get the bigint
+bob = new web3.eth.Contract(token.abi,token.address)
+var bal = await bob.methods.balanceOf(accounts[0]).call()
+//you can execute any of these other commands in this way as above 
+
+//send sme tokens to planet
+token.send(planet.address,100000000000000,'0x0')
+
+//by default they are sent to your first avatar balance that is playing. 
+//send tokens to avatarId 1
+token.send(planet.address,100000000000000,'0x1')
+//for any other avatar id the data should simply be the number, in this case it is in hex, so avatarId 10 would be 0xa
+//this is so if you send no data, it will be fine, and if you have more than one avatar you can give them tokens how you see fit
+
+//get your new balance:, can see it in the player struct
+planet.getPlayers();
+
+
+//messing with dna
+
+av = new web3.eth.Contract(AvatarAUR.abi,AvatarAUR.address)
+var dna = await av.methods.getDNA(1).call()
+web3.utils.hexToBytes(web3.utils.padLeft(web3.utils.toHex(dna),36))
+//this one spits out the array:
+// [strength,vitality,intelligence,haircolor[0],haircolor[1],haircolor[2],eyecolor[0],eyecolor[1],eyecolor[2],skincolor[0],skincolor[1],skincolor[2],hairtype,eyetype,skintype,mouth,gender,race]
+
+
+//to encode dna:
+dnaIn = [165,228,239,117,68,239,5,4,239,153,5,2,9,3,85]
+dnaC = web3.utils.hexToNumberString(web3.utils.bytesToHex(dnaIn))
+//where this array is:
+//[haircolor[0],haircolor[1],haircolor[2],eyecolor[0],eyecolor[1],eyecolor[2],skincolor[0],skincolor[1],skincolor[2],hairtype,eyetype,skintype,mouth,gender,race]
+
+
+
+//battle tile
+//send more tokens, 10 tokens to avatar 1
+//then allocate 1 token to tile 5
+//then battle tile 4(neighbor) with avatar one from tile 5
+token.send(planet.address,'10000000000000000000','0x1')
+planet.allocateTokens(5,1,'1000000000000000000')
+planet.BattleTile(4,1,5)
+
+//now look at reusult
+planet.getTiles()
+
+
+//aerial attack on tile 55 with 0.1 tokens(i think), using avatar 1
+planet.AerialAttack(55,1,'100000000000000000')
+//check result
+planet.getTiles()
+
+//do it again
+planet.AerialAttack(57,1,'100000000000000000')
+
+//take a tile by surrounding like in Go, tile 56 taken with avatarid 1 using tiles 55 and 56
+planet.TakeATile(56,1,55,57)
+
+
+//mine your tokens:
+planet.mineMyTokens(1)
+//does nothing because these tiles we took are not land
+
+//get a land tile, this is actually the venus contract because it launches second
+planet.AerialAttack(5555,1,'100000000000000000')
+
+//fast forward a few blocks
+token.send(planet.address,100000000000000,'0x0')
+token.send(planet.address,100000000000000,'0x0')
+token.send(planet.address,100000000000000,'0x0')
+token.send(planet.address,100000000000000,'0x0')
+token.send(planet.address,100000000000000,'0x0')
+token.send(planet.address,100000000000000,'0x0')
+token.send(planet.address,100000000000000,'0x0')
+token.send(planet.address,100000000000000,'0x0')
+
+
+//check balance
+planet.getPlayers()
+planet.mineMyTokens(1)
+
