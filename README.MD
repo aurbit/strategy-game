@@ -8,6 +8,24 @@ Aurbit is a map based strategy game built with Ethereum Contracts. The objective
 
 Project Aurbit is an entry to the HackFS ETHGlobal Hackathon sponsored by Protocol Labs, among others. Aurbit is a game that uses Fungible and Non-Fungible tokens on Planet Contracts. Assets are Stored on IPFS and the client applicaiton is hosted and deployed with Fleek Hosting.
 
+## How it's Made
+
+Aurbit is a mono repo with two packages, Client and Truffle.
+
+<b>Client</b>
+The client was created with Create-React-App and uses Redux Saga State management. Important libraries in use are React-Bootstrap, Metamask-Provider, WalletConect, and Redux-Sata. The deployment and hosting for production assets are hosted with Fleek Hosting continuous deployments happening on merges to master branch. The client features a decentralized chat built with Textile services that's available within the Planet game maps. We are also using Indura as our core proider, with the exception of signed transactions with Metamask. All requests to the networks happen with Indura, including those signed with WalletConnect.
+
+Aurbit is a strategy game the following pages:
+
+- /auth: The Auth page is a basic landing container to get the wallets setup.
+- /avatar: The Avatar Page allows the user to create a new Avatar.
+- /planet: The Planet Page has the game map, contol panel and chat components.
+
+All state management happens with Redux Sagas and we use generator functions to handle state transition logic.
+
+<b>Truffle</b>
+It was our hope to use Buidler for this project, but we found Truffle to be a more mature and easy-to-use library to quickly get working with contract deployements. We are using Ganache-Cli and and Truffle to compile, deloy and migrate for development and mainnent/testnet builds.
+
 ## Game Play
 
 The game rules are a combination of the map based strategy game Risk, and the ancient game Go. It is designed to never end, and as a result is impossible to win conclusively. The player is designated by a ERC721 token called the Avatar. Any wallet containing the corresponding avatar token inherits control of the resources belonging to that avatar.
@@ -25,7 +43,7 @@ Aurbit seeks to be an open and positive community. <a href="https://github.com/a
 
 ## Planets
 
-In the Spirit of IPFS and the ETHGlobal community, Aurbit is a game takes place on Planets. Each planet is a map of land and water 112 X 63 pixels. Ownership of land tiles on the map mints the Avatar that owns it new AUR tokens on every new block. The tokens can be claimed at anytime and withdrawn to a wallet or used by the Avatar during game play.
+In the Spirit of IPFS and the ETHGlobal community, Aurbit is an Interplanetary strategy game. Planets are maps of land and water 112 X 63 pixels. Ownership of land tiles rewards your Avatar with new AUR tokens every block. The tokens can be claimed at anytime and withdrawn to a wallet or used by the Avatar during game play.
 
 AUR Tokens can be allocated to a tile which bolsters defences against attack from another player. An attack will burn tokens for both players, but having more AUR allocated to a tile will greatly improve the chances of defending an attack.
 
