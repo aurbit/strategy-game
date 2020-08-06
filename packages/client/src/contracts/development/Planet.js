@@ -1,7 +1,7 @@
 
     module.exports = {
       "network": "development",
-      "address": "0xbDaCB2530CFCfE9d447d5D27E8111415BB8A4880",
+      "address": "0xb7185e70288bfb25b06317C66c1A0A0A4dB07c84",
       "artifact": {
   "contractName": "Planet",
   "abi": [
@@ -61196,7 +61196,7 @@
   },
   "networks": {},
   "schemaVersion": "3.2.3",
-  "updatedAt": "2020-08-06T02:36:00.671Z",
+  "updatedAt": "2020-08-06T06:35:20.455Z",
   "devdoc": {
     "methods": {}
   },

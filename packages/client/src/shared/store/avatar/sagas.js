@@ -43,11 +43,10 @@ function * callMintAvatar ({ payload }) {
     const payload = { method: 'eth_sendTransaction', params: [txObject] }
     yield window.ethereum.send(payload, (err, data) => {
       if (err) {
-        return store.dispatch(
-          AVATAR_ACTIONS.callMintAvatarFailure('Failed to Mint')
-        )
+        store.dispatch(AVATAR_ACTIONS.callMintAvatarFailure('Failed to Mint'))
+      } else {
+        store.dispatch(CHAIN_ACTIONS.newTransaction(data.result))
       }
-      store.dispatch(CHAIN_ACTIONS.newTransaction(data.result))
     })
     return
   }

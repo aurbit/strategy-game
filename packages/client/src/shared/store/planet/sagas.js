@@ -101,7 +101,7 @@ function * newPlayerRequest () {
 
     if (wallet == WALLETS.METAMASK) {
       const payload = { method: 'eth_sendTransaction', params: [txObject] }
-      yield window.ethereum.send(payload, (err, data) => {
+      const result = yield window.ethereum.send(payload, (err, data) => {
         if (err) {
           store.dispatch(ACTIONS.callNewPlayerFailure(err))
         } else if (data) {
@@ -109,7 +109,7 @@ function * newPlayerRequest () {
           store.dispatch(ACTIONS.callNewPlayerSuccess(data))
         }
       })
-      return
+      return result
     }
 
     if (wallet === WALLETS.WALLET_CONNECT) {
