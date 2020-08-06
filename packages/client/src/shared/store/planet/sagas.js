@@ -36,7 +36,7 @@ function * buyTileRequest (action) {
       .buyTile(tileIndex, avatar.id)
       .encodeABI()
 
-    const value = provider.utils.fromWei(tileFee, 'ether')
+    // const value = new provider.utils.BN(tileFee.value)
 
     // 2. get wallet Transaction count
     const txCount = yield provider.eth.getTransactionCount(address)
@@ -45,8 +45,7 @@ function * buyTileRequest (action) {
       nonce: provider.utils.toHex(txCount),
       from: address,
       to: contract._address,
-      value: '100000000000000',
-      gasLimit: provider.utils.toHex('6721975'),
+      gasLimit: provider.utils.toHex(6721975),
       gasPrice: provider.utils.toHex(provider.utils.toWei('20', 'gwei')),
       data: rawTrx
     }

@@ -98,7 +98,7 @@ const Map = ({ setMapReady, map, setMap, activeTile }) => {
         setTimeout(() => {
           setMap(template)
           setMapReady(true)
-        }, 100)
+        })
       }
     }
   }
