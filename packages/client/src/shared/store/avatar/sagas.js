@@ -1,23 +1,32 @@
-import { takeLatest, put, select, call } from 'redux-saga/effects'
-import { store } from 'store'
-import { selectAvatarContract } from 'shared/store/chain/selectors'
-import { selectAddress } from 'shared/store/wallet/selectors'
 import { TYPES as AVATAR_TYPES, ACTIONS as AVATAR_ACTIONS } from './index'
-import {
-  TYPES as CHAIN_TYPES,
-  ACTIONS as CHAIN_ACTIONS
-} from 'shared/store/chain'
-import { selectVendor } from 'shared/store/wallet/selectors'
+import { selectAvatarContract } from 'shared/store/chain/selectors'
+import { selectAvatar } from 'shared/store/avatar/selectors'
+import { selectAddress } from 'shared/store/wallet/selectors'
+import { ACTIONS as CHAIN_ACTIONS } from 'shared/store/chain'
+import { ACTIONS as PLANET_ACTIONS } from 'shared/store/planet'
 import { selectProvider } from 'shared/store/chain/selectors'
+import { takeLatest, select, put } from 'redux-saga/effects'
 import { WALLETS } from 'shared/store/wallet'
+import { store } from 'store'
 
 function * callMintAvatar ({ payload }) {
   const address = yield select(selectAddress)
-  const wallet = yield select(selectVendor)
   const provider = yield select(selectProvider)
   const contract = yield select(selectAvatarContract)
   const { name, dna } = payload
 
+  console.log(
+    'address',
+    address,
+    'provider',
+    provider,
+    'contract',
+    contract,
+    'name',
+    name,
+    'dna',
+    dna
+  )
   const rawTrx = yield contract.methods.mintAvatar(name, dna).encodeABI()
   const value = yield provider.utils.toHex(
     provider.utils.toWei('0.01', 'ether')
@@ -38,82 +47,54 @@ function * callMintAvatar ({ payload }) {
     data: rawTrx
   }
 
-  // 3. handle the transaction response
-
-  // 4. Sign and Send
-  // for metamask
-  if (wallet == WALLETS.METAMASK) {
-    const payload = { method: 'eth_sendTransaction', params: [txObject] }
-    yield window.ethereum.send(payload, (err, data) => {
-      if (err)
-        store.dispatch(AVATAR_ACTIONS.callMintAvatarFailure('Failed to Mint'))
+  // 3. Sign and Send
+  const trx = { method: 'eth_sendTransaction', params: [txObject] }
+  return window.ethereum.send(trx, (err, data) => {
+    if (err) {
+      store.dispatch(AVATAR_ACTIONS.callMintAvatarFailure('Failed to Mint'))
+    } else {
       store.dispatch(CHAIN_ACTIONS.newTransaction(data.result))
-    })
-    return
-  }
-
-  // for wallet connect
-  if (wallet === WALLETS.WALLET_CONNECT) {
-    const signedTx = yield window.connector.signTransaction(txObject)
-    yield provider.eth
-      .sendSignedTransaction(signedTx)
-      .then(data => {
-        store.dispatch(CHAIN_ACTIONS.newTransaction(data.transactionHash))
-      })
-      .catch(err => {
-        store.dispatch(AVATAR_ACTIONS.callMintAvatarFailure('Failed to Mint'))
-      })
-  }
+    }
+  })
 }
 
-function * getAvatarsRequest (action) {
+function * getAvatarsRequest () {
   const address = yield select(selectAddress)
   const contract = yield select(selectAvatarContract)
 
-  // get the balance
-  const balance = yield contract.methods.balanceOf(address).call()
-
-  const bal = Number(balance) - 1
-
-  // need to make a crazy bunch of request to get the
-  // avatars. TODO: Fix the avatar contract
-  const auras = {}
-  let counter = 0
-
-  // need to wrap this into an interval
-  // so not to hammer infura
-  const interval = setInterval(() => {
-    if (counter === bal) {
-      store.dispatch(AVATAR_ACTIONS.getAvatarsSuccess(auras))
-      return clearInterval(interval)
+  try {
+    // get the balance
+    const balance = yield contract.methods.balanceOf(address).call()
+    // gets the Avatar
+    if (Number(balance) === 0) {
+      return yield put(
+        AVATAR_ACTIONS.getAvatarsFailure('User does not have an Avatar')
+      )
     }
 
-    if (address) getTokenId(counter)
-    counter++
-  }, 20)
-
-  // gets the Avatar
-  const getAvatar = id => {
-    let ava = contract.methods
-      .avatars(id)
+    const tokenId = yield contract.methods
+      .tokenOfOwnerByIndex(address, 0)
       .call()
-      .then(data => {
-        auras[id] = { avatarId: id, name: data.name, dna: data.dna }
-      })
-      .catch(console.log)
-  }
-
-  // gets the tokenId for each avatar
-  const getTokenId = index => {
-    let result = contract.methods
-      .tokenOfOwnerByIndex(address, index)
-      .call()
-      .then(getAvatar)
-      .catch(console.log)
+    const avatar = yield contract.methods.avatars(tokenId).call()
+    yield put(
+      AVATAR_ACTIONS.getAvatarsSuccess([
+        { dna: avatar.dna, name: avatar.name, id: tokenId }
+      ])
+    )
+  } catch (err) {
+    yield put(AVATAR_ACTIONS.getAvatarsFailure(err))
   }
 }
 
+function * getAvatarsSuccess () {
+  const avatar = yield select(selectAvatar)
+  yield put(AVATAR_ACTIONS.setActiveIndex(0))
+  // yield put(PLANET_ACTIONS.getIsPlayingRequest(avatar.id))
+}
+
 export function * rootAvatarSagas () {
-  yield takeLatest(AVATAR_TYPES.CALL_MINT_AVATAR, callMintAvatar)
+  yield takeLatest(AVATAR_TYPES.CALL_MINT_AVATAR_REQUEST, callMintAvatar)
+  // yield takeLatest(AVATAR_TYPES.CALL_MINT_AVATAR_SUCCESS, callMintAvatarSuccess)
+  yield takeLatest(AVATAR_TYPES.GET_AVATARS_SUCCESS, getAvatarsSuccess)
   yield takeLatest(AVATAR_TYPES.GET_AVATARS_REQUEST, getAvatarsRequest)
 }

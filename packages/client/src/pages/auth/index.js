@@ -1,11 +1,21 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { Container, Spinner } from 'react-bootstrap'
+import { ACTIONS } from 'shared/store/avatar'
+import { Redirect } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import WalletSetup from 'shared/components/WalletSetup'
-import { Container } from 'react-bootstrap'
-import { selectAddress } from 'shared/store/wallet'
+import { selectAddress } from 'shared/store/wallet/selectors'
+import { selectAvatars } from 'shared/store/avatar/selectors'
 
-const AuthPage = props => {
+const AuthPage = () => {
+  const address = useSelector(selectAddress)
+  const avatars = useSelector(selectAvatars)
+  const dispatch = useDispatch()
+
+  React.useEffect(() => {
+    if (address) dispatch(ACTIONS.getAvatarsRequest())
+  }, [address])
+
   return (
     <Container fluid style={{ backgroundColor: 'black' }}>
       <div
@@ -16,7 +26,13 @@ const AuthPage = props => {
           transform: 'translate(-50%, -50%)'
         }}
       >
-        <WalletSetup buttonText='Start Game' link={'/planet'} />
+        {avatars.loading ? (
+          <Spinner animation='grow' variant='warning' />
+        ) : avatars.list.length ? (
+          <Redirect to='/avatar' />
+        ) : (
+          <WalletSetup buttonText='Start Game' link={'/planet'} />
+        )}
       </div>
     </Container>
   )

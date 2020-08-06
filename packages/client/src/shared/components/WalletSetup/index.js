@@ -1,153 +1,83 @@
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { Modal, Button, ListGroup, Image, Row, Col } from 'react-bootstrap'
-import { WALLETS, ACTIONS } from 'shared/store/wallet'
-import { ACTIONS as TOKEN_ACTIONS } from 'shared/store/token'
-import { selectAddress, selectVendor } from 'shared/store/wallet/selectors'
-import { useToken } from 'shared/services/provider'
-import { selectNetwork } from 'shared/store/chain/selectors'
-import { ShieldCheck } from 'react-bootstrap-icons'
-import { useHistory } from 'react-router-dom'
-
-import MetaMaskLogo from 'shared/images/metamask-logo.png'
-import WalletConnectLogo from 'shared/images/wallet-connect-logo.png'
+import { Modal, Button } from 'react-bootstrap'
+import MetaMaskOnboarding from '@metamask/onboarding'
 
 export default props => {
-  const [modalShow, setModalShow] = React.useState(false)
+  const handleButtonClick = () => window.ethereum.enable()
 
   return (
     <div>
-      <Button
-        variant={props.variant || 'dark'}
-        size='lg'
-        onClick={() => setModalShow(true)}
-      >
-        {props.buttonText}
-      </Button>
-      <WalletSelectModal
-        link={props.link}
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-      />
+      {window?.ethereum ? (
+        <Button
+          variant={props.variant || 'dark'}
+          size='lg'
+          onClick={handleButtonClick}
+        >
+          {props.buttonText}
+        </Button>
+      ) : (
+        <OnboardingButton />
+      )}
     </div>
   )
 }
 
-const WalletSelectModal = props => {
-  const address = useSelector(selectAddress)
-  const network = useSelector(selectNetwork)
-  const vendor = useSelector(selectVendor)
-  const dispatch = useDispatch()
-  const history = useHistory()
-  const { token } = useToken()
+const ONBOARD_TEXT = 'Click here to install MetaMask!'
+const CONNECT_TEXT = 'Connect'
+const CONNECTED_TEXT = 'Connected'
 
-  // the continue button on the modal
-  const handleContinue = () => {
-    props.onHide()
-    if (props.link) {
-      history.push(props.link)
-    }
-  }
+export function OnboardingButton () {
+  const [buttonText, setButtonText] = React.useState(ONBOARD_TEXT)
+  const [isDisabled, setDisabled] = React.useState(false)
+  const [accounts, setAccounts] = React.useState([])
+  const onboarding = React.useRef()
 
-  // when the users switches wallet
-  const handleWalletUpdate = wallet => {
-    if (!window.connector.connected && wallet == WALLETS.WALLET_CONNECT) {
-      window.connector.createSession()
-    } else {
-      dispatch(ACTIONS.setWallet({ vendor: wallet }))
-    }
-  }
-
-  /// if address updates, check for aur balance
-  // Should this not be a Use Effect to listen to changes to props?
   React.useEffect(() => {
-    if (address && address !== 'Connect Wallet') {
-      token.methods
-        .balanceOf(address)
-        .call()
-        .then(data => {
-          dispatch(TOKEN_ACTIONS.setAurBalance(data))
-        })
-        .catch(err => {
-          dispatch(TOKEN_ACTIONS.setAurBalanceError(err))
-        })
+    if (!onboarding.current) {
+      onboarding.current = new MetaMaskOnboarding()
     }
-  }, [address, dispatch, token])
+  }, [])
 
+  React.useEffect(() => {
+    if (MetaMaskOnboarding.isMetaMaskInstalled()) {
+      if (accounts.length > 0) {
+        setButtonText(CONNECTED_TEXT)
+        setDisabled(true)
+        onboarding.current.stopOnboarding()
+      } else {
+        setButtonText(CONNECT_TEXT)
+        setDisabled(false)
+      }
+    }
+  }, [accounts])
+
+  React.useEffect(() => {
+    function handleNewAccounts (newAccounts) {
+      setAccounts(newAccounts)
+    }
+    if (MetaMaskOnboarding.isMetaMaskInstalled()) {
+      window.ethereum
+        .request({ method: 'eth_requestAccounts' })
+        .then(handleNewAccounts)
+      window.ethereum.on('accountsChanged', handleNewAccounts)
+      return () => {
+        window.ethereum.off('accountsChanged', handleNewAccounts)
+      }
+    }
+  }, [])
+
+  const onClick = () => {
+    if (MetaMaskOnboarding.isMetaMaskInstalled()) {
+      window.ethereum
+        .request({ method: 'eth_requestAccounts' })
+        .then(newAccounts => setAccounts(newAccounts))
+    } else {
+      onboarding.current.startOnboarding()
+    }
+  }
   return (
-    <Modal
-      {...props}
-      size='lg'
-      aria-labelledby='contained-modal-title-vcenter'
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id='contained-modal-title-vcenter'>
-          Connect Wallet
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <ListGroup>
-          {typeof window?.ethereum !== 'undefined' ? (
-            <ListGroup.Item
-              action
-              variant='no-style'
-              active={vendor === WALLETS.METAMASK}
-              style={{ height: 100 }}
-            >
-              <Row
-                className='align-items-center'
-                onClick={() => handleWalletUpdate(WALLETS.METAMASK)}
-              >
-                <Col xs={3}>
-                  <Image width={80} height={80} src={MetaMaskLogo} />
-                </Col>
-                <Col xs={6} md={7}>
-                  MetaMask
-                </Col>
-                <Col xs={3} md='auto' order='last'>
-                  {window?.ethereum.selectedAddress &&
-                  vendor === WALLETS.METAMASK ? (
-                    <ShieldCheck color='white' size={48} />
-                  ) : null}
-                </Col>
-              </Row>
-            </ListGroup.Item>
-          ) : null}
-          <ListGroup.Item
-            action
-            variant='no-style'
-            active={vendor === WALLETS.WALLET_CONNECT}
-            style={{ height: 100 }}
-          >
-            <Row
-              className='align-items-center'
-              onClick={() => handleWalletUpdate(WALLETS.WALLET_CONNECT)}
-            >
-              <Col xs={3}>
-                <Image width={80} height={80} src={WalletConnectLogo} />
-              </Col>
-              <Col xs={6} md={7}>
-                Wallet Connect
-              </Col>
-              <Col xs={2} md='auto' order='last'>
-                {vendor === WALLETS.WALLET_CONNECT ? (
-                  <ShieldCheck color='white' size={48} />
-                ) : null}
-              </Col>
-            </Row>
-          </ListGroup.Item>
-        </ListGroup>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button
-          variant='dark'
-          disabled={vendor === null}
-          onClick={handleContinue}
-        >
-          {network}
-        </Button>
-      </Modal.Footer>
-    </Modal>
+    <Button variant='dark' size='lg' disabled={isDisabled} onClick={onClick}>
+      {buttonText}
+    </Button>
   )
 }

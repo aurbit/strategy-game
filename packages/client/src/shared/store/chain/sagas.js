@@ -113,7 +113,8 @@ function * initContracts () {
   avatarListener.on('data', data => store.dispatch(ACTIONS.avatarEvent(data)))
   // todo
   const planetListener = planet.events.allEvents()
-  planetListener.on('data', console.log)
+  planetListener.on('data', data => store.dispatch(ACTIONS.planetEvent(data)))
+
   const tokenListener = token.events.allEvents()
   tokenListener.on('data', console.log)
 }

@@ -24,7 +24,6 @@ function * getTileFeeRequest () {
 function * buyTileRequest (action) {
   const contract = yield select(selectPlanetContract)
   const provider = yield select(selectProvider)
-  const wallet = yield select(selectVendor)
   const address = yield select(selectAddress)
   const avatar = yield select(selectAvatar)
   const tileFee = yield select(selectTileFee)
@@ -38,7 +37,6 @@ function * buyTileRequest (action) {
 
     const value = provider.utils.fromWei(tileFee.value, 'ether')
 
-    console.log(value)
     // 2. get wallet Transaction count
     const txCount = yield provider.eth.getTransactionCount(address)
     // 3. Build the transaction
@@ -52,30 +50,15 @@ function * buyTileRequest (action) {
       data: rawTrx
     }
 
-    if (wallet == WALLETS.METAMASK) {
-      const payload = { method: 'eth_sendTransaction', params: [txObject] }
-      yield window.ethereum.send(payload, (err, data) => {
-        if (err) {
-          store.dispatch(ACTIONS.callBuyTileFailure(err))
-        } else if (data) {
-          store.dispatch(CHAIN_ACTIONS.newTransaction(data.transactionHash))
-          store.dispatch(ACTIONS.callBuyTileSuccess(data))
-        }
-      })
-      return
-    }
-    // for wallet connect
-    if (wallet === WALLETS.WALLET_CONNECT) {
-      const signedTx = yield window.connector.signTransaction(txObject)
-      yield provider.eth
-        .sendSignedTransaction(signedTx)
-        .then(data => {
-          store.dispatch(CHAIN_ACTIONS.newTransaction(data.transactionHash))
-        })
-        .catch(err => {
-          store.dispatch(ACTIONS.callBuyTileFailure(err))
-        })
-    }
+    const payload = { method: 'eth_sendTransaction', params: [txObject] }
+    yield window.ethereum.send(payload, (err, data) => {
+      if (err) {
+        store.dispatch(ACTIONS.callBuyTileFailure(err))
+      } else if (data) {
+        store.dispatch(CHAIN_ACTIONS.newTransaction(data.transactionHash))
+        store.dispatch(ACTIONS.callBuyTileSuccess(data))
+      }
+    })
   } catch (err) {
     yield put(ACTIONS.callBuyTileFailure(err))
   }
@@ -85,7 +68,6 @@ function * newPlayerRequest () {
   try {
     const contract = yield select(selectPlanetContract)
     const provider = yield select(selectProvider)
-    const wallet = yield select(selectVendor)
     const address = yield select(selectAddress)
     const avatar = yield select(selectAvatar)
 
@@ -101,31 +83,15 @@ function * newPlayerRequest () {
       data: rawTrx
     }
 
-    if (wallet == WALLETS.METAMASK) {
-      const payload = { method: 'eth_sendTransaction', params: [txObject] }
-      yield window.ethereum.send(payload, (err, data) => {
-        if (err) {
-          store.dispatch(ACTIONS.callNewPlayerFailure(err))
-        } else if (data) {
-          store.dispatch(CHAIN_ACTIONS.newTransaction(data.transactionHash))
-          store.dispatch(ACTIONS.callNewPlayerSuccess(data))
-        }
-      })
-      return
-    }
-
-    if (wallet === WALLETS.WALLET_CONNECT) {
-      const signedTx = yield window.connector.signTransaction(txObject)
-      yield provider.eth
-        .sendSignedTransaction(signedTx)
-        .then(data => {
-          store.dispatch(CHAIN_ACTIONS.newTransaction(data.transactionHash))
-          store.dispatch(ACTIONS.callNewPlayerSuccess(data))
-        })
-        .catch(err => {
-          store.dispatch(ACTIONS.callNewPlayerFailure(err))
-        })
-    }
+    const payload = { method: 'eth_sendTransaction', params: [txObject] }
+    yield window.ethereum.send(payload, (err, data) => {
+      if (err) {
+        store.dispatch(ACTIONS.callNewPlayerFailure(err))
+      } else if (data) {
+        store.dispatch(CHAIN_ACTIONS.newTransaction(data.transactionHash))
+        store.dispatch(ACTIONS.callNewPlayerSuccess(data))
+      }
+    })
   } catch (err) {
     yield put(ACTIONS.callNewPlayerFailure(err))
   }
@@ -135,7 +101,6 @@ function * isPlayingRequest () {
   try {
     const contract = yield select(selectPlanetContract)
     const provider = yield select(selectProvider)
-    const wallet = yield select(selectVendor)
     const address = yield select(selectAddress)
     const avatar = yield select(selectAvatar)
 
@@ -151,31 +116,15 @@ function * isPlayingRequest () {
       data: rawTrx
     }
 
-    if (wallet == WALLETS.METAMASK) {
-      const payload = { method: 'eth_sendTransaction', params: [txObject] }
-      yield window.ethereum.send(payload, (err, data) => {
-        if (err) {
-          store.dispatch(ACTIONS.getIsPlayingFailure(err))
-        } else if (data) {
-          store.dispatch(CHAIN_ACTIONS.newTransaction(data.transactionHash))
-          store.dispatch(ACTIONS.getIsPlayingSuccess(data))
-        }
-      })
-      return
-    }
-
-    if (wallet === WALLETS.WALLET_CONNECT) {
-      const signedTx = yield window.connector.signTransaction(txObject)
-      yield provider.eth
-        .sendSignedTransaction(signedTx)
-        .then(data => {
-          store.dispatch(CHAIN_ACTIONS.newTransaction(data.transactionHash))
-          store.dispatch(ACTIONS.getIsPlayingSuccess(data))
-        })
-        .catch(err => {
-          store.dispatch(ACTIONS.getIsPlayingFailure(err))
-        })
-    }
+    const payload = { method: 'eth_sendTransaction', params: [txObject] }
+    yield window.ethereum.send(payload, (err, data) => {
+      if (err) {
+        store.dispatch(ACTIONS.getIsPlayingFailure(err))
+      } else if (data) {
+        store.dispatch(CHAIN_ACTIONS.newTransaction(data.transactionHash))
+        store.dispatch(ACTIONS.getIsPlayingSuccess(data))
+      }
+    })
   } catch (err) {
     yield put(ACTIONS.getIsPlayingFailure(err))
   }

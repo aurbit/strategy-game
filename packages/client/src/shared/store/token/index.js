@@ -37,4 +37,4 @@ export const tokenReducer = createReducer(INITIAL_STATE, {
 })
 
 // Selectors
-export const selectBalance = (state) => state.token.balance
+export const selectBalance = state => state.token.balance

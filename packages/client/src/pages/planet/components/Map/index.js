@@ -5,28 +5,32 @@ import { ACTIONS } from 'shared/store/map'
 import { selectMapApiStatus, selectMapGrid } from 'shared/store/map/selectors'
 import { selectCurrentPlanet } from 'shared/store/planet/index'
 
-export default ({ setMapReady, mapReady }) => {
+export default ({ setMapReady, activeTile }) => {
   const dispatch = useDispatch()
   // Loading is the Map API status - but loading seems to be coming from somewhere else
   const loading = useSelector(selectMapApiStatus)
   const planet = useSelector(selectCurrentPlanet)
+
   const [map, setMap] = useState(false)
 
   React.useEffect(() => {
+    setMapReady(false)
     dispatch(ACTIONS.getMap({ planet }))
   }, [dispatch, planet])
 
-  return (
+  return loading ? (
+    <Spinner animation='grow' variant='warning' />
+  ) : (
     <Map
-      mapReady={loading}
       setMapReady={setMapReady}
       map={map}
       setMap={setMap}
+      activeTile={activeTile}
     />
   )
 }
 
-const Map = ({ setMapReady, mapReady, map, setMap }) => {
+const Map = ({ setMapReady, map, setMap, activeTile }) => {
   const dispatch = useDispatch()
   const grid = useSelector(selectMapGrid)
   const [width, height] = useWindowSize()
@@ -34,6 +38,11 @@ const Map = ({ setMapReady, mapReady, map, setMap }) => {
 
   function handleTileClick (e) {
     dispatch(ACTIONS.setActiveTile(e.target.id))
+    const tile = document.getElementById(e.target.id)
+    tile.style.borderLeft = '1px solid #011d4a'
+    tile.style.borderBottom = ''
+    tile.style.borderRight = ''
+    tile.style.borderTop = '1px solid #011d4a'
   }
 
   function handleTileMouseOver (e) {
@@ -67,7 +76,7 @@ const Map = ({ setMapReady, mapReady, map, setMap }) => {
             <div
               onClick={handleTileClick}
               onMouseOver={handleTileMouseOver}
-              onMouseOut={handleTileMouseOut}
+              onMouseOut={e => handleTileMouseOut(e, activeTile)}
               className='tile'
               key={j}
               id={tileCount}
@@ -87,31 +96,21 @@ const Map = ({ setMapReady, mapReady, map, setMap }) => {
       // delay to avoid messy rerender with javascript lag
       if (tileCount === x * y) {
         setTimeout(() => {
-          setMapReady(true)
           setMap(template)
-        }, 10)
+          setMapReady(true)
+        })
       }
     }
   }
 
-  if (!map) {
-    build()
-  }
+  if (!map) build()
 
-  return mapReady ? <Spinner animation='grow' variant='warning' /> : map
+  // return mapReady ? <Spinner animation='grow' variant='warning' /> : map
+  return map
 }
 
 const useWindowSize = () => {
-  const [size, setSize] = useState([0, 0])
-  useLayoutEffect(() => {
-    function updateSize () {
-      setSize([window.innerWidth, window.innerHeight])
-    }
-    window.addEventListener('resize', updateSize)
-    updateSize()
-    return () => window.removeEventListener('resize', updateSize)
-  }, [])
-  return size
+  return [window.innerWidth, window.innerHeight]
 }
 
 const useStyles = (height, width) => {

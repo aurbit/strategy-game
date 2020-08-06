@@ -1,10 +1,17 @@
 import { makeAction, createReducer } from 'shared/utils/redux-utils'
 
 const INITIAL_STATE = {
-  loading: { get: null, mint: null },
-  success: { get: null, mint: null },
-  error: { get: null, mint: null },
-  auras: []
+  activeIndex: null,
+  avatars: {
+    loading: false,
+    error: null,
+    list: []
+  },
+  mintAvatar: {
+    loading: false,
+    error: null,
+    result: null
+  }
 }
 
 export const AVATAR_EVENTS = {
@@ -14,76 +21,62 @@ export const AVATAR_EVENTS = {
 
 // Action Types
 export const TYPES = {
-  CALL_MINT_AVATAR: 'CALL_MINT_AVATAR',
+  CALL_MINT_AVATAR_REQUEST: 'CALL_MINT_AVATAR_REQUEST',
   CALL_MINT_AVATAR_SUCCESS: 'CALL_MINT_AVATAR_SUCCESS',
   CALL_MINT_AVATAR_FAILURE: 'CALL_MINT_AVATAR_FAILURE',
   GET_AVATARS_REQUEST: 'GET_AVATARS_REQUEST',
   GET_AVATARS_SUCCESS: 'GET_AVATARS_SUCCESS',
-  GET_AVATARS_FAILURE: 'GET_AVATARS_FAILURE'
+  GET_AVATARS_FAILURE: 'GET_AVATARS_FAILURE',
+  SET_ACTIVE_INDEX: 'SET_ACTIVE_INDEX'
 }
 
 // Action Creators
 export const ACTIONS = {
-  callMintAvatar: makeAction(TYPES.CALL_MINT_AVATAR, 'payload'),
+  callMintAvatarRequest: makeAction(TYPES.CALL_MINT_AVATAR_REQUEST, 'payload'),
   callMintAvatarSuccess: makeAction(TYPES.CALL_MINT_AVATAR_SUCCESS, 'payload'),
   callMintAvatarFailure: makeAction(TYPES.CALL_MINT_AVATAR_FAILURE, 'payload'),
   getAvatarsRequest: makeAction(TYPES.GET_AVATARS_REQUEST, 'payload'),
   getAvatarsSuccess: makeAction(TYPES.GET_AVATARS_SUCCESS, 'payload'),
-  getAvatarsFailure: makeAction(TYPES.GET_AVATARS_FAILURE, 'payload')
+  getAvatarsFailure: makeAction(TYPES.GET_AVATARS_FAILURE, 'payload'),
+  setActiveIndex: makeAction(TYPES.SET_ACTIVE_INDEX, 'payload')
 }
 
 // Reducer
 export const avatarReducer = createReducer(INITIAL_STATE, {
-  [TYPES.CALL_MINT_AVATAR]: state => {
-    return {
-      ...state,
-      loading: { ...state.loading, mint: true },
-      success: { ...state.success, mint: null },
-      error: { ...state.error, mint: null }
-    }
+  [TYPES.CALL_MINT_AVATAR_REQUEST]: state => {
+    const mintAvatar = { loading: true, error: null, result: null }
+    return { ...state, mintAvatar }
   },
   [TYPES.CALL_MINT_AVATAR_SUCCESS]: (state, action) => {
-    const auras = Array.from(state.auras)
-    auras.push(action.payload)
-    return {
-      ...state,
-      auras,
-      loading: { ...state.loading, mint: false },
-      success: { ...state.success, mint: true },
-      error: { ...state.error, mint: null }
-    }
+    const list = Array.from(state.avatars.list)
+    const mintAvatar = { loading: false, error: null, result: action.payload }
+    list.push(action.payload)
+    const avatars = Object.assign({}, { ...state.avatars, list })
+    return { ...state, avatars, mintAvatar }
   },
   [TYPES.CALL_MINT_AVATAR_FAILURE]: (state, action) => {
-    return {
-      ...state,
-      loading: { ...state.loading, mint: false },
-      success: { ...state.success, mint: false },
-      error: { ...state.error, mint: action.payload }
-    }
+    const mintAvatar = { loading: false, error: action.payload, result: null }
+    return { ...state, mintAvatar }
   },
   [TYPES.GET_AVATARS_REQUEST]: state => {
-    return {
-      ...state,
-      loading: { ...state.loading, get: true },
-      success: { ...state.success, get: null },
-      error: { ...state.error, get: null }
-    }
+    const avatars = { loading: true, error: null, list: [] }
+    return { ...state, avatars }
   },
   [TYPES.GET_AVATARS_SUCCESS]: (state, action) => {
-    return {
-      ...state,
-      auras: action.payload,
-      loading: { ...state.loading, get: false },
-      success: { ...state.success, get: true },
-      error: { ...state.error, get: null }
+    const avatars = {
+      laoding: false,
+      error: null,
+      list: action.payload,
+      success: true
     }
+    const activeIndex = action.payload.length - 1
+    return { ...state, avatars, activeIndex }
   },
   [TYPES.GET_AVATARS_FAILURE]: (state, action) => {
-    return {
-      ...state,
-      loading: { ...state.loading, get: false },
-      success: { ...state.sucess, get: false },
-      error: { ...state.error, get: action.payload }
-    }
+    const avatars = { loading: false, error: action.payload, list: [] }
+    return { ...state, avatars }
+  },
+  [TYPES.SET_ACTIVE_INDEX]: (state, action) => {
+    return { ...state, activeIndex: action.payload }
   }
 })

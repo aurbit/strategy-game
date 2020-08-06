@@ -2,9 +2,9 @@ import React from 'react'
 import { utils } from 'web3'
 import SVG from 'react-inlinesvg'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Redirect } from 'react-router-dom'
 import { Container, Row, Col, Spinner } from 'react-bootstrap'
-import { selectMintAvatarSuccess } from 'shared/store/avatar/selectors'
+import { selectMintAvatar } from 'shared/store/avatar/selectors'
 import { avatarImage, parseDataArray } from './avatar-utils'
 import { ACTIONS } from 'shared/store/avatar'
 import styles from './index.module.css'
@@ -18,13 +18,7 @@ const CreateAvatarContainer = () => {
   const [avatarUrl, setAvatarUrl] = React.useState(avatarImage('human_male'))
   const history = useHistory()
   const dispatch = useDispatch()
-  const mintAvatarSuccess = useSelector(selectMintAvatarSuccess)
-
-  // React.useEffect(() => {
-  //   if (mintAvatarSuccess) {
-  //     history.push('/avatar')
-  //   }
-  // }, [mintAvatarSuccess, history])
+  const mintAvatar = useSelector(selectMintAvatar)
 
   React.useEffect(() => {
     // Update global CSS so style change will affect SVG class
@@ -34,6 +28,12 @@ const CreateAvatarContainer = () => {
     style.sheet.insertRule(`.hair-color {fill: ${hairColor}}`)
     style.sheet.insertRule(`.skin-color {fill: ${skinColor}}`)
   }, [hairColor, eyeColor, skinColor])
+
+  React.useEffect(() => {
+    if (mintAvatar.result) {
+      history.push('/avatar')
+    }
+  }, [mintAvatar])
 
   function handleOnHairChangeComplete (color) {
     setHairColor(color.hex)
@@ -62,7 +62,7 @@ const CreateAvatarContainer = () => {
     const name = e.target['name'].value
     const data = parseDataArray(hairColor, eyeColor, skinColor, gender)
     const dna = await utils.hexToNumberString(utils.bytesToHex(data))
-    dispatch(ACTIONS.callMintAvatar({ name, dna }))
+    dispatch(ACTIONS.callMintAvatarRequest({ name, dna }))
   }
 
   const AvatarImage = ({ avatarUrl }) => {
