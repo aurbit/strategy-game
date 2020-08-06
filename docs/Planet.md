@@ -1,17 +1,6 @@
 ## Planet Contracts
 
 
-<<<<<<< HEAD
-=======
-## Developers
-
-`getMap`: Returns the byteArray map of the Planet. After getting the map on the client, use must convert with the bitmap utility.
-`isPlaying`: (avatarId) Checks if the avatar is playing
-`createNewPlayer`: (avatarId) must be called by the wallet that owns that avatarId to enter the planet game
-`buyTile`: (tile index, avatarId): Buys a tile on the map.
-
-
->>>>>>> dc4b411743635c33aa13aab4b2dc31299ef28a79
 ```
 constructor(
         address payable _govContract,
@@ -138,7 +127,3 @@ getTiles() - spits out array of tile structures
 
 
 `function isLand(uint16 ind)` - returns true if `ind` is a land tile. 
-<<<<<<< HEAD
-=======
-
->>>>>>> dc4b411743635c33aa13aab4b2dc31299ef28a79
