@@ -15,7 +15,10 @@ const NavbarComponent = ({ network, account }) => {
   return (
     <Row className='justify-content-between align-items-center p-4'>
       <Col xs={4} md={2}>
-        <Button variant='no-style' onClick={() => history.push('/')}>
+        <Button
+          variant='no-style'
+          onClick={() => history.push('/avatar/create')}
+        >
           <SVG
             style={styles.aurLogo}
             height={50}

@@ -1,12 +1,10 @@
 import { TYPES as AVATAR_TYPES, ACTIONS as AVATAR_ACTIONS } from './index'
 import { selectAvatarContract } from 'shared/store/chain/selectors'
-import { selectAvatar } from 'shared/store/avatar/selectors'
+import { selectAvatars } from 'shared/store/avatar/selectors'
 import { selectAddress } from 'shared/store/wallet/selectors'
 import { ACTIONS as CHAIN_ACTIONS } from 'shared/store/chain'
-import { ACTIONS as PLANET_ACTIONS } from 'shared/store/planet'
 import { selectProvider } from 'shared/store/chain/selectors'
 import { takeLatest, select, put } from 'redux-saga/effects'
-import { WALLETS } from 'shared/store/wallet'
 import { store } from 'store'
 
 function * callMintAvatar ({ payload }) {
@@ -55,12 +53,13 @@ function * getAvatarsRequest () {
       )
     }
     // get the token ID
+    const id = Number(balance) - 1
     const tokenId = yield contract.methods
-      .tokenOfOwnerByIndex(address, 0)
+      .tokenOfOwnerByIndex(address, id)
       .call()
 
     // get the avatar
-    const avatar = yield contract.methods.avatars(tokenId).call()
+    const avatar = yield contract.methods.avatars(tokenId - 1).call()
     yield put(
       AVATAR_ACTIONS.getAvatarsSuccess([
         { dna: avatar.dna, name: avatar.name, id: tokenId }
@@ -72,14 +71,19 @@ function * getAvatarsRequest () {
 }
 
 function * getAvatarsSuccess () {
-  const avatar = yield select(selectAvatar)
-  yield put(AVATAR_ACTIONS.setActiveIndex(0))
+  const avatars = yield select(selectAvatars)
+  yield put(AVATAR_ACTIONS.setActiveIndex(avatars.list[avatars.list.length]))
+  //
   // yield put(PLANET_ACTIONS.getIsPlayingRequest(avatar.id))
+}
+
+function * callMintAvatarSuccess () {
+  yield put(AVATAR_ACTIONS.getAvatarsRequest())
 }
 
 export function * rootAvatarSagas () {
   yield takeLatest(AVATAR_TYPES.CALL_MINT_AVATAR_REQUEST, callMintAvatar)
-  // yield takeLatest(AVATAR_TYPES.CALL_MINT_AVATAR_SUCCESS, callMintAvatarSuccess)
+  yield takeLatest(AVATAR_TYPES.CALL_MINT_AVATAR_SUCCESS, callMintAvatarSuccess)
   yield takeLatest(AVATAR_TYPES.GET_AVATARS_SUCCESS, getAvatarsSuccess)
   yield takeLatest(AVATAR_TYPES.GET_AVATARS_REQUEST, getAvatarsRequest)
 }
