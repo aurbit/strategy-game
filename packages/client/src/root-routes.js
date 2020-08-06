@@ -9,6 +9,7 @@ import { ACTIONS as CHAIN_ACTIONS } from 'shared/store/chain'
 import { selectChainInitialzed } from 'shared/store/chain/selectors'
 import { ACTIONS as AVATAR_ACTIONS } from 'shared/store/avatar'
 import { selectAddress } from 'shared/store/wallet/selectors'
+import { ACTIONS as TOKEN_ACTIONS } from 'shared/store/token'
 
 import { Planet, Auth, Avatar, TestPage } from './pages'
 
@@ -31,6 +32,10 @@ export default () => {
     // CREATE CONTRACT BASED ON ARTIFACTS - store/chain/sagas - check initContracts() function
     dispatch(CHAIN_ACTIONS.initContracts())
   }, [])
+
+  React.useEffect(() => {
+    if (providersReady) dispatch(TOKEN_ACTIONS.getAurBalanceRequest())
+  }, [providersReady])
 
   // Check if the user has any avatars
   React.useEffect(() => {

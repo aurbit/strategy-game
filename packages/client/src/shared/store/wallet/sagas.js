@@ -1,5 +1,5 @@
 import { store } from 'store'
-import { TYPES, ACTIONS, WALLETS } from './index'
+import { TYPES, ACTIONS } from './index'
 import { takeLatest, put } from 'redux-saga/effects'
 
 import { ethereumEventListeners } from './window-listeners'
