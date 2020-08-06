@@ -577,16 +577,16 @@ contract Planet is IERC777Recipient {
         return out;
     }
 
-    function CreateNewPlayer(uint256 _avatarId)
+    function createNewPlayer(uint256 _avatarId)
         public
         payable
         returns (uint256)
     {
         //initializes gameplay, adding player to player struct
-        require(
-            AURGov.isRaceAuthed(uint8(Avatar.getDNA(_avatarId) & 255)),
-            "Race Unauthorized"
-        );
+        // require(
+        //     AURGov.isRaceAuthed(uint8(Avatar.getDNA(_avatarId) & 255)),
+        //     "Race Unauthorized"
+        // );
         require(msg.sender == Avatar.ownerOf(_avatarId), UNAUTHMSG);
         //this above line checks if the sender is owner of _avatarId.
         //this is needed because the function for it checks isPlaying too...

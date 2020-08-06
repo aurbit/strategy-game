@@ -1,7 +1,7 @@
 
     module.exports = {
       "network": "development",
-      "address": "0xBBde2899aF88aA48Aa21921CD28d1dD7C5faD0d7",
+      "address": "0x296B028C2B01B4C31D4F915216A88E6e705D8F25",
       "artifact": {
   "contractName": "AvatarAUR",
   "abi": [
@@ -646,7 +646,7 @@
         "id": 657,
         "nodeType": "ImportDirective",
         "scope": 1075,
-        "sourceUnit": 4739,
+        "sourceUnit": 4723,
         "src": "25:57:2",
         "symbolAliases": [],
         "unitAlias": ""
@@ -657,7 +657,7 @@
         "id": 658,
         "nodeType": "ImportDirective",
         "scope": 1075,
-        "sourceUnit": 6408,
+        "sourceUnit": 6392,
         "src": "83:52:2",
         "symbolAliases": [],
         "unitAlias": ""
@@ -672,10 +672,10 @@
               "id": 659,
               "name": "ERC721",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 4738,
+              "referencedDeclaration": 4722,
               "src": "363:6:2",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_ERC721_$4738",
+                "typeIdentifier": "t_contract$_ERC721_$4722",
                 "typeString": "contract ERC721"
               }
             },
@@ -685,13 +685,13 @@
           }
         ],
         "contractDependencies": [
-          3437,
-          3490,
-          3500,
-          4738,
-          4841,
-          4868,
-          4891
+          3421,
+          3474,
+          3484,
+          4722,
+          4825,
+          4852,
+          4875
         ],
         "contractKind": "contract",
         "documentation": "Author: Chris Markov 2020\nProject Aurbit\nThe Avatar Contract for the Aurbit Strategy Game.\nSymbol: AURA\nhttps://github.com/aurbit/strategy-game/blob/master/docs/Avatars.md",
@@ -699,13 +699,13 @@
         "id": 1074,
         "linearizedBaseContracts": [
           1074,
-          4738,
-          4868,
-          4891,
-          4841,
-          3490,
-          3500,
-          3437
+          4722,
+          4852,
+          4875,
+          4825,
+          3474,
+          3484,
+          3421
         ],
         "name": "AvatarAUR",
         "nodeType": "ContractDefinition",
@@ -717,10 +717,10 @@
               "id": 661,
               "name": "Counters",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 6407,
+              "referencedDeclaration": 6391,
               "src": "382:8:2",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Counters_$6407",
+                "typeIdentifier": "t_contract$_Counters_$6391",
                 "typeString": "library Counters"
               }
             },
@@ -731,10 +731,10 @@
               "id": 662,
               "name": "Counters.Counter",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 6367,
+              "referencedDeclaration": 6351,
               "src": "395:16:2",
               "typeDescriptions": {
-                "typeIdentifier": "t_struct$_Counter_$6367_storage_ptr",
+                "typeIdentifier": "t_struct$_Counter_$6351_storage_ptr",
                 "typeString": "struct Counters.Counter"
               }
             }
@@ -750,7 +750,7 @@
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_struct$_Counter_$6367_storage",
+              "typeIdentifier": "t_struct$_Counter_$6351_storage",
               "typeString": "struct Counters.Counter"
             },
             "typeName": {
@@ -758,10 +758,10 @@
               "id": 664,
               "name": "Counters.Counter",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 6367,
+              "referencedDeclaration": 6351,
               "src": "417:16:2",
               "typeDescriptions": {
-                "typeIdentifier": "t_struct$_Counter_$6367_storage_ptr",
+                "typeIdentifier": "t_struct$_Counter_$6351_storage_ptr",
                 "typeString": "struct Counters.Counter"
               }
             },
@@ -1395,10 +1395,10 @@
                   "name": "ERC721",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 4738,
+                  "referencedDeclaration": 4722,
                   "src": "950:6:2",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_type$_t_contract$_ERC721_$4738_$",
+                    "typeIdentifier": "t_type$_t_contract$_ERC721_$4722_$",
                     "typeString": "type(contract ERC721)"
                   }
                 },
@@ -1810,7 +1810,7 @@
                         "referencedDeclaration": 665,
                         "src": "1454:9:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Counter_$6367_storage",
+                          "typeIdentifier": "t_struct$_Counter_$6351_storage",
                           "typeString": "struct Counters.Counter storage ref"
                         }
                       },
@@ -1821,10 +1821,10 @@
                       "lValueRequested": false,
                       "memberName": "increment",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 6390,
+                      "referencedDeclaration": 6374,
                       "src": "1454:19:2",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_nonpayable$_t_struct$_Counter_$6367_storage_ptr_$returns$__$bound_to$_t_struct$_Counter_$6367_storage_ptr_$",
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_struct$_Counter_$6351_storage_ptr_$returns$__$bound_to$_t_struct$_Counter_$6351_storage_ptr_$",
                         "typeString": "function (struct Counters.Counter storage pointer)"
                       }
                     },
@@ -1895,7 +1895,7 @@
                         "referencedDeclaration": 665,
                         "src": "1505:9:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Counter_$6367_storage",
+                          "typeIdentifier": "t_struct$_Counter_$6351_storage",
                           "typeString": "struct Counters.Counter storage ref"
                         }
                       },
@@ -1906,10 +1906,10 @@
                       "lValueRequested": false,
                       "memberName": "current",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 6378,
+                      "referencedDeclaration": 6362,
                       "src": "1505:17:2",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_view$_t_struct$_Counter_$6367_storage_ptr_$returns$_t_uint256_$bound_to$_t_struct$_Counter_$6367_storage_ptr_$",
+                        "typeIdentifier": "t_function_internal_view$_t_struct$_Counter_$6351_storage_ptr_$returns$_t_uint256_$bound_to$_t_struct$_Counter_$6351_storage_ptr_$",
                         "typeString": "function (struct Counters.Counter storage pointer) view returns (uint256)"
                       }
                     },
@@ -1993,7 +1993,7 @@
                       "name": "_mint",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 4480,
+                      "referencedDeclaration": 4464,
                       "src": "1534:5:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_address_$_t_uint256_$returns$__$",
@@ -2387,7 +2387,7 @@
                       "name": "_setTokenURI",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 4638,
+                      "referencedDeclaration": 4622,
                       "src": "1642:12:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_uint256_$_t_string_memory_ptr_$returns$__$",
@@ -6612,7 +6612,7 @@
         "id": 657,
         "nodeType": "ImportDirective",
         "scope": 1075,
-        "sourceUnit": 4739,
+        "sourceUnit": 4723,
         "src": "25:57:2",
         "symbolAliases": [],
         "unitAlias": ""
@@ -6623,7 +6623,7 @@
         "id": 658,
         "nodeType": "ImportDirective",
         "scope": 1075,
-        "sourceUnit": 6408,
+        "sourceUnit": 6392,
         "src": "83:52:2",
         "symbolAliases": [],
         "unitAlias": ""
@@ -6638,10 +6638,10 @@
               "id": 659,
               "name": "ERC721",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 4738,
+              "referencedDeclaration": 4722,
               "src": "363:6:2",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_ERC721_$4738",
+                "typeIdentifier": "t_contract$_ERC721_$4722",
                 "typeString": "contract ERC721"
               }
             },
@@ -6651,13 +6651,13 @@
           }
         ],
         "contractDependencies": [
-          3437,
-          3490,
-          3500,
-          4738,
-          4841,
-          4868,
-          4891
+          3421,
+          3474,
+          3484,
+          4722,
+          4825,
+          4852,
+          4875
         ],
         "contractKind": "contract",
         "documentation": "Author: Chris Markov 2020\nProject Aurbit\nThe Avatar Contract for the Aurbit Strategy Game.\nSymbol: AURA\nhttps://github.com/aurbit/strategy-game/blob/master/docs/Avatars.md",
@@ -6665,13 +6665,13 @@
         "id": 1074,
         "linearizedBaseContracts": [
           1074,
-          4738,
-          4868,
-          4891,
-          4841,
-          3490,
-          3500,
-          3437
+          4722,
+          4852,
+          4875,
+          4825,
+          3474,
+          3484,
+          3421
         ],
         "name": "AvatarAUR",
         "nodeType": "ContractDefinition",
@@ -6683,10 +6683,10 @@
               "id": 661,
               "name": "Counters",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 6407,
+              "referencedDeclaration": 6391,
               "src": "382:8:2",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Counters_$6407",
+                "typeIdentifier": "t_contract$_Counters_$6391",
                 "typeString": "library Counters"
               }
             },
@@ -6697,10 +6697,10 @@
               "id": 662,
               "name": "Counters.Counter",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 6367,
+              "referencedDeclaration": 6351,
               "src": "395:16:2",
               "typeDescriptions": {
-                "typeIdentifier": "t_struct$_Counter_$6367_storage_ptr",
+                "typeIdentifier": "t_struct$_Counter_$6351_storage_ptr",
                 "typeString": "struct Counters.Counter"
               }
             }
@@ -6716,7 +6716,7 @@
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_struct$_Counter_$6367_storage",
+              "typeIdentifier": "t_struct$_Counter_$6351_storage",
               "typeString": "struct Counters.Counter"
             },
             "typeName": {
@@ -6724,10 +6724,10 @@
               "id": 664,
               "name": "Counters.Counter",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 6367,
+              "referencedDeclaration": 6351,
               "src": "417:16:2",
               "typeDescriptions": {
-                "typeIdentifier": "t_struct$_Counter_$6367_storage_ptr",
+                "typeIdentifier": "t_struct$_Counter_$6351_storage_ptr",
                 "typeString": "struct Counters.Counter"
               }
             },
@@ -7361,10 +7361,10 @@
                   "name": "ERC721",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 4738,
+                  "referencedDeclaration": 4722,
                   "src": "950:6:2",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_type$_t_contract$_ERC721_$4738_$",
+                    "typeIdentifier": "t_type$_t_contract$_ERC721_$4722_$",
                     "typeString": "type(contract ERC721)"
                   }
                 },
@@ -7776,7 +7776,7 @@
                         "referencedDeclaration": 665,
                         "src": "1454:9:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Counter_$6367_storage",
+                          "typeIdentifier": "t_struct$_Counter_$6351_storage",
                           "typeString": "struct Counters.Counter storage ref"
                         }
                       },
@@ -7787,10 +7787,10 @@
                       "lValueRequested": false,
                       "memberName": "increment",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 6390,
+                      "referencedDeclaration": 6374,
                       "src": "1454:19:2",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_nonpayable$_t_struct$_Counter_$6367_storage_ptr_$returns$__$bound_to$_t_struct$_Counter_$6367_storage_ptr_$",
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_struct$_Counter_$6351_storage_ptr_$returns$__$bound_to$_t_struct$_Counter_$6351_storage_ptr_$",
                         "typeString": "function (struct Counters.Counter storage pointer)"
                       }
                     },
@@ -7861,7 +7861,7 @@
                         "referencedDeclaration": 665,
                         "src": "1505:9:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Counter_$6367_storage",
+                          "typeIdentifier": "t_struct$_Counter_$6351_storage",
                           "typeString": "struct Counters.Counter storage ref"
                         }
                       },
@@ -7872,10 +7872,10 @@
                       "lValueRequested": false,
                       "memberName": "current",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 6378,
+                      "referencedDeclaration": 6362,
                       "src": "1505:17:2",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_view$_t_struct$_Counter_$6367_storage_ptr_$returns$_t_uint256_$bound_to$_t_struct$_Counter_$6367_storage_ptr_$",
+                        "typeIdentifier": "t_function_internal_view$_t_struct$_Counter_$6351_storage_ptr_$returns$_t_uint256_$bound_to$_t_struct$_Counter_$6351_storage_ptr_$",
                         "typeString": "function (struct Counters.Counter storage pointer) view returns (uint256)"
                       }
                     },
@@ -7959,7 +7959,7 @@
                       "name": "_mint",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 4480,
+                      "referencedDeclaration": 4464,
                       "src": "1534:5:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_address_$_t_uint256_$returns$__$",
@@ -8353,7 +8353,7 @@
                       "name": "_setTokenURI",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 4638,
+                      "referencedDeclaration": 4622,
                       "src": "1642:12:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_uint256_$_t_string_memory_ptr_$returns$__$",
@@ -12557,7 +12557,7 @@
   },
   "networks": {},
   "schemaVersion": "3.2.3",
-  "updatedAt": "2020-08-05T18:31:05.102Z",
+  "updatedAt": "2020-08-06T02:36:00.665Z",
   "devdoc": {
     "methods": {
       "approve(address,uint256)": {

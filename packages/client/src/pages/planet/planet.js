@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Container, Col, Row } from 'react-bootstrap'
-import { useDispatch } from 'react-redux'
-import { ACTIONS, TYPES } from 'shared/store/planet'
+import { useDispatch, useSelector } from 'react-redux'
+import { ACTIONS as PLANET_ACTIONS, TYPES } from 'shared/store/planet'
 import ControlPanel from 'pages/planet/components/ControlPanel'
 import Map from 'pages/planet/components/Map'
+import { selectActiveTile } from 'shared/store/map/selectors'
 
 const styles = {
   row: {
@@ -20,19 +21,19 @@ const styles = {
 }
 
 export default props => {
-  const [mapReady, setMapReady] = useState(false)
-  const [hoverTile, setHoverTile] = useState(0)
-
+  const [mapReady, setMapReady] = React.useState(false)
+  const [hoverTile, setHoverTile] = React.useState(0)
+  const activeTile = useSelector(selectActiveTile)
   const dispatch = useDispatch()
 
   // get the tile price
   React.useEffect(() => {
-    setMapReady(false)
-    dispatch(ACTIONS.getTileFeeRequest())
+    dispatch(PLANET_ACTIONS.getTileFeeRequest())
   }, [])
 
   const handleBuyTileClick = () => {
     // get Buy the Tile
+    dispatch(PLANET_ACTIONS.callBuyTileRequest(activeTile))
   }
   return (
     <Container fluid style={{ backgroundColor: 'black' }}>
@@ -42,10 +43,17 @@ export default props => {
             setMapReady={setMapReady}
             hoverTile={hoverTile}
             setHoverTile={setHoverTile}
+            activeTile={activeTile}
           />
         </Col>
         <Col style={styles.control}>
-          <ControlPanel mapReady={mapReady} hoverTile={hoverTile} />
+          {mapReady ? (
+            <ControlPanel
+              mapReady={mapReady}
+              hoverTile={hoverTile}
+              handleBuyTileClick={handleBuyTileClick}
+            />
+          ) : null}
         </Col>
       </Row>
     </Container>

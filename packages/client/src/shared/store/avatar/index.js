@@ -44,7 +44,7 @@ export const ACTIONS = {
 // Reducer
 export const avatarReducer = createReducer(INITIAL_STATE, {
   [TYPES.CALL_MINT_AVATAR_REQUEST]: state => {
-    const mintAvatar = { laoding: true, error: null, result: null }
+    const mintAvatar = { loading: true, error: null, result: null }
     return { ...state, mintAvatar }
   },
   [TYPES.CALL_MINT_AVATAR_SUCCESS]: (state, action) => {
@@ -52,8 +52,7 @@ export const avatarReducer = createReducer(INITIAL_STATE, {
     const mintAvatar = { loading: false, error: null, result: action.payload }
     list.push(action.payload)
     const avatars = Object.assign({}, { ...state.avatars, list })
-    const activeIndex = list.length - 1
-    return { ...state, avatars, mintAvatar, activeIndex }
+    return { ...state, avatars, mintAvatar }
   },
   [TYPES.CALL_MINT_AVATAR_FAILURE]: (state, action) => {
     const mintAvatar = { loading: false, error: action.payload, result: null }
@@ -64,7 +63,12 @@ export const avatarReducer = createReducer(INITIAL_STATE, {
     return { ...state, avatars }
   },
   [TYPES.GET_AVATARS_SUCCESS]: (state, action) => {
-    const avatars = { laoding: false, error: null, list: action.payload }
+    const avatars = {
+      laoding: false,
+      error: null,
+      list: action.payload,
+      success: true
+    }
     const activeIndex = action.payload.length - 1
     return { ...state, avatars, activeIndex }
   },

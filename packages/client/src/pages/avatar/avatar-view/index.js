@@ -24,6 +24,7 @@ const AvatarCard = ({ name, dna }) => {
   let toHex = utils.toHex(dna)
   let padLeft = utils.padLeft(toHex, 36)
   let dnaArray = utils.hexToBytes(padLeft)
+  console.log(dnaArray)
   return (
     <Col className='mb-5' align='center'>
       <Card style={{ maxWidth: 600 }}>
@@ -32,7 +33,7 @@ const AvatarCard = ({ name, dna }) => {
         </div>
         <Card.Body>
           <Card.Title>{name}</Card.Title>
-          <Card.Text>{dna}</Card.Text>
+          <Card.Text>{dnaArray}</Card.Text>
           <Link className='btn btn-primary' to='/planet'>
             Play Now
           </Link>

@@ -35,7 +35,12 @@ export const ACTIONS = {
 // Reducer
 export const walletReducer = createReducer(initialState, {
   [TYPES.SET_WALLET]: (state, action) => {
+    // if (window.ethereum && !window.ethereum.enabled()) window.ethereum.connect()
     const { vendor } = action.payload
+
+    if (window?.ethereum && !window?.ethereum.selectedAddress) {
+      return window.ethereum.enable()
+    }
     const address =
       vendor === WALLETS.METAMASK
         ? window.ethereum.selectedAddress

@@ -1,10 +1,12 @@
 import { TYPES as AVATAR_TYPES, ACTIONS as AVATAR_ACTIONS } from './index'
 import { selectAvatarContract } from 'shared/store/chain/selectors'
+import { selectAvatar } from 'shared/store/avatar/selectors'
 import { selectAddress } from 'shared/store/wallet/selectors'
 import { ACTIONS as CHAIN_ACTIONS } from 'shared/store/chain'
+import { ACTIONS as PLANET_ACTIONS } from 'shared/store/planet'
 import { selectProvider } from 'shared/store/chain/selectors'
 import { selectVendor } from 'shared/store/wallet/selectors'
-import { takeLatest, select } from 'redux-saga/effects'
+import { takeLatest, select, put } from 'redux-saga/effects'
 import { WALLETS } from 'shared/store/wallet'
 import { store } from 'store'
 
@@ -40,8 +42,11 @@ function * callMintAvatar ({ payload }) {
   if (wallet == WALLETS.METAMASK) {
     const payload = { method: 'eth_sendTransaction', params: [txObject] }
     yield window.ethereum.send(payload, (err, data) => {
-      if (err)
-        store.dispatch(AVATAR_ACTIONS.callMintAvatarFailure('Failed to Mint'))
+      if (err) {
+        return store.dispatch(
+          AVATAR_ACTIONS.callMintAvatarFailure('Failed to Mint')
+        )
+      }
       store.dispatch(CHAIN_ACTIONS.newTransaction(data.result))
     })
     return
@@ -67,44 +72,39 @@ function * getAvatarsRequest () {
   const address = yield select(selectAddress)
   const contract = yield select(selectAvatarContract)
 
-  // get the balance
-  const balance = yield contract.methods.balanceOf(address).call()
-
-  // need to make a crazy bunch of request to get the
-  // avatars. TODO: Fix the avatar contract
-  const list = []
-  let counter = 0
-  // need to wrap this into an interval
-  // so not to hammer infura
-  const interval = setInterval(() => {
-    if (counter == Number(balance) - 1) {
-      clearInterval(interval)
-      return store.dispatch(AVATAR_ACTIONS.getAvatarsSuccess(list))
+  try {
+    // get the balance
+    const balance = yield contract.methods.balanceOf(address).call()
+    // gets the Avatar
+    if (Number(balance) === 0) {
+      return yield put(
+        AVATAR_ACTIONS.getAvatarsFailure('User does not have an Avatar')
+      )
     }
-    if (address) getTokenId(counter)
-    counter++
-  }, 100)
 
-  // gets the Avatar
-  const getAvatar = avatarId => {
-    return contract.methods
-      .avatars(avatarId)
+    const tokenId = yield contract.methods
+      .tokenOfOwnerByIndex(address, 0)
       .call()
-      .then(data => list.push(data))
-      .catch(console.log)
+    const avatar = yield contract.methods.avatars(tokenId).call()
+    yield put(
+      AVATAR_ACTIONS.getAvatarsSuccess([
+        { dna: avatar.dna, name: avatar.name, id: tokenId }
+      ])
+    )
+  } catch (err) {
+    yield put(AVATAR_ACTIONS.getAvatarsFailure(err))
   }
+}
 
-  // gets the tokenId for each avatar
-  const getTokenId = index => {
-    return contract.methods
-      .tokenOfOwnerByIndex(address, index)
-      .call()
-      .then(getAvatar)
-      .catch(console.log)
-  }
+function * getAvatarsSuccess () {
+  const avatar = yield select(selectAvatar)
+  yield put(AVATAR_ACTIONS.setActiveIndex(0))
+  // yield put(PLANET_ACTIONS.getIsPlayingRequest(avatar.id))
 }
 
 export function * rootAvatarSagas () {
   yield takeLatest(AVATAR_TYPES.CALL_MINT_AVATAR_REQUEST, callMintAvatar)
+  // yield takeLatest(AVATAR_TYPES.CALL_MINT_AVATAR_SUCCESS, callMintAvatarSuccess)
+  yield takeLatest(AVATAR_TYPES.GET_AVATARS_SUCCESS, getAvatarsSuccess)
   yield takeLatest(AVATAR_TYPES.GET_AVATARS_REQUEST, getAvatarsRequest)
 }
