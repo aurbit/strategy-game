@@ -1,7 +1,7 @@
 
     module.exports = {
       "network": "development",
-      "address": "0xfa4C76c5F696535B3565960A1D2d0A012d2C87aB",
+      "address": "0x36c2D3ef5628b98274A0A8214e711E9d1F8b737D",
       "artifact": {
   "contractName": "AURToken",
   "abi": [
@@ -632,7 +632,7 @@
         "id": 540,
         "nodeType": "ImportDirective",
         "scope": 655,
-        "sourceUnit": 5981,
+        "sourceUnit": 5965,
         "src": "77:57:1",
         "symbolAliases": [],
         "unitAlias": ""
@@ -658,10 +658,10 @@
               "id": 542,
               "name": "ERC777",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 5980,
+              "referencedDeclaration": 5964,
               "src": "239:6:1",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_ERC777_$5980",
+                "typeIdentifier": "t_contract$_ERC777_$5964",
                 "typeString": "contract ERC777"
               }
             },
@@ -671,10 +671,10 @@
           }
         ],
         "contractDependencies": [
-          3437,
-          3837,
-          5980,
-          6125
+          3421,
+          3821,
+          5964,
+          6109
         ],
         "contractKind": "contract",
         "documentation": "Author: Chris Markov 2020\nProject Aurbit",
@@ -682,10 +682,10 @@
         "id": 654,
         "linearizedBaseContracts": [
           654,
-          5980,
-          3837,
-          6125,
-          3437
+          5964,
+          3821,
+          6109,
+          3421
         ],
         "name": "AURToken",
         "nodeType": "ContractDefinition",
@@ -1191,7 +1191,7 @@
                       "name": "_mint",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 5607,
+                      "referencedDeclaration": 5591,
                       "src": "1046:5:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_address_$_t_uint256_$_t_bytes_memory_ptr_$_t_bytes_memory_ptr_$returns$__$",
@@ -1347,10 +1347,10 @@
                   "name": "ERC777",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 5980,
+                  "referencedDeclaration": 5964,
                   "src": "674:6:1",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_type$_t_contract$_ERC777_$5980_$",
+                    "typeIdentifier": "t_type$_t_contract$_ERC777_$5964_$",
                     "typeString": "type(contract ERC777)"
                   }
                 },
@@ -1596,7 +1596,7 @@
                       "name": "_mint",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 5607,
+                      "referencedDeclaration": 5591,
                       "src": "1430:5:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_address_$_t_uint256_$_t_bytes_memory_ptr_$_t_bytes_memory_ptr_$returns$__$",
@@ -1812,7 +1812,7 @@
                       "name": "burn",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 5206,
+                      "referencedDeclaration": 5190,
                       "src": "1752:4:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_uint256_$_t_bytes_memory_ptr_$returns$__$",
@@ -2273,7 +2273,7 @@
         "id": 540,
         "nodeType": "ImportDirective",
         "scope": 655,
-        "sourceUnit": 5981,
+        "sourceUnit": 5965,
         "src": "77:57:1",
         "symbolAliases": [],
         "unitAlias": ""
@@ -2299,10 +2299,10 @@
               "id": 542,
               "name": "ERC777",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 5980,
+              "referencedDeclaration": 5964,
               "src": "239:6:1",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_ERC777_$5980",
+                "typeIdentifier": "t_contract$_ERC777_$5964",
                 "typeString": "contract ERC777"
               }
             },
@@ -2312,10 +2312,10 @@
           }
         ],
         "contractDependencies": [
-          3437,
-          3837,
-          5980,
-          6125
+          3421,
+          3821,
+          5964,
+          6109
         ],
         "contractKind": "contract",
         "documentation": "Author: Chris Markov 2020\nProject Aurbit",
@@ -2323,10 +2323,10 @@
         "id": 654,
         "linearizedBaseContracts": [
           654,
-          5980,
-          3837,
-          6125,
-          3437
+          5964,
+          3821,
+          6109,
+          3421
         ],
         "name": "AURToken",
         "nodeType": "ContractDefinition",
@@ -2832,7 +2832,7 @@
                       "name": "_mint",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 5607,
+                      "referencedDeclaration": 5591,
                       "src": "1046:5:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_address_$_t_uint256_$_t_bytes_memory_ptr_$_t_bytes_memory_ptr_$returns$__$",
@@ -2988,10 +2988,10 @@
                   "name": "ERC777",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 5980,
+                  "referencedDeclaration": 5964,
                   "src": "674:6:1",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_type$_t_contract$_ERC777_$5980_$",
+                    "typeIdentifier": "t_type$_t_contract$_ERC777_$5964_$",
                     "typeString": "type(contract ERC777)"
                   }
                 },
@@ -3237,7 +3237,7 @@
                       "name": "_mint",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 5607,
+                      "referencedDeclaration": 5591,
                       "src": "1430:5:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_address_$_t_uint256_$_t_bytes_memory_ptr_$_t_bytes_memory_ptr_$returns$__$",
@@ -3453,7 +3453,7 @@
                       "name": "burn",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 5206,
+                      "referencedDeclaration": 5190,
                       "src": "1752:4:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_uint256_$_t_bytes_memory_ptr_$returns$__$",
@@ -3893,7 +3893,7 @@
   },
   "networks": {},
   "schemaVersion": "3.2.3",
-  "updatedAt": "2020-08-04T16:56:37.633Z",
+  "updatedAt": "2020-08-06T07:24:05.518Z",
   "devdoc": {
     "methods": {
       "allowance(address,address)": {

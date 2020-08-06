@@ -20,6 +20,8 @@ const INITIAL_STATE = {
   planetContract: null,
   tokenContract: null,
   avatarEvents: [],
+  planetEvents: [],
+  tokenEvents: [],
   transactions: []
 }
 
@@ -38,7 +40,8 @@ export const TYPES = {
   SET_CONTRACTS: 'SET_CONTRACTS',
   CALL_MINT_AVATAR: 'CALL_MINT_AVATAR',
   NEW_TRANSACTION: 'NEW_TRANSACTION',
-  AVATAR_CONTRACT_EVENT: 'AVATAR_CONTRACT_EVENT'
+  AVATAR_CONTRACT_EVENT: 'AVATAR_CONTRACT_EVENT',
+  PLANET_CONTRACT_EVENT: 'PLANET_CONTRACT_EVENT'
 }
 
 // INIT Actions will be used to trigger a SAGA - Do required logic in Saga - then use SET Action to dispatch this into reducer
@@ -56,7 +59,8 @@ export const ACTIONS = {
   setContracts: makeAction(TYPES.SET_CONTRACTS, 'payload'),
   callMintAvatar: makeAction(TYPES.CALL_MINT_AVATAR, 'payload'),
   newTransaction: makeAction(TYPES.NEW_TRANSACTION, 'payload'),
-  avatarEvent: makeAction(TYPES.AVATAR_CONTRACT_EVENT, 'payload')
+  avatarEvent: makeAction(TYPES.AVATAR_CONTRACT_EVENT, 'payload'),
+  planetEvent: makeAction(TYPES.PLANET_CONTRACT_EVENT, 'payload')
 }
 
 // Reducer
@@ -93,5 +97,10 @@ export const chainReducer = createReducer(INITIAL_STATE, {
     const avatarEvents = Array.from(state.avatarEvents)
     avatarEvents.push(action.payload)
     return { ...state, avatarEvents }
+  },
+  [TYPES.PLANET_CONTRACT_EVENT]: (state, action) => {
+    const planetEvents = Array.from(state.planetEvents)
+    planetEvents.push(action.payload)
+    return { ...state, planetEvents }
   }
 })

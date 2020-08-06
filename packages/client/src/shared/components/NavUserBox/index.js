@@ -12,7 +12,7 @@ import AurLogo from 'shared/images/logo_A.svg'
 import SVG from 'react-inlinesvg'
 
 // for getting the token balance
-import { selectAddress } from 'shared/store/wallet'
+import { selectAddress, selectNetwork } from 'shared/store/wallet'
 
 import './index.module.css'
 
@@ -28,7 +28,7 @@ export default () => {
           styles={styles.avatarIcon}
           size={40}
           color='gray'
-          onClick={() => history.push('/avatar/create')}
+          onClick={() => history.push('/avatar')}
         />
       </Button>
     )

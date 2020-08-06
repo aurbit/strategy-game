@@ -1,18 +1,20 @@
 import React from 'react'
 import { utils } from 'web3'
-import { Container, Col, Row, Card, Button, Spinner } from 'react-bootstrap'
-import { useHistory } from 'react-router-dom'
+import { Container, Col, Row, Card, Spinner } from 'react-bootstrap'
+import { Link, Redirect } from 'react-router-dom'
 
 import PlayerAvatar from 'shared/components/PlayerAvatar'
 
-export default ({ avatar }) => {
+export default ({ avatars }) => {
   return (
     <Container className='mt-5'>
       <Row>
-        {!avatar ? (
+        {avatars.loading ? (
           <Spinner animation='grow' variant='warning' />
+        ) : !avatars.list[0] ? (
+          <Redirect to='/avatar/create' />
         ) : (
-          <AvatarCard name={avatar.name} dna={avatar.dna} />
+          <AvatarCard name={avatars.list[0].name} dna={avatars.list[0].dna} />
         )}
       </Row>
     </Container>
@@ -20,23 +22,23 @@ export default ({ avatar }) => {
 }
 
 const AvatarCard = ({ name, dna }) => {
-  const history = useHistory()
-  const handleRouteClick = () => {
-    history.push('/planet')
-  }
+  // need to transform the dna to a byte array
   let toHex = utils.toHex(dna)
   let padLeft = utils.padLeft(toHex, 36)
   let dnaArray = utils.hexToBytes(padLeft)
+
   return (
-    <Col className='mb-5'>
+    <Col className='mb-5' align='center'>
       <Card style={{ maxWidth: 600 }}>
-        <PlayerAvatar dna={dnaArray} />
+        <div style={{ minHeight: 600 }}>
+          <PlayerAvatar dna={dnaArray} />
+        </div>
         <Card.Body>
           <Card.Title>{name}</Card.Title>
-          <Card.Text>{dna}</Card.Text>
-          <Button variant='primary' onClick={() => handleRouteClick()}>
+          <Card.Text>{dnaArray}</Card.Text>
+          <Link className='btn btn-primary' to='/planet'>
             Play Now
-          </Button>
+          </Link>
         </Card.Body>
       </Card>
     </Col>

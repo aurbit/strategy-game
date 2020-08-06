@@ -1,26 +1,14 @@
-import { takeLatest, call, put } from 'redux-saga/effects'
+import { takeLatest, call, put, select } from 'redux-saga/effects'
 import { PLANETS } from 'shared/store/planet/index'
+import { selectPlanetContract } from 'shared/store/chain/selectors'
+
 import bitmap from 'shared/utils/bitmap'
 import { ACTIONS, TYPES } from './index'
-// Move to ENV Variables?
-const FLEEK_BUCKET_URL = 'https://xhad-team-bucket.storage.fleek.co'
 
-const MAP_URL = {
-  EARTH: `${FLEEK_BUCKET_URL}/earth-map.json`
-}
-
-function* getMap(action) {
-  const { planet } = action.payload
-  let url = ''
-  switch (planet) {
-    case PLANETS.EARTH:
-      url = MAP_URL.EARTH
-      break
-    default:
-      throw new Error('Invalid planet')
-  }
+function * getMap () {
+  const contract = yield select(selectPlanetContract)
   try {
-    const result = yield call(callMapApi, url)
+    const result = yield contract.methods.getMap().call()
     const grid = bitmap(result)
     yield put(ACTIONS.getMapSuccess({ grid }))
   } catch (err) {
@@ -28,15 +16,6 @@ function* getMap(action) {
   }
 }
 
-const callMapApi = (url) => {
-  return fetch(url)
-    .then((res) => res.json())
-    .then((json) => json)
-    .catch((err) => {
-      throw err
-    })
-}
-
-export function* rootMapSagas() {
+export function * rootMapSagas () {
   yield takeLatest(TYPES.GET_MAP_REQUEST, getMap)
 }

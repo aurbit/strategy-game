@@ -7,6 +7,8 @@ import { ACTIONS as WALLET_ACTIONS } from 'shared/store/wallet'
 import { selectWalletInitalized } from 'shared/store/wallet/selectors'
 import { ACTIONS as CHAIN_ACTIONS } from 'shared/store/chain'
 import { selectChainInitialzed } from 'shared/store/chain/selectors'
+import { ACTIONS as AVATAR_ACTIONS } from 'shared/store/avatar'
+import { selectAddress } from 'shared/store/wallet/selectors'
 
 import { Planet, Auth, Avatar, TestPage } from './pages'
 
@@ -15,10 +17,11 @@ export default () => {
   const dispatch = useDispatch()
   const walletReady = useSelector(selectWalletInitalized)
   const providersReady = useSelector(selectChainInitialzed)
+  const address = useSelector(selectAddress)
 
   React.useEffect(() => {
-    dispatch(WALLET_ACTIONS.initWallet())
-  }, [])
+    dispatch(WALLET_ACTIONS.initWalletRequest())
+  }, [WALLET_ACTIONS])
 
   React.useEffect(() => {
     // BEGIN TO INIT PROVIDER
@@ -28,6 +31,11 @@ export default () => {
     // CREATE CONTRACT BASED ON ARTIFACTS - store/chain/sagas - check initContracts() function
     dispatch(CHAIN_ACTIONS.initContracts())
   }, [])
+
+  // Check if the user has any avatars
+  React.useEffect(() => {
+    if (address) dispatch(AVATAR_ACTIONS.getAvatarsRequest())
+  }, [address])
 
   return walletReady && providersReady ? (
     <div>
