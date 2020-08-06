@@ -25,14 +25,13 @@ export default ({ setMapReady, mapReady, activeTile }) => {
 const Map = ({ setMapReady, mapReady, map, setMap, activeTile }) => {
   const dispatch = useDispatch()
   const userTiles = useSelector(selectTiles)
-  const [oldSelected, setNewSelected] = React.useState()
+
   const grid = useSelector(selectMapGrid)
   const width = window.innerWidth
   const height = window.innerHeight
   const styles = useStyles(height, width)
 
   colorizer(mapReady, userTiles)
-
   const build = () => {
     let x, y
     let tileCount = 0
@@ -43,9 +42,6 @@ const Map = ({ setMapReady, mapReady, map, setMap, activeTile }) => {
       y = grid.length
 
       function handleTileClick (e) {
-        setNewSelected(e.target.id)
-        document.getElementById(e.target.id).style.backgroundColor = 'white'
-
         dispatch(ACTIONS.setActiveTile(e.target.id))
         const tile = document.getElementById(e.target.id)
         tile.style.borderLeft = '1px solid #011d4a'

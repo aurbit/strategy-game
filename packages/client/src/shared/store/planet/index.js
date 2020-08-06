@@ -39,6 +39,11 @@ const initialState = {
     loading: false,
     error: null,
     result: null
+  },
+  aerialAttack: {
+    loading: false,
+    error: null,
+    result: null
   }
 }
 
@@ -62,7 +67,10 @@ export const TYPES = {
   GET_PLAYERS_FAILURE: 'GET_PLAYERS_FAILURE',
   GET_TILES_REQUEST: 'GET_TILES_REQUEST',
   GET_TILES_SUCCESS: 'GET_TILES_SUCCESS',
-  GET_TILES_FAILURE: 'GET_TILES_FAILURE'
+  GET_TILES_FAILURE: 'GET_TILES_FAILURE',
+  AERIAL_ATTACK_REQUEST: 'AERIAL_ATTACK_REQUEST',
+  AERIAL_ATTACK_SUCCESS: 'AERIAL_ATTACK_SUCCESS',
+  AERIAL_ATTACK_FAILURE: 'AERIAL_ATTACK_FAILURE'
 }
 
 // Action Creators
@@ -85,7 +93,10 @@ export const ACTIONS = {
   getPlayersFailure: makeAction(TYPES.GET_PLAYERS_FAILURE, 'payload'),
   getTilesRequest: makeAction(TYPES.GET_TILES_REQUEST, 'payload'),
   getTilesSuccess: makeAction(TYPES.GET_TILES_SUCCESS, 'payload'),
-  getTilesFailure: makeAction(TYPES.GET_TILES_FAILURE, 'payload')
+  getTilesFailure: makeAction(TYPES.GET_TILES_FAILURE, 'payload'),
+  aerialAttackRequest: makeAction(TYPES.AERIAL_ATTACK_REQUEST, 'payload'),
+  aerialAttackSuccess: makeAction(TYPES.AERIAL_ATTACK_SUCCESS, 'payload'),
+  aerialAttackFailure: makeAction(TYPES.AERIAL_ATTACK_FAILURE)
 }
 
 // Reducer
@@ -158,6 +169,18 @@ export const planetReducer = createReducer(initialState, {
   [TYPES.GET_TILES_FAILURE]: (state, action) => {
     const tiles = { loading: false, error: action.payload, result: null }
     return { ...state, tiles }
+  },
+  [TYPES.AERIAL_ATTACK_REQUEST]: state => {
+    const aerialAttack = { loading: true, error: null, result: null }
+    return { ...state, aerialAttack }
+  },
+  [TYPES.AERIAL_ATTACK_SUCCESS]: (state, action) => {
+    const aerialAttack = { loading: false, error: null, result: action.payload }
+    return { ...state, aerialAttack }
+  },
+  [TYPES.AERIAL_ATTACK_FAILURE]: (state, action) => {
+    const aerialAttack = { loading: false, error: action.payload, result: null }
+    return { ...state, aerialAttack }
   }
 })
 

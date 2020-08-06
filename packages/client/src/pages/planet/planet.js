@@ -48,6 +48,10 @@ export default props => {
   const handleGetTilesClick = () => {
     dispatch(PLANET_ACTIONS.getTilesRequest())
   }
+
+  const handleAerialAttack = (tile, amount) => {
+    dispatch(PLANET_ACTIONS.aerialAttackRequest({ tile, amount }))
+  }
   return (
     <Container fluid style={{ backgroundColor: 'black' }}>
       <Row style={styles.row}>
@@ -69,6 +73,7 @@ export default props => {
             handleGetPlayersClick={handleGetPlayersClick}
             handleGetTilesClick={handleGetTilesClick}
             handleIsPlayingRequest={handleIsPlayingRequest}
+            handleAerialAttack={handleAerialAttack}
           />
         </Col>
         )

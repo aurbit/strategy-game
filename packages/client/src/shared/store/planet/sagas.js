@@ -5,9 +5,8 @@ import { selectPlanetContract } from 'shared/store/chain/selectors'
 import { selectProvider } from 'shared/store/chain/selectors'
 import { selectAddress } from 'shared/store/wallet/selectors'
 import { selectTileFee, selectTiles } from 'shared/store/planet/selectors'
-import { selectAvatar } from '../avatar/selectors'
+import { selectAvatar, selectAvatarId } from '../avatar/selectors'
 import { ACTIONS as CHAIN_ACTIONS } from '../chain'
-import { colorizer } from 'shared/utils/colorizer'
 
 function * getTileFeeRequest () {
   const contract = yield select(selectPlanetContract)
@@ -146,13 +145,27 @@ function * getTilesRequest () {
   }
 }
 
-function * callBuyTitleSuccess () {}
+function * aerialAttackRequest (action) {
+  const { tile, amount } = action
+  const avatarId = yield select(selectAvatarId)
+  const contract = yield select(selectPlanetContract)
+  try {
+    const result = yield contract.methods
+      .AerialAttack(tile, avatarId, amount)
+      .call()
+    yield put(ACTIONS.aerialAttackSuccess(result))
+  } catch (err) {
+    yield put(ACTIONS.aerialAttackFailure(err))
+  }
+}
+
 export function * rootPlanetSagas () {
   yield takeLatest(TYPES.GET_TILE_FEE_REQUEST, getTileFeeRequest)
   yield takeLatest(TYPES.CALL_BUY_TILE_REQUEST, buyTileRequest)
   yield takeLatest(TYPES.CALL_NEW_PLAYER_REQUEST, newPlayerRequest)
-  yield takeLatest(TYPES.CALL_BUY_TILE_SUCCESS, callBuyTitleSuccess)
+  // yield takeLatest(TYPES.CALL_BUY_TILE_SUCCESS, callBuyTitleSuccess)
   yield takeLatest(TYPES.GET_IS_PLAYING_REQUEST, isPlayingRequest)
   yield takeLatest(TYPES.GET_PLAYERS_REQUEST, getPlayersRequest)
   yield takeLatest(TYPES.GET_TILES_REQUEST, getTilesRequest)
+  yield takeLatest(TYPES.AERIAL_ATTACK_REQUEST, aerialAttackRequest)
 }
