@@ -15,28 +15,12 @@ function * callMintAvatar ({ payload }) {
   const contract = yield select(selectAvatarContract)
   const { name, dna } = payload
 
-  console.log(
-    'address',
-    address,
-    'provider',
-    provider,
-    'contract',
-    contract,
-    'name',
-    name,
-    'dna',
-    dna
-  )
   const rawTrx = yield contract.methods.mintAvatar(name, dna).encodeABI()
   const value = yield provider.utils.toHex(
     provider.utils.toWei('0.01', 'ether')
   )
 
-  // HOW TO CREATE WALLET CONNECT AND METAMASK TRANSACTIONS
-  // 1. get wallet Transaction count
   const txCount = yield provider.eth.getTransactionCount(address)
-
-  // 2. Build the transaction
   const txObject = {
     nonce: provider.utils.toHex(txCount),
     from: address,
@@ -47,7 +31,6 @@ function * callMintAvatar ({ payload }) {
     data: rawTrx
   }
 
-  // 3. Sign and Send
   const trx = { method: 'eth_sendTransaction', params: [txObject] }
   return window.ethereum.send(trx, (err, data) => {
     if (err) {
@@ -71,10 +54,12 @@ function * getAvatarsRequest () {
         AVATAR_ACTIONS.getAvatarsFailure('User does not have an Avatar')
       )
     }
-
+    // get the token ID
     const tokenId = yield contract.methods
       .tokenOfOwnerByIndex(address, 0)
       .call()
+
+    // get the avatar
     const avatar = yield contract.methods.avatars(tokenId).call()
     yield put(
       AVATAR_ACTIONS.getAvatarsSuccess([

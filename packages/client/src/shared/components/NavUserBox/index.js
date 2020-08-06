@@ -1,7 +1,7 @@
 import React from 'react'
 import { Col, Row, Button } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
-import { selectBalance } from 'shared/store/token/index'
+import { selectBalance } from 'shared/store/token/selectors'
 import { addressShortener } from 'shared/utils/wallets'
 import WalletSetup from 'shared/components/WalletSetup'
 
@@ -12,7 +12,7 @@ import AurLogo from 'shared/images/logo_A.svg'
 import SVG from 'react-inlinesvg'
 
 // for getting the token balance
-import { selectAddress, selectNetwork } from 'shared/store/wallet'
+import { selectAddress } from 'shared/store/wallet'
 
 import './index.module.css'
 

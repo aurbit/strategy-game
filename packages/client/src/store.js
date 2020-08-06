@@ -7,6 +7,7 @@ import { rootMapSagas } from 'shared/store/map/sagas'
 import { rootChainSagas } from 'shared/store/chain/sagas'
 import { rootAvatarSagas } from 'shared/store/avatar/sagas'
 import { rootPlanetSagas } from 'shared/store/planet/sagas'
+import { rootTokenSagas } from 'shared/store/token/sagas'
 
 import rootReducer from './root-reducer'
 // we need an initialState otherwise , store will freak out
@@ -20,7 +21,8 @@ function * rootSaga () {
     rootMapSagas(),
     rootChainSagas(),
     rootAvatarSagas(),
-    rootPlanetSagas()
+    rootPlanetSagas(),
+    rootTokenSagas()
   ])
 }
 
