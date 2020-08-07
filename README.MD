@@ -13,7 +13,7 @@ Project Aurbit is an entry to the HackFS ETHGlobal Hackathon sponsored by Protoc
 Aurbit is a mono repo with two packages, Client and Truffle.
 
 <b>Client</b>
-The client was created with Create-React-App and uses Redux Saga State management. Important libraries in use are React-Bootstrap, Metamask-Provider, WalletConect, and Redux-Sata. The deployment and hosting for production assets are hosted with Fleek Hosting continuous deployments happening on merges to master branch. The client features a decentralized chat built with Textile services that's available within the Planet game maps. We are also using Indura as our core proider, with the exception of signed transactions with Metamask. All requests to the networks happen with Indura, including those signed with WalletConnect.
+The client was created with Create-React-App and uses Redux Saga State management. Important libraries in use are React-Bootstrap, Metamask-Provider, WalletConect, and Redux-Sata. The deployment and hosting for production assets are hosted with Fleek Hosting with continuous deployments happening on merges to master branch. The client features a decentralized chat built with Textile services that's available within the Planet game maps. We are also using Infura as our core proider, with the exception of signed transactions with Metamask. All requests to the networks happen with Infura, including those signed with WalletConnect.
 
 Aurbit is a strategy game the following pages:
 
