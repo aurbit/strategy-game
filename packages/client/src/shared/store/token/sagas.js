@@ -5,8 +5,9 @@ import { selectTokenContract } from 'shared/store/chain/selectors'
 import { selectAddress } from 'shared/store/wallet/selectors'
 
 function * getBalanceRequest () {
-  const contract = yield select(selectTokenContract)
   const address = yield select(selectAddress)
+  const contract = yield select(selectTokenContract)
+
   try {
     const balance = yield contract.methods.balanceOf(address).call()
     yield put(ACTIONS.getAurBalanceSuccess(balance))

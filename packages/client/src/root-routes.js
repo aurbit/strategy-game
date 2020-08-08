@@ -33,15 +33,16 @@ export default () => {
     dispatch(CHAIN_ACTIONS.initContracts())
   }, [])
 
-  React.useEffect(() => {
-    if (providersReady) dispatch(TOKEN_ACTIONS.getAurBalanceRequest())
-  }, [providersReady])
-
   // Check if the user has any avatars
   React.useEffect(() => {
     if (address) dispatch(AVATAR_ACTIONS.getAvatarsRequest())
   }, [address])
 
+  React.useEffect(() => {
+    if (providersReady) {
+      dispatch(TOKEN_ACTIONS.getAurBalanceRequest())
+    }
+  }, [providersReady, address])
   return walletReady && providersReady ? (
     <div>
       <Router>

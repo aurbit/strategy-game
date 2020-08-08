@@ -26,37 +26,37 @@ function * buyTileRequest (action) {
   const tileFee = yield select(selectTileFee)
   const tiles = yield select(selectTiles)
 
-  try {
-    const tileIndex = action.payload
-    const rawTrx = yield contract.methods
-      .buyTile(tileIndex, avatar.id)
-      .encodeABI()
+  // try {
+  const tileIndex = action.payload
+  const rawTrx = yield contract.methods
+    .buyTile(tileIndex, avatar.id)
+    .encodeABI()
 
-    const txCount = yield provider.eth.getTransactionCount(address)
+  const txCount = yield provider.eth.getTransactionCount(address)
 
-    const txObject = {
-      nonce: provider.utils.toHex(txCount),
-      from: address,
-      to: contract._address,
-      value: provider.utils.toHex(tileFee.value),
-      gasLimit: provider.utils.toHex(6721975),
-      gas: provider.utils.toHex(6721975),
-      data: rawTrx
-    }
-
-    const payload = { method: 'eth_sendTransaction', params: [txObject] }
-    yield window.ethereum.send(payload, (err, data) => {
-      if (err) {
-        store.dispatch(ACTIONS.callBuyTileFailure(err))
-      } else if (data) {
-        store.dispatch(CHAIN_ACTIONS.newTransaction(data.transactionHash))
-        store.dispatch(ACTIONS.callBuyTileSuccess(data))
-        document.getElementById(tileIndex).style.backgroundColor = 'blue'
-      }
-    })
-  } catch (err) {
-    yield put(ACTIONS.callBuyTileFailure(err))
+  const txObject = {
+    nonce: provider.utils.toHex(txCount),
+    from: address,
+    to: contract._address,
+    value: provider.utils.toHex(tileFee.value),
+    gasLimit: provider.utils.toHex(6721975),
+    gas: provider.utils.toHex(6721975),
+    data: rawTrx
   }
+
+  const payload = { method: 'eth_sendTransaction', params: [txObject] }
+  yield window.ethereum.send(payload, (err, data) => {
+    if (err) {
+      store.dispatch(ACTIONS.callBuyTileFailure(err))
+    } else if (data) {
+      store.dispatch(CHAIN_ACTIONS.newTransaction(data.transactionHash))
+      store.dispatch(ACTIONS.callBuyTileSuccess(data))
+      document.getElementById(tileIndex).style.backgroundColor = 'blue'
+    }
+  })
+  // } catch (err) {
+  //   yield put(ACTIONS.callBuyTileFailure(err))
+  // }
 }
 
 function * newPlayerRequest () {
