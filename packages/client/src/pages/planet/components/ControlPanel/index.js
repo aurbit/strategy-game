@@ -112,7 +112,8 @@ const styles = {
   container: {
     border: '1px solid gray',
     backgroundColor: '#e1e1e9',
-    paddignBottom: 30
+    // paddignBottom: 30,
+    height: '100%'
   },
   menu: {
     height: 50,
