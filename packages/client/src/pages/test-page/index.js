@@ -13,7 +13,7 @@ const TestPage = () => {
     dispatch(CHAIN_ACTIONS.initArtifacts())
     // CREATE CONTRACT BASED ON ARTIFACTS - store/chain/sagas - check initContracts() function
     dispatch(CHAIN_ACTIONS.initContracts())
-  }, [])
+  }, [dispatch])
 
   function onClick () {
     const dna = [165, 228, 239, 117, 68, 239, 5, 4, 239, 153, 5, 2, 9, 3, 85]

@@ -4,7 +4,7 @@ import { takeLatest, put, select } from 'redux-saga/effects'
 import { selectPlanetContract } from 'shared/store/chain/selectors'
 import { selectProvider } from 'shared/store/chain/selectors'
 import { selectAddress } from 'shared/store/wallet/selectors'
-import { selectTileFee, selectTiles } from 'shared/store/planet/selectors'
+import { selectTileFee } from 'shared/store/planet/selectors'
 import { selectAvatar, selectAvatarId } from '../avatar/selectors'
 import { ACTIONS as CHAIN_ACTIONS } from '../chain'
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { utils } from 'web3'
 import SVG from 'react-inlinesvg'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory, Redirect } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { Container, Row, Col, Spinner } from 'react-bootstrap'
 import { selectMintAvatar } from 'shared/store/avatar/selectors'
 import { avatarImage, parseDataArray } from './avatar-utils'
@@ -33,7 +33,7 @@ const CreateAvatarContainer = () => {
     if (mintAvatar.result) {
       history.push('/avatar')
     }
-  }, [mintAvatar])
+  }, [mintAvatar, history])
 
   function handleOnHairChangeComplete (color) {
     setHairColor(color.hex)

@@ -24,7 +24,7 @@ function * callMintAvatar ({ payload }) {
     from: address,
     to: contract._address,
     value,
-    gasLimit: provider.utils.toHex(6721975),
+    // gasLimit: provider.utils.toHex(6721975),
     gasPrice: provider.utils.toHex(provider.utils.toWei('50', 'gwei')),
     data: rawTrx
   }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Col, Row, Button, InputGroup, Container } from 'react-bootstrap'
+import { Col, Row, Button, Container } from 'react-bootstrap'
 import { selectActiveTile } from 'shared/store/map/selectors'
 
 export default ({

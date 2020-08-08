@@ -2,9 +2,8 @@ import React from 'react'
 import AvatarView from './avatar-view'
 import CreateAvatar from './create-avatar'
 import { Route, Switch } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import { selectActiveIndex, selectAvatars } from 'shared/store/avatar/selectors'
-import { ACTIONS } from 'shared/store/avatar'
+import { useSelector } from 'react-redux'
+import { selectAvatars } from 'shared/store/avatar/selectors'
 
 function AvatarContainer () {
   // need to get the list of all the avtars from the connect wallet

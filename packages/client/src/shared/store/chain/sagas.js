@@ -47,20 +47,20 @@ function * initProvider () {
       web3 = new Web3(wsPro)
       break
     }
-    case NETWORKS.MAINNET: {
-      web3 = new Web3(url(network, key))
-      break
-    }
     case NETWORKS.ROPSTEN: {
       web3 = new Web3(url(network, key))
       break
     }
+    case NETWORKS.MAINNET: {
+      alert('We have not deployed contracts to this network, yet.')
+      break
+    }
     case NETWORKS.KOVAN: {
-      web3 = new Web3(url(network, key))
+      alert('We have not deployed contracts to this network, yet.')
       break
     }
     case NETWORKS.RINKEBY: {
-      web3 = new Web3(url(network, key))
+      alert('We have not deployed contracts to this network, yet.')
       break
     }
     default: {
@@ -68,6 +68,7 @@ function * initProvider () {
         `ws://localhost:${port}`
       )
       web3 = new Web3(wsPro)
+      break
     }
   }
   yield put(ACTIONS.setProvider({ provider: web3 }))
@@ -99,8 +100,14 @@ function * initArtifacts () {
       planet = { address: p1, artifact: p2 }
       break
     }
-    case NETWORKS.MAINNET:
-    case NETWORKS.RINKEBY:
+    case NETWORKS.MAINNET: {
+      alert('Sorry, we do not support this network, yet.')
+      break
+    }
+    case NETWORKS.RINKEBY: {
+      alert('Sorry, we do not support this network, yet.')
+      break
+    }
     default: {
       throw new Error('Network Currently Unsupported')
     }
@@ -148,7 +155,10 @@ function * avatarContractEvent (action) {
         store.dispatch(
           AVATAR_ACTIONS.callMintAvatarSuccess({ name, dna, avatarId })
         )
+      break
     }
+    default:
+      break
   }
 }
 

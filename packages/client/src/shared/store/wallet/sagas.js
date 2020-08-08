@@ -1,4 +1,3 @@
-import { store } from 'store'
 import { TYPES, ACTIONS } from './index'
 import { takeLatest, put } from 'redux-saga/effects'
 
