@@ -30,6 +30,10 @@ export default props => {
     dispatch(MAP_ACTIONS.getMap('EARTH'))
   }, [MAP_ACTIONS])
 
+  React.useEffect(() => {
+    dispatch(PLANET_ACTIONS.getPlayersRequest())
+  }, [PLANET_ACTIONS])
+
   const handleIsPlayingRequest = id => {
     dispatch(PLANET_ACTIONS.getIsPlayingRequest(id))
   }

@@ -1,7 +1,7 @@
 
     module.exports = {
-      "network": "development",
-      "address": "0xdaBADadB5b83a525837DAA1FE106D222BaBf8cb3",
+      "network": "ropsten",
+      "address": "0xAF832B2D3e4B725cbeC4810F7B143c3cD8c5d4Fa",
       "artifact": {
   "contractName": "Planet",
   "abi": [
@@ -61550,7 +61550,7 @@
   },
   "networks": {},
   "schemaVersion": "3.2.3",
-  "updatedAt": "2020-08-08T11:59:54.197Z",
+  "updatedAt": "2020-08-08T12:00:21.068Z",
   "devdoc": {
     "methods": {}
   },

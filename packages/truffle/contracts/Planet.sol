@@ -77,10 +77,7 @@ contract Planet is IERC777Recipient {
     Player[] Players;
     tile[] Tiles;
 
-    constructor(
-        address payable _govContract,
-        uint8[N / 8] memory _map //,address payable addyerc1820)
-    ) public {
+    constructor(address payable _govContract) public {
         _erc1820.setInterfaceImplementer(
             address(this),
             TOKENS_RECIPIENT_INTERFACE_HASH,
@@ -88,11 +85,15 @@ contract Planet is IERC777Recipient {
         );
         owner = msg.sender;
         setGovContract(_govContract);
-        map = _map;
         launchBlockNumber = block.number;
         TileBuyFee = 10**16; //buy in in ether
         minAURUnit = 10**16;
         satsPerBlockPerTile = 10**14;
+    }
+
+    function setMap(uint8[N / 8] memory _map) public returns (bool) {
+        require(msg.sender == owner);
+        map = _map;
     }
 
     function bytes2uint(bytes memory b) public pure returns (uint256) {

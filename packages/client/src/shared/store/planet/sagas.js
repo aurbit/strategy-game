@@ -24,7 +24,6 @@ function * buyTileRequest (action) {
   const address = yield select(selectAddress)
   const avatar = yield select(selectAvatar)
   const tileFee = yield select(selectTileFee)
-  const tiles = yield select(selectTiles)
 
   try {
     const tileIndex = action.payload
@@ -39,8 +38,8 @@ function * buyTileRequest (action) {
       from: address,
       to: contract._address,
       value: provider.utils.toHex(tileFee.value),
-      gasLimit: provider.utils.toHex(6721975),
-      gas: provider.utils.toHex(6721975),
+      // gasLimit: provider.utils.toHex(6721975),
+      // gas: provider.utils.toHex(6721975),
       data: rawTrx
     }
 
@@ -74,7 +73,7 @@ function * newPlayerRequest () {
       from: address,
       to: contract._address,
       gasLimit: provider.utils.toHex(6721975),
-      gasPrice: provider.utils.toHex(provider.utils.toWei('20', 'gwei')),
+      gasPrice: provider.utils.toHex(provider.utils.toWei('50', 'gwei')),
       data: rawTrx
     }
 
@@ -107,7 +106,7 @@ function * isPlayingRequest () {
       from: address,
       to: contract._address,
       gasLimit: provider.utils.toHex(6721975),
-      gasPrice: provider.utils.toHex(provider.utils.toWei('10', 'gwei')),
+      gasPrice: provider.utils.toHex(provider.utils.toWei('50', 'gwei')),
       data: rawTrx
     }
 

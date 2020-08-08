@@ -1,7 +1,7 @@
 
     module.exports = {
-      "network": "development",
-      "address": "0x7b2137AC373c32508fCF011E93eFF65099bA57F9",
+      "network": "ropsten",
+      "address": "0x0b636af45A43391CaBf359DDEd2674f368606d3A",
       "artifact": {
   "contractName": "AURGov",
   "abi": [
@@ -14272,7 +14272,7 @@
   },
   "networks": {},
   "schemaVersion": "3.2.3",
-  "updatedAt": "2020-08-08T11:59:54.181Z",
+  "updatedAt": "2020-08-08T12:00:21.051Z",
   "devdoc": {
     "methods": {}
   },

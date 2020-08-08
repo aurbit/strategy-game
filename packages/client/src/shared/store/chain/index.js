@@ -11,7 +11,7 @@ export const NETWORKS = {
 }
 
 const INITIAL_STATE = {
-  network: NETWORKS.DEVELOPMENT,
+  network: NETWORKS.ROPSTEN,
   provider: null,
   avatarArtifacts: null,
   planetArtifacts: null,
