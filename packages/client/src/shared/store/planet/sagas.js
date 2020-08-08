@@ -24,39 +24,38 @@ function * buyTileRequest (action) {
   const address = yield select(selectAddress)
   const avatar = yield select(selectAvatar)
   const tileFee = yield select(selectTileFee)
-  const tiles = yield select(selectTiles)
 
-  // try {
-  const tileIndex = action.payload
-  const rawTrx = yield contract.methods
-    .buyTile(tileIndex, avatar.id)
-    .encodeABI()
+  try {
+    const tileIndex = action.payload
+    const rawTrx = yield contract.methods
+      .buyTile(tileIndex, avatar.id)
+      .encodeABI()
 
-  const txCount = yield provider.eth.getTransactionCount(address)
+    const txCount = yield provider.eth.getTransactionCount(address)
 
-  const txObject = {
-    nonce: provider.utils.toHex(txCount),
-    from: address,
-    to: contract._address,
-    value: provider.utils.toHex(tileFee.value),
-    gasLimit: provider.utils.toHex(6721975),
-    gas: provider.utils.toHex(6721975),
-    data: rawTrx
-  }
-
-  const payload = { method: 'eth_sendTransaction', params: [txObject] }
-  yield window.ethereum.send(payload, (err, data) => {
-    if (err) {
-      store.dispatch(ACTIONS.callBuyTileFailure(err))
-    } else if (data) {
-      store.dispatch(CHAIN_ACTIONS.newTransaction(data.transactionHash))
-      store.dispatch(ACTIONS.callBuyTileSuccess(data))
-      document.getElementById(tileIndex).style.backgroundColor = 'blue'
+    const txObject = {
+      nonce: provider.utils.toHex(txCount),
+      from: address,
+      to: contract._address,
+      value: provider.utils.toHex(tileFee.value),
+      // gasLimit: provider.utils.toHex(6721975),
+      // gas: provider.utils.toHex(6721975),
+      data: rawTrx
     }
-  })
-  // } catch (err) {
-  //   yield put(ACTIONS.callBuyTileFailure(err))
-  // }
+
+    const payload = { method: 'eth_sendTransaction', params: [txObject] }
+    yield window.ethereum.send(payload, (err, data) => {
+      if (err) {
+        store.dispatch(ACTIONS.callBuyTileFailure(err))
+      } else if (data) {
+        store.dispatch(CHAIN_ACTIONS.newTransaction(data.transactionHash))
+        store.dispatch(ACTIONS.callBuyTileSuccess(data))
+        document.getElementById(tileIndex).style.backgroundColor = 'blue'
+      }
+    })
+  } catch (err) {
+    yield put(ACTIONS.callBuyTileFailure(err))
+  }
 }
 
 function * newPlayerRequest () {
@@ -74,7 +73,7 @@ function * newPlayerRequest () {
       from: address,
       to: contract._address,
       gasLimit: provider.utils.toHex(6721975),
-      gasPrice: provider.utils.toHex(provider.utils.toWei('20', 'gwei')),
+      gasPrice: provider.utils.toHex(provider.utils.toWei('50', 'gwei')),
       data: rawTrx
     }
 
@@ -107,7 +106,7 @@ function * isPlayingRequest () {
       from: address,
       to: contract._address,
       gasLimit: provider.utils.toHex(6721975),
-      gasPrice: provider.utils.toHex(provider.utils.toWei('10', 'gwei')),
+      gasPrice: provider.utils.toHex(provider.utils.toWei('50', 'gwei')),
       data: rawTrx
     }
 

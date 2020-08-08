@@ -6,6 +6,9 @@ import { NETWORKS } from 'shared/store/chain'
 import PlanetContractsDEV from 'contracts/development/Planet'
 import TokenContractsDEV from 'contracts/development/AURToken'
 import AvatarContractsDEV from 'contracts/development/AvatarAUR'
+import PlanetContractsROPSTEN from 'contracts/ropsten/Planet'
+import TokenContractsROPSTEN from 'contracts/ropsten/AURToken'
+import AvatarContractsROPSTEN from 'contracts/ropsten/AvatarAUR'
 import { takeLatest, put, select } from 'redux-saga/effects'
 import { selectAddress } from 'shared/store/wallet/selectors'
 import {
@@ -31,7 +34,8 @@ function * initProvider () {
     throw new Error('Network is missing')
   }
   const port = process.env.REACT_APP_NETWORK_PORT || 7545
-  const key = '0f76dc369ae847dba3d00ac6427f0b42'
+  const key =
+    process.env.REACT_APP_INFURA_KEY || '0f76dc369ae847dba3d00ac6427f0b42'
   const url = (network, key) => `wss://${network}.infura.io/ws/v3/${key}`
 
   let web3 = null
@@ -75,6 +79,7 @@ function * initArtifacts () {
   let avatar = null
   let token = null
   const network = yield select(selectNetwork)
+
   switch (network) {
     case NETWORKS.DEVELOPMENT: {
       const { address: a1, artifact: a2 } = AvatarContractsDEV
@@ -85,8 +90,16 @@ function * initArtifacts () {
       planet = { address: p1, artifact: p2 }
       break
     }
+    case NETWORKS.ROPSTEN: {
+      const { address: a1, artifact: a2 } = AvatarContractsROPSTEN
+      const { address: t1, artifact: t2 } = TokenContractsROPSTEN
+      const { address: p1, artifact: p2 } = PlanetContractsROPSTEN
+      avatar = { address: a1, artifact: a2 }
+      token = { address: t1, artifact: t2 }
+      planet = { address: p1, artifact: p2 }
+      break
+    }
     case NETWORKS.MAINNET:
-    case NETWORKS.ROPSTEN:
     case NETWORKS.RINKEBY:
     default: {
       throw new Error('Network Currently Unsupported')
