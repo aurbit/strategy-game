@@ -1,40 +1,53 @@
 // Place these into a folder - Incase a store starts having many actions / sagas etc
 // We can easily split them up into separate files
 import { makeAction, createReducer } from 'shared/utils/redux-utils'
-import { utils } from 'web3'
 
 const INITIAL_STATE = {
-  balance: 0,
-  error: false,
-  errMsg: ''
+  balance: {
+    loading: false,
+    error: null,
+    value: 0
+  }
 }
 
 // Action Types
-const TYPES = {
-  SET_AUR_BALANCE: 'SET_AUR_BALANCE',
-  SET_AUR_BALANCE_ERROR: 'SET_AUR_BALANCE_ERROR'
+export const TYPES = {
+  GET_AUR_BALANCE_REQUEST: 'GET_AUR_BALANCE_REQUEST',
+  GET_AUR_BALANCE_SUCCESS: 'GET_AUR_BALANCE_SUCCESS',
+  GET_AUR_BALANCE_FAILURE: 'GET_AUR_BALANCE_FAILURE'
 }
 
 // Action Creators
 export const ACTIONS = {
   setAurBalance: makeAction(TYPES.SET_AUR_BALANCE, 'payload'),
-  setAurBalanceError: makeAction(TYPES.SET_AUR_BALANCE_ERROR, 'payload')
+  setAurBalanceError: makeAction(TYPES.SET_AUR_BALANCE_ERROR, 'payload'),
+  getAurBalanceRequest: makeAction(TYPES.GET_AUR_BALANCE_REQUEST, 'payload'),
+  getAurBalanceSuccess: makeAction(TYPES.GET_AUR_BALANCE_SUCCESS, 'payload'),
+  getAurBalanceFailure: makeAction(TYPES.GET_AUR_BALANCE_FAILURE, 'payload')
 }
 
 // Reducer
 export const tokenReducer = createReducer(INITIAL_STATE, {
-  [TYPES.SET_AUR_BALANCE]: (state, action) => {
-    return {
-      ...state,
-      balance: utils.fromWei(action.payload),
-      error: false,
-      errMsg: ''
-    }
+  [TYPES.GET_AUR_BALANCE_REQUEST]: (state, action) => {
+    const balance = { loading: true, error: null, value: 0 }
+    return { ...state, balance }
   },
+  [TYPES.GET_AUR_BALANCE_SUCCESS]: (state, action) => {
+    const balance = {
+      loading: false,
+      error: null,
+      value: action?.payload
+    }
+    return { ...state, balance }
+  },
+  [TYPES.GET_AUR_BALANCE_FAILURE]: (state, action) => {
+    const balance = { loading: false, error: action?.payload, value: 0 }
+    return { ...state, balance }
+  },
+
   [TYPES.SET_AUR_BALANCE_ERROR]: (state, action) => {
-    return { ...state, error: true, errMsg: action.payload }
+    return { ...state, error: true, errMsg: action?.payload }
   }
 })
 
 // Selectors
-export const selectBalance = (state) => state.token.balance

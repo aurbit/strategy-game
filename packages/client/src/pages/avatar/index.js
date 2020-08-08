@@ -1,18 +1,27 @@
 import React from 'react'
-import { Container, Col, Row } from 'react-bootstrap'
+import AvatarView from './avatar-view'
+import CreateAvatar from './create-avatar'
+import { Route, Switch } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { selectActiveIndex, selectAvatars } from 'shared/store/avatar/selectors'
+import { ACTIONS } from 'shared/store/avatar'
 
-export default () => {
-  // get the dna from the wallet
-  // if no avatar, link to create avatar
-  // render the avatar and show a description
+function AvatarContainer () {
+  // need to get the list of all the avtars from the connect wallet
+  // need to check for avatars from the dna in the url
+
+  const avatars = useSelector(selectAvatars)
 
   return (
-    <Container>
-      <Row>
-        <Col>
-          <p style={{ color: 'white' }}>HERE</p>
-        </Col>
-      </Row>
-    </Container>
+    <Switch>
+      <Route exact path='/avatar/create'>
+        <CreateAvatar />
+      </Route>
+      <Route exact path='/avatar'>
+        <AvatarView avatars={avatars} />
+      </Route>
+    </Switch>
   )
 }
+
+export default AvatarContainer

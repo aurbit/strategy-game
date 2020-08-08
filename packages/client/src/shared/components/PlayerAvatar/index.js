@@ -2,32 +2,42 @@
   RENDER PLAYER AVATAR BASED OFF DNA
 */
 
-import React, { useCallback } from 'react'
+import React from 'react'
 import SVG from 'react-inlinesvg'
 import { avatarImage, rgbToHex } from './avatar-utils'
+import { Container, Spinner, Card } from 'react-bootstrap'
 
-const PlayerAvatar = ({ dna }) => {
+const PlayerAvatar = ({ dna, name }) => {
   const [hair, setHair] = React.useState(null)
   const [eye, setEye] = React.useState(null)
   const [skin, setSkin] = React.useState(null)
   const [avatar, setAvatar] = React.useState(null)
+  const [ready, setReady] = React.useState(false)
 
-  useCallback(parseDna())
+  React.useEffect(() => parseDna(), [parseDna])
 
   React.useEffect(() => {
     updateGlobalCSS()
   }, [updateGlobalCSS])
 
   function parseDna () {
-    // Parse Array back to values to render Avatar
-    const hairArray = dna.splice(0, 3)
-    const eyeArray = dna.splice(0, 3)
-    const skinArray = dna.splice(0, 3)
-    const avatarArray = dna.splice(5, 5)
+    // const intel = dna[0]
+    // const strength = dna[1]
+    // const vitality = dna[2]
+    const hairArray = [dna[3], dna[4], dna[5]]
+    const eyeArray = [dna[6], dna[7], dna[8]]
+    const skinArray = [dna[9], dna[10], dna[11]]
+    // const eyeType = dna[11]
+    // const skinType = dna[12]
+    // const mouth = dna[13]
+    const gender = dna[17]
+    // const race = dna[15]
+
     setHair(rgbToHex(hairArray))
     setEye(rgbToHex(eyeArray))
     setSkin(rgbToHex(skinArray))
-    setAvatar(avatarImage(avatarArray[0]))
+    setAvatar(avatarImage(gender))
+    setReady(true)
   }
 
   function updateGlobalCSS () {
@@ -37,9 +47,16 @@ const PlayerAvatar = ({ dna }) => {
     style.sheet.insertRule(`.hair-color {fill: ${hair}}`)
     style.sheet.insertRule(`.skin-color {fill: ${skin}}`)
   }
-  console.log('EYE: ', hair)
 
-  return <SVG src={avatar} />
+  return (
+    <>
+      {ready ? (
+        <SVG src={avatar} />
+      ) : (
+        <Spinner animation='grow' variant='warning' />
+      )}
+    </>
+  )
 }
 
 export default PlayerAvatar

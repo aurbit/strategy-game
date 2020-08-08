@@ -1,22 +1,21 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { Container, Spinner } from 'react-bootstrap'
+import { ACTIONS } from 'shared/store/avatar'
+import { Redirect } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import WalletSetup from 'shared/components/WalletSetup'
-import { Container, Button } from 'react-bootstrap'
-import { selectAddress } from 'shared/store/wallet'
+import { selectAddress } from 'shared/store/wallet/selectors'
+import { selectAvatars } from 'shared/store/avatar/selectors'
 
-const AuthPage = (props) => {
-  const history = useHistory()
+const AuthPage = () => {
   const address = useSelector(selectAddress)
-  function onBtnClick() {
-    history.push('/planet')
-  }
-  function renderButton() {
-    if (address) {
-      return <Button onClick={onBtnClick}>Hello</Button>
-    }
-    return <WalletSetup buttonText="Start Game" link={'/planet'} />
-  }
+  const avatars = useSelector(selectAvatars)
+  const dispatch = useDispatch()
+
+  React.useEffect(() => {
+    if (address) dispatch(ACTIONS.getAvatarsRequest())
+  }, [address])
+
   return (
     <Container fluid style={{ backgroundColor: 'black' }}>
       <div
@@ -27,7 +26,13 @@ const AuthPage = (props) => {
           transform: 'translate(-50%, -50%)'
         }}
       >
-        {renderButton()}
+        {avatars.loading ? (
+          <Spinner animation='grow' variant='warning' />
+        ) : avatars.list.length ? (
+          <Redirect to='/avatar' />
+        ) : (
+          <WalletSetup buttonText='Start Game' link={'/planet'} />
+        )}
       </div>
     </Container>
   )

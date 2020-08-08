@@ -3,3 +3,4 @@ yarn.lock
 # misc
 .DS_Store
 .env*
+.secret

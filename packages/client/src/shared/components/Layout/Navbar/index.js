@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navbar, Col, Button } from 'react-bootstrap'
+import { Navbar, Row, Col, Button } from 'react-bootstrap'
 import AurLogo from 'shared/images/logo_full.svg'
 import NavUserBox from 'shared/components/NavUserBox'
 import SVG from 'react-inlinesvg'
@@ -13,9 +13,12 @@ const styles = {
 const NavbarComponent = ({ network, account }) => {
   const history = useHistory()
   return (
-    <Navbar className='justify-content-between align-items-center p-4'>
-      <Navbar.Brand style={styles.brand}>
-        <Button variant='no-style' onClick={() => history.push('/')}>
+    <Row className='justify-content-between align-items-center p-4'>
+      <Col xs={4} md={2}>
+        <Button
+          variant='no-style'
+          onClick={() => history.push('/avatar/create')}
+        >
           <SVG
             style={styles.aurLogo}
             height={50}
@@ -28,11 +31,11 @@ const NavbarComponent = ({ network, account }) => {
             uniquifyIDs={true}
           />
         </Button>
-      </Navbar.Brand>
-      <Col style={{ color: 'white' }}>
+      </Col>
+      <Col xs={12} md={6} style={{ color: 'white' }}>
         <NavUserBox />
       </Col>
-    </Navbar>
+    </Row>
   )
 }
 

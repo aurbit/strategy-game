@@ -8,11 +8,11 @@ The contract is based on the ERC 777 Open Zeppelin contracts and is widely compa
 
 ```
 constructor(
-  address payable planet0
+  address payable govcontract
 ) public ERC777("Aurbit Token", "AUR", new address[] (0))
 ```
 
-- `planet0` The initial planet that will be able to mint or burn token according to gameplay.
+- `govcontract` - address of governance contract
 
 `isMintAuthed` Checks if the function callers is authorized to Mint tokens
 

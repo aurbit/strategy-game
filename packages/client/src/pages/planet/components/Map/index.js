@@ -1,54 +1,37 @@
-import React, { useLayoutEffect, useState } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Spinner } from 'react-bootstrap'
 import { ACTIONS } from 'shared/store/map'
-import { selectMapApiStatus, selectMapGrid } from 'shared/store/map/selectors'
-import { selectCurrentPlanet } from 'shared/store/planet/index'
+import { selectMapGrid } from 'shared/store/map/selectors'
+import { selectTiles } from 'shared/store/planet/selectors'
+import { colorizer } from 'shared/utils/colorizer'
 
-export default ({ setMapReady, mapReady }) => {
-  const dispatch = useDispatch()
-  // Loading is the Map API status - but loading seems to be coming from somewhere else
-  const loading = useSelector(selectMapApiStatus)
-  const planet = useSelector(selectCurrentPlanet)
-  const [map, setMap] = useState(false)
-
-  React.useEffect(() => {
-    dispatch(ACTIONS.getMap({ planet }))
-  }, [dispatch, planet])
+export default ({ setMapReady, mapReady, activeTile }) => {
+  const [map, setMap] = React.useState(false)
 
   return (
-    <Map
-      mapReady={loading}
-      setMapReady={setMapReady}
-      map={map}
-      setMap={setMap}
-    />
+    <div>
+      <Map
+        mapReady={mapReady}
+        setMapReady={setMapReady}
+        map={map}
+        setMap={setMap}
+        activeTile={activeTile}
+      />
+    </div>
   )
 }
 
-const Map = ({ setMapReady, mapReady, map, setMap }) => {
+const Map = ({ setMapReady, mapReady, map, setMap, activeTile }) => {
   const dispatch = useDispatch()
+  const userTiles = useSelector(selectTiles)
+
   const grid = useSelector(selectMapGrid)
-  const [width, height] = useWindowSize()
+  const width = window.innerWidth
+  const height = window.innerHeight
   const styles = useStyles(height, width)
 
-  function handleTileClick (e) {
-    dispatch(ACTIONS.setActiveTile(e.target.id))
-  }
-
-  function handleTileMouseOver (e) {
-    const tile = document.getElementById(e.target.id)
-    tile.style.border = '1px solid white'
-  }
-
-  function handleTileMouseOut (e) {
-    const tile = document.getElementById(e.target.id)
-    tile.style.borderLeft = '1px solid #011d4a'
-    tile.style.borderBottom = ''
-    tile.style.borderRight = ''
-    tile.style.borderTop = '1px solid #011d4a'
-  }
-
+  colorizer(mapReady, userTiles)
   const build = () => {
     let x, y
     let tileCount = 0
@@ -58,7 +41,28 @@ const Map = ({ setMapReady, mapReady, map, setMap }) => {
       x = grid[0].length
       y = grid.length
 
-      // loop over rows and items in the grid array
+      function handleTileClick (e) {
+        dispatch(ACTIONS.setActiveTile(e.target.id))
+        const tile = document.getElementById(e.target.id)
+        tile.style.borderLeft = '1px solid #011d4a'
+        tile.style.borderBottom = ''
+        tile.style.borderRight = ''
+        tile.style.borderTop = '1px solid #011d4a'
+      }
+
+      function handleTileMouseOver (e) {
+        const tile = document.getElementById(e.target.id)
+        tile.style.border = '1px solid white'
+      }
+
+      function handleTileMouseOut (e) {
+        const tile = document.getElementById(e.target.id)
+        tile.style.borderLeft = '1px solid #011d4a'
+        tile.style.borderBottom = ''
+        tile.style.borderRight = ''
+        tile.style.borderTop = '1px solid #011d4a'
+      }
+
       for (const i in grid) {
         const rowTemplate = []
 
@@ -67,7 +71,7 @@ const Map = ({ setMapReady, mapReady, map, setMap }) => {
             <div
               onClick={handleTileClick}
               onMouseOver={handleTileMouseOver}
-              onMouseOut={handleTileMouseOut}
+              onMouseOut={e => handleTileMouseOut(e, activeTile)}
               className='tile'
               key={j}
               id={tileCount}
@@ -88,39 +92,27 @@ const Map = ({ setMapReady, mapReady, map, setMap }) => {
       if (tileCount === x * y) {
         setTimeout(() => {
           setMapReady(true)
-          setMap(template)
-        }, 10)
+          return setMap(template)
+        })
       }
     }
   }
 
-  if (!map) {
-    build()
-  }
+  if (!map) build()
 
-  return mapReady ? <Spinner animation='grow' /> : map
-}
+  // colorize the user owned tiles
 
-const useWindowSize = () => {
-  const [size, setSize] = useState([0, 0])
-  useLayoutEffect(() => {
-    function updateSize () {
-      setSize([window.innerWidth, window.innerHeight])
-    }
-    window.addEventListener('resize', updateSize)
-    updateSize()
-    return () => window.removeEventListener('resize', updateSize)
-  }, [])
-  return size
+  return !mapReady ? <Spinner animation='grow' variant='warning' /> : map
 }
 
 const useStyles = (height, width) => {
+  let kw = window.innerWidth >= 1000 ? 138 : 106.5
   const styles = {
     land: {
       float: 'left',
       backgroundColor: 'green',
       height: Math.floor(height / 90),
-      width: Math.floor(width / 138),
+      width: Math.floor(width / kw),
       borderLeft: '1px solid #011d4a',
       borderTop: '1px solid #011d4a'
     },
@@ -128,7 +120,7 @@ const useStyles = (height, width) => {
       float: 'left',
       backgroundColor: 'rgb(23,43,70)',
       height: Math.floor(height / 90),
-      width: Math.floor(width / 138),
+      width: Math.floor(width / kw),
       borderLeft: '1px solid #011d4a',
       borderTop: '1px solid #011d4a'
     },

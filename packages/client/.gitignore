@@ -8,9 +8,6 @@
 # testing
 /coverage
 
-# contract builds
-/contracts
-
 # production
 /build
 
@@ -27,7 +24,7 @@ yarn-error.log*
 yarn.lock
 
 # Contracts
-contract/development
+contracts/development
 
 .eslintcache
 

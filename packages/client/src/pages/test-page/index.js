@@ -28,8 +28,10 @@ const TestPageContainer = () => {
       <Button onClick={onClickConnect}>Connect</Button>
       <Button onClick={onClickSend}>SEND</Button>
       <Button onClick={onClickGet}>GET</Button>
+
     </div>
   )
 }
 
 export default TestPageContainer
+
