@@ -50,9 +50,8 @@ const PlayerAvatar = ({ dna, name }) => {
       {ready ? (
         <div>
           <SVG src={avatar} />
-          <p>Strength: {dnaArray[0]}</p>
-          <p>Intelligence: {dnaArray[1]}</p>
-          <p>Vitality: {dnaArray[2]}</p>
+          [Strength: {dnaArray[0]} - Intelligence: {dnaArray[1]} - Vitality:{' '}
+          {dnaArray[2]}]
         </div>
       ) : (
         <Spinner animation='grow' variant='warning' />
