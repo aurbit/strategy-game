@@ -9,7 +9,6 @@ import { avatarImage, parseDataArray } from './avatar-utils'
 import { ACTIONS } from 'shared/store/avatar'
 import styles from './index.module.css'
 import CreateAvatarForm from './Form'
-import { selectAddress } from 'shared/store/wallet/selectors'
 
 const CreateAvatarContainer = () => {
   const [hairColor, setHairColor] = React.useState('#402801')
@@ -20,7 +19,6 @@ const CreateAvatarContainer = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const mintAvatar = useSelector(selectMintAvatar)
-  const address = useSelector(selectAddress)
 
   React.useEffect(() => {
     // Update global CSS so style change will affect SVG class
