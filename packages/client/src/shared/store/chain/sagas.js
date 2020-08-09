@@ -2,6 +2,7 @@ import Web3 from 'web3'
 import { store } from 'store'
 import { TYPES, ACTIONS } from './index'
 import { ACTIONS as AVATAR_ACTIONS, AVATAR_EVENTS } from 'shared/store/avatar'
+import { PLANET_EVENTS, ACTIONS as PLANET_ACTIONS } from 'shared/store/planet'
 import { NETWORKS } from 'shared/store/chain'
 import PlanetContractsDEV from 'contracts/development/Planet'
 import TokenContractsDEV from 'contracts/development/AURToken'
@@ -155,6 +156,26 @@ function * avatarContractEvent (action) {
         )
       break
     }
+
+    case PLANET_EVENTS.TileChanged: {
+      yield put(PLANET_ACTIONS.getTilesRequest())
+      break
+    }
+    default:
+      break
+  }
+}
+
+function * planetContractEvent (action) {
+  const {
+    payload: { event }
+  } = action
+
+  switch (event) {
+    case PLANET_EVENTS.TileChanged: {
+      yield put(PLANET_ACTIONS.getTilesRequest())
+      break
+    }
     default:
       break
   }
@@ -165,4 +186,5 @@ export function * rootChainSagas () {
   yield takeLatest(TYPES.INIT_ARTIFACTS, initArtifacts)
   yield takeLatest(TYPES.INIT_CONTRACTS, initContracts)
   yield takeLatest(TYPES.AVATAR_CONTRACT_EVENT, avatarContractEvent)
+  yield takeLatest(TYPES.PLANET_CONTRACT_EVENT, planetContractEvent)
 }

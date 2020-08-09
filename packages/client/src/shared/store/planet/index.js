@@ -8,6 +8,10 @@ export const PLANETS = {
   VENUS: 'VENUS'
 }
 
+export const PLANET_EVENTS = {
+  TileChanged: 'TileChanged'
+}
+
 const initialState = {
   onPlanet: PLANETS.EARTH,
   tileFee: {
@@ -96,7 +100,7 @@ export const ACTIONS = {
   getTilesFailure: makeAction(TYPES.GET_TILES_FAILURE, 'payload'),
   aerialAttackRequest: makeAction(TYPES.AERIAL_ATTACK_REQUEST, 'payload'),
   aerialAttackSuccess: makeAction(TYPES.AERIAL_ATTACK_SUCCESS, 'payload'),
-  aerialAttackFailure: makeAction(TYPES.AERIAL_ATTACK_FAILURE)
+  aerialAttackFailure: makeAction(TYPES.AERIAL_ATTACK_FAILURE, 'payload')
 }
 
 // Reducer
