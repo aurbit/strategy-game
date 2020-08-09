@@ -2,6 +2,8 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { Col, Row, Button, Container } from 'react-bootstrap'
 import { selectActiveTile } from 'shared/store/map/selectors'
+import PlayerAvatar from 'shared/components/PlayerAvatar'
+import { selectAvatar } from 'shared/store/avatar/selectors'
 
 export default ({
   mapReady,
@@ -10,10 +12,11 @@ export default ({
   handleGetPlayersClick,
   handleGetTilesClick,
   handleIsPlayingClick,
-  handleAerialAttack
+  handleAerialAttack,
+  avatar
 }) => {
   const activeTile = useSelector(selectActiveTile)
-  const [activeMenu, setActiveMenu] = React.useState(1)
+  const [activeMenu, setActiveMenu] = React.useState(0)
 
   return mapReady ? (
     <Container
@@ -48,7 +51,11 @@ export default ({
                 </Row>
               </Col>
             ) : (
-              <Col>No Tile Selected</Col>
+              <ShowPlayerInfo
+                dna={avatar.dna}
+                name={avatar.name}
+                id={avatar.id}
+              />
             )}
           </Col>
         ) : (
@@ -106,6 +113,14 @@ export default ({
       </Row>
     </Container>
   ) : null
+}
+
+const ShowPlayerInfo = ({ dna, name, id }) => {
+  return (
+    <>
+      <PlayerAvatar dna={dna} name={name} id={id} />
+    </>
+  )
 }
 
 const styles = {
