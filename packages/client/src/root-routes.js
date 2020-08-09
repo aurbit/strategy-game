@@ -22,9 +22,6 @@ export default () => {
 
   React.useEffect(() => {
     dispatch(WALLET_ACTIONS.initWalletRequest())
-  }, [dispatch])
-
-  React.useEffect(() => {
     // BEGIN TO INIT PROVIDER
     dispatch(CHAIN_ACTIONS.initProvider())
     // START TO INIT ARTIFACTS - store/chain/sagas - check initArtifacts() function

@@ -30,9 +30,7 @@ FLOW
 function * initProvider () {
   // Example of getting State from Store in a Saga
   const network = yield select(selectNetwork)
-  if (!network) {
-    throw new Error('Network is missing')
-  }
+
   const port = process.env.REACT_APP_NETWORK_PORT || 7545
   const key =
     process.env.REACT_APP_INFURA_KEY || '0f76dc369ae847dba3d00ac6427f0b42'

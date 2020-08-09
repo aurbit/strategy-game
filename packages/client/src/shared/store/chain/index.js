@@ -66,7 +66,7 @@ export const ACTIONS = {
 // Reducer
 export const chainReducer = createReducer(INITIAL_STATE, {
   [TYPES.SET_NETWORK]: (state, action) => {
-    const { network } = action.payload
+    const network = action.payload
     return { ...state, network }
   },
   [TYPES.SET_PROVIDER]: (state, action) => {
