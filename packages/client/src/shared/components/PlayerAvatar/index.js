@@ -5,7 +5,8 @@
 import React from 'react'
 import SVG from 'react-inlinesvg'
 import { avatarImage, rgbToHex } from './avatar-utils'
-import { Container, Spinner, Card } from 'react-bootstrap'
+import { Spinner } from 'react-bootstrap'
+import parseDna from 'shared/store/avatar/parse-dna'
 
 const PlayerAvatar = ({ dna, name }) => {
   const [hair, setHair] = React.useState(null)
@@ -14,48 +15,48 @@ const PlayerAvatar = ({ dna, name }) => {
   const [avatar, setAvatar] = React.useState(null)
   const [ready, setReady] = React.useState(false)
 
-  React.useEffect(() => parseDna(), [parseDna])
+  const dnaArray = parseDna(dna)
 
   React.useEffect(() => {
-    updateGlobalCSS()
-  }, [updateGlobalCSS])
-
-  function parseDna () {
     // const intel = dna[0]
     // const strength = dna[1]
     // const vitality = dna[2]
-    const hairArray = [dna[3], dna[4], dna[5]]
-    const eyeArray = [dna[6], dna[7], dna[8]]
-    const skinArray = [dna[9], dna[10], dna[11]]
+    const hairArray = [dnaArray[3], dnaArray[4], dnaArray[5]]
+    const eyeArray = [dnaArray[6], dnaArray[7], dnaArray[8]]
+    const skinArray = [dnaArray[9], dnaArray[10], dnaArray[11]]
     // const eyeType = dna[11]
     // const skinType = dna[12]
     // const mouth = dna[13]
-    const gender = dna[17]
     // const race = dna[15]
+    setAvatar(avatarImage(dna[17]))
 
     setHair(rgbToHex(hairArray))
     setEye(rgbToHex(eyeArray))
     setSkin(rgbToHex(skinArray))
-    setAvatar(avatarImage(gender))
     setReady(true)
-  }
+  }, [dnaArray])
 
-  function updateGlobalCSS () {
+  React.useEffect(() => {
     const style = document.createElement('style')
-    document.head.appendChild(style)
+    const avatar = document.getElementById('avatar')
+    avatar.appendChild(style)
     style.sheet.insertRule(`.eye-color {fill: ${eye}}`)
     style.sheet.insertRule(`.hair-color {fill: ${hair}}`)
     style.sheet.insertRule(`.skin-color {fill: ${skin}}`)
-  }
+  }, [eye, hair, skin])
 
   return (
-    <>
+    <div id={'avatar'}>
       {ready ? (
-        <SVG src={avatar} />
+        <div>
+          <SVG src={avatar} />
+          [Strength: {dnaArray[0]} - Intelligence: {dnaArray[1]} - Vitality:{' '}
+          {dnaArray[2]}]
+        </div>
       ) : (
         <Spinner animation='grow' variant='warning' />
       )}
-    </>
+    </div>
   )
 }
 

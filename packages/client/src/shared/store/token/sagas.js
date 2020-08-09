@@ -1,4 +1,3 @@
-import { store } from 'store'
 import { TYPES, ACTIONS } from './index'
 import { takeLatest, put, select } from 'redux-saga/effects'
 import { selectTokenContract } from 'shared/store/chain/selectors'

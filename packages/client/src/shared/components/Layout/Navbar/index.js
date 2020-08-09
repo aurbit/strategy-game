@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navbar, Row, Col, Button } from 'react-bootstrap'
+import { Row, Col, Button } from 'react-bootstrap'
 import AurLogo from 'shared/images/logo_full.svg'
 import NavUserBox from 'shared/components/NavUserBox'
 import SVG from 'react-inlinesvg'

@@ -24,7 +24,7 @@ export default () => {
 
   React.useEffect(() => {
     dispatch(WALLET_ACTIONS.initWalletRequest())
-  }, [WALLET_ACTIONS])
+  }, [dispatch])
 
   React.useEffect(() => {
     // BEGIN TO INIT PROVIDER
@@ -33,18 +33,18 @@ export default () => {
     dispatch(CHAIN_ACTIONS.initArtifacts())
     // CREATE CONTRACT BASED ON ARTIFACTS - store/chain/sagas - check initContracts() function
     dispatch(CHAIN_ACTIONS.initContracts())
-  }, [])
+  }, [dispatch])
 
   // Check if the user has any avatars
   React.useEffect(() => {
     if (address) dispatch(AVATAR_ACTIONS.getAvatarsRequest())
-  }, [address])
+  }, [address, dispatch])
 
   React.useEffect(() => {
     if (providersReady) {
       dispatch(TOKEN_ACTIONS.getAurBalanceRequest())
     }
-  }, [providersReady, address])
+  }, [providersReady, address, dispatch])
   return walletReady && providersReady ? (
     <div>
       <Router>

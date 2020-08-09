@@ -2,13 +2,14 @@ import React from 'react'
 import { utils } from 'web3'
 import SVG from 'react-inlinesvg'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory, Redirect } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { Container, Row, Col, Spinner } from 'react-bootstrap'
 import { selectMintAvatar } from 'shared/store/avatar/selectors'
 import { avatarImage, parseDataArray } from './avatar-utils'
 import { ACTIONS } from 'shared/store/avatar'
 import styles from './index.module.css'
 import CreateAvatarForm from './Form'
+import { selectAddress } from 'shared/store/wallet/selectors'
 
 const CreateAvatarContainer = () => {
   const [hairColor, setHairColor] = React.useState('#402801')
@@ -19,6 +20,7 @@ const CreateAvatarContainer = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const mintAvatar = useSelector(selectMintAvatar)
+  const address = useSelector(selectAddress)
 
   React.useEffect(() => {
     // Update global CSS so style change will affect SVG class
@@ -33,7 +35,7 @@ const CreateAvatarContainer = () => {
     if (mintAvatar.result) {
       history.push('/avatar')
     }
-  }, [mintAvatar])
+  }, [mintAvatar, history])
 
   function handleOnHairChangeComplete (color) {
     setHairColor(color.hex)
@@ -66,7 +68,16 @@ const CreateAvatarContainer = () => {
   }
 
   const AvatarImage = ({ avatarUrl }) => {
-    return <SVG loader={<Spinner animation='grow' />} src={avatarUrl} />
+    return (
+      <SVG
+        id='avatar'
+        loader={<Spinner animation='grow' />}
+        src={avatarUrl}
+        // preProcessor={code => {
+        //   // code.replace(/fill=".*?"/g, 'fill="currentColor"')
+        // }}
+      />
+    )
   }
 
   return (

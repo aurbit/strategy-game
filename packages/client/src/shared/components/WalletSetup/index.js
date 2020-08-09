@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, Button } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 import MetaMaskOnboarding from '@metamask/onboarding'
 import { useHistory } from 'react-router-dom'
 

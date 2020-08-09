@@ -25,7 +25,7 @@ function * callMintAvatar ({ payload }) {
     to: contract._address,
     value,
     gasLimit: provider.utils.toHex(6721975),
-    gasPrice: provider.utils.toHex(provider.utils.toWei('50', 'gwei')),
+    gas: provider.utils.toHex(6721975),
     data: rawTrx
   }
 
@@ -71,8 +71,7 @@ function * getAvatarsRequest () {
 }
 
 function * getAvatarsSuccess () {
-  const avatars = yield select(selectAvatars)
-  yield put(AVATAR_ACTIONS.setActiveIndex(avatars.list[avatars.list.length]))
+  yield put(AVATAR_ACTIONS.setActiveIndex(0))
   //
   // yield put(PLANET_ACTIONS.getIsPlayingRequest(avatar.id))
 }

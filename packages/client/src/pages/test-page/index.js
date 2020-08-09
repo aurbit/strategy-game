@@ -7,8 +7,14 @@ const TestPageContainer = () => {
   const dispatch = useDispatch()
   const chatProvider = useSelector(selectChat)
   React.useEffect(() => {
-    dispatch(ACTIONS.initChat())
-  }, [])
+    // BEGIN TO INIT PROVIDER
+    dispatch(CHAIN_ACTIONS.initProvider())
+    // START TO INIT ARTIFACTS - store/chain/sagas - check initArtifacts() function
+    dispatch(CHAIN_ACTIONS.initArtifacts())
+    // CREATE CONTRACT BASED ON ARTIFACTS - store/chain/sagas - check initContracts() function
+    dispatch(CHAIN_ACTIONS.initContracts())
+  }, [dispatch])
+
 
   function onClickConnect() {
     chatProvider.startNewRoom()

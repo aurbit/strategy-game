@@ -14,7 +14,7 @@ const AuthPage = () => {
 
   React.useEffect(() => {
     if (address) dispatch(ACTIONS.getAvatarsRequest())
-  }, [address])
+  }, [address, dispatch])
 
   return (
     <Container fluid style={{ backgroundColor: 'black' }}>
