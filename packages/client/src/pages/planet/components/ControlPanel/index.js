@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux'
 import { Col, Row, Button, Container } from 'react-bootstrap'
 import { selectActiveTile } from 'shared/store/map/selectors'
 import PlayerAvatar from 'shared/components/PlayerAvatar'
-import { selectAvatar } from 'shared/store/avatar/selectors'
 
 export default ({
   mapReady,

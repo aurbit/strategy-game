@@ -1,7 +1,8 @@
 import React from 'react'
 import { Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { ACTIONS, selectChat } from 'shared/store/chat'
+import { selectChat } from 'shared/store/chat'
+import { ACTIONS as CHAIN_ACTIONS } from 'shared/store/chain'
 
 const TestPageContainer = () => {
   const dispatch = useDispatch()
@@ -15,17 +16,16 @@ const TestPageContainer = () => {
     dispatch(CHAIN_ACTIONS.initContracts())
   }, [dispatch])
 
-
-  function onClickConnect() {
+  function onClickConnect () {
     chatProvider.startNewRoom()
   }
-  function onClickInit() {
+  function onClickInit () {
     chatProvider.init()
   }
-  function onClickSend() {
+  function onClickSend () {
     chatProvider.send('Hellow orld')
   }
-  function onClickGet() {
+  function onClickGet () {
     chatProvider.getMessages()
   }
   return (
@@ -34,10 +34,8 @@ const TestPageContainer = () => {
       <Button onClick={onClickConnect}>Connect</Button>
       <Button onClick={onClickSend}>SEND</Button>
       <Button onClick={onClickGet}>GET</Button>
-
     </div>
   )
 }
 
 export default TestPageContainer
-

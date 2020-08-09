@@ -28,7 +28,7 @@ const PlayerAvatar = ({ dna, name }) => {
     // const skinType = dna[12]
     // const mouth = dna[13]
     // const race = dna[15]
-    setAvatar(avatarImage(dna[17]))
+    setAvatar(avatarImage(dnaArray[17]))
 
     setHair(rgbToHex(hairArray))
     setEye(rgbToHex(eyeArray))

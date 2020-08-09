@@ -1,6 +1,5 @@
 import { TYPES as AVATAR_TYPES, ACTIONS as AVATAR_ACTIONS } from './index'
 import { selectAvatarContract } from 'shared/store/chain/selectors'
-import { selectAvatars } from 'shared/store/avatar/selectors'
 import { selectAddress } from 'shared/store/wallet/selectors'
 import { ACTIONS as CHAIN_ACTIONS } from 'shared/store/chain'
 import { selectProvider } from 'shared/store/chain/selectors'

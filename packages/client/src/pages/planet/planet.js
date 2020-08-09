@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Col, Row, Spinner } from 'react-bootstrap'
+import { Container, Col, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { ACTIONS as PLANET_ACTIONS } from 'shared/store/planet'
 import { ACTIONS as MAP_ACTIONS } from 'shared/store/map'
