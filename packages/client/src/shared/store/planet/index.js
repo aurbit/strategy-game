@@ -9,7 +9,8 @@ export const PLANETS = {
 }
 
 export const PLANET_EVENTS = {
-  TileChanged: 'TileChanged'
+  TileChanged: 'TileChanged',
+  PlayerBalanceChange: 'PlayerBalanceChange'
 }
 
 const initialState = {
@@ -48,6 +49,11 @@ const initialState = {
     loading: false,
     error: null,
     result: null
+  },
+  aurBalance: {
+    loading: false,
+    error: null,
+    result: 0
   }
 }
 
@@ -74,7 +80,10 @@ export const TYPES = {
   GET_TILES_FAILURE: 'GET_TILES_FAILURE',
   AERIAL_ATTACK_REQUEST: 'AERIAL_ATTACK_REQUEST',
   AERIAL_ATTACK_SUCCESS: 'AERIAL_ATTACK_SUCCESS',
-  AERIAL_ATTACK_FAILURE: 'AERIAL_ATTACK_FAILURE'
+  AERIAL_ATTACK_FAILURE: 'AERIAL_ATTACK_FAILURE',
+  GET_PLANET_AUR_BALANCE_REQUEST: 'GET_PLANET_AUR_BALANCE_REQUEST',
+  GET_PLANET_AUR_BALANCE_SUCCESS: 'GET_PLANET_AUR_BALANCE_SUCCESS',
+  GET_PLANET_AUR_BALANCE_FAILURE: 'GET_PLANET_AUR_BALANCE_FAILURE'
 }
 
 // Action Creators
@@ -100,7 +109,16 @@ export const ACTIONS = {
   getTilesFailure: makeAction(TYPES.GET_TILES_FAILURE, 'payload'),
   aerialAttackRequest: makeAction(TYPES.AERIAL_ATTACK_REQUEST, 'payload'),
   aerialAttackSuccess: makeAction(TYPES.AERIAL_ATTACK_SUCCESS, 'payload'),
-  aerialAttackFailure: makeAction(TYPES.AERIAL_ATTACK_FAILURE, 'payload')
+  aerialAttackFailure: makeAction(TYPES.AERIAL_ATTACK_FAILURE, 'payload'),
+  getPlanetAurBalanceRequest: makeAction(TYPES.GET_PLANET_AUR_BALANCE_REQUEST),
+  getPlanetAurBalanceSuccess: makeAction(
+    TYPES.GET_PLANET_AUR_BALANCE_SUCCESS,
+    'payload'
+  ),
+  getPlanetAurBalanceFailure: makeAction(
+    TYPES.GET_PLANET_AUR_BALANCE_FAILURE,
+    'payload'
+  )
 }
 
 // Reducer
@@ -185,6 +203,18 @@ export const planetReducer = createReducer(initialState, {
   [TYPES.AERIAL_ATTACK_FAILURE]: (state, action) => {
     const aerialAttack = { loading: false, error: action.payload, result: null }
     return { ...state, aerialAttack }
+  },
+  [TYPES.GET_PLANET_AUR_BALANCE_REQUEST]: state => {
+    const aurBalance = { loading: true, error: null, result: null }
+    return { ...state, aurBalance }
+  },
+  [TYPES.GET_PLANET_AUR_BALANCE_SUCCESS]: (state, action) => {
+    const aurBalance = { loading: false, error: null, result: action.payload }
+    return { ...state, aurBalance }
+  },
+  [TYPES.GET_PLANET_AUR_BALANCE_FAILURE]: (state, action) => {
+    const aurBalance = { loading: false, error: action.payload, result: null }
+    return { ...state, aurBalance }
   }
 })
 

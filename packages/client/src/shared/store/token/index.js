@@ -1,12 +1,18 @@
 // Place these into a folder - Incase a store starts having many actions / sagas etc
 // We can easily split them up into separate files
 import { makeAction, createReducer } from 'shared/utils/redux-utils'
+import { TypeStrikethrough } from 'react-bootstrap-icons'
 
 const INITIAL_STATE = {
   balance: {
     loading: false,
     error: null,
     value: 0
+  },
+  sendPlanetAur: {
+    loading: false,
+    error: null,
+    result: null
   }
 }
 
@@ -14,7 +20,10 @@ const INITIAL_STATE = {
 export const TYPES = {
   GET_AUR_BALANCE_REQUEST: 'GET_AUR_BALANCE_REQUEST',
   GET_AUR_BALANCE_SUCCESS: 'GET_AUR_BALANCE_SUCCESS',
-  GET_AUR_BALANCE_FAILURE: 'GET_AUR_BALANCE_FAILURE'
+  GET_AUR_BALANCE_FAILURE: 'GET_AUR_BALANCE_FAILURE',
+  SEND_PLANET_AUR_REQUEST: 'SEND_PLANET_AUR_REQUEST',
+  SEND_PLANET_AUR_SUCCESS: 'SEND_PLANET_AUR_SUCCESS',
+  SEND_PLANET_AUR_FAILURE: 'SEND_PLANET_AUR_FAILURE'
 }
 
 // Action Creators
@@ -23,7 +32,10 @@ export const ACTIONS = {
   setAurBalanceError: makeAction(TYPES.SET_AUR_BALANCE_ERROR, 'payload'),
   getAurBalanceRequest: makeAction(TYPES.GET_AUR_BALANCE_REQUEST, 'payload'),
   getAurBalanceSuccess: makeAction(TYPES.GET_AUR_BALANCE_SUCCESS, 'payload'),
-  getAurBalanceFailure: makeAction(TYPES.GET_AUR_BALANCE_FAILURE, 'payload')
+  getAurBalanceFailure: makeAction(TYPES.GET_AUR_BALANCE_FAILURE, 'payload'),
+  sendPlanetAurRequest: makeAction(TYPES.SEND_PLANET_AUR_REQUEST, 'payload'),
+  sendPlanetAurSuccess: makeAction(TYPES.SEND_PLANET_AUR_SUCCESS, 'payload'),
+  sendPlanetAurFailure: makeAction(TYPES.SEND_PLANET_AUR_FAILURE, 'payload')
 }
 
 // Reducer
@@ -44,10 +56,21 @@ export const tokenReducer = createReducer(INITIAL_STATE, {
     const balance = { loading: false, error: action?.payload, value: 0 }
     return { ...state, balance }
   },
-
   [TYPES.SET_AUR_BALANCE_ERROR]: (state, action) => {
     return { ...state, error: true, errMsg: action?.payload }
+  },
+  [TYPES.SEND_PLANET_AUR_REQUEST]: state => {
+    const sendPlanetAur = { loading: true, error: null, result: null }
+    return { ...state, sendPlanetAur }
+  },
+  [TYPES.SEND_PLANET_AUR_SUCCESS]: (state, action) => {
+    const result = action.payload
+    const sendPlanetAur = { loading: false, error: null, result }
+    return { ...state, sendPlanetAur }
+  },
+  [TYPES.SEND_PLANET_AUR_FAILURE]: (state, action) => {
+    const error = action.payload
+    const sendPlanetAur = { loading: false, error, result: null }
+    return { ...state, sendPlanetAur }
   }
 })
-
-// Selectors

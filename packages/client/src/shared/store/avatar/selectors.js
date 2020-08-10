@@ -5,3 +5,5 @@ export const selectAvatar = state => state.avatar.avatars.list[0]
 export const selectAvatarList = state => state.avatar.avatars.list
 export const selectAvatarId = state =>
   state.avatar.avatars.list[state.avatar.avatars.list.length - 1].id
+export const selectDna = state => state.avatar.getDna.result
+export const selectGetAvatar = state => state.avatar.getAvatar.result

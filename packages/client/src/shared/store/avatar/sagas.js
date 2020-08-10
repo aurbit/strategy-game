@@ -5,6 +5,7 @@ import { ACTIONS as CHAIN_ACTIONS } from 'shared/store/chain'
 import { selectProvider } from 'shared/store/chain/selectors'
 import { takeLatest, select, put } from 'redux-saga/effects'
 import { store } from 'store'
+import { AVATARS } from 'pages/avatar/create-avatar/avatar-utils'
 
 function * callMintAvatar ({ payload }) {
   const address = yield select(selectAddress)
@@ -71,12 +72,35 @@ function * getAvatarsRequest () {
 
 function * getAvatarsSuccess () {
   yield put(AVATAR_ACTIONS.setActiveIndex(0))
-  //
-  // yield put(PLANET_ACTIONS.getIsPlayingRequest(avatar.id))
 }
 
 function * callMintAvatarSuccess () {
   yield put(AVATAR_ACTIONS.getAvatarsRequest())
+}
+
+function * getDnaRequest (action) {
+  const contract = yield select(selectAvatarContract)
+
+  try {
+    const result = yield contract.methods.getDNA(action.payload)
+    yield put(AVATAR_ACTIONS.getAvatarDnaSuccess(result))
+  } catch (err) {
+    yield put(AVATAR_ACTIONS.getAvatarDnaFailure(err))
+  }
+}
+
+function * getAvatarRequest (action) {
+  const contract = yield select(selectAvatarContract)
+
+  try {
+    const avatarId = action.payload
+
+    console.log('get avatar is', avatarId)
+    const result = yield contract.methods.avatars(avatarId).call()
+    yield put(AVATAR_ACTIONS.getAvatarSuccess({ ...result, avatarId }))
+  } catch (err) {
+    yield put(AVATAR_ACTIONS.getAvatarFailure(err))
+  }
 }
 
 export function * rootAvatarSagas () {
@@ -84,4 +108,6 @@ export function * rootAvatarSagas () {
   yield takeLatest(AVATAR_TYPES.CALL_MINT_AVATAR_SUCCESS, callMintAvatarSuccess)
   yield takeLatest(AVATAR_TYPES.GET_AVATARS_SUCCESS, getAvatarsSuccess)
   yield takeLatest(AVATAR_TYPES.GET_AVATARS_REQUEST, getAvatarsRequest)
+  yield takeLatest(AVATAR_TYPES.GET_AVATAR_DNA_REQUEST, getDnaRequest)
+  yield takeLatest(AVATAR_TYPES.GET_AVATAR_REQUEST, getAvatarRequest)
 }

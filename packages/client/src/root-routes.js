@@ -40,6 +40,7 @@ export default () => {
       dispatch(TOKEN_ACTIONS.getAurBalanceRequest())
     }
   }, [providersReady, address, dispatch])
+
   return walletReady && providersReady ? (
     <div>
       <Router>

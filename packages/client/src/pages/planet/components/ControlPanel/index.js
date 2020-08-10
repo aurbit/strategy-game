@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { Col, Row, Button, Container } from 'react-bootstrap'
 import { selectActiveTile } from 'shared/store/map/selectors'
 import PlayerAvatar from 'shared/components/PlayerAvatar'
+import SendAurToAvatar from 'shared/components/SendAurToAvatar'
 
 export default ({
   mapReady,
@@ -102,6 +103,9 @@ export default ({
                 >
                   Aerial Attack
                 </Button>
+              </Row>
+              <Row>
+                <SendAurToAvatar />
               </Row>
             </Col>
           </Row>

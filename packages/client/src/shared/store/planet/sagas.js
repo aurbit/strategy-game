@@ -4,7 +4,7 @@ import { takeLatest, put, select } from 'redux-saga/effects'
 import { selectPlanetContract } from 'shared/store/chain/selectors'
 import { selectProvider } from 'shared/store/chain/selectors'
 import { selectAddress } from 'shared/store/wallet/selectors'
-import { selectTileFee } from 'shared/store/planet/selectors'
+import { selectTileFee, selectPlayers } from 'shared/store/planet/selectors'
 import { selectAvatar, selectAvatarId } from '../avatar/selectors'
 import { ACTIONS as CHAIN_ACTIONS } from '../chain'
 
@@ -158,6 +158,25 @@ function * aerialAttackRequest (action) {
   }
 }
 
+function * getAurPlanetBalance () {
+  yield put(ACTIONS.getPlanetAurBalanceRequest())
+}
+
+function * getAurRequest () {
+  const avatar = yield select(selectAvatar)
+  const players = yield select(selectPlayers)
+  const { result } = players
+
+  if (players.result && avatar) {
+    for (let n in result) {
+      if (result[n].avatarId === avatar.id) {
+        yield put(ACTIONS.getPlanetAurBalanceSuccess(result[n].balance))
+        return
+      }
+    }
+  }
+}
+
 export function * rootPlanetSagas () {
   yield takeLatest(TYPES.GET_TILE_FEE_REQUEST, getTileFeeRequest)
   yield takeLatest(TYPES.CALL_BUY_TILE_REQUEST, buyTileRequest)
@@ -165,6 +184,9 @@ export function * rootPlanetSagas () {
   // yield takeLatest(TYPES.CALL_BUY_TILE_SUCCESS, callBuyTitleSuccess)
   yield takeLatest(TYPES.GET_IS_PLAYING_REQUEST, isPlayingRequest)
   yield takeLatest(TYPES.GET_PLAYERS_REQUEST, getPlayersRequest)
+  yield takeLatest(TYPES.GET_PLAYERS_SUCCESS, getAurPlanetBalance)
+
   yield takeLatest(TYPES.GET_TILES_REQUEST, getTilesRequest)
   yield takeLatest(TYPES.AERIAL_ATTACK_REQUEST, aerialAttackRequest)
+  yield takeLatest(TYPES.GET_PLANET_AUR_BALANCE_REQUEST, getAurRequest)
 }

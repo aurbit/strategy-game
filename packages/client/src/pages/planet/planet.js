@@ -1,9 +1,9 @@
 import React from 'react'
-import { Container, Col, Row } from 'react-bootstrap'
+import { Container, Col, Row, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { ACTIONS as PLANET_ACTIONS } from 'shared/store/planet'
 import { ACTIONS as MAP_ACTIONS } from 'shared/store/map'
-
+import { useHistory } from 'react-router-dom'
 import ControlPanel from 'pages/planet/components/ControlPanel'
 import Map from 'pages/planet/components/Map'
 import { selectActiveTile } from 'shared/store/map/selectors'
@@ -31,7 +31,7 @@ export default props => {
 
   React.useEffect(() => {
     dispatch(PLANET_ACTIONS.getPlayersRequest())
-  }, [dispatch])
+  }, [dispatch, avatar])
 
   const handleIsPlayingRequest = id => {
     dispatch(PLANET_ACTIONS.getIsPlayingRequest(id))
@@ -80,7 +80,9 @@ export default props => {
               handleAerialAttack={handleAerialAttack}
               avatar={avatar}
             />
-          ) : null}
+          ) : (
+            <GoCreateAnAvatar mapReady={mapReady} />
+          )}
         </Col>
         )
       </Row>
@@ -88,7 +90,25 @@ export default props => {
   )
 }
 
+const GoCreateAnAvatar = ({ mapReady }) => {
+  const history = useHistory()
+  return mapReady ? (
+    <Container style={styles.goCreateAnAvatar}>
+      <p>This wallet does not have an AURA.</p>
+      <Button variant='dark' onClick={() => history.push('/avatar/create')}>
+        CREATE AVATAR
+      </Button>
+    </Container>
+  ) : null
+}
+
 const styles = {
+  goCreateAnAvatar: {
+    backgroundColor: '#e3e3e3',
+    height: '100%',
+    textAlign: 'center',
+    paddingTop: 100
+  },
   row: {
     margin: 0
   },

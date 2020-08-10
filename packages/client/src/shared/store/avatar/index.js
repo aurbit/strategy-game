@@ -11,6 +11,16 @@ const INITIAL_STATE = {
     loading: false,
     error: null,
     result: null
+  },
+  getDna: {
+    loading: false,
+    error: null,
+    result: null
+  },
+  getAvatar: {
+    loading: false,
+    error: null,
+    result: null
   }
 }
 
@@ -27,7 +37,13 @@ export const TYPES = {
   GET_AVATARS_REQUEST: 'GET_AVATARS_REQUEST',
   GET_AVATARS_SUCCESS: 'GET_AVATARS_SUCCESS',
   GET_AVATARS_FAILURE: 'GET_AVATARS_FAILURE',
-  SET_ACTIVE_INDEX: 'SET_ACTIVE_INDEX'
+  SET_ACTIVE_INDEX: 'SET_ACTIVE_INDEX',
+  GET_AVATAR_DNA_REQUEST: 'GET_AVATAR_DNA_REQUEST',
+  GET_AVATAR_DNA_SUCCESS: 'GET_AVATAR_DNA_SUCCESS',
+  GET_AVATAR_DNA_FAILURE: 'GET_AVATAR_DNA_FAILURE',
+  GET_AVATAR_REQUEST: 'GET_AVATAR_REQUEST',
+  GET_AVATAR_SUCCESS: 'GET_AVATAR_SUCCESS',
+  GET_AVATAR_FAILURE: 'GET_AVATAR_FAILURE'
 }
 
 // Action Creators
@@ -38,7 +54,13 @@ export const ACTIONS = {
   getAvatarsRequest: makeAction(TYPES.GET_AVATARS_REQUEST, 'payload'),
   getAvatarsSuccess: makeAction(TYPES.GET_AVATARS_SUCCESS, 'payload'),
   getAvatarsFailure: makeAction(TYPES.GET_AVATARS_FAILURE, 'payload'),
-  setActiveIndex: makeAction(TYPES.SET_ACTIVE_INDEX, 'payload')
+  setActiveIndex: makeAction(TYPES.SET_ACTIVE_INDEX, 'payload'),
+  getAvatarDnaRequest: makeAction(TYPES.GET_AVATARS_REQUEST, 'payload'),
+  getAvatarDnaSuccess: makeAction(TYPES.GET_AVATARS_SUCCESS, 'payload'),
+  getAvatarDnaFailure: makeAction(TYPES.GET_AVATARS_FAILURE, 'payload'),
+  getAvatarRequest: makeAction(TYPES.GET_AVATAR_REQUEST, 'payload'),
+  getAvatarSuccess: makeAction(TYPES.GET_AVATAR_SUCCESS, 'payload'),
+  getAvatarFailure: makeAction(TYPES.GET_AVATAR_FAILURE, 'payload')
 }
 
 // Reducer
@@ -78,5 +100,30 @@ export const avatarReducer = createReducer(INITIAL_STATE, {
   },
   [TYPES.SET_ACTIVE_INDEX]: (state, action) => {
     return { ...state, activeIndex: action.payload }
+  },
+  [TYPES.GET_AVATAR_DNA_REQUEST]: (state, action) => {
+    const getDna = { loading: true, error: null, result: null }
+    return { ...state, getDna }
+  },
+  [TYPES.GET_AVATAR_DNA_SUCCESS]: (state, action) => {
+    const getDna = { loading: false, error: null, result: null }
+    return { ...state, getDna }
+  },
+  [TYPES.GET_AVATAR_DNA_FAILURE]: (state, action) => {
+    const getDna = { loading: false, error: null, result: null }
+    return { ...state, getDna }
+  },
+  [TYPES.GET_AVATAR_REQUEST]: (state, action) => {
+    const getAvatar = { loading: true, error: null, result: null }
+    return { ...state, getAvatar }
+  },
+  [TYPES.GET_AVATAR_SUCCESS]: (state, action) => {
+    const result = action.payload
+    const getAvatar = { loading: false, error: null, result }
+    return { ...state, getAvatar }
+  },
+  [TYPES.GET_AVATAR_FAILURE]: (state, action) => {
+    const getAvatar = { loading: false, error: null, result: null }
+    return { ...state, getAvatar }
   }
 })
