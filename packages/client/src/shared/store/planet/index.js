@@ -54,6 +54,16 @@ const initialState = {
     loading: false,
     error: null,
     result: 0
+  },
+  allocate: {
+    loading: false,
+    error: null,
+    result: null
+  },
+  deallocate: {
+    loading: false,
+    error: null,
+    result: null
   }
 }
 
@@ -83,7 +93,13 @@ export const TYPES = {
   AERIAL_ATTACK_FAILURE: 'AERIAL_ATTACK_FAILURE',
   GET_PLANET_AUR_BALANCE_REQUEST: 'GET_PLANET_AUR_BALANCE_REQUEST',
   GET_PLANET_AUR_BALANCE_SUCCESS: 'GET_PLANET_AUR_BALANCE_SUCCESS',
-  GET_PLANET_AUR_BALANCE_FAILURE: 'GET_PLANET_AUR_BALANCE_FAILURE'
+  GET_PLANET_AUR_BALANCE_FAILURE: 'GET_PLANET_AUR_BALANCE_FAILURE',
+  ALLOCATE_TOKENS_REQUEST: 'ALLOCATE_TOKENS_REQUEST',
+  ALLOCATE_TOKENS_SUCCESS: 'ALLOCATE_TOKENS_SUCCESS',
+  ALLOCATE_TOKENS_FAILURE: 'ALLOCATE_TOKENS_FAILURE',
+  DEALLOCATE_TOKENS_REQUEST: 'DEALLOCATE_TOKENS_REQUEST',
+  DEALLOCATE_TOKENS_SUCCESS: 'DEALLOCATE_TOKENS_SUCCESS',
+  DEALLOCATE_TOKENS_FAILURE: 'DEALLOCATE_TOKENS_FAILURE'
 }
 
 // Action Creators
@@ -117,6 +133,21 @@ export const ACTIONS = {
   ),
   getPlanetAurBalanceFailure: makeAction(
     TYPES.GET_PLANET_AUR_BALANCE_FAILURE,
+    'payload'
+  ),
+  allocateTokensRequest: makeActions(TYPES.ALLOCATE_TOKENS_REQUEST, 'payload'),
+  allocateTokensSuccess: makeActions(TYPES.ALLOCATE_TOKENS_SUCCESS, 'payload'),
+  allocateTokensFailure: makeActions(TYPES.ALLOCATE_TOKENS_FAILURE, 'payload'),
+  deallocateTokensRequest: makeActions(
+    TYPES.DEALLOCATE_TOKENS_REQUEST,
+    'payload'
+  ),
+  deallocateTokensSuccess: makeActions(
+    TYPES.DEALLOCATE_TOKENS_SUCCESS,
+    'payload'
+  ),
+  deallocateTokensFailure: makeActions(
+    TYPES.DEALLOCATE_TOKENS_FAILURE,
     'payload'
   )
 }
@@ -215,6 +246,30 @@ export const planetReducer = createReducer(initialState, {
   [TYPES.GET_PLANET_AUR_BALANCE_FAILURE]: (state, action) => {
     const aurBalance = { loading: false, error: action.payload, result: null }
     return { ...state, aurBalance }
+  },
+  [TYPES.ALLOCATE_TOKENS_REQUEST]: state => {
+    const allocate = { loading: true, error: null, result: null }
+    return { ...state, allocate }
+  },
+  [TYPES.ALLOCATE_TOKENS_SUCCESS]: (state, action) => {
+    const allocate = { loading: false, error: null, result: action.payload }
+    return { ...state, allocate }
+  },
+  [TYPES.ALLOCATE_TOKENS_FAILURE]: (state, action) => {
+    const allocate = { loading: false, error: action.payload, result: null }
+    return { ...state, allocate }
+  },
+  [TYPES.DEALLOCATE_TOKENS_REQUEST]: state => {
+    const deallocate = { loading: true, error: null, result: null }
+    return { ...state, deallocate }
+  },
+  [TYPES.DEALLOCATE_TOKENS_SUCCESS]: (state, action) => {
+    const deallocate = { loading: false, error: null, result: action.payload }
+    return { ...state, deallocate }
+  },
+  [TYPES.DEALLOCATE_TOKENS_FAILURE]: (state, action) => {
+    const deallocate = { loading: false, error: action.payload, result: null }
+    return { ...state, deallocate }
   }
 })
 

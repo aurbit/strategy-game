@@ -13,6 +13,8 @@ export default ({
   handleGetTilesClick,
   handleIsPlayingClick,
   handleAerialAttack,
+  handleAllocateTokensClick,
+  handleDeallocateTokensClick,
   avatar
 }) => {
   const activeTile = useSelector(selectActiveTile)
@@ -77,35 +79,16 @@ export default ({
                 <Button onClick={handleBuyTileClick}>BUY {activeTile}</Button>
               </Row>
               <hr />
-              <Row className='m-3'>
-                <input
-                  style={{ padding: 5 }}
-                  id='tile-to-aerial-attack'
-                  placeholder='Tile Number to Attack'
+              <Row>
+                <AreialAttackComponent
+                  handleAeriallAttack={handleAerialAttack}
                 />
               </Row>
               <Row className='m-3'>
-                <input
-                  style={{ padding: 5 }}
-                  id='aerial-attack-amount'
-                  placeholder='AUR Amount'
-                />
-              </Row>
-              <Row className='m-3'>
-                <Button
-                  onClick={ev =>
-                    handleAerialAttack(
-                      document.getElementById('tile-to-aerial-attack'),
-                      document.getElementById('aerial-attack-amount')
-                    )
-                  }
-                  type='submit'
-                >
-                  Aerial Attack
-                </Button>
+                <SendAurToAvatar />
               </Row>
               <Row>
-                <SendAurToAvatar />
+                <AllocateTokens />
               </Row>
             </Col>
           </Row>
@@ -116,6 +99,88 @@ export default ({
       </Row>
     </Container>
   ) : null
+}
+
+const AllocateTokens = () => {
+  const [index, setIndex] = React.useState()
+  const [amount, setAmount] = React.useState()
+
+  const handleUpdateIndex = ev => {
+    ev.preventDefault()
+    setIndex(ev.target.value)
+  }
+  const handleUpdateAmount = ev => {
+    ev.preventDefault()
+    setAmount(ev.target.value)
+  }
+  const handleClick = () => {
+    handleAllocateTokensClick({ index, amount })
+  }
+
+  return (
+    <Container>
+      <Row className='m-3'>
+        <input
+          style={{ padding: 5 }}
+          id='allocate-tokens-index'
+          value={index}
+          onChange={handleUpdateIndex}
+          placeholder='Index of Token to Allocate'
+        />
+      </Row>
+      <Row className='m-3'>
+        <input
+          style={{ padding: 5 }}
+          id='allocate-tokens-amount'
+          value={amount}
+          onChange={handleUpdateAmount}
+          placeholder='Amount of AUR to allocate'
+        />
+      </Row>
+      <Row className='m-3'>
+        <Button onClick={handleClick} type='submit'>
+          Aerial Attack
+        </Button>
+      </Row>
+    </Container>
+  )
+}
+
+const DeallocateTokens = () => {
+  return <Container></Container>
+}
+const AerialAttackComponent = ({ handleAerialAttack }) => {
+  return (
+    <Container>
+      <Row className='m-3'>
+        <input
+          style={{ padding: 5 }}
+          id='tile-to-aerial-attack'
+          placeholder='Tile Number to Attack'
+        />
+      </Row>
+      <Row className='m-3'>
+        <input
+          style={{ padding: 5 }}
+          id='aerial-attack-amount'
+          placeholder='AUR Amount'
+        />
+      </Row>
+      <Row className='m-3'>
+        <Button
+          onClick={ev =>
+            handleAerialAttack(
+              document.getElementById('tile-to-aerial-attack'),
+              document.getElementById('aerial-attack-amount')
+            )
+          }
+          type='submit'
+        >
+          Aerial Attack
+        </Button>
+      </Row>
+    </Container>
+  )
 }
 
 const ShowPlayerInfo = ({ dna, name, id }) => {

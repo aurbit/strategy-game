@@ -177,6 +177,80 @@ function * getAurRequest () {
   }
 }
 
+function * allocateTokensRequest (action) {
+  console.log(action)
+
+  const contract = yield select(selectPlanetContract)
+  try {
+    const provider = yield select(selectProvider)
+    const address = yield select(selectAddress)
+    const avatar = yield select(selectAvatar)
+    const { index, amount } = action.payload
+
+    const rawTrx = yield contract.methods
+      .allocate(index, avatar.id, amount)
+      .encodeABI()
+
+    const txCount = yield provider.eth.getTransactionCount(address)
+
+    const txObject = {
+      nonce: provider.utils.toHex(txCount),
+      from: address,
+      to: contract._address,
+      gasLimit: provider.utils.toHex(6721975),
+      gasPrice: provider.utils.toHex(provider.utils.toWei('50', 'gwei')),
+      data: rawTrx
+    }
+
+    const payload = { method: 'eth_sendTransaction', params: [txObject] }
+    yield window.ethereum.send(payload, (err, data) => {
+      if (err) {
+        store.dispatch(ACTIONS.allocateTokensSuccess(data))
+      } else if (data) {
+        store.dispatch(ACTIONS.allocateTokensFailure(err))
+      }
+    })
+  } catch (err) {
+    yield put(ACTIONS.allocateTokensFailure(err))
+  }
+}
+
+function * deallocateTokensRequest (action) {
+  const contract = yield select(selectPlanetContract)
+  const provider = yield select(selectProvider)
+  const address = yield select(selectAddress)
+  const avatar = yield select(selectAvatar)
+  const { index, amount } = action.payload
+
+  try {
+    const rawTrx = yield contract.methods
+      .deallocate(index, avatar.id, amount)
+      .encodeABI()
+
+    const txCount = yield provider.eth.getTransactionCount(address)
+
+    const txObject = {
+      nonce: provider.utils.toHex(txCount),
+      from: address,
+      to: contract._address,
+      gasLimit: provider.utils.toHex(6721975),
+      gasPrice: provider.utils.toHex(provider.utils.toWei('50', 'gwei')),
+      data: rawTrx
+    }
+
+    const payload = { method: 'eth_sendTransaction', params: [txObject] }
+    yield window.ethereum.send(payload, (err, data) => {
+      if (err) {
+        store.dispatch(ACTIONS.allocateTokensSuccess(data))
+      } else if (data) {
+        store.dispatch(ACTIONS.allocateTokensFailure(err))
+      }
+    })
+  } catch (err) {
+    yield put(ACTIONS.deallocateTokensFailure(err))
+  }
+}
+
 export function * rootPlanetSagas () {
   yield takeLatest(TYPES.GET_TILE_FEE_REQUEST, getTileFeeRequest)
   yield takeLatest(TYPES.CALL_BUY_TILE_REQUEST, buyTileRequest)
@@ -189,4 +263,7 @@ export function * rootPlanetSagas () {
   yield takeLatest(TYPES.GET_TILES_REQUEST, getTilesRequest)
   yield takeLatest(TYPES.AERIAL_ATTACK_REQUEST, aerialAttackRequest)
   yield takeLatest(TYPES.GET_PLANET_AUR_BALANCE_REQUEST, getAurRequest)
+
+  yield takeLatest(TYPES.ALLOCATE_TOKENS_REQUEST, allocateTokensRequest)
+  yield takeLatest(TYPES.DEALLOCATE_TOKENS_REQUEST, deallocateTokensRequest)
 }

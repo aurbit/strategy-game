@@ -55,6 +55,15 @@ export default props => {
   const handleAerialAttack = (tile, amount) => {
     dispatch(PLANET_ACTIONS.aerialAttackRequest({ tile, amount }))
   }
+
+  const handleDeallocateTokensClick = ({ index, amount }) => {
+    dispatch(PLANET_ACTIONS.deallocateTokensRequest({ index, amount }))
+  }
+
+  const handleAllocateTokensClick = ({ index, amount }) => {
+    dispatch(PLANET_ACTIONS.allocateTokensFailure({ index, amount }))
+  }
+
   return (
     <Container fluid style={{ backgroundColor: 'black' }}>
       <Row style={styles.row}>
@@ -78,6 +87,8 @@ export default props => {
               handleGetTilesClick={handleGetTilesClick}
               handleIsPlayingRequest={handleIsPlayingRequest}
               handleAerialAttack={handleAerialAttack}
+              handleAllocateTokensClick={handleAllocateTokensClick}
+              handleDeallocateTokensClick={handleDeallocateTokensClick}
               avatar={avatar}
             />
           ) : (
