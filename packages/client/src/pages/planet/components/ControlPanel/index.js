@@ -1,6 +1,13 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Col, Row, Button, Container } from 'react-bootstrap'
+import {
+  Col,
+  Row,
+  Button,
+  Container,
+  InputGroup,
+  FormControl
+} from 'react-bootstrap'
 import { selectActiveTile } from 'shared/store/map/selectors'
 import PlayerAvatar from 'shared/components/PlayerAvatar'
 import SendAurToAvatar from 'shared/components/SendAurToAvatar'
@@ -80,15 +87,18 @@ export default ({
               </Row>
               <hr />
               <Row>
-                <AreialAttackComponent
-                  handleAeriallAttack={handleAerialAttack}
+                <AerialAttackComponent
+                  handleAerialAttack={handleAerialAttack}
                 />
               </Row>
               <Row className='m-3'>
                 <SendAurToAvatar />
               </Row>
               <Row>
-                <AllocateTokens />
+                <AllocateTokens
+                  handleAllocateTokensClick={handleAllocateTokensClick}
+                  handleDeallocateTokensClick={handleDeallocateTokensClick}
+                />
               </Row>
             </Col>
           </Row>
@@ -101,9 +111,13 @@ export default ({
   ) : null
 }
 
-const AllocateTokens = () => {
+const AllocateTokens = ({
+  handleAllocateTokensClick,
+  handleDeallocateTokensClick
+}) => {
   const [index, setIndex] = React.useState()
   const [amount, setAmount] = React.useState()
+  const [type, setType] = React.useState(0)
 
   const handleUpdateIndex = ev => {
     ev.preventDefault()
@@ -116,9 +130,31 @@ const AllocateTokens = () => {
   const handleClick = () => {
     handleAllocateTokensClick({ index, amount })
   }
+  const handleRadioClick = () => {}
 
   return (
     <Container>
+      <Row>
+        <InputGroup>
+          <InputGroup.Radio
+            id='allocate'
+            name='Allocate'
+            value='0'
+            onClick={handleRadioClick}
+            checkedselectedaria-label='Allocate Tokens'
+            checked={type == 0}
+          />
+          <InputGroup.Radio
+            id='deallocate'
+            name='Deallocate'
+            value='1'
+            check={type == 1}
+            onClick={handleRadioClick}
+            checkedselectedaria-label='Deallocate Tokens'
+          />
+          <FormControl aria-label='Allocate or Deallocate' />
+        </InputGroup>
+      </Row>
       <Row className='m-3'>
         <input
           style={{ padding: 5 }}

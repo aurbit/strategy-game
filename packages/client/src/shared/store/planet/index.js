@@ -135,18 +135,18 @@ export const ACTIONS = {
     TYPES.GET_PLANET_AUR_BALANCE_FAILURE,
     'payload'
   ),
-  allocateTokensRequest: makeActions(TYPES.ALLOCATE_TOKENS_REQUEST, 'payload'),
-  allocateTokensSuccess: makeActions(TYPES.ALLOCATE_TOKENS_SUCCESS, 'payload'),
-  allocateTokensFailure: makeActions(TYPES.ALLOCATE_TOKENS_FAILURE, 'payload'),
-  deallocateTokensRequest: makeActions(
+  allocateTokensRequest: makeAction(TYPES.ALLOCATE_TOKENS_REQUEST, 'payload'),
+  allocateTokensSuccess: makeAction(TYPES.ALLOCATE_TOKENS_SUCCESS, 'payload'),
+  allocateTokensFailure: makeAction(TYPES.ALLOCATE_TOKENS_FAILURE, 'payload'),
+  deallocateTokensRequest: makeAction(
     TYPES.DEALLOCATE_TOKENS_REQUEST,
     'payload'
   ),
-  deallocateTokensSuccess: makeActions(
+  deallocateTokensSuccess: makeAction(
     TYPES.DEALLOCATE_TOKENS_SUCCESS,
     'payload'
   ),
-  deallocateTokensFailure: makeActions(
+  deallocateTokensFailure: makeAction(
     TYPES.DEALLOCATE_TOKENS_FAILURE,
     'payload'
   )
