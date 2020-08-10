@@ -135,25 +135,27 @@ const AllocateTokens = ({
   return (
     <Container>
       <Row>
-        <InputGroup>
+        {/* <InputGroup>
           <InputGroup.Radio
             id='allocate'
             name='Allocate'
             value='0'
-            onClick={handleRadioClick}
+            onChange={handleRadioClick}
             checkedselectedaria-label='Allocate Tokens'
-            checked={type == 0}
+            status='checked'
           />
+          Allocate
           <InputGroup.Radio
             id='deallocate'
             name='Deallocate'
             value='1'
             check={type == 1}
-            onClick={handleRadioClick}
+            onChange={handleRadioClick}
             checkedselectedaria-label='Deallocate Tokens'
           />
+          Deallocate
           <FormControl aria-label='Allocate or Deallocate' />
-        </InputGroup>
+        </InputGroup> */}
       </Row>
       <Row className='m-3'>
         <input
