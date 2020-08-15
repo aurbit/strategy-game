@@ -11,14 +11,23 @@ To get started, build the repo on your machine. You must have the Ganache GUI ru
 git clone git@github.com:aurbit/strategy-game
 cd strategy-game
 npm i -g yarn
-
 yarn
-
-yarn truffle:chain
-yarn truffle:migrate
 ```
 
-In a Second terminal:
+Terminal 1
+
+```
+yarn truffle:chain
+```
+
+Terminal 2
+
+```
+yarn truffle:console
+truffle(development)> migrate
+```
+
+Terminal 3
 
 ```
 yarn start

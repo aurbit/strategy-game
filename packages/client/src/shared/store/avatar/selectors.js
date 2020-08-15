@@ -7,3 +7,4 @@ export const selectAvatarId = state =>
   state.avatar.avatars.list[state.avatar.avatars.list.length - 1].id
 export const selectDna = state => state.avatar.getDna.result
 export const selectGetAvatar = state => state.avatar.getAvatar.result
+export const selectMintFee = state => state.avatar.mintFee.result

@@ -5,8 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { selectBalance } from 'shared/store/token/selectors'
 import { selectPlayers } from 'shared/store/planet/selectors'
 import { selectPlanetContractAddress } from 'shared/store/chain/selectors'
-import { selectAddress } from 'shared/store/wallet/selectors'
-import { selectAvatar, selectGetAvatar } from 'shared/store/avatar/selectors'
+import { selectGetAvatar } from 'shared/store/avatar/selectors'
 import { ACTIONS as TOKEN_ACTIONS } from 'shared/store/token'
 import { ACTIONS as AVATAR_ACTIONS } from 'shared/store/avatar'
 
@@ -15,10 +14,7 @@ const SendAurToAvatar = () => {
   const [avatarId, setAvatarId] = React.useState()
   const [show, setShow] = React.useState(false)
 
-  const players = useSelector(selectPlayers)
-  const address = useSelector(selectAddress)
   const aurBalance = useSelector(selectBalance)
-  const avatar = useSelector(selectAvatar)
   const gotAvatar = useSelector(selectGetAvatar)
   const planetAddress = useSelector(selectPlanetContractAddress)
   const dispatch = useDispatch()
@@ -31,14 +27,14 @@ const SendAurToAvatar = () => {
   const handleUpdateAvatarId = ev => {
     ev.preventDefault()
     const id = ev.target.value
-    if (players) {
-      for (let player of players) {
-        if (player.avatarId === id) {
-          dispatch(AVATAR_ACTIONS.getAvatarRequest(id))
-        }
-      }
-      setAvatarId(id)
-    }
+    // if (players) {
+    //   for (let player of players) {
+    //     if (player.avatarId === id) {
+    dispatch(AVATAR_ACTIONS.getAvatarRequest(id))
+    //   }
+    // }
+    setAvatarId(id)
+    // }
     setAvatarId(ev.target.value)
   }
 

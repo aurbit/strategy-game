@@ -8,6 +8,8 @@ Aurbit is a map based strategy game built with Ethereum Contracts. The objective
 
 Project Aurbit is an entry to the HackFS ETHGlobal Hackathon sponsored by Protocol Labs, among others. Aurbit is a game that uses Fungible and Non-Fungible tokens on Planet Contracts. Assets are Stored on IPFS and the client applicaiton is hosted and deployed with Fleek Hosting.
 
+Developers: <a href="https://github.com/aurbit/strategy-game/blob/master/docs/Developers.md">Documentation</a>
+
 ## How it's Made
 
 Aurbit is a mono repo with two packages, Client and Truffle.

@@ -38,8 +38,6 @@ function * buyTileRequest (action) {
       from: address,
       to: contract._address,
       value: provider.utils.toHex(tileFee.value),
-      // gasLimit: provider.utils.toHex(6721975),
-      // gas: provider.utils.toHex(6721975),
       data: rawTrx
     }
 
@@ -72,8 +70,6 @@ function * newPlayerRequest () {
       nonce: provider.utils.toHex(txCount),
       from: address,
       to: contract._address,
-      gasLimit: provider.utils.toHex(6721975),
-      gasPrice: provider.utils.toHex(provider.utils.toWei('50', 'gwei')),
       data: rawTrx
     }
 
@@ -254,7 +250,7 @@ function * deallocateTokensRequest (action) {
 export function * rootPlanetSagas () {
   yield takeLatest(TYPES.GET_TILE_FEE_REQUEST, getTileFeeRequest)
   yield takeLatest(TYPES.CALL_BUY_TILE_REQUEST, buyTileRequest)
-  yield takeLatest(TYPES.CALL_NEW_PLAYER_REQUEST, newPlayerRequest)
+  yield takeLatest(TYPES.NEW_PLAYER_REQUEST, newPlayerRequest)
   // yield takeLatest(TYPES.CALL_BUY_TILE_SUCCESS, callBuyTitleSuccess)
   yield takeLatest(TYPES.GET_IS_PLAYING_REQUEST, isPlayingRequest)
   yield takeLatest(TYPES.GET_PLAYERS_REQUEST, getPlayersRequest)
@@ -262,7 +258,7 @@ export function * rootPlanetSagas () {
 
   yield takeLatest(TYPES.GET_TILES_REQUEST, getTilesRequest)
   yield takeLatest(TYPES.AERIAL_ATTACK_REQUEST, aerialAttackRequest)
-  yield takeLatest(TYPES.GET_PLANET_AUR_BALANCE_REQUEST, getAurRequest)
+  // yield takeLatest(TYPES.GET_PLANET_AUR_BALANCE_REQUEST, getAurRequest)
 
   yield takeLatest(TYPES.ALLOCATE_TOKENS_REQUEST, allocateTokensRequest)
   yield takeLatest(TYPES.DEALLOCATE_TOKENS_REQUEST, deallocateTokensRequest)

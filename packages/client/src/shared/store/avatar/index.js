@@ -21,6 +21,11 @@ const INITIAL_STATE = {
     loading: false,
     error: null,
     result: null
+  },
+  mintFee: {
+    loading: false,
+    error: null,
+    result: null
   }
 }
 
@@ -31,9 +36,9 @@ export const AVATAR_EVENTS = {
 
 // Action Types
 export const TYPES = {
-  CALL_MINT_AVATAR_REQUEST: 'CALL_MINT_AVATAR_REQUEST',
-  CALL_MINT_AVATAR_SUCCESS: 'CALL_MINT_AVATAR_SUCCESS',
-  CALL_MINT_AVATAR_FAILURE: 'CALL_MINT_AVATAR_FAILURE',
+  MINT_AVATAR_REQUEST: 'MINT_AVATAR_REQUEST',
+  MINT_AVATAR_SUCCESS: 'MINT_AVATAR_SUCCESS',
+  MINT_AVATAR_FAILURE: 'MINT_AVATAR_FAILURE',
   GET_AVATARS_REQUEST: 'GET_AVATARS_REQUEST',
   GET_AVATARS_SUCCESS: 'GET_AVATARS_SUCCESS',
   GET_AVATARS_FAILURE: 'GET_AVATARS_FAILURE',
@@ -43,14 +48,17 @@ export const TYPES = {
   GET_AVATAR_DNA_FAILURE: 'GET_AVATAR_DNA_FAILURE',
   GET_AVATAR_REQUEST: 'GET_AVATAR_REQUEST',
   GET_AVATAR_SUCCESS: 'GET_AVATAR_SUCCESS',
-  GET_AVATAR_FAILURE: 'GET_AVATAR_FAILURE'
+  GET_AVATAR_FAILURE: 'GET_AVATAR_FAILURE',
+  GET_MINT_FEE_REQUEST: 'GET_MINT_FEE_REQUEST',
+  GET_MINT_FEE_SUCCESS: 'GET_MINT_FEE_SUCCESS',
+  GET_MINT_FEE_FAILURE: 'GET_MINT_FEE_FAILURE'
 }
 
 // Action Creators
 export const ACTIONS = {
-  callMintAvatarRequest: makeAction(TYPES.CALL_MINT_AVATAR_REQUEST, 'payload'),
-  callMintAvatarSuccess: makeAction(TYPES.CALL_MINT_AVATAR_SUCCESS, 'payload'),
-  callMintAvatarFailure: makeAction(TYPES.CALL_MINT_AVATAR_FAILURE, 'payload'),
+  callMintAvatarRequest: makeAction(TYPES.MINT_AVATAR_REQUEST, 'payload'),
+  callMintAvatarSuccess: makeAction(TYPES.MINT_AVATAR_SUCCESS, 'payload'),
+  callMintAvatarFailure: makeAction(TYPES.MINT_AVATAR_FAILURE, 'payload'),
   getAvatarsRequest: makeAction(TYPES.GET_AVATARS_REQUEST, 'payload'),
   getAvatarsSuccess: makeAction(TYPES.GET_AVATARS_SUCCESS, 'payload'),
   getAvatarsFailure: makeAction(TYPES.GET_AVATARS_FAILURE, 'payload'),
@@ -60,23 +68,26 @@ export const ACTIONS = {
   getAvatarDnaFailure: makeAction(TYPES.GET_AVATARS_FAILURE, 'payload'),
   getAvatarRequest: makeAction(TYPES.GET_AVATAR_REQUEST, 'payload'),
   getAvatarSuccess: makeAction(TYPES.GET_AVATAR_SUCCESS, 'payload'),
-  getAvatarFailure: makeAction(TYPES.GET_AVATAR_FAILURE, 'payload')
+  getAvatarFailure: makeAction(TYPES.GET_AVATAR_FAILURE, 'payload'),
+  getMintFeeRequest: makeAction(TYPES.GET_MINT_FEE_REQUEST, 'payload'),
+  getMintFeeSuccess: makeAction(TYPES.GET_MINT_FEE_SUCCESS, 'payload'),
+  getMintFeeFailure: makeAction(TYPES.GET_MINT_FEE_FAILURE, 'payload')
 }
 
 // Reducer
 export const avatarReducer = createReducer(INITIAL_STATE, {
-  [TYPES.CALL_MINT_AVATAR_REQUEST]: state => {
+  [TYPES.MINT_AVATAR_REQUEST]: state => {
     const mintAvatar = { loading: true, error: null, result: null }
     return { ...state, mintAvatar }
   },
-  [TYPES.CALL_MINT_AVATAR_SUCCESS]: (state, action) => {
+  [TYPES.MINT_AVATAR_SUCCESS]: (state, action) => {
     const list = Array.from(state.avatars.list)
     const mintAvatar = { loading: false, error: null, result: action.payload }
     list.push(action.payload)
     const avatars = Object.assign({}, { ...state.avatars, list })
     return { ...state, avatars, mintAvatar }
   },
-  [TYPES.CALL_MINT_AVATAR_FAILURE]: (state, action) => {
+  [TYPES.MINT_AVATAR_FAILURE]: (state, action) => {
     const mintAvatar = { loading: false, error: action.payload, result: null }
     return { ...state, mintAvatar }
   },
@@ -125,5 +136,19 @@ export const avatarReducer = createReducer(INITIAL_STATE, {
   [TYPES.GET_AVATAR_FAILURE]: (state, action) => {
     const getAvatar = { loading: false, error: null, result: null }
     return { ...state, getAvatar }
+  },
+  [TYPES.GET_MINT_FEE_REQUEST]: (state, action) => {
+    const mintFee = { loading: true, error: null, result: null }
+    return { ...state, mintFee }
+  },
+  [TYPES.GET_MINT_FEE_SUCCESS]: (state, action) => {
+    const result = action.payload
+    const mintFee = { loading: false, error: null, result }
+    return { ...state, mintFee }
+  },
+  [TYPES.GET_MINT_FEE_FAILURE]: (state, action) => {
+    const error = action.payload
+    const mintFee = { loading: false, error, result: null }
+    return { ...state, mintFee }
   }
 })

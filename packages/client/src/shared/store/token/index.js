@@ -1,7 +1,6 @@
 // Place these into a folder - Incase a store starts having many actions / sagas etc
 // We can easily split them up into separate files
 import { makeAction, createReducer } from 'shared/utils/redux-utils'
-import { TypeStrikethrough } from 'react-bootstrap-icons'
 
 const INITIAL_STATE = {
   balance: {

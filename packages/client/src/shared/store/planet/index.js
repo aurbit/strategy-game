@@ -76,9 +76,9 @@ export const TYPES = {
   CALL_BUY_TILE_REQUEST: 'CALL_BUY_TILE_REQUEST',
   CALL_BUY_TILE_SUCCESS: 'CALL_BUY_TILE_SUCCESS',
   CALL_BUY_TILE_FAILURE: 'CALL_BUY_TILE_FAILURE',
-  CALL_NEW_PLAYER_REQUEST: 'CALL_NEW_PLAYER_REQUEST',
-  CALL_NEW_PLAYER_SUCCESS: 'CALL_NEW_PLAYER_SUCCESS',
-  CALL_NEW_PLAYER_FAILURE: 'CALL_NEW_PLAYER_FAILURE',
+  NEW_PLAYER_REQUEST: 'NEW_PLAYER_REQUEST',
+  NEW_PLAYER_SUCCESS: 'NEW_PLAYER_SUCCESS',
+  NEW_PLAYER_FAILURE: 'NEW_PLAYER_FAILURE',
   GET_IS_PLAYING_REQUEST: 'GET_IS_PLAYING_REQUEST',
   GET_IS_PLAYING_SUCCESS: 'GET_IS_PLAYING_SUCCESS',
   GET_IS_PLAYING_FAILURE: 'GET_IS_PLAYING_FAILURE',
@@ -111,9 +111,9 @@ export const ACTIONS = {
   callBuyTileRequest: makeAction(TYPES.CALL_BUY_TILE_REQUEST, 'payload'),
   callBuyTileSuccess: makeAction(TYPES.CALL_BUY_TILE_SUCCESS, 'payload'),
   callBuyTileFailure: makeAction(TYPES.CALL_BUY_TILE_FAILURE, 'payload'),
-  callNewPlayerRequest: makeAction(TYPES.CALL_NEW_PLAYER_REQUEST, 'payload'),
-  callNewPlayerSuccess: makeAction(TYPES.CALL_NEW_PLAYER_SUCCESS, 'payload'),
-  callNewPlayerFailure: makeAction(TYPES.CALL_NEW_PLAYER_FAILURE, 'payload'),
+  callNewPlayerRequest: makeAction(TYPES.NEW_PLAYER_REQUEST, 'payload'),
+  callNewPlayerSuccess: makeAction(TYPES.NEW_PLAYER_SUCCESS, 'payload'),
+  callNewPlayerFailure: makeAction(TYPES.NEW_PLAYER_FAILURE, 'payload'),
   getIsPlayingRequest: makeAction(TYPES.GET_IS_PLAYING_REQUEST, 'payload'),
   getIsPlayingSuccess: makeAction(TYPES.GET_IS_PLAYING_SUCCESS, 'payload'),
   getIsPlayingFailure: makeAction(TYPES.GET_IS_PLAYING_FAILURE, 'payload'),
@@ -179,14 +179,14 @@ export const planetReducer = createReducer(initialState, {
     const buyTile = { loading: false, error: action.payload, message: null }
     return { ...state, buyTile }
   },
-  [TYPES.CALL_NEW_PLAYER_REQUEST]: state => {
+  [TYPES.NEW_PLAYER_REQUEST]: state => {
     return { ...state, newPlayer: { loading: true, error: null, result: null } }
   },
-  [TYPES.CALL_NEW_PLAYER_SUCCESS]: (state, action) => {
+  [TYPES.NEW_PLAYER_SUCCESS]: (state, action) => {
     const newPlayer = { loading: false, error: null, result: action.payload }
     return { ...state, newPlayer }
   },
-  [TYPES.CALL_NEW_PLAYER_FAILURE]: (state, action) => {
+  [TYPES.NEW_PLAYER_FAILURE]: (state, action) => {
     const newPlayer = { loading: false, error: action.payload, message: null }
     return { ...state, newPlayer }
   },

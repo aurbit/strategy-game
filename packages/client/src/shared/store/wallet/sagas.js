@@ -7,25 +7,7 @@ function * initWalletRequest () {
   if (window.ethereum) {
     const { ethereum } = window
     yield ethereumEventListeners()
-    const network = ethereum.chainId
 
-    console.log('laskjdfl;aksjdf;lakjsdf', network)
-
-    switch (network) {
-      case '0x3': {
-        yield put(CHAIN_ACTIONS.setNetwork(NETWORKS.ROPSTEN))
-        break
-      }
-
-      case '0xNaN': {
-        yield put(CHAIN_ACTIONS.setNetwork(NETWORKS.DEVELOPMENT))
-        break
-      }
-
-      default:
-        alert('Network unsupported')
-        break
-    }
     yield put(
       ACTIONS.initWalletSuccess({
         address: ethereum.selectedAddress,
@@ -35,6 +17,29 @@ function * initWalletRequest () {
   }
 }
 
+function * initWalletSuccess () {
+  const { ethereum } = window
+
+  const network = yield ethereum.chainId
+
+  switch (network) {
+    case '0x3': {
+      yield put(CHAIN_ACTIONS.setNetwork(NETWORKS.ROPSTEN))
+      break
+    }
+
+    case '0xNaN': {
+      yield put(CHAIN_ACTIONS.setNetwork(NETWORKS.DEVELOPMENT))
+      break
+    }
+
+    default:
+      alert('Network unsupported')
+      break
+  }
+}
+
 export function * rootWalletSagas () {
   yield takeLatest(TYPES.INIT_WALLET_REQUEST, initWalletRequest)
+  yield takeLatest(TYPES.INIT_WALLET_SUCCESS, initWalletSuccess)
 }
