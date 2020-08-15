@@ -76,7 +76,7 @@ export default ({
               <Row className='m-3'>
                 <Button onClick={handleCreateNewPlayer}>Join Game</Button>
               </Row>
-              <Row className='m-3'>
+              {/* <Row className='m-3'>
                 <Button onClick={handleGetPlayersClick}>Get Players</Button>
               </Row>
               <Row className='m-3'>
@@ -84,7 +84,7 @@ export default ({
               </Row>
               <Row className='m-3'>
                 <Button onClick={handleIsPlayingClick}>Is Playing?</Button>
-              </Row>
+              </Row> */}
               <Row className='m-3'>
                 <Button onClick={handleBuyTileClick}>BUY {activeTile}</Button>
               </Row>

@@ -56,6 +56,10 @@ const TileOwned = ({ ind, owner, bal, LastMineBlockTime }) => {
             <h3># {ind}</h3>
           </Row>
           <Row className='mt-1'>Owner: {gotAvatar.name}</Row>
+          <Row>Tile Number: {ind}</Row>
+          <Row>Owner AvatarId: {owner}</Row>
+          <Row>Allocated AUR: {bal}</Row>
+          <Row>Last Mined Block: {LastMineBlockTime}</Row>
           <Row>
             {gotAvatar.dna ? (
               <PlayerAvatar dna={gotAvatar.dna} id={gotAvatar.avatarId} />
@@ -63,10 +67,6 @@ const TileOwned = ({ ind, owner, bal, LastMineBlockTime }) => {
               <Spinner animation='grow' variant='warning' />
             )}
           </Row>
-          <Row>Tile Number: {ind}</Row>
-          <Row>Owner AvatarId: {owner}</Row>
-          <Row>Allocated AUR: {bal}</Row>
-          <Row>Last Mined Block: {LastMineBlockTime}</Row>
         </Col>
       ) : (
         <Spinner animation='grow' />

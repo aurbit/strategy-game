@@ -28,7 +28,7 @@ function * callMintAvatar ({ payload }) {
   }
 
   const trx = { method: 'eth_sendTransaction', params: [txObject] }
-  return window.ethereum.request(trx, (err, data) => {
+  return window.ethereum.send(trx, (err, data) => {
     if (err) {
       store.dispatch(AVATAR_ACTIONS.callMintAvatarFailure('Failed to Mint'))
     } else {
@@ -107,8 +107,12 @@ function * getAvatarRequest (action) {
 
 function * getMintFeeRequest () {
   const contract = yield select(selectAvatarContract)
-  const result = yield contract.methods.createAvatarFee().call()
-  yield put(AVATAR_ACTIONS.getMintFeeSuccess(result))
+  if (contract.methods?.createAvatarFee) {
+    const result = yield contract.methods?.createAvatarFee().call()
+    yield put(AVATAR_ACTIONS.getMintFeeSuccess(result))
+  } else {
+    yield put(AVATAR_ACTIONS.getMintFeeSuccess('10000000000000000'))
+  }
   try {
   } catch (err) {
     yield put(AVATAR_ACTIONS.getMintFeeFailure(err))

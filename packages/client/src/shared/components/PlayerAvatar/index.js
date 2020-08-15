@@ -99,24 +99,26 @@ const PlayerAvatar = ({ dna, name, id }) => {
 
           <Row className='pt'>
             <Col>
-              <b>Strg:</b> {strength}
+              <b>Strength:</b> {strength}
             </Col>
             <Col>
               <b>Intel:</b> {intel}
             </Col>
-            <Col>
-              <b>Vita:</b> {vitality}
-            </Col>
           </Row>
           <Row>
             <Col>
-              <b>id:</b> {id}
+              <b>Vitality:</b> {vitality}
             </Col>
             <Col>
               <b>Race:</b> {race}
             </Col>
+          </Row>
+          <Row>
             <Col>
               <b>Gender:</b> {gender}
+            </Col>
+            <Col>
+              <b>id:</b> {id}
             </Col>
           </Row>
         </div>
