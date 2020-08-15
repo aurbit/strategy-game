@@ -142,18 +142,24 @@ function * aerialAttackRequest (action) {
 }
 
 function * getAvatarAurBalanceRequest () {
-  const avatar = yield select(selectAvatar)
-  const players = yield select(selectPlayers)
+  try {
+    const avatar = yield select(selectAvatar)
+    const players = yield select(selectPlayers)
+    const provider = yield select(selectProvider)
 
-  if (players.length && avatar) {
-    for (let n in players) {
-      if (players[n].avatarId === avatar.id) {
-        yield put(ACTIONS.getAvatarAurBalanceSuccess(players[n].balance))
-        return
+    if (players.length && avatar) {
+      for (let n in players) {
+        if (players[n].avatarId === avatar.id) {
+          const balance = provider.utils.fromWei(players[n].balance)
+          yield put(ACTIONS.getAvatarAurBalanceSuccess(balance))
+          return
+        }
       }
+    } else {
+      yield put(ACTIONS.getAvatarAurBalanceFailure('Player not found'))
     }
-  } else {
-    yield put(ACTIONS.getAvatarAurBalanceFailure('Player not found'))
+  } catch (err) {
+    yield put(ACTIONS.getAvatarAurBalanceFailure(err))
   }
 }
 
@@ -221,10 +227,8 @@ export function * rootPlanetSagas () {
   yield takeLatest(TYPES.GET_TILE_FEE_REQUEST, getTileFeeRequest)
   yield takeLatest(TYPES.CALL_BUY_TILE_REQUEST, buyTileRequest)
   yield takeLatest(TYPES.NEW_PLAYER_REQUEST, newPlayerRequest)
-  // yield takeLatest(TYPES.CALL_BUY_TILE_SUCCESS, callBuyTitleSuccess)
   yield takeLatest(TYPES.GET_IS_PLAYING_REQUEST, isPlayingRequest)
   yield takeLatest(TYPES.GET_PLAYERS_REQUEST, getPlayersRequest)
-  yield takeLatest(TYPES.GET_PLAYERS_SUCCESS, getAvatarAurBalanceRequest)
 
   yield takeLatest(TYPES.GET_TILES_REQUEST, getTilesRequest)
   yield takeLatest(TYPES.AERIAL_ATTACK_REQUEST, aerialAttackRequest)

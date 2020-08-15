@@ -32,14 +32,11 @@ export default () => {
 
   // Check if the user has any avatars
   React.useEffect(() => {
-    if (address) dispatch(AVATAR_ACTIONS.getAvatarsRequest())
-  }, [address, dispatch])
-
-  React.useEffect(() => {
-    if (providersReady) {
+    if (address && providersReady) {
+      dispatch(AVATAR_ACTIONS.getAvatarsRequest())
       dispatch(TOKEN_ACTIONS.getAurBalanceRequest())
     }
-  }, [providersReady, address, dispatch])
+  }, [address && providersReady, dispatch])
 
   return walletReady && providersReady ? (
     <div>

@@ -1,11 +1,11 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Col, Row, Button, Container } from 'react-bootstrap'
+import { Col, Row, Button, Spinner, Container } from 'react-bootstrap'
 import { selectActiveTile } from 'shared/store/map/selectors'
 import { selectAurBalance } from 'shared/store/planet/selectors'
-import { selectProvider } from 'shared/store/chain/selectors'
 import PlayerAvatar from 'shared/components/PlayerAvatar'
 import SendAurToAvatar from 'shared/components/SendAurToAvatar'
+import ShowTile from './ShowTile'
 
 export default ({
   mapReady,
@@ -33,7 +33,9 @@ export default ({
         <Button
           className={activeMenu === 0 ? 'btn btn-dark' : 'btn btn-light'}
           style={styles.menuButton}
-          onClick={() => setActiveMenu(0)}
+          onClick={() => {
+            setActiveMenu(0)
+          }}
         >
           <b>INFO</b>
         </Button>
@@ -49,13 +51,8 @@ export default ({
         {activeMenu === 0 ? (
           <Col>
             {activeTile ? (
-              <Col>
-                <Row>Tile Number: {activeTile}</Row>
-                <Row>
-                  <Button onClick={handleBuyTileClick}>BUY {activeTile}</Button>
-                </Row>
-              </Col>
-            ) : (
+              <ShowTile activeTile={activeTile} />
+            ) : avatar ? (
               <Col>
                 <Row>
                   <ShowPlayerInfo
@@ -64,8 +61,13 @@ export default ({
                     id={avatar.id}
                   />
                 </Row>
-                <Row>Balance: {aurBalance} AUR</Row>
+                <Row>
+                  <b>Available: </b>
+                  {aurBalance ? aurBalance : <Spinner />} AUR
+                </Row>
               </Col>
+            ) : (
+              <Spinner animation='grow' />
             )}
           </Col>
         ) : (
@@ -201,7 +203,9 @@ const AerialAttackComponent = ({ handleAerialAttack }) => {
 const ShowPlayerInfo = ({ dna, name, id }) => {
   return (
     <>
-      <PlayerAvatar dna={dna} name={name} id={id} />
+      {dna && name && id ? (
+        <PlayerAvatar dna={dna} name={name} id={id} />
+      ) : null}
     </>
   )
 }

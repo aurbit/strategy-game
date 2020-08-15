@@ -3,35 +3,35 @@ import { Container, Col, Row, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { ACTIONS as PLANET_ACTIONS } from 'shared/store/planet'
 import { ACTIONS as MAP_ACTIONS } from 'shared/store/map'
+
 import { useHistory } from 'react-router-dom'
 import ControlPanel from 'pages/planet/components/ControlPanel'
 import Map from 'pages/planet/components/Map'
 import { selectActiveTile } from 'shared/store/map/selectors'
 import { selectAvatar } from 'shared/store/avatar/selectors'
+import { selectPlayers } from 'shared/store/planet/selectors'
 
 export default props => {
   const [mapReady, setMapReady] = React.useState(false)
   const [hoverTile, setHoverTile] = React.useState(0)
   const activeTile = useSelector(selectActiveTile)
   const avatar = useSelector(selectAvatar)
+  const players = useSelector(selectPlayers)
   const dispatch = useDispatch()
 
   // get the tile price
   React.useEffect(() => {
-    dispatch(PLANET_ACTIONS.getTileFeeRequest())
-  }, [dispatch])
-
-  React.useEffect(() => {
-    dispatch(PLANET_ACTIONS.getTilesRequest())
-  }, [dispatch])
-
-  React.useEffect(() => {
     dispatch(MAP_ACTIONS.getMap('EARTH'))
+    dispatch(PLANET_ACTIONS.getTileFeeRequest())
+    dispatch(PLANET_ACTIONS.getTilesRequest())
+    dispatch(PLANET_ACTIONS.getPlayersRequest())
   }, [dispatch])
 
   React.useEffect(() => {
-    dispatch(PLANET_ACTIONS.getPlayersRequest())
-  }, [dispatch, avatar])
+    if (avatar && players) {
+      dispatch(PLANET_ACTIONS.getAatarAurBalanceRequest())
+    }
+  }, [avatar, players, mapReady, dispatch])
 
   const handleIsPlayingRequest = id => {
     dispatch(PLANET_ACTIONS.getIsPlayingRequest(id))
