@@ -31,10 +31,7 @@ function * buyTileRequest (action) {
       .buyTile(tileIndex, avatar.id)
       .encodeABI()
 
-    const txCount = yield provider.eth.getTransactionCount(address)
-
     const txObject = {
-      nonce: provider.utils.toHex(txCount),
       from: address,
       to: contract._address,
       value: provider.utils.toHex(tileFee.value),
@@ -59,15 +56,11 @@ function * buyTileRequest (action) {
 function * newPlayerRequest () {
   try {
     const contract = yield select(selectPlanetContract)
-    const provider = yield select(selectProvider)
     const address = yield select(selectAddress)
     const avatar = yield select(selectAvatar)
-
     const rawTrx = yield contract.methods.createNewPlayer(avatar.id).encodeABI()
-    const txCount = yield provider.eth.getTransactionCount(address)
 
     const txObject = {
-      nonce: provider.utils.toHex(txCount),
       from: address,
       to: contract._address,
       data: rawTrx
@@ -90,19 +83,13 @@ function * newPlayerRequest () {
 function * isPlayingRequest () {
   try {
     const contract = yield select(selectPlanetContract)
-    const provider = yield select(selectProvider)
     const address = yield select(selectAddress)
     const avatar = yield select(selectAvatar)
-
     const rawTrx = yield contract.methods.isPlaying(avatar.id).encodeABI()
-    const txCount = yield provider.eth.getTransactionCount(address)
 
     const txObject = {
-      nonce: provider.utils.toHex(txCount),
       from: address,
       to: contract._address,
-      gasLimit: provider.utils.toHex(6721975),
-      gasPrice: provider.utils.toHex(provider.utils.toWei('50', 'gwei')),
       data: rawTrx
     }
 
@@ -154,31 +141,25 @@ function * aerialAttackRequest (action) {
   }
 }
 
-function * getAurPlanetBalance () {
-  yield put(ACTIONS.getPlanetAurBalanceRequest())
-}
-
-function * getAurRequest () {
+function * getAvatarAurBalanceRequest () {
   const avatar = yield select(selectAvatar)
   const players = yield select(selectPlayers)
-  const { result } = players
 
-  if (players.result && avatar) {
-    for (let n in result) {
-      if (result[n].avatarId === avatar.id) {
-        yield put(ACTIONS.getPlanetAurBalanceSuccess(result[n].balance))
+  if (players.length && avatar) {
+    for (let n in players) {
+      if (players[n].avatarId === avatar.id) {
+        yield put(ACTIONS.getAvatarAurBalanceSuccess(players[n].balance))
         return
       }
     }
+  } else {
+    yield put(ACTIONS.getAvatarAurBalanceFailure('Player not found'))
   }
 }
 
 function * allocateTokensRequest (action) {
-  console.log(action)
-
-  const contract = yield select(selectPlanetContract)
   try {
-    const provider = yield select(selectProvider)
+    const contract = yield select(selectPlanetContract)
     const address = yield select(selectAddress)
     const avatar = yield select(selectAvatar)
     const { index, amount } = action.payload
@@ -187,14 +168,9 @@ function * allocateTokensRequest (action) {
       .allocate(index, avatar.id, amount)
       .encodeABI()
 
-    const txCount = yield provider.eth.getTransactionCount(address)
-
     const txObject = {
-      nonce: provider.utils.toHex(txCount),
       from: address,
       to: contract._address,
-      gasLimit: provider.utils.toHex(6721975),
-      gasPrice: provider.utils.toHex(provider.utils.toWei('50', 'gwei')),
       data: rawTrx
     }
 
@@ -213,7 +189,6 @@ function * allocateTokensRequest (action) {
 
 function * deallocateTokensRequest (action) {
   const contract = yield select(selectPlanetContract)
-  const provider = yield select(selectProvider)
   const address = yield select(selectAddress)
   const avatar = yield select(selectAvatar)
   const { index, amount } = action.payload
@@ -223,14 +198,9 @@ function * deallocateTokensRequest (action) {
       .deallocate(index, avatar.id, amount)
       .encodeABI()
 
-    const txCount = yield provider.eth.getTransactionCount(address)
-
     const txObject = {
-      nonce: provider.utils.toHex(txCount),
       from: address,
       to: contract._address,
-      gasLimit: provider.utils.toHex(6721975),
-      gasPrice: provider.utils.toHex(provider.utils.toWei('50', 'gwei')),
       data: rawTrx
     }
 
@@ -254,11 +224,14 @@ export function * rootPlanetSagas () {
   // yield takeLatest(TYPES.CALL_BUY_TILE_SUCCESS, callBuyTitleSuccess)
   yield takeLatest(TYPES.GET_IS_PLAYING_REQUEST, isPlayingRequest)
   yield takeLatest(TYPES.GET_PLAYERS_REQUEST, getPlayersRequest)
-  yield takeLatest(TYPES.GET_PLAYERS_SUCCESS, getAurPlanetBalance)
+  yield takeLatest(TYPES.GET_PLAYERS_SUCCESS, getAvatarAurBalanceRequest)
 
   yield takeLatest(TYPES.GET_TILES_REQUEST, getTilesRequest)
   yield takeLatest(TYPES.AERIAL_ATTACK_REQUEST, aerialAttackRequest)
-  // yield takeLatest(TYPES.GET_PLANET_AUR_BALANCE_REQUEST, getAurRequest)
+  yield takeLatest(
+    TYPES.GET_AVATAR_AUR_BALANCE_REQUEST,
+    getAvatarAurBalanceRequest
+  )
 
   yield takeLatest(TYPES.ALLOCATE_TOKENS_REQUEST, allocateTokensRequest)
   yield takeLatest(TYPES.DEALLOCATE_TOKENS_REQUEST, deallocateTokensRequest)

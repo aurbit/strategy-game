@@ -7,6 +7,7 @@ import {
 } from 'shared/store/chain/selectors'
 import { selectAddress } from 'shared/store/wallet/selectors'
 import { store } from 'store'
+import { ACTIONS as PLANET_ACTIONS } from 'shared/store/planet'
 
 function * getBalanceRequest () {
   const address = yield select(selectAddress)
@@ -49,7 +50,17 @@ function * sendPlanetAurRequest (action) {
   })
 }
 
+function * sendPlanetAurSuccess () {
+  try {
+    const result = yield put(PLANET_ACTIONS.getPlayersRequest())
+    yield put(PLANET_ACTIONS.getPlayersSuccess(result))
+  } catch (err) {
+    yield put(PLANET_ACTIONS.getPlayersFailure(err))
+  }
+}
+
 export function * rootTokenSagas () {
-  yield takeLatest(TYPES.GET_AUR_BALANCE_REQUEST, getBalanceRequest)
+  yield takeLatest(TYPES.WALLET_AUR_BALANCE_REQUEST, getBalanceRequest)
   yield takeLatest(TYPES.SEND_PLANET_AUR_REQUEST, sendPlanetAurRequest)
+  yield takeLatest(TYPES.SEND_PLANET_AUR_SUCCESS, sendPlanetAurSuccess)
 }

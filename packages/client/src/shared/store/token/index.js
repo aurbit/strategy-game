@@ -17,9 +17,9 @@ const INITIAL_STATE = {
 
 // Action Types
 export const TYPES = {
-  GET_AUR_BALANCE_REQUEST: 'GET_AUR_BALANCE_REQUEST',
-  GET_AUR_BALANCE_SUCCESS: 'GET_AUR_BALANCE_SUCCESS',
-  GET_AUR_BALANCE_FAILURE: 'GET_AUR_BALANCE_FAILURE',
+  WALLET_AUR_BALANCE_REQUEST: 'WALLET_AUR_BALANCE_REQUEST',
+  WALLET_AUR_BALANCE_SUCCESS: 'WALLET_AUR_BALANCE_SUCCESS',
+  WALLET_AUR_BALANCE_FAILURE: 'WALLET_AUR_BALANCE_FAILURE',
   SEND_PLANET_AUR_REQUEST: 'SEND_PLANET_AUR_REQUEST',
   SEND_PLANET_AUR_SUCCESS: 'SEND_PLANET_AUR_SUCCESS',
   SEND_PLANET_AUR_FAILURE: 'SEND_PLANET_AUR_FAILURE'
@@ -29,9 +29,9 @@ export const TYPES = {
 export const ACTIONS = {
   setAurBalance: makeAction(TYPES.SET_AUR_BALANCE, 'payload'),
   setAurBalanceError: makeAction(TYPES.SET_AUR_BALANCE_ERROR, 'payload'),
-  getAurBalanceRequest: makeAction(TYPES.GET_AUR_BALANCE_REQUEST, 'payload'),
-  getAurBalanceSuccess: makeAction(TYPES.GET_AUR_BALANCE_SUCCESS, 'payload'),
-  getAurBalanceFailure: makeAction(TYPES.GET_AUR_BALANCE_FAILURE, 'payload'),
+  getAurBalanceRequest: makeAction(TYPES.WALLET_AUR_BALANCE_REQUEST, 'payload'),
+  getAurBalanceSuccess: makeAction(TYPES.WALLET_AUR_BALANCE_SUCCESS, 'payload'),
+  getAurBalanceFailure: makeAction(TYPES.WALLET_AUR_BALANCE_FAILURE, 'payload'),
   sendPlanetAurRequest: makeAction(TYPES.SEND_PLANET_AUR_REQUEST, 'payload'),
   sendPlanetAurSuccess: makeAction(TYPES.SEND_PLANET_AUR_SUCCESS, 'payload'),
   sendPlanetAurFailure: makeAction(TYPES.SEND_PLANET_AUR_FAILURE, 'payload')
@@ -39,11 +39,11 @@ export const ACTIONS = {
 
 // Reducer
 export const tokenReducer = createReducer(INITIAL_STATE, {
-  [TYPES.GET_AUR_BALANCE_REQUEST]: (state, action) => {
+  [TYPES.WALLET_AUR_BALANCE_REQUEST]: (state, action) => {
     const balance = { loading: true, error: null, value: 0 }
     return { ...state, balance }
   },
-  [TYPES.GET_AUR_BALANCE_SUCCESS]: (state, action) => {
+  [TYPES.WALLET_AUR_BALANCE_SUCCESS]: (state, action) => {
     const balance = {
       loading: false,
       error: null,
@@ -51,7 +51,7 @@ export const tokenReducer = createReducer(INITIAL_STATE, {
     }
     return { ...state, balance }
   },
-  [TYPES.GET_AUR_BALANCE_FAILURE]: (state, action) => {
+  [TYPES.WALLET_AUR_BALANCE_FAILURE]: (state, action) => {
     const balance = { loading: false, error: action?.payload, value: 0 }
     return { ...state, balance }
   },
