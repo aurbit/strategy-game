@@ -11,14 +11,17 @@ export const ethereumEventListeners = () => {
       }
       case '0x1': {
         store.dispatch(ACTIONS.setNetwork({ network: NETWORKS.MAINNET }))
+        alert('We have not deployed contracts to this network, yet.')
         break
       }
       case '0x2a': {
         store.dispatch(ACTIONS.setNetwork({ network: NETWORKS.KOVAN }))
+        alert('We have not deployed contracts to this network, yet.')
         break
       }
       case '0x4': {
         store.dispatch(ACTIONS.setNetwork({ network: NETWORKS.RINKEBY }))
+        alert('We have not deployed contracts to this network, yet.')
         break
       }
       default: {

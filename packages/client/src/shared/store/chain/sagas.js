@@ -2,10 +2,14 @@ import Web3 from 'web3'
 import { store } from 'store'
 import { TYPES, ACTIONS } from './index'
 import { ACTIONS as AVATAR_ACTIONS, AVATAR_EVENTS } from 'shared/store/avatar'
+import { PLANET_EVENTS, ACTIONS as PLANET_ACTIONS } from 'shared/store/planet'
 import { NETWORKS } from 'shared/store/chain'
 import PlanetContractsDEV from 'contracts/development/Planet'
 import TokenContractsDEV from 'contracts/development/AURToken'
 import AvatarContractsDEV from 'contracts/development/AvatarAUR'
+import PlanetContractsROPSTEN from 'contracts/ropsten/Planet'
+import TokenContractsROPSTEN from 'contracts/ropsten/AURToken'
+import AvatarContractsROPSTEN from 'contracts/ropsten/AvatarAUR'
 import { takeLatest, put, select } from 'redux-saga/effects'
 import { selectAddress } from 'shared/store/wallet/selectors'
 import {
@@ -27,11 +31,10 @@ FLOW
 function * initProvider () {
   // Example of getting State from Store in a Saga
   const network = yield select(selectNetwork)
-  if (!network) {
-    throw new Error('Network is missing')
-  }
+
   const port = process.env.REACT_APP_NETWORK_PORT || 7545
-  const key = '0f76dc369ae847dba3d00ac6427f0b42'
+  const key =
+    process.env.REACT_APP_INFURA_KEY || '0f76dc369ae847dba3d00ac6427f0b42'
   const url = (network, key) => `wss://${network}.infura.io/ws/v3/${key}`
 
   let web3 = null
@@ -43,20 +46,20 @@ function * initProvider () {
       web3 = new Web3(wsPro)
       break
     }
-    case NETWORKS.MAINNET: {
-      web3 = new Web3(url(network, key))
-      break
-    }
     case NETWORKS.ROPSTEN: {
       web3 = new Web3(url(network, key))
       break
     }
+    case NETWORKS.MAINNET: {
+      alert('We have not deployed contracts to this network, yet.')
+      break
+    }
     case NETWORKS.KOVAN: {
-      web3 = new Web3(url(network, key))
+      alert('We have not deployed contracts to this network, yet.')
       break
     }
     case NETWORKS.RINKEBY: {
-      web3 = new Web3(url(network, key))
+      alert('We have not deployed contracts to this network, yet.')
       break
     }
     default: {
@@ -64,6 +67,7 @@ function * initProvider () {
         `ws://localhost:${port}`
       )
       web3 = new Web3(wsPro)
+      break
     }
   }
   yield put(ACTIONS.setProvider({ provider: web3 }))
@@ -75,6 +79,7 @@ function * initArtifacts () {
   let avatar = null
   let token = null
   const network = yield select(selectNetwork)
+
   switch (network) {
     case NETWORKS.DEVELOPMENT: {
       const { address: a1, artifact: a2 } = AvatarContractsDEV
@@ -85,9 +90,23 @@ function * initArtifacts () {
       planet = { address: p1, artifact: p2 }
       break
     }
-    case NETWORKS.MAINNET:
-    case NETWORKS.ROPSTEN:
-    case NETWORKS.RINKEBY:
+    case NETWORKS.ROPSTEN: {
+      const { address: a1, artifact: a2 } = AvatarContractsROPSTEN
+      const { address: t1, artifact: t2 } = TokenContractsROPSTEN
+      const { address: p1, artifact: p2 } = PlanetContractsROPSTEN
+      avatar = { address: a1, artifact: a2 }
+      token = { address: t1, artifact: t2 }
+      planet = { address: p1, artifact: p2 }
+      break
+    }
+    case NETWORKS.MAINNET: {
+      alert('Sorry, we do not support this network, yet.')
+      break
+    }
+    case NETWORKS.RINKEBY: {
+      alert('Sorry, we do not support this network, yet.')
+      break
+    }
     default: {
       throw new Error('Network Currently Unsupported')
     }
@@ -116,7 +135,7 @@ function * initContracts () {
   planetListener.on('data', data => store.dispatch(ACTIONS.planetEvent(data)))
 
   const tokenListener = token.events.allEvents()
-  tokenListener.on('data', console.log)
+  tokenListener.on('data', data => store.dispatch(ACTIONS.tokenEvent(data)))
 }
 
 function * avatarContractEvent (action) {
@@ -135,7 +154,30 @@ function * avatarContractEvent (action) {
         store.dispatch(
           AVATAR_ACTIONS.callMintAvatarSuccess({ name, dna, avatarId })
         )
+      break
     }
+
+    case PLANET_EVENTS.TileChanged: {
+      yield put(PLANET_ACTIONS.getTilesRequest())
+      break
+    }
+    default:
+      break
+  }
+}
+
+function * planetContractEvent (action) {
+  const {
+    payload: { event }
+  } = action
+
+  switch (event) {
+    case PLANET_EVENTS.TileChanged: {
+      yield put(PLANET_ACTIONS.getTilesRequest())
+      break
+    }
+    default:
+      break
   }
 }
 
@@ -144,4 +186,5 @@ export function * rootChainSagas () {
   yield takeLatest(TYPES.INIT_ARTIFACTS, initArtifacts)
   yield takeLatest(TYPES.INIT_CONTRACTS, initContracts)
   yield takeLatest(TYPES.AVATAR_CONTRACT_EVENT, avatarContractEvent)
+  yield takeLatest(TYPES.PLANET_CONTRACT_EVENT, planetContractEvent)
 }

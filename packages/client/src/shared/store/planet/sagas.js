@@ -4,7 +4,7 @@ import { takeLatest, put, select } from 'redux-saga/effects'
 import { selectPlanetContract } from 'shared/store/chain/selectors'
 import { selectProvider } from 'shared/store/chain/selectors'
 import { selectAddress } from 'shared/store/wallet/selectors'
-import { selectTileFee, selectTiles } from 'shared/store/planet/selectors'
+import { selectTileFee, selectPlayers } from 'shared/store/planet/selectors'
 import { selectAvatar, selectAvatarId } from '../avatar/selectors'
 import { ACTIONS as CHAIN_ACTIONS } from '../chain'
 
@@ -24,7 +24,6 @@ function * buyTileRequest (action) {
   const address = yield select(selectAddress)
   const avatar = yield select(selectAvatar)
   const tileFee = yield select(selectTileFee)
-  const tiles = yield select(selectTiles)
 
   try {
     const tileIndex = action.payload
@@ -32,15 +31,10 @@ function * buyTileRequest (action) {
       .buyTile(tileIndex, avatar.id)
       .encodeABI()
 
-    const txCount = yield provider.eth.getTransactionCount(address)
-
     const txObject = {
-      nonce: provider.utils.toHex(txCount),
       from: address,
       to: contract._address,
       value: provider.utils.toHex(tileFee.value),
-      gasLimit: provider.utils.toHex(6721975),
-      gas: provider.utils.toHex(6721975),
       data: rawTrx
     }
 
@@ -62,19 +56,13 @@ function * buyTileRequest (action) {
 function * newPlayerRequest () {
   try {
     const contract = yield select(selectPlanetContract)
-    const provider = yield select(selectProvider)
     const address = yield select(selectAddress)
     const avatar = yield select(selectAvatar)
-
     const rawTrx = yield contract.methods.createNewPlayer(avatar.id).encodeABI()
-    const txCount = yield provider.eth.getTransactionCount(address)
 
     const txObject = {
-      nonce: provider.utils.toHex(txCount),
       from: address,
       to: contract._address,
-      gasLimit: provider.utils.toHex(6721975),
-      gasPrice: provider.utils.toHex(provider.utils.toWei('20', 'gwei')),
       data: rawTrx
     }
 
@@ -95,19 +83,13 @@ function * newPlayerRequest () {
 function * isPlayingRequest () {
   try {
     const contract = yield select(selectPlanetContract)
-    const provider = yield select(selectProvider)
     const address = yield select(selectAddress)
     const avatar = yield select(selectAvatar)
-
     const rawTrx = yield contract.methods.isPlaying(avatar.id).encodeABI()
-    const txCount = yield provider.eth.getTransactionCount(address)
 
     const txObject = {
-      nonce: provider.utils.toHex(txCount),
       from: address,
       to: contract._address,
-      gasLimit: provider.utils.toHex(6721975),
-      gasPrice: provider.utils.toHex(provider.utils.toWei('10', 'gwei')),
       data: rawTrx
     }
 
@@ -159,13 +141,102 @@ function * aerialAttackRequest (action) {
   }
 }
 
+function * getAvatarAurBalanceRequest () {
+  try {
+    const avatar = yield select(selectAvatar)
+    const players = yield select(selectPlayers)
+    const provider = yield select(selectProvider)
+
+    if (players.length && avatar) {
+      for (let n in players) {
+        if (players[n].avatarId === avatar.id) {
+          const balance = provider.utils.fromWei(players[n].balance)
+          yield put(ACTIONS.getAvatarAurBalanceSuccess(balance))
+          return
+        }
+      }
+    } else {
+      yield put(ACTIONS.getAvatarAurBalanceFailure('Player not found'))
+    }
+  } catch (err) {
+    yield put(ACTIONS.getAvatarAurBalanceFailure(err))
+  }
+}
+
+function * allocateTokensRequest (action) {
+  try {
+    const contract = yield select(selectPlanetContract)
+    const address = yield select(selectAddress)
+    const avatar = yield select(selectAvatar)
+    const { index, amount } = action.payload
+
+    const rawTrx = yield contract.methods
+      .allocate(index, avatar.id, amount)
+      .encodeABI()
+
+    const txObject = {
+      from: address,
+      to: contract._address,
+      data: rawTrx
+    }
+
+    const payload = { method: 'eth_sendTransaction', params: [txObject] }
+    yield window.ethereum.send(payload, (err, data) => {
+      if (err) {
+        store.dispatch(ACTIONS.allocateTokensSuccess(data))
+      } else if (data) {
+        store.dispatch(ACTIONS.allocateTokensFailure(err))
+      }
+    })
+  } catch (err) {
+    yield put(ACTIONS.allocateTokensFailure(err))
+  }
+}
+
+function * deallocateTokensRequest (action) {
+  const contract = yield select(selectPlanetContract)
+  const address = yield select(selectAddress)
+  const avatar = yield select(selectAvatar)
+  const { index, amount } = action.payload
+
+  try {
+    const rawTrx = yield contract.methods
+      .deallocate(index, avatar.id, amount)
+      .encodeABI()
+
+    const txObject = {
+      from: address,
+      to: contract._address,
+      data: rawTrx
+    }
+
+    const payload = { method: 'eth_sendTransaction', params: [txObject] }
+    yield window.ethereum.send(payload, (err, data) => {
+      if (err) {
+        store.dispatch(ACTIONS.allocateTokensSuccess(data))
+      } else if (data) {
+        store.dispatch(ACTIONS.allocateTokensFailure(err))
+      }
+    })
+  } catch (err) {
+    yield put(ACTIONS.deallocateTokensFailure(err))
+  }
+}
+
 export function * rootPlanetSagas () {
   yield takeLatest(TYPES.GET_TILE_FEE_REQUEST, getTileFeeRequest)
   yield takeLatest(TYPES.CALL_BUY_TILE_REQUEST, buyTileRequest)
-  yield takeLatest(TYPES.CALL_NEW_PLAYER_REQUEST, newPlayerRequest)
-  // yield takeLatest(TYPES.CALL_BUY_TILE_SUCCESS, callBuyTitleSuccess)
+  yield takeLatest(TYPES.NEW_PLAYER_REQUEST, newPlayerRequest)
   yield takeLatest(TYPES.GET_IS_PLAYING_REQUEST, isPlayingRequest)
   yield takeLatest(TYPES.GET_PLAYERS_REQUEST, getPlayersRequest)
+
   yield takeLatest(TYPES.GET_TILES_REQUEST, getTilesRequest)
   yield takeLatest(TYPES.AERIAL_ATTACK_REQUEST, aerialAttackRequest)
+  yield takeLatest(
+    TYPES.GET_AVATAR_AUR_BALANCE_REQUEST,
+    getAvatarAurBalanceRequest
+  )
+
+  yield takeLatest(TYPES.ALLOCATE_TOKENS_REQUEST, allocateTokensRequest)
+  yield takeLatest(TYPES.DEALLOCATE_TOKENS_REQUEST, deallocateTokensRequest)
 }

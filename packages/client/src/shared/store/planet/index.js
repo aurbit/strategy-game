@@ -8,6 +8,11 @@ export const PLANETS = {
   VENUS: 'VENUS'
 }
 
+export const PLANET_EVENTS = {
+  TileChanged: 'TileChanged',
+  PlayerBalanceChange: 'PlayerBalanceChange'
+}
+
 const initialState = {
   onPlanet: PLANETS.EARTH,
   tileFee: {
@@ -44,6 +49,21 @@ const initialState = {
     loading: false,
     error: null,
     result: null
+  },
+  aurBalance: {
+    loading: false,
+    error: null,
+    result: 0
+  },
+  allocate: {
+    loading: false,
+    error: null,
+    result: null
+  },
+  deallocate: {
+    loading: false,
+    error: null,
+    result: null
   }
 }
 
@@ -56,9 +76,9 @@ export const TYPES = {
   CALL_BUY_TILE_REQUEST: 'CALL_BUY_TILE_REQUEST',
   CALL_BUY_TILE_SUCCESS: 'CALL_BUY_TILE_SUCCESS',
   CALL_BUY_TILE_FAILURE: 'CALL_BUY_TILE_FAILURE',
-  CALL_NEW_PLAYER_REQUEST: 'CALL_NEW_PLAYER_REQUEST',
-  CALL_NEW_PLAYER_SUCCESS: 'CALL_NEW_PLAYER_SUCCESS',
-  CALL_NEW_PLAYER_FAILURE: 'CALL_NEW_PLAYER_FAILURE',
+  NEW_PLAYER_REQUEST: 'NEW_PLAYER_REQUEST',
+  NEW_PLAYER_SUCCESS: 'NEW_PLAYER_SUCCESS',
+  NEW_PLAYER_FAILURE: 'NEW_PLAYER_FAILURE',
   GET_IS_PLAYING_REQUEST: 'GET_IS_PLAYING_REQUEST',
   GET_IS_PLAYING_SUCCESS: 'GET_IS_PLAYING_SUCCESS',
   GET_IS_PLAYING_FAILURE: 'GET_IS_PLAYING_FAILURE',
@@ -70,7 +90,16 @@ export const TYPES = {
   GET_TILES_FAILURE: 'GET_TILES_FAILURE',
   AERIAL_ATTACK_REQUEST: 'AERIAL_ATTACK_REQUEST',
   AERIAL_ATTACK_SUCCESS: 'AERIAL_ATTACK_SUCCESS',
-  AERIAL_ATTACK_FAILURE: 'AERIAL_ATTACK_FAILURE'
+  AERIAL_ATTACK_FAILURE: 'AERIAL_ATTACK_FAILURE',
+  GET_AVATAR_AUR_BALANCE_REQUEST: 'GET_AVATAR_AUR_BALANCE_REQUEST',
+  GET_AVATAR_AUR_BALANCE_SUCCESS: 'GET_AVATAR_AUR_BALANCE_SUCCESS',
+  GET_AVATAR_AUR_BALANCE_FAILURE: 'GET_AVATAR_AUR_BALANCE_FAILURE',
+  ALLOCATE_TOKENS_REQUEST: 'ALLOCATE_TOKENS_REQUEST',
+  ALLOCATE_TOKENS_SUCCESS: 'ALLOCATE_TOKENS_SUCCESS',
+  ALLOCATE_TOKENS_FAILURE: 'ALLOCATE_TOKENS_FAILURE',
+  DEALLOCATE_TOKENS_REQUEST: 'DEALLOCATE_TOKENS_REQUEST',
+  DEALLOCATE_TOKENS_SUCCESS: 'DEALLOCATE_TOKENS_SUCCESS',
+  DEALLOCATE_TOKENS_FAILURE: 'DEALLOCATE_TOKENS_FAILURE'
 }
 
 // Action Creators
@@ -82,9 +111,9 @@ export const ACTIONS = {
   callBuyTileRequest: makeAction(TYPES.CALL_BUY_TILE_REQUEST, 'payload'),
   callBuyTileSuccess: makeAction(TYPES.CALL_BUY_TILE_SUCCESS, 'payload'),
   callBuyTileFailure: makeAction(TYPES.CALL_BUY_TILE_FAILURE, 'payload'),
-  callNewPlayerRequest: makeAction(TYPES.CALL_NEW_PLAYER_REQUEST, 'payload'),
-  callNewPlayerSuccess: makeAction(TYPES.CALL_NEW_PLAYER_SUCCESS, 'payload'),
-  callNewPlayerFailure: makeAction(TYPES.CALL_NEW_PLAYER_FAILURE, 'payload'),
+  callNewPlayerRequest: makeAction(TYPES.NEW_PLAYER_REQUEST, 'payload'),
+  callNewPlayerSuccess: makeAction(TYPES.NEW_PLAYER_SUCCESS, 'payload'),
+  callNewPlayerFailure: makeAction(TYPES.NEW_PLAYER_FAILURE, 'payload'),
   getIsPlayingRequest: makeAction(TYPES.GET_IS_PLAYING_REQUEST, 'payload'),
   getIsPlayingSuccess: makeAction(TYPES.GET_IS_PLAYING_SUCCESS, 'payload'),
   getIsPlayingFailure: makeAction(TYPES.GET_IS_PLAYING_FAILURE, 'payload'),
@@ -96,7 +125,31 @@ export const ACTIONS = {
   getTilesFailure: makeAction(TYPES.GET_TILES_FAILURE, 'payload'),
   aerialAttackRequest: makeAction(TYPES.AERIAL_ATTACK_REQUEST, 'payload'),
   aerialAttackSuccess: makeAction(TYPES.AERIAL_ATTACK_SUCCESS, 'payload'),
-  aerialAttackFailure: makeAction(TYPES.AERIAL_ATTACK_FAILURE)
+  aerialAttackFailure: makeAction(TYPES.AERIAL_ATTACK_FAILURE, 'payload'),
+  getAatarAurBalanceRequest: makeAction(TYPES.GET_AVATAR_AUR_BALANCE_REQUEST),
+  getAvatarAurBalanceSuccess: makeAction(
+    TYPES.GET_AVATAR_AUR_BALANCE_SUCCESS,
+    'payload'
+  ),
+  getAvatarAurBalanceFailure: makeAction(
+    TYPES.GET_AVATAR_AUR_BALANCE_FAILURE,
+    'payload'
+  ),
+  allocateTokensRequest: makeAction(TYPES.ALLOCATE_TOKENS_REQUEST, 'payload'),
+  allocateTokensSuccess: makeAction(TYPES.ALLOCATE_TOKENS_SUCCESS, 'payload'),
+  allocateTokensFailure: makeAction(TYPES.ALLOCATE_TOKENS_FAILURE, 'payload'),
+  deallocateTokensRequest: makeAction(
+    TYPES.DEALLOCATE_TOKENS_REQUEST,
+    'payload'
+  ),
+  deallocateTokensSuccess: makeAction(
+    TYPES.DEALLOCATE_TOKENS_SUCCESS,
+    'payload'
+  ),
+  deallocateTokensFailure: makeAction(
+    TYPES.DEALLOCATE_TOKENS_FAILURE,
+    'payload'
+  )
 }
 
 // Reducer
@@ -126,14 +179,14 @@ export const planetReducer = createReducer(initialState, {
     const buyTile = { loading: false, error: action.payload, message: null }
     return { ...state, buyTile }
   },
-  [TYPES.CALL_NEW_PLAYER_REQUEST]: state => {
+  [TYPES.NEW_PLAYER_REQUEST]: state => {
     return { ...state, newPlayer: { loading: true, error: null, result: null } }
   },
-  [TYPES.CALL_NEW_PLAYER_SUCCESS]: (state, action) => {
+  [TYPES.NEW_PLAYER_SUCCESS]: (state, action) => {
     const newPlayer = { loading: false, error: null, result: action.payload }
     return { ...state, newPlayer }
   },
-  [TYPES.CALL_NEW_PLAYER_FAILURE]: (state, action) => {
+  [TYPES.NEW_PLAYER_FAILURE]: (state, action) => {
     const newPlayer = { loading: false, error: action.payload, message: null }
     return { ...state, newPlayer }
   },
@@ -181,6 +234,42 @@ export const planetReducer = createReducer(initialState, {
   [TYPES.AERIAL_ATTACK_FAILURE]: (state, action) => {
     const aerialAttack = { loading: false, error: action.payload, result: null }
     return { ...state, aerialAttack }
+  },
+  [TYPES.GET_AVATAR_AUR_BALANCE_REQUEST]: state => {
+    const aurBalance = { loading: true, error: null, result: null }
+    return { ...state, aurBalance }
+  },
+  [TYPES.GET_AVATAR_AUR_BALANCE_SUCCESS]: (state, action) => {
+    const aurBalance = { loading: false, error: null, result: action.payload }
+    return { ...state, aurBalance }
+  },
+  [TYPES.GET_AVATAR_AUR_BALANCE_FAILURE]: (state, action) => {
+    const aurBalance = { loading: false, error: action.payload, result: null }
+    return { ...state, aurBalance }
+  },
+  [TYPES.ALLOCATE_TOKENS_REQUEST]: state => {
+    const allocate = { loading: true, error: null, result: null }
+    return { ...state, allocate }
+  },
+  [TYPES.ALLOCATE_TOKENS_SUCCESS]: (state, action) => {
+    const allocate = { loading: false, error: null, result: action.payload }
+    return { ...state, allocate }
+  },
+  [TYPES.ALLOCATE_TOKENS_FAILURE]: (state, action) => {
+    const allocate = { loading: false, error: action.payload, result: null }
+    return { ...state, allocate }
+  },
+  [TYPES.DEALLOCATE_TOKENS_REQUEST]: state => {
+    const deallocate = { loading: true, error: null, result: null }
+    return { ...state, deallocate }
+  },
+  [TYPES.DEALLOCATE_TOKENS_SUCCESS]: (state, action) => {
+    const deallocate = { loading: false, error: null, result: action.payload }
+    return { ...state, deallocate }
+  },
+  [TYPES.DEALLOCATE_TOKENS_FAILURE]: (state, action) => {
+    const deallocate = { loading: false, error: action.payload, result: null }
+    return { ...state, deallocate }
   }
 })
 

@@ -1,6 +1,6 @@
 import { TYPES as AVATAR_TYPES, ACTIONS as AVATAR_ACTIONS } from './index'
 import { selectAvatarContract } from 'shared/store/chain/selectors'
-import { selectAvatars } from 'shared/store/avatar/selectors'
+import { selectMintFee } from 'shared/store/avatar/selectors'
 import { selectAddress } from 'shared/store/wallet/selectors'
 import { ACTIONS as CHAIN_ACTIONS } from 'shared/store/chain'
 import { selectProvider } from 'shared/store/chain/selectors'
@@ -11,12 +11,12 @@ function * callMintAvatar ({ payload }) {
   const address = yield select(selectAddress)
   const provider = yield select(selectProvider)
   const contract = yield select(selectAvatarContract)
+  const mintFee = yield select(selectMintFee)
+
   const { name, dna } = payload
 
   const rawTrx = yield contract.methods.mintAvatar(name, dna).encodeABI()
-  const value = yield provider.utils.toHex(
-    provider.utils.toWei('0.01', 'ether')
-  )
+  const value = yield provider.utils.toHex(mintFee)
 
   const txCount = yield provider.eth.getTransactionCount(address)
   const txObject = {
@@ -24,8 +24,6 @@ function * callMintAvatar ({ payload }) {
     from: address,
     to: contract._address,
     value,
-    gasLimit: provider.utils.toHex(6721975),
-    gasPrice: provider.utils.toHex(provider.utils.toWei('20', 'gwei')),
     data: rawTrx
   }
 
@@ -71,19 +69,62 @@ function * getAvatarsRequest () {
 }
 
 function * getAvatarsSuccess () {
-  const avatars = yield select(selectAvatars)
-  yield put(AVATAR_ACTIONS.setActiveIndex(avatars.list[avatars.list.length]))
-  //
-  // yield put(PLANET_ACTIONS.getIsPlayingRequest(avatar.id))
+  yield put(AVATAR_ACTIONS.setActiveIndex(0))
 }
 
 function * callMintAvatarSuccess () {
   yield put(AVATAR_ACTIONS.getAvatarsRequest())
 }
 
+function * getDnaRequest (action) {
+  const contract = yield select(selectAvatarContract)
+
+  try {
+    const result = yield contract.methods.getDNA(action.payload)
+    yield put(AVATAR_ACTIONS.getAvatarDnaSuccess(result))
+  } catch (err) {
+    yield put(AVATAR_ACTIONS.getAvatarDnaFailure(err))
+  }
+}
+
+// gets a single avatar with avatar ID param
+function * getAvatarRequest (action) {
+  const contract = yield select(selectAvatarContract)
+  const { utils } = yield select(selectProvider)
+
+  try {
+    const avatarId = utils.toHex(action?.payload)
+
+    console.log(avatarId)
+    const result = yield contract.methods.avatars(avatarId).call()
+    yield put(
+      AVATAR_ACTIONS.getAvatarSuccess({ ...result, avatarId: action.payload })
+    )
+  } catch (err) {
+    yield put(AVATAR_ACTIONS.getAvatarFailure(err))
+  }
+}
+
+function * getMintFeeRequest () {
+  const contract = yield select(selectAvatarContract)
+  if (contract.methods?.createAvatarFee) {
+    const result = yield contract.methods?.createAvatarFee().call()
+    yield put(AVATAR_ACTIONS.getMintFeeSuccess(result))
+  } else {
+    yield put(AVATAR_ACTIONS.getMintFeeSuccess('10000000000000000'))
+  }
+  try {
+  } catch (err) {
+    yield put(AVATAR_ACTIONS.getMintFeeFailure(err))
+  }
+}
+
 export function * rootAvatarSagas () {
-  yield takeLatest(AVATAR_TYPES.CALL_MINT_AVATAR_REQUEST, callMintAvatar)
-  yield takeLatest(AVATAR_TYPES.CALL_MINT_AVATAR_SUCCESS, callMintAvatarSuccess)
+  yield takeLatest(AVATAR_TYPES.MINT_AVATAR_REQUEST, callMintAvatar)
+  yield takeLatest(AVATAR_TYPES.MINT_AVATAR_SUCCESS, callMintAvatarSuccess)
   yield takeLatest(AVATAR_TYPES.GET_AVATARS_SUCCESS, getAvatarsSuccess)
   yield takeLatest(AVATAR_TYPES.GET_AVATARS_REQUEST, getAvatarsRequest)
+  yield takeLatest(AVATAR_TYPES.GET_AVATAR_DNA_REQUEST, getDnaRequest)
+  yield takeLatest(AVATAR_TYPES.GET_AVATAR_REQUEST, getAvatarRequest)
+  yield takeLatest(AVATAR_TYPES.GET_MINT_FEE_REQUEST, getMintFeeRequest)
 }

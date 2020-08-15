@@ -3,7 +3,7 @@ import AvatarView from './avatar-view'
 import CreateAvatar from './create-avatar'
 import { Route, Switch } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectActiveIndex, selectAvatars } from 'shared/store/avatar/selectors'
+import { selectAvatars } from 'shared/store/avatar/selectors'
 import { ACTIONS } from 'shared/store/avatar'
 
 function AvatarContainer () {
@@ -11,6 +11,11 @@ function AvatarContainer () {
   // need to check for avatars from the dna in the url
 
   const avatars = useSelector(selectAvatars)
+  const dispatch = useDispatch()
+
+  React.useEffect(() => {
+    dispatch(ACTIONS.getMintFeeRequest())
+  }, [dispatch])
 
   return (
     <Switch>

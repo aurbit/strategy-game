@@ -1,40 +1,43 @@
 import React from 'react'
-import { Container, Col, Row } from 'react-bootstrap'
+import { Container, Col, Row, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { ACTIONS as PLANET_ACTIONS, TYPES } from 'shared/store/planet'
+import { ACTIONS as PLANET_ACTIONS } from 'shared/store/planet'
 import { ACTIONS as MAP_ACTIONS } from 'shared/store/map'
 
+import { useHistory } from 'react-router-dom'
 import ControlPanel from 'pages/planet/components/ControlPanel'
 import Map from 'pages/planet/components/Map'
 import { selectActiveTile } from 'shared/store/map/selectors'
-import { selectAvatars, selectActiveIndex } from 'shared/store/avatar/selectors'
+import { selectAvatar } from 'shared/store/avatar/selectors'
+import { selectPlayers } from 'shared/store/planet/selectors'
 
 export default props => {
   const [mapReady, setMapReady] = React.useState(false)
   const [hoverTile, setHoverTile] = React.useState(0)
   const activeTile = useSelector(selectActiveTile)
-  const avatars = useSelector(selectAvatars)
-  const activeIndex = useSelector(selectActiveIndex)
+  const avatar = useSelector(selectAvatar)
+  const players = useSelector(selectPlayers)
   const dispatch = useDispatch()
 
   // get the tile price
   React.useEffect(() => {
-    dispatch(PLANET_ACTIONS.getTileFeeRequest())
-  }, [])
-
-  React.useEffect(() => {
-    dispatch(PLANET_ACTIONS.getTilesRequest())
-  }, [PLANET_ACTIONS])
-
-  React.useEffect(() => {
     dispatch(MAP_ACTIONS.getMap('EARTH'))
-  }, [MAP_ACTIONS])
+    dispatch(PLANET_ACTIONS.getTileFeeRequest())
+    dispatch(PLANET_ACTIONS.getTilesRequest())
+    dispatch(PLANET_ACTIONS.getPlayersRequest())
+  }, [dispatch])
+
+  React.useEffect(() => {
+    if (avatar && players) {
+      dispatch(PLANET_ACTIONS.getAatarAurBalanceRequest())
+    }
+  }, [avatar, players, mapReady, dispatch])
 
   const handleIsPlayingRequest = id => {
     dispatch(PLANET_ACTIONS.getIsPlayingRequest(id))
   }
   const handleCreateNewPlayer = () => {
-    dispatch(PLANET_ACTIONS.callNewPlayerRequest(avatars.list[activeIndex]))
+    dispatch(PLANET_ACTIONS.callNewPlayerRequest(avatar))
   }
 
   const handleBuyTileClick = () => {
@@ -52,6 +55,15 @@ export default props => {
   const handleAerialAttack = (tile, amount) => {
     dispatch(PLANET_ACTIONS.aerialAttackRequest({ tile, amount }))
   }
+
+  const handleDeallocateTokensClick = ({ index, amount }) => {
+    dispatch(PLANET_ACTIONS.deallocateTokensRequest({ index, amount }))
+  }
+
+  const handleAllocateTokensClick = ({ index, amount }) => {
+    dispatch(PLANET_ACTIONS.allocateTokensFailure({ index, amount }))
+  }
+
   return (
     <Container fluid style={{ backgroundColor: 'black' }}>
       <Row style={styles.row}>
@@ -65,16 +77,23 @@ export default props => {
           />
         </Col>
         <Col style={styles.control}>
-          <ControlPanel
-            mapReady={mapReady}
-            hoverTile={hoverTile}
-            handleBuyTileClick={handleBuyTileClick}
-            handleCreateNewPlayer={handleCreateNewPlayer}
-            handleGetPlayersClick={handleGetPlayersClick}
-            handleGetTilesClick={handleGetTilesClick}
-            handleIsPlayingRequest={handleIsPlayingRequest}
-            handleAerialAttack={handleAerialAttack}
-          />
+          {avatar ? (
+            <ControlPanel
+              mapReady={mapReady}
+              hoverTile={hoverTile}
+              handleBuyTileClick={handleBuyTileClick}
+              handleCreateNewPlayer={handleCreateNewPlayer}
+              handleGetPlayersClick={handleGetPlayersClick}
+              handleGetTilesClick={handleGetTilesClick}
+              handleIsPlayingRequest={handleIsPlayingRequest}
+              handleAerialAttack={handleAerialAttack}
+              handleAllocateTokensClick={handleAllocateTokensClick}
+              handleDeallocateTokensClick={handleDeallocateTokensClick}
+              avatar={avatar}
+            />
+          ) : (
+            <GoCreateAnAvatar mapReady={mapReady} />
+          )}
         </Col>
         )
       </Row>
@@ -82,7 +101,25 @@ export default props => {
   )
 }
 
+const GoCreateAnAvatar = ({ mapReady }) => {
+  const history = useHistory()
+  return mapReady ? (
+    <Container style={styles.goCreateAnAvatar}>
+      <p>This wallet does not have an AURA.</p>
+      <Button variant='dark' onClick={() => history.push('/avatar/create')}>
+        CREATE AVATAR
+      </Button>
+    </Container>
+  ) : null
+}
+
 const styles = {
+  goCreateAnAvatar: {
+    backgroundColor: '#e3e3e3',
+    height: '100%',
+    textAlign: 'center',
+    paddingTop: 100
+  },
   row: {
     margin: 0
   },

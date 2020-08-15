@@ -1,9 +1,18 @@
 import React from 'react'
-import { Modal, Button } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 import MetaMaskOnboarding from '@metamask/onboarding'
+import { useHistory } from 'react-router-dom'
 
 export default props => {
-  const handleButtonClick = () => window.ethereum.enable()
+  const history = useHistory()
+
+  const handleButtonClick = () => {
+    const enabled = window?.ethereum.enable()
+
+    if (enabled) {
+      history.push('/avatar')
+    }
+  }
 
   return (
     <div>

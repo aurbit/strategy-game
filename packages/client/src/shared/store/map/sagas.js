@@ -1,5 +1,4 @@
-import { takeLatest, call, put, select } from 'redux-saga/effects'
-import { PLANETS } from 'shared/store/planet/index'
+import { takeLatest, put, select } from 'redux-saga/effects'
 import { selectPlanetContract } from 'shared/store/chain/selectors'
 
 import bitmap from 'shared/utils/bitmap'

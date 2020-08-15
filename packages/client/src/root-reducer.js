@@ -1,10 +1,11 @@
 import { combineReducers } from 'redux'
 
-import { avatarReducer } from 'shared/store/avatar'
-import { tokenReducer } from 'shared/store/token'
-import { walletReducer } from 'shared/store/wallet'
-import { planetReducer } from 'shared/store/planet'
-import { mapReducer } from 'shared/store/map'
+import { avatarReducer } from 'shared/store/avatar/index'
+import { tokenReducer } from 'shared/store/token/index'
+import { walletReducer } from 'shared/store/wallet/index'
+import { planetReducer } from 'shared/store/planet/index'
+import { mapReducer } from 'shared/store/map/index'
+import { chatReducer } from 'shared/store/chat'
 import { chainReducer } from 'shared/store/chain'
 
 const rootReducer = combineReducers({
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
   token: tokenReducer,
   wallet: walletReducer,
   planet: planetReducer,
-  map: mapReducer
+  map: mapReducer,
+  chat: chatReducer
 })
 
 export default rootReducer

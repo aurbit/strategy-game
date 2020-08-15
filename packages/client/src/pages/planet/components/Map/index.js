@@ -5,6 +5,7 @@ import { ACTIONS } from 'shared/store/map'
 import { selectMapGrid } from 'shared/store/map/selectors'
 import { selectTiles } from 'shared/store/planet/selectors'
 import { colorizer } from 'shared/utils/colorizer'
+import { selectPlayers } from 'shared/store/planet/selectors'
 
 export default ({ setMapReady, mapReady, activeTile }) => {
   const [map, setMap] = React.useState(false)
@@ -25,13 +26,13 @@ export default ({ setMapReady, mapReady, activeTile }) => {
 const Map = ({ setMapReady, mapReady, map, setMap, activeTile }) => {
   const dispatch = useDispatch()
   const userTiles = useSelector(selectTiles)
-
+  const players = useSelector(selectPlayers)
   const grid = useSelector(selectMapGrid)
   const width = window.innerWidth
   const height = window.innerHeight
   const styles = useStyles(height, width)
 
-  colorizer(mapReady, userTiles)
+  colorizer(mapReady, userTiles, players)
   const build = () => {
     let x, y
     let tileCount = 0

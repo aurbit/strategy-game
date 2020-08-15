@@ -1,7 +1,11 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Col, Row, Button, InputGroup, Container } from 'react-bootstrap'
+import { Col, Row, Button, Spinner, Container } from 'react-bootstrap'
 import { selectActiveTile } from 'shared/store/map/selectors'
+import { selectAurBalance } from 'shared/store/planet/selectors'
+import PlayerAvatar from 'shared/components/PlayerAvatar'
+import SendAurToAvatar from 'shared/components/SendAurToAvatar'
+import ShowTile from './ShowTile'
 
 export default ({
   mapReady,
@@ -10,10 +14,14 @@ export default ({
   handleGetPlayersClick,
   handleGetTilesClick,
   handleIsPlayingClick,
-  handleAerialAttack
+  handleAerialAttack,
+  handleAllocateTokensClick,
+  handleDeallocateTokensClick,
+  avatar
 }) => {
   const activeTile = useSelector(selectActiveTile)
-  const [activeMenu, setActiveMenu] = React.useState(1)
+  const aurBalance = useSelector(selectAurBalance)
+  const [activeMenu, setActiveMenu] = React.useState(0)
 
   return mapReady ? (
     <Container
@@ -25,7 +33,9 @@ export default ({
         <Button
           className={activeMenu === 0 ? 'btn btn-dark' : 'btn btn-light'}
           style={styles.menuButton}
-          onClick={() => setActiveMenu(0)}
+          onClick={() => {
+            setActiveMenu(0)
+          }}
         >
           <b>INFO</b>
         </Button>
@@ -41,14 +51,23 @@ export default ({
         {activeMenu === 0 ? (
           <Col>
             {activeTile ? (
+              <ShowTile activeTile={activeTile} />
+            ) : avatar ? (
               <Col>
-                <Row>Tile Number: {activeTile}</Row>
                 <Row>
-                  <Button onClick={handleBuyTileClick}>BUY {activeTile}</Button>
+                  <ShowPlayerInfo
+                    dna={avatar.dna}
+                    name={avatar.name}
+                    id={avatar.id}
+                  />
+                </Row>
+                <Row>
+                  <b>Available: </b>
+                  {aurBalance ? aurBalance : <Spinner />} AUR
                 </Row>
               </Col>
             ) : (
-              <Col>No Tile Selected</Col>
+              <Spinner animation='grow' />
             )}
           </Col>
         ) : (
@@ -57,7 +76,7 @@ export default ({
               <Row className='m-3'>
                 <Button onClick={handleCreateNewPlayer}>Join Game</Button>
               </Row>
-              <Row className='m-3'>
+              {/* <Row className='m-3'>
                 <Button onClick={handleGetPlayersClick}>Get Players</Button>
               </Row>
               <Row className='m-3'>
@@ -65,37 +84,24 @@ export default ({
               </Row>
               <Row className='m-3'>
                 <Button onClick={handleIsPlayingClick}>Is Playing?</Button>
-              </Row>
+              </Row> */}
               <Row className='m-3'>
                 <Button onClick={handleBuyTileClick}>BUY {activeTile}</Button>
               </Row>
               <hr />
-              <Row className='m-3'>
-                <input
-                  style={{ padding: 5 }}
-                  id='tile-to-aerial-attack'
-                  placeholder='Tile Number to Attack'
+              <Row>
+                <AerialAttackComponent
+                  handleAerialAttack={handleAerialAttack}
                 />
               </Row>
               <Row className='m-3'>
-                <input
-                  style={{ padding: 5 }}
-                  id='aerial-attack-amount'
-                  placeholder='AUR Amount'
-                />
+                <SendAurToAvatar />
               </Row>
-              <Row className='m-3'>
-                <Button
-                  onClick={ev =>
-                    handleAerialAttack(
-                      document.getElementById('tile-to-aerial-attack'),
-                      document.getElementById('aerial-attack-amount')
-                    )
-                  }
-                  type='submit'
-                >
-                  Aerial Attack
-                </Button>
+              <Row>
+                <AllocateTokens
+                  handleAllocateTokensClick={handleAllocateTokensClick}
+                  handleDeallocateTokensClick={handleDeallocateTokensClick}
+                />
               </Row>
             </Col>
           </Row>
@@ -108,11 +114,108 @@ export default ({
   ) : null
 }
 
+const AllocateTokens = ({
+  handleAllocateTokensClick,
+  handleDeallocateTokensClick
+}) => {
+  const [index, setIndex] = React.useState()
+  const [amount, setAmount] = React.useState()
+  const [type, setType] = React.useState(0)
+
+  const handleUpdateIndex = ev => {
+    ev.preventDefault()
+    setIndex(ev.target.value)
+  }
+  const handleUpdateAmount = ev => {
+    ev.preventDefault()
+    setAmount(ev.target.value)
+  }
+  const handleClick = () => {
+    handleAllocateTokensClick({ index, amount })
+  }
+
+  return (
+    <Container>
+      <Row className='m-3'>
+        <input
+          style={{ padding: 5 }}
+          id='allocate-tokens-index'
+          value={index}
+          onChange={handleUpdateIndex}
+          placeholder='Index of Token to Allocate'
+        />
+      </Row>
+      <Row className='m-3'>
+        <input
+          style={{ padding: 5 }}
+          id='allocate-tokens-amount'
+          value={amount}
+          onChange={handleUpdateAmount}
+          placeholder='Amount of AUR to allocate'
+        />
+      </Row>
+      <Row className='m-3'>
+        <Button onClick={handleClick} type='submit'>
+          Aerial Attack
+        </Button>
+      </Row>
+    </Container>
+  )
+}
+
+const DeallocateTokens = () => {
+  return <Container></Container>
+}
+const AerialAttackComponent = ({ handleAerialAttack }) => {
+  return (
+    <Container>
+      <Row className='m-3'>
+        <input
+          style={{ padding: 5 }}
+          id='tile-to-aerial-attack'
+          placeholder='Tile Number to Attack'
+        />
+      </Row>
+      <Row className='m-3'>
+        <input
+          style={{ padding: 5 }}
+          id='aerial-attack-amount'
+          placeholder='AUR Amount'
+        />
+      </Row>
+      <Row className='m-3'>
+        <Button
+          onClick={ev =>
+            handleAerialAttack(
+              document.getElementById('tile-to-aerial-attack'),
+              document.getElementById('aerial-attack-amount')
+            )
+          }
+          type='submit'
+        >
+          Aerial Attack
+        </Button>
+      </Row>
+    </Container>
+  )
+}
+
+const ShowPlayerInfo = ({ dna, name, id }) => {
+  return (
+    <>
+      {dna && name && id ? (
+        <PlayerAvatar dna={dna} name={name} id={id} />
+      ) : null}
+    </>
+  )
+}
+
 const styles = {
   container: {
     border: '1px solid gray',
     backgroundColor: '#e1e1e9',
-    paddignBottom: 30
+    // paddignBottom: 30,
+    height: '100%'
   },
   menu: {
     height: 50,

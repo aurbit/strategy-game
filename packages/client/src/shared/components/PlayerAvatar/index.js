@@ -5,57 +5,127 @@
 import React from 'react'
 import SVG from 'react-inlinesvg'
 import { avatarImage, rgbToHex } from './avatar-utils'
-import { Container, Spinner, Card } from 'react-bootstrap'
+import { Spinner, Container, Col, Row } from 'react-bootstrap'
+import parseDna from 'shared/store/avatar/parse-dna'
 
-const PlayerAvatar = ({ dna, name }) => {
-  const [hair, setHair] = React.useState(null)
-  const [eye, setEye] = React.useState(null)
-  const [skin, setSkin] = React.useState(null)
+const PlayerAvatar = ({ dna, name, id }) => {
+  const [hairColor, setHairColor] = React.useState(null)
+  const [eyeColor, setEyeColor] = React.useState(null)
+  const [skinColor, setSkinColor] = React.useState(null)
+  const [eyeType, setEyeType] = React.useState(null)
+  const [hairType, setHairType] = React.useState(null)
+  const [skinType, setSkinType] = React.useState(null)
+  const [gender, setGender] = React.useState(null)
+  const [mouth, setMouth] = React.useState(null)
+  const [race, setRace] = React.useState(null)
   const [avatar, setAvatar] = React.useState(null)
   const [ready, setReady] = React.useState(false)
+  const [intel, setIntel] = React.useState()
+  const [strength, setStrength] = React.useState()
+  const [vitality, setVitality] = React.useState()
 
-  React.useEffect(() => parseDna(), [parseDna])
+  const dnaArray = parseDna(dna)
 
   React.useEffect(() => {
-    updateGlobalCSS()
-  }, [updateGlobalCSS])
+    if (!ready) {
+      const _intel = dnaArray[0]
+      const _strength = dnaArray[1]
+      const _vitality = dnaArray[2]
+      const _hairArray = [dnaArray[3], dnaArray[4], dnaArray[5]]
+      const _eyeArray = [dnaArray[6], dnaArray[7], dnaArray[8]]
+      const _skinArray = [dnaArray[9], dnaArray[10], dnaArray[11]]
+      const _eyeType = dnaArray[12]
+      const _hairType = dnaArray[13]
+      const _skinType = dnaArray[14]
+      const _mouth = dnaArray[15]
+      const _race = dnaArray[16]
+      const _gender = dnaArray[17]
 
-  function parseDna () {
-    // const intel = dna[0]
-    // const strength = dna[1]
-    // const vitality = dna[2]
-    const hairArray = [dna[3], dna[4], dna[5]]
-    const eyeArray = [dna[6], dna[7], dna[8]]
-    const skinArray = [dna[9], dna[10], dna[11]]
-    // const eyeType = dna[11]
-    // const skinType = dna[12]
-    // const mouth = dna[13]
-    const gender = dna[17]
-    // const race = dna[15]
+      setAvatar(avatarImage(_gender))
+      setHairColor(rgbToHex(_hairArray))
+      setEyeColor(rgbToHex(_eyeArray))
+      setSkinColor(rgbToHex(_skinArray))
+      setHairType(_hairType)
+      setEyeType(_eyeType)
+      setSkinType(_skinType)
+      setStrength(_strength)
+      setMouth(_mouth)
+      setRace(_race)
+      setGender(_gender)
+      setIntel(_intel)
+      setVitality(_vitality)
+      setReady(true)
+    }
+  }, [
+    dnaArray,
+    setAvatar,
+    setHairColor,
+    setSkinColor,
+    setStrength,
+    setVitality,
+    setSkinType,
+    setHairType,
+    setMouth,
+    setRace,
+    setIntel,
+    setStrength,
+    setEyeType,
+    setReady
+  ])
 
-    setHair(rgbToHex(hairArray))
-    setEye(rgbToHex(eyeArray))
-    setSkin(rgbToHex(skinArray))
-    setAvatar(avatarImage(gender))
-    setReady(true)
-  }
-
-  function updateGlobalCSS () {
+  React.useEffect(() => {
     const style = document.createElement('style')
-    document.head.appendChild(style)
-    style.sheet.insertRule(`.eye-color {fill: ${eye}}`)
-    style.sheet.insertRule(`.hair-color {fill: ${hair}}`)
-    style.sheet.insertRule(`.skin-color {fill: ${skin}}`)
-  }
+    const avatar = document.getElementById('avatar')
+    avatar.appendChild(style)
+    style.sheet.insertRule(`.eye-color {fill: ${eyeColor}}`)
+    style.sheet.insertRule(`.hair-color {fill: ${hairColor}}`)
+    style.sheet.insertRule(`.skin-color {fill: ${skinColor}}`)
+  }, [eyeColor, hairColor, skinColor])
 
   return (
-    <>
-      {ready ? (
-        <SVG src={avatar} />
+    <div id={'avatar'} style={{ backgroundColor: '#e3e3e3e', width: '100%' }}>
+      {avatar && ready ? (
+        <div>
+          <Row>
+            <Col>
+              <h3>{name}</h3>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={12}>
+              <SVG src={avatar} />
+            </Col>
+          </Row>
+
+          <Row className='pt'>
+            <Col>
+              <b>Strength:</b> {strength}
+            </Col>
+            <Col>
+              <b>Intel:</b> {intel}
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <b>Vitality:</b> {vitality}
+            </Col>
+            <Col>
+              <b>Race:</b> {race}
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <b>Gender:</b> {gender}
+            </Col>
+            <Col>
+              <b>id:</b> {id}
+            </Col>
+          </Row>
+        </div>
       ) : (
         <Spinner animation='grow' variant='warning' />
       )}
-    </>
+    </div>
   )
 }
 

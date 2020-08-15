@@ -1,11 +1,12 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
-import { ACTIONS as AVATAR_ACTIONS } from 'shared/store/avatar'
+import { Button } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectChat } from 'shared/store/chat'
 import { ACTIONS as CHAIN_ACTIONS } from 'shared/store/chain'
 
-const TestPage = () => {
+const TestPageContainer = () => {
   const dispatch = useDispatch()
-
+  const chatProvider = useSelector(selectChat)
   React.useEffect(() => {
     // BEGIN TO INIT PROVIDER
     dispatch(CHAIN_ACTIONS.initProvider())
@@ -13,18 +14,28 @@ const TestPage = () => {
     dispatch(CHAIN_ACTIONS.initArtifacts())
     // CREATE CONTRACT BASED ON ARTIFACTS - store/chain/sagas - check initContracts() function
     dispatch(CHAIN_ACTIONS.initContracts())
-  }, [])
+  }, [dispatch])
 
-  function onClick () {
-    const dna = [165, 228, 239, 117, 68, 239, 5, 4, 239, 153, 5, 2, 9, 3, 85]
-    dispatch(AVATAR_ACTIONS.callMintAvatar({ name: 'df', dna }))
+  function onClickConnect () {
+    chatProvider.startNewRoom()
   }
-
+  function onClickInit () {
+    chatProvider.init()
+  }
+  function onClickSend () {
+    chatProvider.send('Hellow orld')
+  }
+  function onClickGet () {
+    chatProvider.getMessages()
+  }
   return (
     <div>
-      <button onClick={onClick}>SUBMIT</button>
+      <Button onClick={onClickInit}>Init</Button>
+      <Button onClick={onClickConnect}>Connect</Button>
+      <Button onClick={onClickSend}>SEND</Button>
+      <Button onClick={onClickGet}>GET</Button>
     </div>
   )
 }
 
-export default TestPage
+export default TestPageContainer

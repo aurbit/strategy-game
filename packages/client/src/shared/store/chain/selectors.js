@@ -21,3 +21,5 @@ export const selectChainInitialzed = state => {
     return false
   }
 }
+export const selectPlanetContractAddress = state =>
+  state.chain.planetContract._address

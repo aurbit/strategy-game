@@ -18,7 +18,7 @@ contract AvatarAUR is ERC721 {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
     address payable owner;
-    uint256 createAvatarFee = 10**16;
+    uint256 public createAvatarFee = 10**16;
     //uint dnasize = 16;
     //uint dnamod = 10 ** dnasize;
     address payable govContract;

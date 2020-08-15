@@ -1,4 +1,4 @@
-let hexCode = [
+module.exports = [
   {
     color: 'indian red',
     code: {
