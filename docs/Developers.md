@@ -17,13 +17,13 @@ yarn
 Terminal 1
 
 ```
-yarn truffle:chain
+yarn chain
 ```
 
 Terminal 2
 
 ```
-yarn truffle:console
+yarn console
 truffle(development)> migrate
 ```
 
