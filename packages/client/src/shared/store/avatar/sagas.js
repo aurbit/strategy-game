@@ -95,8 +95,8 @@ function * getAvatarRequest (action) {
   try {
     const avatarId = utils.toHex(action?.payload)
 
-    console.log(avatarId)
-    const result = yield contract.methods.avatars(avatarId).call()
+    console.log('AVATAR ID', avatarId)
+    const result = yield contract.methods.avatars(avatarId - 1).call()
     yield put(
       AVATAR_ACTIONS.getAvatarSuccess({ ...result, avatarId: action.payload })
     )
