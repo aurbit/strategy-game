@@ -7,6 +7,7 @@ import SVG from 'react-inlinesvg'
 import { avatarImage, rgbToHex } from './avatar-utils'
 import { Spinner, Container, Col, Row } from 'react-bootstrap'
 import parseDna from 'shared/store/avatar/parse-dna'
+import Style from 'style-it'
 
 const PlayerAvatar = ({ dna, name, id }) => {
   const [hairColor, setHairColor] = React.useState(null)
@@ -73,59 +74,63 @@ const PlayerAvatar = ({ dna, name, id }) => {
     setReady
   ])
 
-  React.useEffect(() => {
-    const style = document.createElement('style')
-    const avatar = document.getElementById('avatar')
-    avatar.appendChild(style)
-    style.sheet.insertRule(`.eye-color {fill: ${eyeColor}}`)
-    style.sheet.insertRule(`.hair-color {fill: ${hairColor}}`)
-    style.sheet.insertRule(`.skin-color {fill: ${skinColor}}`)
-  }, [eyeColor, hairColor, skinColor])
-
   return (
-    <div id={'avatar'} style={{ backgroundColor: '#e3e3e3e', width: '100%' }}>
-      {avatar && ready ? (
-        <div>
-          <Row>
-            <Col>
-              <h3>{name}</h3>
-            </Col>
-          </Row>
-          <Row>
-            <Col md={12}>
-              <SVG src={avatar} />
-            </Col>
-          </Row>
+    <Style>
+      {`
+      .eye-color {
+        fill: ${eyeColor} !important;
+      }
+      .skin-color {
+        fill: ${skinColor} !important;
+      }
+      .hair-color {
+        fill: ${hairColor} !important;
+      }
+    `}
+      <div id={dna} style={{ backgroundColor: '#e3e3e3e', width: '100%' }}>
+        {avatar && ready ? (
+          <div>
+            <Row>
+              <Col>
+                <h3>{name}</h3>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={12}>
+                <SVG src={avatar} />
+              </Col>
+            </Row>
 
-          <Row className='pt'>
-            <Col>
-              <b>Strength:</b> {strength}
-            </Col>
-            <Col>
-              <b>Intel:</b> {intel}
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <b>Vitality:</b> {vitality}
-            </Col>
-            <Col>
-              <b>Race:</b> {race}
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <b>Gender:</b> {gender}
-            </Col>
-            <Col>
-              <b>id:</b> {id}
-            </Col>
-          </Row>
-        </div>
-      ) : (
-        <Spinner animation='grow' variant='warning' />
-      )}
-    </div>
+            <Row className='pt'>
+              <Col>
+                <b>Strength:</b> {strength}
+              </Col>
+              <Col>
+                <b>Intel:</b> {intel}
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <b>Vitality:</b> {vitality}
+              </Col>
+              <Col>
+                <b>Race:</b> {race}
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <b>Gender:</b> {gender}
+              </Col>
+              <Col>
+                <b>id:</b> {id}
+              </Col>
+            </Row>
+          </div>
+        ) : (
+          <Spinner animation='grow' variant='warning' />
+        )}
+      </div>
+    </Style>
   )
 }
 

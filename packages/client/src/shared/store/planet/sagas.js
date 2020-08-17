@@ -58,6 +58,7 @@ function * newPlayerRequest () {
     const contract = yield select(selectPlanetContract)
     const address = yield select(selectAddress)
     const avatar = yield select(selectAvatar)
+
     const rawTrx = yield contract.methods.createNewPlayer(avatar.id).encodeABI()
 
     const txObject = {

@@ -15,6 +15,10 @@ const INITIAL_STATE = {
   }
 }
 
+export const TOKEN_EVENTS = {
+  Transfer: 'Transfer'
+}
+
 // Action Types
 export const TYPES = {
   WALLET_AUR_BALANCE_REQUEST: 'WALLET_AUR_BALANCE_REQUEST',
