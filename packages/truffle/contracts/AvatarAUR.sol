@@ -2,42 +2,32 @@ pragma solidity ^0.6.2;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
+pragma experimental ABIEncoderV2;
 
-/**
-    Author: Chris Markov 2020
-    Project Aurbit
-
-    The Avatar Contract for the Aurbit Strategy Game.
-
-    Symbol: AURA
-
-    https://github.com/aurbit/strategy-game/blob/master/docs/Avatars.md
-
- */
 contract AvatarAUR is ERC721 {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
+
     address payable owner;
     uint256 public createAvatarFee = 10**16;
-    //uint dnasize = 16;
-    //uint dnamod = 10 ** dnasize;
     address payable govContract;
+
     struct Avatar {
         string name;
         uint256 dna;
+        uint256 id;
     }
 
     Avatar[] public avatars;
-    mapping(uint256 => uint256) public TokenIDtoAvID;
 
-    event Minted(address sender, uint256 dna, uint256 avatarId, string name);
-    event FeeUpdated(uint256 newFee);
+    event Minted(address sender, uint256 dna, uint256 id, string name);
 
     constructor(address payable _govContract)
         public
         ERC721("Aurbit Avatar", "AURA")
     {
         govContract = _govContract;
+        avatars.push(Avatar("0", 0, 0)); //push empty filler
         owner = msg.sender; //set owner addres as sender on deploy
     }
 
@@ -51,14 +41,14 @@ contract AvatarAUR is ERC721 {
         returns (uint256)
     {
         require(msg.value == createAvatarFee, "pay fee");
-        forward(); //enforce fee of 0.01 and forward to owner. bad way?
+        forward(); // forwards the fee to AURGov
         _tokenIds.increment();
-        uint256 newItemId = _tokenIds.current();
-        _mint(msg.sender, newItemId);
-        //uint dna =
-        _birthAvatar(name, newItemId, _userDNA);
+        uint256 id = _tokenIds.current();
+        _mint(msg.sender, id);
+        uint256 dna = _mkDNA(name, _userDNA);
+        avatars.push(Avatar(name, dna, id));
         _setTokenURI(
-            newItemId,
+            id,
             string(
                 abi.encodePacked(
                     '{"name": "',
@@ -71,23 +61,13 @@ contract AvatarAUR is ERC721 {
                 )
             )
         );
-        //sample description and sample image uri should be replaced with variables, didnt bother declaring them yet
-        return newItemId;
+        emit Minted(msg.sender, dna, id, name);
+        return id;
     }
 
     function setcreateAvatarFee(uint256 _newfee) public {
         require(govContract == msg.sender);
         createAvatarFee = _newfee;
-        emit FeeUpdated(_newfee);
-    }
-
-    function storeAvatar(string memory _name, uint256 _dna)
-        private
-        returns (uint256)
-    {
-        //store in array of avatars, return index
-        avatars.push(Avatar(_name, _dna));
-        return avatars.length - 1;
     }
 
     function pullcrumb(uint8 b, uint8 pos) public pure returns (uint8) {
@@ -111,11 +91,10 @@ contract AvatarAUR is ERC721 {
 
         uint256 intel = (prand % ((pullcrumb(race, 0) + 1) * 15)) + 40; //first 2 bits littleendian gives intel
         uint256 vital = ((prand >> 8) % ((pullcrumb(race, 1) + 1) * 15)) + 40; //second is vital
-        uint256 strength = ((prand >> 16) % ((pullcrumb(race, 2) + 1) * 15)) +
-            40; //third is strength
+        uint256 str = ((prand >> 16) % ((pullcrumb(race, 2) + 1) * 15)) + 40; //third is strength
         uint256 out = setbyte(_userDNA, 15, intel);
         out = setbyte(out, 16, vital);
-        out = setbyte(out, 17, strength); //this is the first of the batch when returned as array...
+        out = setbyte(out, 17, str); //this is the first of the batch when returned as array...
         return out;
     }
 
@@ -123,26 +102,24 @@ contract AvatarAUR is ERC721 {
         uint256 _indat,
         uint16 k,
         uint256 _setdat
-    ) public pure returns (uint256) {
+    ) private pure returns (uint256) {
         //set kth byte from the right in _indat to _setdat
         return (_setdat << (8 * k)) + _indat;
     }
 
-    function _birthAvatar(
-        string memory _name,
-        uint256 _id,
-        uint256 _userDNA
-    ) private {
-        uint256 dna = _mkDNA(_name, _userDNA);
-        uint256 aid = storeAvatar(_name, dna);
-        TokenIDtoAvID[_id] = aid;
-        //return dna; could return DNA to put in description, but parsing numbers to string is a little dumb i think
-        emit Minted(msg.sender, dna, aid, _name);
-    }
-
     function getDNA(uint256 tid) public view returns (uint256) {
         //gets DNA from token ID. not sure the exact proper error handling for this.
-        require(tid <= avatars.length);
-        return avatars[TokenIDtoAvID[tid]].dna;
+        require(tid < avatars.length);
+        return avatars[tid].dna;
+    }
+
+    function getAvatars(address _owner) public view returns (Avatar[] memory) {
+        uint256 bal = this.balanceOf(_owner);
+        Avatar[] memory out = new Avatar[](bal);
+        for (uint256 i = 0; i < bal; i++) {
+            uint256 aid = this.tokenOfOwnerByIndex(_owner, i);
+            out[i] = Avatar(avatars[aid].name, avatars[aid].dna, aid);
+        }
+        return out;
     }
 }

@@ -105,7 +105,7 @@ export const chainReducer = createReducer(INITIAL_STATE, {
     planetEvents.push(action.payload)
     return { ...state, planetEvents }
   },
-  [TYPES.TOKEN_EVENT]: (state, action) => {
+  [TYPES.TOKEN_CONTRACT_EVENT]: (state, action) => {
     const tokenEvents = Array.from(state.tokenEvents)
     tokenEvents.push(action.payload)
     return { ...state, tokenEvents }

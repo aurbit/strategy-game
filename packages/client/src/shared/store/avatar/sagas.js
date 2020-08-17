@@ -50,19 +50,10 @@ function * getAvatarsRequest () {
         AVATAR_ACTIONS.getAvatarsFailure('User does not have an Avatar')
       )
     }
-    // get the token ID
-    const id = Number(balance) - 1
-    const tokenId = yield contract.methods
-      .tokenOfOwnerByIndex(address, id)
-      .call()
 
     // get the avatar
-    const avatar = yield contract.methods.avatars(tokenId - 1).call()
-    yield put(
-      AVATAR_ACTIONS.getAvatarsSuccess([
-        { dna: avatar.dna, name: avatar.name, id: tokenId }
-      ])
-    )
+    const avatars = yield contract.methods.getAvatars(address).call()
+    yield put(AVATAR_ACTIONS.getAvatarsSuccess(avatars))
   } catch (err) {
     yield put(AVATAR_ACTIONS.getAvatarsFailure(err))
   }
@@ -95,8 +86,7 @@ function * getAvatarRequest (action) {
   try {
     const avatarId = utils.toHex(action?.payload)
 
-    console.log('AVATAR ID', avatarId)
-    const result = yield contract.methods.avatars(avatarId - 1).call()
+    const result = yield contract.methods.avatars(avatarId).call()
     yield put(
       AVATAR_ACTIONS.getAvatarSuccess({ ...result, avatarId: action.payload })
     )

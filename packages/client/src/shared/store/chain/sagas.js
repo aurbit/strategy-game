@@ -1,9 +1,11 @@
 import Web3 from 'web3'
 import { store } from 'store'
-import { TYPES, ACTIONS } from './index'
+
 import { ACTIONS as AVATAR_ACTIONS, AVATAR_EVENTS } from 'shared/store/avatar'
 import { PLANET_EVENTS, ACTIONS as PLANET_ACTIONS } from 'shared/store/planet'
-import { NETWORKS } from 'shared/store/chain'
+import { ACTIONS as TOKEN_ACTIONS, TOKEN_EVENTS } from 'shared/store/token'
+import { TYPES, ACTIONS, NETWORKS } from 'shared/store/chain'
+
 import PlanetContractsDEV from 'contracts/development/Planet'
 import TokenContractsDEV from 'contracts/development/AURToken'
 import AvatarContractsDEV from 'contracts/development/AvatarAUR'
@@ -176,6 +178,18 @@ function * planetContractEvent (action) {
       yield put(PLANET_ACTIONS.getTilesRequest())
       break
     }
+  }
+}
+
+function * tokenContractEvent (action) {
+  const {
+    payload: { event }
+  } = action
+
+  switch (event) {
+    case TOKEN_EVENTS.Transfer: {
+      yield put(TOKEN_ACTIONS.getAurBalanceRequest())
+    }
     default:
       break
   }
@@ -187,4 +201,5 @@ export function * rootChainSagas () {
   yield takeLatest(TYPES.INIT_CONTRACTS, initContracts)
   yield takeLatest(TYPES.AVATAR_CONTRACT_EVENT, avatarContractEvent)
   yield takeLatest(TYPES.PLANET_CONTRACT_EVENT, planetContractEvent)
+  yield takeLatest(TYPES.TOKEN_CONTRACT_EVENT, tokenContractEvent)
 }
