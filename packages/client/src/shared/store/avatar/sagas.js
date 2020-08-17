@@ -25,8 +25,6 @@ function * callMintAvatar ({ payload }) {
     data: rawTrx
   }
 
-  console.log(txObject)
-
   const trx = { method: 'eth_sendTransaction', params: [txObject] }
   return window.ethereum.send(trx, (err, data) => {
     if (err) {

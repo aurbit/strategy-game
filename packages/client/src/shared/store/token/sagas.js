@@ -1,13 +1,15 @@
-import { TYPES, ACTIONS } from './index'
+import { store } from 'store'
 import { takeLatest, put, select } from 'redux-saga/effects'
+
+import { selectAddress } from 'shared/store/wallet/selectors'
 import {
   selectPlanetContract,
   selectTokenContract,
   selectProvider
 } from 'shared/store/chain/selectors'
-import { selectAddress } from 'shared/store/wallet/selectors'
-import { store } from 'store'
+
 import { ACTIONS as PLANET_ACTIONS } from 'shared/store/planet'
+import { TYPES, ACTIONS } from './index'
 
 function * getBalanceRequest () {
   const address = yield select(selectAddress)
@@ -26,8 +28,6 @@ function * sendPlanetAurRequest (action) {
   const provider = yield select(selectProvider)
   const contract = yield select(selectTokenContract)
   const amountInWei = provider.utils.toWei(amount, 'ether')
-
-  console.log('BALANCE', amount, avatarId)
   const address = yield select(selectAddress)
   const planet = yield select(selectPlanetContract)
   const hexId = yield provider.utils.toHex(avatarId)

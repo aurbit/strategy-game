@@ -5,6 +5,7 @@ import { selectGetAvatar } from 'shared/store/avatar/selectors'
 import { useSelector, useDispatch } from 'react-redux'
 import { ACTIONS as AVATAR_ACTIONS } from 'shared/store/avatar'
 import PlayerAvatar from 'shared/components/PlayerAvatar'
+import { utils } from 'web3'
 
 export default ({ activeTile }) => {
   // check if tile is owned, show owner
@@ -58,7 +59,7 @@ const TileOwned = ({ ind, owner, bal, LastMineBlockTime }) => {
           <Row className='mt-1'>Owner: {gotAvatar.name}</Row>
           <Row>Tile Number: {ind}</Row>
           <Row>Owner AvatarId: {owner}</Row>
-          <Row>Allocated AUR: {bal}</Row>
+          <Row>Allocated AUR: {utils.fromWei(bal, 'ether')}</Row>
           <Row>Last Mined Block: {LastMineBlockTime}</Row>
           <Row>
             {gotAvatar.dna ? (

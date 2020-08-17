@@ -1,12 +1,15 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Col, Row, Button, Spinner, Container } from 'react-bootstrap'
+
 import { selectActiveTile } from 'shared/store/map/selectors'
 import { selectAurBalance } from 'shared/store/planet/selectors'
+import { selectActiveIndex } from 'shared/store/avatar/selectors'
+
 import PlayerAvatar from 'shared/components/PlayerAvatar'
 import SendAurToAvatar from 'shared/components/SendAurToAvatar'
+import AllocateTokens from './AllocateTokens'
 import ShowTile from './ShowTile'
-import { selectActiveIndex } from 'shared/store/avatar/selectors'
 
 export default ({
   mapReady,
@@ -116,107 +119,6 @@ export default ({
   ) : null
 }
 
-const AllocateTokens = ({
-  handleAllocateTokensClick,
-  handleDeallocateTokensClick,
-  activeTile
-}) => {
-  const [index, setIndex] = React.useState(0)
-  const [amount, setAmount] = React.useState(null)
-  const [type, setType] = React.useState(0)
-  const [selected, setSelected] = React.useState('allocate')
-
-  const handleUpdateRadio = ev => {
-    return selected === 'allocate'
-      ? setSelected('deallocate')
-      : setSelected('allocate')
-  }
-  const handleUpdateIndex = num => {
-    setIndex(num)
-  }
-  const handleUpdateAmount = ev => {
-    ev.preventDefault()
-    setAmount(ev.target.value)
-  }
-  const handleClick = () => {
-    handleAllocateTokensClick({ index, amount })
-  }
-
-  React.useEffect(() => {
-    handleUpdateIndex(activeTile)
-  }, [handleUpdateIndex])
-
-  return (
-    <Container>
-      <hr />
-      <h4 align='center'>Allocate Tokens</h4>
-      <Row className='pl-3'>
-        <Col md={12}>
-          <input
-            type='radio'
-            id='allocate'
-            name='allocate'
-            value='allocate'
-            onChange={handleUpdateRadio}
-            checked={selected === 'allocate'}
-          />
-          <label className='ml-1' htmlFor='allocate'>
-            Allocate
-          </label>
-        </Col>
-        <Col>
-          <input
-            type='radio'
-            id='deallocate'
-            name='deallocate'
-            value='deallocate'
-            onChange={handleUpdateRadio}
-            checked={selected === 'deallocate'}
-          />
-          <label className='ml-1' htmlFor='deallocate'>
-            Deallocate
-          </label>
-        </Col>
-      </Row>
-      <Row className='m-3'>
-        <label className='ml-1' htmlFor='deallocate'>
-          Tile Number
-        </label>
-        <input
-          type='number'
-          style={{ padding: 5 }}
-          id='allocate-tokens-index'
-          value={index || 0}
-          onChange={e => handleUpdateIndex(e.target.value)}
-          placeholder='Tile Number'
-        />
-      </Row>
-      <Row className='m-3'>
-        <label className='ml-1' htmlFor='deallocate'>
-          AUR Amount
-        </label>
-        <input
-          type='number'
-          style={{ padding: 5 }}
-          id='allocate-tokens-amount'
-          value={amount || 0}
-          onChange={handleUpdateAmount}
-          placeholder='Amount of AUR'
-        />
-      </Row>
-      <Row className='m-3'>
-        <Button onClick={handleClick} type='submit'>
-          Allocate Tokens
-        </Button>
-      </Row>
-    </Container>
-  )
-}
-
-const DeallocateTokens = () => {
-  return <Container></Container>
-}
-
 const AerialAttackComponent = ({ handleAerialAttack }) => {
   return (
     <Container>
@@ -252,7 +154,6 @@ const AerialAttackComponent = ({ handleAerialAttack }) => {
 }
 
 const ShowPlayerInfo = ({ dna, name, id }) => {
-  console.log('PLAYER', dna, id, name)
   return (
     <>
       {dna && name && id ? (
