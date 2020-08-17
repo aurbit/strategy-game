@@ -27,6 +27,7 @@ function * sendPlanetAurRequest (action) {
   const contract = yield select(selectTokenContract)
   const amountInWei = provider.utils.toWei(amount, 'ether')
 
+  console.log('BALANCE', amount, avatarId)
   const address = yield select(selectAddress)
   const planet = yield select(selectPlanetContract)
   const hexId = yield provider.utils.toHex(avatarId)

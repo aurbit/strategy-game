@@ -73,9 +73,9 @@ export const TYPES = {
   GET_TILE_FEE_REQUEST: 'GET_TILE_FEE_REQUEST',
   GET_TILE_FEE_SUCCESS: 'GET_TILE_FEE_SUCCESS',
   GET_TILE_FEE_FAILURE: 'GET_TILE_FEE_FAILURE',
-  CALL_BUY_TILE_REQUEST: 'CALL_BUY_TILE_REQUEST',
-  CALL_BUY_TILE_SUCCESS: 'CALL_BUY_TILE_SUCCESS',
-  CALL_BUY_TILE_FAILURE: 'CALL_BUY_TILE_FAILURE',
+  BUY_TILE_REQUEST: 'BUY_TILE_REQUEST',
+  BUY_TILE_SUCCESS: 'BUY_TILE_SUCCESS',
+  BUY_TILE_FAILURE: 'BUY_TILE_FAILURE',
   NEW_PLAYER_REQUEST: 'NEW_PLAYER_REQUEST',
   NEW_PLAYER_SUCCESS: 'NEW_PLAYER_SUCCESS',
   NEW_PLAYER_FAILURE: 'NEW_PLAYER_FAILURE',
@@ -108,12 +108,12 @@ export const ACTIONS = {
   getTileFeeRequest: makeAction(TYPES.GET_TILE_FEE_REQUEST, 'payload'),
   getTileFeeSuccess: makeAction(TYPES.GET_TILE_FEE_SUCCESS, 'payload'),
   getTileFeeFailure: makeAction(TYPES.GET_TILE_FEE_FAILURE, 'payload'),
-  callBuyTileRequest: makeAction(TYPES.CALL_BUY_TILE_REQUEST, 'payload'),
-  callBuyTileSuccess: makeAction(TYPES.CALL_BUY_TILE_SUCCESS, 'payload'),
-  callBuyTileFailure: makeAction(TYPES.CALL_BUY_TILE_FAILURE, 'payload'),
-  callNewPlayerRequest: makeAction(TYPES.NEW_PLAYER_REQUEST, 'payload'),
-  callNewPlayerSuccess: makeAction(TYPES.NEW_PLAYER_SUCCESS, 'payload'),
-  callNewPlayerFailure: makeAction(TYPES.NEW_PLAYER_FAILURE, 'payload'),
+  buyTileRequest: makeAction(TYPES.BUY_TILE_REQUEST, 'payload'),
+  buyTileSuccess: makeAction(TYPES.BUY_TILE_SUCCESS, 'payload'),
+  buyTileFailure: makeAction(TYPES.BUY_TILE_FAILURE, 'payload'),
+  newPlayerRequest: makeAction(TYPES.NEW_PLAYER_REQUEST, 'payload'),
+  newPlayerSuccess: makeAction(TYPES.NEW_PLAYER_SUCCESS, 'payload'),
+  newPlayerFailure: makeAction(TYPES.NEW_PLAYER_FAILURE, 'payload'),
   getIsPlayingRequest: makeAction(TYPES.GET_IS_PLAYING_REQUEST, 'payload'),
   getIsPlayingSuccess: makeAction(TYPES.GET_IS_PLAYING_SUCCESS, 'payload'),
   getIsPlayingFailure: makeAction(TYPES.GET_IS_PLAYING_FAILURE, 'payload'),
@@ -168,14 +168,14 @@ export const planetReducer = createReducer(initialState, {
     const tileFee = { loading: false, error: action.payload, value: 0 }
     return { ...state, tileFee }
   },
-  [TYPES.CALL_BUY_TILE_REQUEST]: state => {
+  [TYPES.BUY_TILE_REQUEST]: state => {
     return { ...state, buyTile: { loading: true, error: null, result: null } }
   },
-  [TYPES.CALL_BUY_TILE_SUCCESS]: (state, action) => {
+  [TYPES.BUY_TILE_SUCCESS]: (state, action) => {
     const buyTile = { loading: false, error: null, result: action.payload }
     return { ...state, buyTile }
   },
-  [TYPES.CALL_BUY_TILE_FAILURE]: (state, action) => {
+  [TYPES.BUY_TILE_FAILURE]: (state, action) => {
     const buyTile = { loading: false, error: action.payload, message: null }
     return { ...state, buyTile }
   },

@@ -1112,7 +1112,7 @@
         "id": 1201,
         "nodeType": "ImportDirective",
         "scope": 3412,
-        "sourceUnit": 6155,
+        "sourceUnit": 6141,
         "src": "395:67:8",
         "symbolAliases": [],
         "unitAlias": ""
@@ -1127,10 +1127,10 @@
               "id": 1202,
               "name": "IERC777Recipient",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 6154,
+              "referencedDeclaration": 6140,
               "src": "541:16:8",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_IERC777Recipient_$6154",
+                "typeIdentifier": "t_contract$_IERC777Recipient_$6140",
                 "typeString": "contract IERC777Recipient"
               }
             },
@@ -1140,7 +1140,7 @@
           }
         ],
         "contractDependencies": [
-          6154
+          6140
         ],
         "contractKind": "contract",
         "documentation": "Author: Chris Markov 2020\nProject Aurbit",
@@ -1148,7 +1148,7 @@
         "id": 3411,
         "linearizedBaseContracts": [
           3411,
-          6154
+          6140
         ],
         "name": "Planet",
         "nodeType": "ContractDefinition",
@@ -10761,7 +10761,7 @@
           },
           {
             "baseFunctions": [
-              6153
+              6139
             ],
             "body": {
               "id": 2021,
@@ -12742,7 +12742,7 @@
                             "lValueRequested": false,
                             "memberName": "send",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 6029,
+                            "referencedDeclaration": 6015,
                             "src": "9743:13:8",
                             "typeDescriptions": {
                               "typeIdentifier": "t_function_external_nonpayable$_t_address_$_t_uint256_$_t_bytes_memory_ptr_$returns$__$",
@@ -31381,7 +31381,7 @@
         "id": 1201,
         "nodeType": "ImportDirective",
         "scope": 3412,
-        "sourceUnit": 6155,
+        "sourceUnit": 6141,
         "src": "395:67:8",
         "symbolAliases": [],
         "unitAlias": ""
@@ -31396,10 +31396,10 @@
               "id": 1202,
               "name": "IERC777Recipient",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 6154,
+              "referencedDeclaration": 6140,
               "src": "541:16:8",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_IERC777Recipient_$6154",
+                "typeIdentifier": "t_contract$_IERC777Recipient_$6140",
                 "typeString": "contract IERC777Recipient"
               }
             },
@@ -31409,7 +31409,7 @@
           }
         ],
         "contractDependencies": [
-          6154
+          6140
         ],
         "contractKind": "contract",
         "documentation": "Author: Chris Markov 2020\nProject Aurbit",
@@ -31417,7 +31417,7 @@
         "id": 3411,
         "linearizedBaseContracts": [
           3411,
-          6154
+          6140
         ],
         "name": "Planet",
         "nodeType": "ContractDefinition",
@@ -41030,7 +41030,7 @@
           },
           {
             "baseFunctions": [
-              6153
+              6139
             ],
             "body": {
               "id": 2021,
@@ -43011,7 +43011,7 @@
                             "lValueRequested": false,
                             "memberName": "send",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 6029,
+                            "referencedDeclaration": 6015,
                             "src": "9743:13:8",
                             "typeDescriptions": {
                               "typeIdentifier": "t_function_external_nonpayable$_t_address_$_t_uint256_$_t_bytes_memory_ptr_$returns$__$",
@@ -61572,176 +61572,7 @@
     "version": "0.6.2+commit.bacdbe57.Emscripten.clang"
   },
   "networks": {
-    "1597409447944": {
-      "events": {
-        "0x9de118d1860b941e57aa762edf44dcdc9ed3d04e3de3442393f63ef27e4e05db": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "aggressor_avatarId",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "defender_avatarId",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "winner_avatarId",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "tile_ind",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "internalType": "string",
-              "name": "attackType",
-              "type": "string"
-            },
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "resources_burnt",
-              "type": "uint256"
-            }
-          ],
-          "name": "Battle",
-          "type": "event"
-        },
-        "0x0162909566f34ffd11b6b6e3f6f2f6547a5a9f884deca2dfbcb6ff2dff9f907e": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "_ammount",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "_avatarId",
-              "type": "uint256"
-            }
-          ],
-          "name": "MinedAUR",
-          "type": "event"
-        },
-        "0xf4dd1db653a1088522e9ca377c4d54a81fc4c56ca3183a81caf1303eda7e1a95": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "_avatarId",
-              "type": "uint256"
-            }
-          ],
-          "name": "NewPlayer",
-          "type": "event"
-        },
-        "0x932b93792275f25d407a72d8c52c2ceca614037d79012f189f59ebe7c4b68c43": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "_avatarId",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "_balance_ammount",
-              "type": "uint256"
-            }
-          ],
-          "name": "PlayerBalanceChange",
-          "type": "event"
-        },
-        "0x5daa84ba1b8e450f422d40313f04b0837c5e0b621bebd2b040f875a0d7d0206a": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "internalType": "address",
-              "name": "operator",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "internalType": "address",
-              "name": "from",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "internalType": "address",
-              "name": "to",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "amount",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "internalType": "bytes",
-              "name": "userData",
-              "type": "bytes"
-            },
-            {
-              "indexed": false,
-              "internalType": "bytes",
-              "name": "operatorData",
-              "type": "bytes"
-            }
-          ],
-          "name": "ReceivedDeposit",
-          "type": "event"
-        },
-        "0x531c4e041ecb83820038b58317b353c842d8052b3382475c84b6d632aa5d00bb": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "tile_ind",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "tile_owner",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "internalType": "uint256",
-              "name": "tile_bal",
-              "type": "uint256"
-            }
-          ],
-          "name": "TileChanged",
-          "type": "event"
-        }
-      },
-      "links": {},
-      "address": "0x8ACEe021a27779d8E98B9650722676B850b25E11",
-      "transactionHash": "0x712ecf58be122d5240ba2dd4f18ef283ac35561a3699c0bc73daa686f1906b5d"
-    },
-    "1597462186698": {
+    "1597574288293": {
       "events": {
         "0x9de118d1860b941e57aa762edf44dcdc9ed3d04e3de3442393f63ef27e4e05db": {
           "anonymous": false,
@@ -61910,7 +61741,7 @@
       "address": "0x2C2B9C9a4a25e24B174f26114e8926a9f2128FE4",
       "transactionHash": "0xb789760a4f885c166df405d5885408a44130641c12ac9cd0eb71411a00840bc0"
     },
-    "1597499771190": {
+    "1597574949801": {
       "events": {
         "0x9de118d1860b941e57aa762edf44dcdc9ed3d04e3de3442393f63ef27e4e05db": {
           "anonymous": false,
@@ -62077,11 +61908,11 @@
       },
       "links": {},
       "address": "0x2C2B9C9a4a25e24B174f26114e8926a9f2128FE4",
-      "transactionHash": "0xb789760a4f885c166df405d5885408a44130641c12ac9cd0eb71411a00840bc0"
+      "transactionHash": "0x2f1239ae47d808b04e8aac8957579ef640f0c188aba2bce07b66205c6739f353"
     }
   },
   "schemaVersion": "3.2.3",
-  "updatedAt": "2020-08-15T13:56:29.524Z",
+  "updatedAt": "2020-08-16T10:50:17.449Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}

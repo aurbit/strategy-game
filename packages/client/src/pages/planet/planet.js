@@ -37,11 +37,11 @@ export default props => {
     dispatch(PLANET_ACTIONS.getIsPlayingRequest(id))
   }
   const handleCreateNewPlayer = () => {
-    dispatch(PLANET_ACTIONS.callNewPlayerRequest(avatar))
+    dispatch(PLANET_ACTIONS.newPlayerRequest(avatar))
   }
 
   const handleBuyTileClick = () => {
-    dispatch(PLANET_ACTIONS.callBuyTileRequest(activeTile))
+    dispatch(PLANET_ACTIONS.buyTileRequest(activeTile))
   }
 
   const handleGetPlayersClick = () => {
@@ -61,7 +61,7 @@ export default props => {
   }
 
   const handleAllocateTokensClick = ({ index, amount }) => {
-    dispatch(PLANET_ACTIONS.allocateTokensFailure({ index, amount }))
+    dispatch(PLANET_ACTIONS.allocateTokensRequest({ index, amount }))
   }
 
   return (

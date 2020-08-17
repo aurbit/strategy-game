@@ -8,7 +8,7 @@ import { avatarImage, rgbToHex } from './avatar-utils'
 import { Spinner, Container, Col, Row } from 'react-bootstrap'
 import parseDna from 'shared/store/avatar/parse-dna'
 
-const PlayerAvatar = ({ dna, name, id }) => {
+const PlayerAvatar = ({ dna, name = '', id }) => {
   const [hairColor, setHairColor] = React.useState(null)
   const [eyeColor, setEyeColor] = React.useState(null)
   const [skinColor, setSkinColor] = React.useState(null)

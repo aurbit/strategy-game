@@ -41,15 +41,15 @@ function * buyTileRequest (action) {
     const payload = { method: 'eth_sendTransaction', params: [txObject] }
     yield window.ethereum.send(payload, (err, data) => {
       if (err) {
-        store.dispatch(ACTIONS.callBuyTileFailure(err))
+        store.dispatch(ACTIONS.buyTileFailure(err))
       } else if (data) {
         store.dispatch(CHAIN_ACTIONS.newTransaction(data.transactionHash))
-        store.dispatch(ACTIONS.callBuyTileSuccess(data))
+        store.dispatch(ACTIONS.buyTileSuccess(data))
         document.getElementById(tileIndex).style.backgroundColor = 'blue'
       }
     })
   } catch (err) {
-    yield put(ACTIONS.callBuyTileFailure(err))
+    yield put(ACTIONS.buyTileFailure(err))
   }
 }
 
@@ -69,14 +69,14 @@ function * newPlayerRequest () {
     const payload = { method: 'eth_sendTransaction', params: [txObject] }
     yield window.ethereum.send(payload, (err, data) => {
       if (err) {
-        store.dispatch(ACTIONS.callNewPlayerFailure(err.message))
+        store.dispatch(ACTIONS.newPlayerFailure(err.message))
       } else if (data) {
         store.dispatch(CHAIN_ACTIONS.newTransaction(data.transactionHash))
-        store.dispatch(ACTIONS.callNewPlayerSuccess(data))
+        store.dispatch(ACTIONS.newPlayerSuccess(data))
       }
     })
   } catch (err) {
-    yield put(ACTIONS.callNewPlayerFailure(err.message))
+    yield put(ACTIONS.newPlayerFailure(err.message))
   }
 }
 
@@ -166,12 +166,14 @@ function * getAvatarAurBalanceRequest () {
 function * allocateTokensRequest (action) {
   try {
     const contract = yield select(selectPlanetContract)
+    const provider = yield select(selectProvider)
     const address = yield select(selectAddress)
     const avatar = yield select(selectAvatar)
     const { index, amount } = action.payload
 
+    const amountInWei = provider.utils.toWei(amount, 'ether')
     const rawTrx = yield contract.methods
-      .allocate(index, avatar.id, amount)
+      .allocateTokens(index, avatar.id, amountInWei)
       .encodeABI()
 
     const txObject = {
@@ -183,9 +185,9 @@ function * allocateTokensRequest (action) {
     const payload = { method: 'eth_sendTransaction', params: [txObject] }
     yield window.ethereum.send(payload, (err, data) => {
       if (err) {
-        store.dispatch(ACTIONS.allocateTokensSuccess(data))
-      } else if (data) {
         store.dispatch(ACTIONS.allocateTokensFailure(err))
+      } else if (data) {
+        store.dispatch(ACTIONS.allocateTokensSuccess(data))
       }
     })
   } catch (err) {
@@ -196,12 +198,14 @@ function * allocateTokensRequest (action) {
 function * deallocateTokensRequest (action) {
   const contract = yield select(selectPlanetContract)
   const address = yield select(selectAddress)
+  const provider = yield select(selectProvider)
   const avatar = yield select(selectAvatar)
   const { index, amount } = action.payload
+  const amountInWei = provider.utils.toWei(amount, 'ether')
 
   try {
     const rawTrx = yield contract.methods
-      .deallocate(index, avatar.id, amount)
+      .deallocateTokens(index, avatar.id, amountInWei)
       .encodeABI()
 
     const txObject = {
@@ -213,9 +217,9 @@ function * deallocateTokensRequest (action) {
     const payload = { method: 'eth_sendTransaction', params: [txObject] }
     yield window.ethereum.send(payload, (err, data) => {
       if (err) {
-        store.dispatch(ACTIONS.allocateTokensSuccess(data))
-      } else if (data) {
         store.dispatch(ACTIONS.allocateTokensFailure(err))
+      } else if (data) {
+        store.dispatch(ACTIONS.allocateTokensSuccess(data))
       }
     })
   } catch (err) {
@@ -225,7 +229,7 @@ function * deallocateTokensRequest (action) {
 
 export function * rootPlanetSagas () {
   yield takeLatest(TYPES.GET_TILE_FEE_REQUEST, getTileFeeRequest)
-  yield takeLatest(TYPES.CALL_BUY_TILE_REQUEST, buyTileRequest)
+  yield takeLatest(TYPES.BUY_TILE_REQUEST, buyTileRequest)
   yield takeLatest(TYPES.NEW_PLAYER_REQUEST, newPlayerRequest)
   yield takeLatest(TYPES.GET_IS_PLAYING_REQUEST, isPlayingRequest)
   yield takeLatest(TYPES.GET_PLAYERS_REQUEST, getPlayersRequest)

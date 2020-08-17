@@ -18,14 +18,14 @@ function * callMintAvatar ({ payload }) {
   const rawTrx = yield contract.methods.mintAvatar(name, dna).encodeABI()
   const value = yield provider.utils.toHex(mintFee)
 
-  const txCount = yield provider.eth.getTransactionCount(address)
   const txObject = {
-    nonce: provider.utils.toHex(txCount),
     from: address,
     to: contract._address,
     value,
     data: rawTrx
   }
+
+  console.log(txObject)
 
   const trx = { method: 'eth_sendTransaction', params: [txObject] }
   return window.ethereum.send(trx, (err, data) => {
