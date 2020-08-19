@@ -1,5 +1,7 @@
 const chai = require('chai')
 const AvatarAUR = artifacts.require('AvatarAUR')
+const web3 = require('web3')
+const gasCost = require('./gas-cost')
 
 contract('AvatarAUR', accounts => {
   const mintingFee = 10000000000000000
@@ -13,21 +15,17 @@ contract('AvatarAUR', accounts => {
     )
   })
 
-  it('Should mint a new avatar token', async () => {
+  it('Should mint a new avatar token no Event', async () => {
     const instance = await AvatarAUR.deployed()
 
     // [haircolor[0],haircolor[1],haircolor[2],eyecolor[0],eyecolor[1],eyecolor[2],skincolor[0],skincolor[1],skincolor[2],hairtype,eyetype,skintype,mouth,gender,race]
     const dna = [165, 228, 239, 117, 68, 239, 5, 4, 239, 153, 5, 2, 9, 3, 85]
     const dnaC = web3.utils.hexToNumberString(web3.utils.bytesToHex(dna))
-    await instance.mintAvatar('bob', dnaC, {
+    const result = await instance.mintAvatar('bob', dnaC, {
       value: mintingFee
     })
 
-    const avatar = new web3.eth.Contract(AvatarAUR.abi, AvatarAUR.address)
-
-    const dnaInteger = await avatar.methods
-      .getDNA('1')
-      .call({ from: accounts[0] })
+    const dnaInteger = await instance.getDNA('1', { from: accounts[0] })
 
     const dnaArray = await web3.utils.hexToBytes(
       web3.utils.padLeft(web3.utils.toHex(dnaInteger), 36)
@@ -46,18 +44,20 @@ contract('AvatarAUR', accounts => {
   it('Should get the mintingFee', async () => {
     const instance = await AvatarAUR.deployed()
 
-    const fee = await instance.mintingFee.call()
+    const fee = await instance.createAvatarFee.call()
     chai.expect(fee.toString() === mintingFee).is.not.null
   })
 
-  it('Should change the minting fee', async () => {
+  it('Should get the avatars for the address', async () => {
     const instance = await AvatarAUR.deployed()
+    const avatars = await instance.getAvatars(accounts[0])
+    chai.expect(avatars[0].name === 'bob')
+  })
 
-    const result = await instance.changeMintingFee(
-      (Number(mintingFee) * 2).toString()
-    )
-
-    const fee = await instance.mintingFee.call()
-    chai.expect(fee.toString() === Number(mintingFee * 2).toString()).is.true
+  it('should get the total supply of AURA tokens', async () => {
+    const instance = await AvatarAUR.deployed()
+    const supply = await instance.totalSupply()
+    console.log(supply)
+    chai.expect(supply > 0)
   })
 })

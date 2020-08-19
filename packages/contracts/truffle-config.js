@@ -33,6 +33,8 @@ module.exports = {
    * $ truffle test --network <network-name>
    */
 
+  plugins: ['solidity-coverage'],
+
   networks: {
     // Useful for testing. The `development` name is special - truffle uses it by default
     // if it's defined here and no other network is specified at the command line.
@@ -45,7 +47,15 @@ module.exports = {
       port: 7545, // Standard Ethereum port (default: none)
       network_id: '*', // Any network (default: none)
       gas: 5000000,
-      websocket: true
+      websockets: true
+    },
+    matic: {
+      provider: () =>
+        new HDWalletProvider(privateKeys, `https://rpc-mumbai.matic.today`),
+      network_id: 80001,
+      confirmations: 2,
+      timeoutBlocks: 200,
+      skipDryRun: true
     },
     test: {
       host: '127.0.0.1', // Localhost (default: none)
@@ -87,6 +97,20 @@ module.exports = {
   // Set default mocha options here, use special reporters etc.
   mocha: {
     // timeout: 100000
+    reporter: 'eth-gas-reporter',
+    reporterOptions: {
+      currency: 'usd',
+      gasPrice: 1,
+      onlyCalledMethods: false,
+      noColors: true,
+      rst: true,
+      rstTitle: 'Gas Usage',
+      showTimeSpent: true,
+      excludeContracts: ['Migrations'],
+      proxyResolver: 'EtherRouter',
+      codechecks: true,
+      showMethodSig: true
+    }
   },
 
   // Configure your compilers

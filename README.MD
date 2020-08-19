@@ -25,7 +25,7 @@ Aurbit is a strategy game the following pages:
 
 All state management happens with Redux Sagas and we use generator functions to handle state transition logic.
 
-<b>Truffle</b>
+<b>Contracts</b>
 It was our hope to use Buidler for this project, but we found Truffle to be a more mature and easy-to-use library to quickly get working with contract deployements. We are using Ganache-Cli and and Truffle to compile, deloy and migrate for development and mainnent/testnet builds.
 
 ## Game Play
