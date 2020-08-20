@@ -15,16 +15,16 @@ export default ({ activeTile }) => {
 
   React.useEffect(() => {
     for (let i in tiles.result) {
-      if (tiles.result[i].ind == activeTile) {
+      if (tiles.result[i].ind === activeTile) {
         dispatch(AVATAR_ACTIONS.getAvatarRequest(tiles.result[i].owner))
         return setTileInd(i)
       }
 
-      if (i == tiles.result.length - 1) {
+      if (i === tiles.result.length - 1) {
         setTileInd(null)
       }
     }
-  })
+  }, [setTileInd, dispatch, tiles, activeTile])
 
   // for showting the avatar
 

@@ -2,8 +2,10 @@ import React from 'react'
 import PlayerAvatar from 'shared/components/PlayerAvatar'
 import { Button, Container, Row, Col, Modal, Spinner } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectBalance } from 'shared/store/token/selectors'
-import { selectPlayers } from 'shared/store/planet/selectors'
+import {
+  selectBalance,
+  selectSendPlanetAur
+} from 'shared/store/token/selectors'
 import { selectPlanetContractAddress } from 'shared/store/chain/selectors'
 import { selectGetAvatar } from 'shared/store/avatar/selectors'
 import { ACTIONS as TOKEN_ACTIONS } from 'shared/store/token'
@@ -16,6 +18,7 @@ const SendAurToAvatar = () => {
 
   const aurBalance = useSelector(selectBalance)
   const gotAvatar = useSelector(selectGetAvatar)
+  const sendPlanetAur = useSelector(selectSendPlanetAur)
   const planetAddress = useSelector(selectPlanetContractAddress)
   const dispatch = useDispatch()
 
@@ -27,16 +30,16 @@ const SendAurToAvatar = () => {
   const handleUpdateAvatarId = ev => {
     ev.preventDefault()
     const id = ev.target.value
-    // if (players) {
-    //   for (let player of players) {
-    //     if (player.avatarId === id) {
     dispatch(AVATAR_ACTIONS.getAvatarRequest(id))
-    //   }
-    // }
+
     setAvatarId(id)
-    // }
-    setAvatarId(ev.target.value)
   }
+
+  React.useEffect(() => {
+    if (sendPlanetAur.result) {
+      setShow(false)
+    }
+  }, [setShow, sendPlanetAur])
 
   const handleButtonClick = () => {
     if (planetAddress && amount && avatarId)
@@ -73,7 +76,7 @@ const SendAurToAvatar = () => {
                   <Row className='m-1'>AURA: {gotAvatar.name}</Row>
                   <Row>
                     {gotAvatar.dna ? (
-                      <PlayerAvatar dna={gotAvatar.dna} />
+                      <PlayerAvatar dna={gotAvatar.dna} id={gotAvatar.id} />
                     ) : (
                       <Spinner animation='grow' variant='warning' />
                     )}

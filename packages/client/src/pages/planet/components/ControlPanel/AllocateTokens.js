@@ -15,9 +15,12 @@ export default ({
       ? setSelected('Deallocate')
       : setSelected('Allocate')
   }
-  const handleUpdateIndex = num => {
-    setIndex(num)
-  }
+  const handleUpdateIndex = React.useCallback(
+    num => {
+      setIndex(num)
+    },
+    [setIndex]
+  )
   const handleUpdateAmount = ev => {
     ev.preventDefault()
     setAmount(ev.target.value)
@@ -30,7 +33,7 @@ export default ({
 
   React.useEffect(() => {
     handleUpdateIndex(activeTile)
-  }, [handleUpdateIndex])
+  }, [handleUpdateIndex, activeTile])
 
   return (
     <Container>

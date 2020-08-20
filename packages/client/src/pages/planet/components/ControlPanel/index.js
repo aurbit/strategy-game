@@ -4,7 +4,6 @@ import { Col, Row, Button, Spinner, Container } from 'react-bootstrap'
 
 import { selectActiveTile } from 'shared/store/map/selectors'
 import { selectAurBalance } from 'shared/store/planet/selectors'
-import { selectActiveIndex } from 'shared/store/avatar/selectors'
 
 import PlayerAvatar from 'shared/components/PlayerAvatar'
 import SendAurToAvatar from 'shared/components/SendAurToAvatar'

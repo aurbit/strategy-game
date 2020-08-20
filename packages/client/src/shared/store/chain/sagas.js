@@ -178,6 +178,8 @@ function * planetContractEvent (action) {
       yield put(PLANET_ACTIONS.getTilesRequest())
       break
     }
+    default:
+      break
   }
 }
 
@@ -189,6 +191,7 @@ function * tokenContractEvent (action) {
   switch (event) {
     case TOKEN_EVENTS.Transfer: {
       yield put(TOKEN_ACTIONS.getAurBalanceRequest())
+      break
     }
     default:
       break

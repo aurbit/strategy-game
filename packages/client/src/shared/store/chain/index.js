@@ -7,7 +7,9 @@ export const NETWORKS = {
   MAINNET: 'mainnet',
   ROPSTEN: 'ropsten',
   RINKEBY: 'rinkeby',
-  KOVAN: 'kovan'
+  KOVAN: 'kovan',
+  MATIC_MUMBAI: 'matic_mumbai',
+  MATIC: 'matic'
 }
 
 const INITIAL_STATE = {

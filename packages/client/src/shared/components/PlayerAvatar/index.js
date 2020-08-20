@@ -5,7 +5,7 @@
 import React from 'react'
 import SVG from 'react-inlinesvg'
 import { avatarImage, rgbToHex } from './avatar-utils'
-import { Spinner, Container, Col, Row } from 'react-bootstrap'
+import { Spinner, Col, Row } from 'react-bootstrap'
 import parseDna from 'shared/store/avatar/parse-dna'
 import Style from 'style-it'
 
@@ -13,11 +13,11 @@ const PlayerAvatar = ({ dna, name = '', id }) => {
   const [hairColor, setHairColor] = React.useState(null)
   const [eyeColor, setEyeColor] = React.useState(null)
   const [skinColor, setSkinColor] = React.useState(null)
-  const [eyeType, setEyeType] = React.useState(null)
-  const [hairType, setHairType] = React.useState(null)
-  const [skinType, setSkinType] = React.useState(null)
+  // const [eyeType, setEyeType] = React.useState(null)
+  // const [hairType, setHairType] = React.useState(null)
+  // const [skinType, setSkinType] = React.useState(null)
+  // const [mouth, setMouth] = React.useState(null)
   const [gender, setGender] = React.useState(null)
-  const [mouth, setMouth] = React.useState(null)
   const [race, setRace] = React.useState(null)
   const [avatar, setAvatar] = React.useState(null)
   const [ready, setReady] = React.useState(false)
@@ -35,10 +35,10 @@ const PlayerAvatar = ({ dna, name = '', id }) => {
       const _hairArray = [dnaArray[3], dnaArray[4], dnaArray[5]]
       const _eyeArray = [dnaArray[6], dnaArray[7], dnaArray[8]]
       const _skinArray = [dnaArray[9], dnaArray[10], dnaArray[11]]
-      const _eyeType = dnaArray[12]
-      const _hairType = dnaArray[13]
-      const _skinType = dnaArray[14]
-      const _mouth = dnaArray[15]
+      // const _eyeType = dnaArray[12]
+      // const _hairType = dnaArray[13]
+      // const _skinType = dnaArray[14]
+      // const _mouth = dnaArray[15]
       const _race = dnaArray[16]
       const _gender = dnaArray[17]
 
@@ -46,11 +46,11 @@ const PlayerAvatar = ({ dna, name = '', id }) => {
       setHairColor(rgbToHex(_hairArray))
       setEyeColor(rgbToHex(_eyeArray))
       setSkinColor(rgbToHex(_skinArray))
-      setHairType(_hairType)
-      setEyeType(_eyeType)
-      setSkinType(_skinType)
+      // setHairType(_hairType)
+      // setEyeType(_eyeType)
+      // setSkinType(_skinType)
+      // setMouth(_mouth)
       setStrength(_strength)
-      setMouth(_mouth)
       setRace(_race)
       setGender(_gender)
       setIntel(_intel)
@@ -62,16 +62,16 @@ const PlayerAvatar = ({ dna, name = '', id }) => {
     setAvatar,
     setHairColor,
     setSkinColor,
-    setStrength,
     setVitality,
-    setSkinType,
-    setHairType,
-    setMouth,
+    // setSkinType,
+    // setHairType,
+    // setEyeType,
+    // setMouth,
     setRace,
     setIntel,
     setStrength,
-    setEyeType,
-    setReady
+    setReady,
+    ready
   ])
 
   return (

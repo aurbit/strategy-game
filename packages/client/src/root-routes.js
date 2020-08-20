@@ -36,7 +36,7 @@ export default () => {
       dispatch(AVATAR_ACTIONS.getAvatarsRequest())
       dispatch(TOKEN_ACTIONS.getAurBalanceRequest())
     }
-  }, [address && providersReady, dispatch])
+  }, [address, providersReady, dispatch])
 
   return walletReady && providersReady ? (
     <div>

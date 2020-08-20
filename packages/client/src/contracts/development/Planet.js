@@ -1,7 +1,7 @@
 
     module.exports = {
       "network": "development",
-      "address": "0x48cF3EF6aF69A257a68e2350c3Ce267E5C47626c",
+      "address": "0x2C2B9C9a4a25e24B174f26114e8926a9f2128FE4",
       "artifact": {
   "contractName": "Planet",
   "abi": [
@@ -61572,7 +61572,176 @@
     "version": "0.6.2+commit.bacdbe57.Emscripten.clang"
   },
   "networks": {
-    "1597845373203": {
+    "3": {
+      "events": {
+        "0x9de118d1860b941e57aa762edf44dcdc9ed3d04e3de3442393f63ef27e4e05db": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "aggressor_avatarId",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "defender_avatarId",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "winner_avatarId",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "tile_ind",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "string",
+              "name": "attackType",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "resources_burnt",
+              "type": "uint256"
+            }
+          ],
+          "name": "Battle",
+          "type": "event"
+        },
+        "0x0162909566f34ffd11b6b6e3f6f2f6547a5a9f884deca2dfbcb6ff2dff9f907e": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "_ammount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "_avatarId",
+              "type": "uint256"
+            }
+          ],
+          "name": "MinedAUR",
+          "type": "event"
+        },
+        "0xf4dd1db653a1088522e9ca377c4d54a81fc4c56ca3183a81caf1303eda7e1a95": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "_avatarId",
+              "type": "uint256"
+            }
+          ],
+          "name": "NewPlayer",
+          "type": "event"
+        },
+        "0x932b93792275f25d407a72d8c52c2ceca614037d79012f189f59ebe7c4b68c43": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "_avatarId",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "_balance_ammount",
+              "type": "uint256"
+            }
+          ],
+          "name": "PlayerBalanceChange",
+          "type": "event"
+        },
+        "0x5daa84ba1b8e450f422d40313f04b0837c5e0b621bebd2b040f875a0d7d0206a": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "operator",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "from",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "to",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "bytes",
+              "name": "userData",
+              "type": "bytes"
+            },
+            {
+              "indexed": false,
+              "internalType": "bytes",
+              "name": "operatorData",
+              "type": "bytes"
+            }
+          ],
+          "name": "ReceivedDeposit",
+          "type": "event"
+        },
+        "0x531c4e041ecb83820038b58317b353c842d8052b3382475c84b6d632aa5d00bb": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "tile_ind",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "tile_owner",
+              "type": "uint256"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "tile_bal",
+              "type": "uint256"
+            }
+          ],
+          "name": "TileChanged",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0x97AdEdb24175D5aD07bc2A6e0d2A0CA559b2ca4a",
+      "transactionHash": "0x77c43e90c2d01b6f07be31dbe48955cbe20dbd080887f2258d1c4df6466b3220"
+    },
+    "1597848629609": {
       "events": {
         "0x9de118d1860b941e57aa762edf44dcdc9ed3d04e3de3442393f63ef27e4e05db": {
           "anonymous": false,
@@ -61743,7 +61912,7 @@
     }
   },
   "schemaVersion": "3.2.3",
-  "updatedAt": "2020-08-19T14:11:12.760Z",
+  "updatedAt": "2020-08-20T04:22:15.165Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}

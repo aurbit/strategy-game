@@ -1,7 +1,7 @@
 
     module.exports = {
       "network": "development",
-      "address": "0x647520713D70a754baD30A6c25c58DFF9621EA08",
+      "address": "0xf25186B5081Ff5cE73482AD761DB0eB0d25abfBF",
       "artifact": {
   "contractName": "AURGov",
   "abi": [
@@ -14277,7 +14277,13 @@
     "version": "0.6.2+commit.bacdbe57.Emscripten.clang"
   },
   "networks": {
-    "1597845373203": {
+    "3": {
+      "events": {},
+      "links": {},
+      "address": "0x2203cbeB2F77C2FCF5f35D6FEF721cBDb04dc971",
+      "transactionHash": "0x8da3af0eead0dd877d47e7bdb7b2ff89b2c4edd9a5d9b68d995ec974a0cda8e5"
+    },
+    "1597848629609": {
       "events": {},
       "links": {},
       "address": "0xf25186B5081Ff5cE73482AD761DB0eB0d25abfBF",
@@ -14285,7 +14291,7 @@
     }
   },
   "schemaVersion": "3.2.3",
-  "updatedAt": "2020-08-19T14:11:12.779Z",
+  "updatedAt": "2020-08-20T04:22:15.187Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}
